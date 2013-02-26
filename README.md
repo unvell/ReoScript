@@ -50,3 +50,7 @@ The following softwares may be included in this product:
 ## License
 
 ReoScript and ReoScript Editor released under GNU Lesser General Public License (LGPLv3).
+
+Jing, Lu (lujing@unvell.com)
+
+copyright (c) unvell.com 2012-2013 all rights reserved.
