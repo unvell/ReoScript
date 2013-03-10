@@ -9,11 +9,9 @@
 //
 // License: GNU Lesser General Public License (LGPLv3)
 //
-// Jing, Lu (lujing@unvell.com)
+// Email: lujing@unvell.com
 //
 // Copyright (C) unvell.com, 2013. All Rights Reserved
-//
-// PID: 0D4F1DD2-93B5-4359-9FAA-AB697EEEB9DD
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -135,7 +133,8 @@ namespace Unvell.ReoScript
 
 			this["length"] = new ExternalProperty(() => { return String.Length; }, (v) => { });
 
-			this["repeat"] = new NativeFunctionValue("repeat", (srm, owner, args)=>{
+			this["repeat"] = new NativeFunctionValue("repeat", (srm, owner, args) =>
+			{
 				int count = ScriptRunningMachine.GetIntParam(args, 0, 0);
 
 				if (count > 0)
@@ -220,7 +219,7 @@ namespace Unvell.ReoScript
 				StringBuilder sb = new StringBuilder();
 				if (this is ArrayObject || this is StringObject || this is NumberObject)
 				{
-					sb.AppendLine(string.Format("[object {0}: {1}]",Name, this.ToString()));
+					sb.AppendLine(string.Format("[object {0}: {1}]", Name, this.ToString()));
 				}
 				else
 				{
@@ -636,7 +635,7 @@ namespace Unvell.ReoScript
 	#endregion
 
 	#region Array
-	internal class ArrayObject : ObjectValue
+	internal class ArrayObject : ObjectValue, IEnumerable
 	{
 		private ArrayList list = new ArrayList(5);
 
@@ -694,6 +693,15 @@ namespace Unvell.ReoScript
 		}
 
 		public override string Name { get { return "Array"; } }
+
+		#region IEnumerable Members
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return list.GetEnumerator();
+		}
+
+		#endregion
 	}
 	#endregion
 	#endregion
@@ -1321,7 +1329,7 @@ namespace Unvell.ReoScript
 			else if (left is string || right is string
 				|| left is StringObject || right is StringObject)
 			{
-				return string.Empty + left + right;
+				return new StringObject(string.Empty + left + right);
 			}
 			else if (left.GetType() == typeof(ObjectValue) && right.GetType() == typeof(ObjectValue))
 			{
@@ -1942,6 +1950,44 @@ namespace Unvell.ReoScript
 		#endregion
 	}
 	#endregion
+	class ForEachStatementNodeParser : INodeParser
+	{
+		#region INodeParser Members
+
+		public object Parse(CommonTree t, ScriptRunningMachine srm)
+		{
+			string varName = t.Children[0].ToString();
+
+			// retrieve target object
+			object nativeObj = srm.ParseNode(t.Children[1] as CommonTree);
+			if (nativeObj is IAccess) nativeObj = ((IAccess)nativeObj).Get();
+
+			if (nativeObj is IEnumerable)
+			{
+				IEnumerator iterator = ((IEnumerable)nativeObj).GetEnumerator();
+				while (iterator.MoveNext())
+				{
+					// prepare key
+					srm[varName] = iterator.Current;
+
+					// prepare iterator
+					CommonTree body = t.Children[2] as CommonTree;
+
+					// call iterator and terminal loop if break
+					object result = srm.ParseNode(body);
+					if (result is BreakNode)
+					{
+						return null;
+					}
+				}
+			}
+
+			return null;
+		}
+
+		#endregion
+	}
+
 	#region Break
 	class BreakNodeParser : INodeParser
 	{
@@ -2260,21 +2306,12 @@ namespace Unvell.ReoScript
 		{
 			object value = null;
 
-			//if (t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
-			//{
-			//  string objName = t.Children[0].ToString();
-			//  value = srm.CurrentContext.GetCurrentCallScope()[objName];
-			//}
-
-			//if (value == null)
-			//{
-				value = srm.ParseNode((CommonTree)t.Children[0]);
-				while (value is IAccess) value = ((IAccess)value).Get();
-			//}
+			value = srm.ParseNode((CommonTree)t.Children[0]);
+			while (value is IAccess) value = ((IAccess)value).Get();
 
 			if (value == null) throw new AWDLRuntimeException("Attempt to access property from null or undefined object.");
 
-			if(!(value is ObjectValue))
+			if (!(value is ObjectValue))
 			{
 				if (value is ISyntaxTreeReturn)
 				{
@@ -2315,6 +2352,7 @@ namespace Unvell.ReoScript
 			definedParser[ReoScriptLexer.ASSIGNMENT] = new AssignmentNodeParser();
 			definedParser[ReoScriptLexer.IF_STATEMENT] = new IfStatementNodeParser();
 			definedParser[ReoScriptLexer.FOR_STATEMENT] = new ForStatementNodeParser();
+			definedParser[ReoScriptLexer.FOREACH_STATEMENT] = new ForEachStatementNodeParser();
 			definedParser[ReoScriptLexer.SWITCH] = new SwitchCaseStatementNodeParser();
 			definedParser[ReoScriptLexer.FUNCTION_CALL] = new FunctionCallNodeParser();
 			definedParser[ReoScriptLexer.FUNCTION_DEFINE] = new FunctionDefineNodeParser();
@@ -2608,13 +2646,17 @@ namespace Unvell.ReoScript
 		{
 			IsForceStop = true;
 
+			//lock (asyncCallerList)
+			//{
+			//  asyncCallerList.Clear();
+			//}
 			lock (timeoutList)
 			{
 				foreach (BackgroundWorker bw in timeoutList)
 				{
 					try
 					{
-						bw.CancelAsync();
+						if (bw != null) bw.CancelAsync();
 					}
 					catch { }
 				}
@@ -2646,6 +2688,12 @@ namespace Unvell.ReoScript
 		~ScriptRunningMachine()
 		{
 			DetachAllEvents();
+
+			try
+			{
+				if(asyncCallThread!=null) asyncCallThread.Abort();
+			}
+			catch { }
 		}
 
 		internal void LoadCoreLibraries(ScriptContext sc)
@@ -2664,7 +2712,7 @@ namespace Unvell.ReoScript
 		/// <returns>object is created</returns>
 		public ObjectValue CreateNewObject()
 		{
-			return CreateNewObject(string.Empty);
+			return CreateNewObject("Object");
 		}
 
 		/// <summary>
@@ -3000,7 +3048,7 @@ namespace Unvell.ReoScript
 			public FunctionValue FunctionValue { get; set; }
 			public ScriptRunningMachine Srm { get; set; }
 
-			internal EventHandlerInfo(ScriptRunningMachine srm, object instance, 
+			internal EventHandlerInfo(ScriptRunningMachine srm, object instance,
 				EventInfo eventInfo, Delegate delegateMethod, FunctionValue functionValue)
 			{
 				this.Srm = srm;
@@ -3077,7 +3125,7 @@ namespace Unvell.ReoScript
 		{
 			return InvokeFunction(ownerObject, funObject, GetParameterList(argTree));
 		}
-		
+
 		internal object InvokeFunction(object ownerObject, AbstractFunctionValue funObject, object[] args)
 		{
 			if (funObject is NativeFunctionValue)
@@ -3120,6 +3168,30 @@ namespace Unvell.ReoScript
 			else
 				throw new AWDLRuntimeException("Object is not a function: " + Convert.ToString(funObject));
 		}
+
+		/// <summary>
+		/// Call a function that existed in Global Object as a property.
+		/// This method equals the following script:
+		/// if (fun != undefined) fun();
+		/// </summary>
+		/// <param name="funName">function name</param>
+		/// <param name="p">parameters if has</param>
+		/// <returns>return value of function</returns>
+		public object InvokeFunctionIfExisted(string funName, params object[] p)
+		{
+			string param = string.Empty;
+
+			if (p != null && p.Length > 0)
+			{
+				param = string.Join(",", Array.ConvertAll<object, string>(p, _p => Convert.ToString(_p)));
+			}
+
+			return Run(
+					(!string.IsNullOrEmpty(param))
+					? string.Format("if ({0} != undefined) {0}();", funName)
+					: string.Format("if ({0} != undefined) {0}({1});", funName, param)
+				);
+		}
 		#endregion
 
 		#region Call Timeout
@@ -3133,31 +3205,164 @@ namespace Unvell.ReoScript
 			BackgroundWorker bw = new BackgroundWorker() { WorkerSupportsCancellation = true };
 			bw.DoWork += (s, e) =>
 			{
-				timeoutList.Add(bw);
+			  timeoutList.Add(bw);
 
-				Thread.Sleep(ms);
+			  Thread.Sleep(ms);
 
-				if (code is FunctionValue)
-				{
-					this.ParseNode(((FunctionValue)code).Body);
-				}
-				else if (code is CommonTree)
-				{
-					this.ParseNode(((CommonTree)code));
-				}
-				else
-				{
-					this.CalcExpression(Convert.ToString(code));
-				}
+			  if (code is FunctionValue)
+			  {
+			    this.ParseNode(((FunctionValue)code).Body);
+			  }
+			  else if (code is CommonTree)
+			  {
+			    this.ParseNode(((CommonTree)code));
+			  }
+			  else
+			  {
+			    this.CalcExpression(Convert.ToString(code));
+			  }
 
-				timeoutList.Remove(bw);
+			  timeoutList.Remove(bw);
 			};
 			bw.RunWorkerAsync();
-		}
-		//struct CallWaiting
-		//{
 
-		//}
+			//AddAsyncCall(ms, () =>
+			//{
+			//  Thread.Sleep(ms);
+
+			//  if (code is FunctionValue)
+			//  {
+			//    this.ParseNode(((FunctionValue)code).Body);
+			//  }
+			//  else if (code is CommonTree)
+			//  {
+			//    this.ParseNode(((CommonTree)code));
+			//  }
+			//  else
+			//  {
+			//    this.CalcExpression(Convert.ToString(code));
+			//  }
+
+			//  return true;
+			//});
+		}
+
+		private Thread asyncCallThread;
+
+		private List<AsyncCaller> asyncCallerList = new List<AsyncCaller>();
+
+		private int minAsyncCallInterval = 0;
+
+		private void AddAsyncCall(int interval, Func<bool> caller)
+		{
+			if (minAsyncCallInterval == 0
+				|| minAsyncCallInterval > interval)
+			{
+				minAsyncCallInterval = interval;
+			}
+
+			lock (asyncCallerList)
+			{
+				asyncCallerList.Add(new AsyncCaller(interval, caller));
+			}
+
+			if (asyncCallThread == null)
+			{
+				asyncCallThread = new Thread(AsyncCallLoop);
+				asyncCallThread.Start();
+			}
+		}
+
+		private void AsyncCallLoop()
+		{
+			while (asyncCallerList.Count > 0)
+			{
+				// should wait more than 0 ms
+				Debug.Assert(minAsyncCallInterval > 0);
+
+				Thread.Sleep(minAsyncCallInterval);
+
+				lock (asyncCallerList)
+				{
+					for (int i = 0; i < asyncCallerList.Count; i++)
+					{
+						AsyncCaller caller = asyncCallerList[i];
+
+						if (DateTime.Now > caller.LastCalled.AddMilliseconds(caller.Interval))
+						{
+							try
+							{
+								caller.LastCalled = DateTime.Now;
+								caller.DoCall();
+							}
+							catch {
+								// error caused in this caller, planned to remove it 
+								caller.Finished = true;
+							}
+						}
+
+						if (caller.Finished)
+						{
+							asyncCallerList.Remove(caller);
+						}
+					}
+
+					//asyncCallerList.RemoveAll(ac => ac.Finished);
+				}
+			}
+
+			asyncCallThread = null;
+		}
+
+		internal class AsyncCaller
+		{
+			public AsyncCaller(int interval, Func<bool> caller)
+			{
+				this.interval = interval;
+				this.lastCalled = DateTime.Now;
+				this.action = caller;
+				this.finished = false;
+			}
+
+			private DateTime lastCalled;
+
+			public DateTime LastCalled
+			{
+				get { return lastCalled; }
+				set { lastCalled = value; }
+			}
+
+			private int interval;
+
+			public int Interval
+			{
+				get { return interval; }
+				set { interval = value; }
+			}
+
+			private Func<bool> action;
+
+			/// <summary>
+			/// Do async calling.
+			/// If return true this calling will be removed from timer loop.
+			/// </summary>
+			/// <returns>return true if calling is finished.</returns>
+			public void DoCall()
+			{
+				if (action != null)
+				{
+					if (action()) finished = true;
+				}
+			}
+
+			private bool finished;
+
+			public bool Finished
+			{
+				get { return finished; }
+				set { finished = value; }
+			}
+		}
 		#endregion
 
 		#region Standard Input & Output
@@ -3267,26 +3472,22 @@ namespace Unvell.ReoScript
 		/// <summary>
 		/// Run specified ReoScript script. Note that semicolon is required at end of every line. 
 		/// </summary>
-		/// <param name="statements">statements contained in script will be executed</param>
+		/// <param name="script">statements contained in script will be executed</param>
 		/// <returns>value of statement last be executed</returns>
-		public object Run(string statements)
+		public object Run(string script)
 		{
-			ReoScriptLexer lex = new ReoScriptLexer(new ANTLRStringStream(statements));
-			CommonTokenStream tokens = new CommonTokenStream(lex);
-			ReoScriptParser parser = new ReoScriptParser(tokens);
-			try
-			{
-				CommonTree t = parser.script().Tree as CommonTree;
+			return RunCompiledScript(Compile(script));
+		}
 
-				IsForceStop = false;
-				object v = ParseNode(t);
-				while (v is IAccess) v = ((IAccess)v).Get();
-				return v;
-			}
-			catch (RecognitionException ex)
-			{
-				throw new AWDLSyntaxErrorException("syntax error near at " + ex.Character + "(" + ex.Line + ": " + ex.CharPositionInLine + ")");
-			}
+		public object RunCompiledScript(CompiledScript script)
+		{
+			// clear ForceStop flag
+			IsForceStop = false;
+
+			object v = ParseNode( script.RootNode);
+			while (v is IAccess) v = ((IAccess)v).Get();
+
+			return v;
 		}
 
 		/// <summary>
@@ -3310,6 +3511,40 @@ namespace Unvell.ReoScript
 
 			return v;
 		}
+
+		private FunctionDefineNodeParser globalFunctionDefineNodeParser = new FunctionDefineNodeParser();
+
+		public CompiledScript Compile(string script)
+		{
+			ReoScriptLexer lex = new ReoScriptLexer(new ANTLRStringStream(script));
+			CommonTokenStream tokens = new CommonTokenStream(lex);
+			ReoScriptParser parser = new ReoScriptParser(tokens);
+
+			try
+			{
+				// read script and build ASTree
+				CommonTree t = parser.script().Tree as CommonTree;
+
+				// scan 1st level and define global functions
+				for (int i = 0; i < t.ChildCount; i++)
+				{
+					if (t.Children[i].Type == ReoScriptLexer.FUNCTION_DEFINE)
+					{
+						if(t.Children[i].ChildCount>0 && t.Children[i] is CommonTree)
+						{
+							globalFunctionDefineNodeParser.Parse(t.Children[i] as CommonTree, this);
+						}
+					}
+				}
+
+				return new CompiledScript { RootNode = t };
+			}
+			catch (RecognitionException ex)
+			{
+				throw new AWDLSyntaxErrorException("syntax error near at " + ex.Character + "(" + ex.Line + ": " + ex.CharPositionInLine + ")");
+			}
+		}
+
 		#endregion
 
 		#region Adapter Operations
@@ -3372,13 +3607,20 @@ namespace Unvell.ReoScript
 						return null;
 
 					case ReoScriptLexer.OBJECT_LITERAL:
-						ObjectValue val = new ObjectValue();
+						ObjectValue val = CreateNewObject();
+
 						for (int i = 0; i < t.ChildCount; i += 2)
 						{
 							object value = ParseNode(t.Children[i + 1] as CommonTree);
 							if (value is IAccess) value = ((IAccess)value).Get();
-							val[Convert.ToString(t.Children[i])] = value;
+
+							string identifier = t.Children[i].ToString();
+							if (t.Children[i].Type == ReoScriptLexer.STRING_LITERATE)
+								identifier = identifier.Substring(1, identifier.Length - 2);
+
+							val[identifier] = value;
 						}
+
 						return val;
 
 					case ReoScriptLexer.ARRAY_LITERAL:
@@ -3438,7 +3680,7 @@ namespace Unvell.ReoScript
 						//if (val is FunctionValue)
 						//  args[i] = ((FunctionValue)val).Body;
 						//else
-							args[i] = val;
+						args[i] = val;
 					}
 				}
 			}
@@ -3651,6 +3893,11 @@ namespace Unvell.ReoScript
 
 	}
 
+	public class CompiledScript
+	{
+		internal CommonTree RootNode {get;set;}
+	}
+
 	/// <summary>
 	/// Defines and represents the working mode of ScriptRunningMachine
 	/// </summary>
@@ -3659,7 +3906,7 @@ namespace Unvell.ReoScript
 		/// <summary>
 		/// Default working mode
 		/// </summary>
-		Default = 0 | MachineWorkMode.IgnoreCLRExceptions |	MachineWorkMode.AutoImportRelationType,
+		Default = 0 | MachineWorkMode.IgnoreCLRExceptions | MachineWorkMode.AutoImportRelationType,
 
 		/// <summary>
 		/// Allows to access .Net object, type, namespace, etc. directly.

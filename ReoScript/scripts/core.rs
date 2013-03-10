@@ -1,7 +1,7 @@
 ﻿
 // ReoScript core library
 //
-// copyright (c) 2013 unvell all rights reserved.
+// copyright (c) 2013 unvell, all rights reserved.
 //
 
 // Console

@@ -9,11 +9,9 @@
 //
 // License: GNU Lesser General Public License (LGPLv3)
 //
-// Jing, Lu (lujing@unvell.com)
+// Email: lujing@unvell.com
 //
 // Copyright (C) unvell.com, 2013. All Rights Reserved
-//
-// PID: 0D4F1DD2-93B5-4359-9FAA-AB697EEEB9DD
 //
 ///////////////////////////////////////////////////////////////////////////////
 

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.4 C:\\work\\ReoScript\\ReoScript.g 2013-02-08 22:21:21
+// $ANTLR 3.4 C:\\work\\ReoScript\\ReoScript.g 2013-03-11 02:04:51
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -47,7 +47,6 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	public const int T__108=108;
 	public const int T__109=109;
 	public const int T__110=110;
-	public const int T__111=111;
 	public const int AND=4;
 	public const int ANONYMOUS_FUNCTION_DEFINE=5;
 	public const int ARGUMENT_LIST=6;
@@ -1070,12 +1069,12 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = T__102;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:35:8: ( 'foreach' )
+			// C:\\work\\ReoScript\\ReoScript.g:35:8: ( 'function' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:35:10: 'foreach'
+			// C:\\work\\ReoScript\\ReoScript.g:35:10: 'function'
 			{
 			DebugLocation(35, 10);
-			Match("foreach"); 
+			Match("function"); 
 
 
 			}
@@ -1106,12 +1105,12 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = T__103;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:36:8: ( 'function' )
+			// C:\\work\\ReoScript\\ReoScript.g:36:8: ( 'if' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:36:10: 'function'
+			// C:\\work\\ReoScript\\ReoScript.g:36:10: 'if'
 			{
 			DebugLocation(36, 10);
-			Match("function"); 
+			Match("if"); 
 
 
 			}
@@ -1142,12 +1141,12 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = T__104;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:37:8: ( 'if' )
+			// C:\\work\\ReoScript\\ReoScript.g:37:8: ( 'import' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:37:10: 'if'
+			// C:\\work\\ReoScript\\ReoScript.g:37:10: 'import'
 			{
 			DebugLocation(37, 10);
-			Match("if"); 
+			Match("import"); 
 
 
 			}
@@ -1178,12 +1177,12 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = T__105;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:38:8: ( 'import' )
+			// C:\\work\\ReoScript\\ReoScript.g:38:8: ( 'in' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:38:10: 'import'
+			// C:\\work\\ReoScript\\ReoScript.g:38:10: 'in'
 			{
 			DebugLocation(38, 10);
-			Match("import"); 
+			Match("in"); 
 
 
 			}
@@ -1214,12 +1213,12 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = T__106;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:39:8: ( 'in' )
+			// C:\\work\\ReoScript\\ReoScript.g:39:8: ( 'new' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:39:10: 'in'
+			// C:\\work\\ReoScript\\ReoScript.g:39:10: 'new'
 			{
 			DebugLocation(39, 10);
-			Match("in"); 
+			Match("new"); 
 
 
 			}
@@ -1250,12 +1249,12 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = T__107;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:40:8: ( 'new' )
+			// C:\\work\\ReoScript\\ReoScript.g:40:8: ( 'return' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:40:10: 'new'
+			// C:\\work\\ReoScript\\ReoScript.g:40:10: 'return'
 			{
 			DebugLocation(40, 10);
-			Match("new"); 
+			Match("return"); 
 
 
 			}
@@ -1286,12 +1285,12 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = T__108;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:41:8: ( 'return' )
+			// C:\\work\\ReoScript\\ReoScript.g:41:8: ( 'switch' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:41:10: 'return'
+			// C:\\work\\ReoScript\\ReoScript.g:41:10: 'switch'
 			{
 			DebugLocation(41, 10);
-			Match("return"); 
+			Match("switch"); 
 
 
 			}
@@ -1322,12 +1321,12 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = T__109;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:42:8: ( 'switch' )
+			// C:\\work\\ReoScript\\ReoScript.g:42:8: ( 'while' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:42:10: 'switch'
+			// C:\\work\\ReoScript\\ReoScript.g:42:10: 'while'
 			{
 			DebugLocation(42, 10);
-			Match("switch"); 
+			Match("while"); 
 
 
 			}
@@ -1358,13 +1357,12 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = T__110;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:43:8: ( 'while' )
+			// C:\\work\\ReoScript\\ReoScript.g:43:8: ( '~' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:43:10: 'while'
+			// C:\\work\\ReoScript\\ReoScript.g:43:10: '~'
 			{
 			DebugLocation(43, 10);
-			Match("while"); 
-
+			Match('~'); 
 
 			}
 
@@ -1380,41 +1378,6 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	}
 	// $ANTLR end "T__110"
 
-	partial void EnterRule_T__111();
-	partial void LeaveRule_T__111();
-
-	// $ANTLR start "T__111"
-	[GrammarRule("T__111")]
-	private void mT__111()
-	{
-		EnterRule_T__111();
-		EnterRule("T__111", 35);
-		TraceIn("T__111", 35);
-		try
-		{
-			int _type = T__111;
-			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:44:8: ( '~' )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:44:10: '~'
-			{
-			DebugLocation(44, 10);
-			Match('~'); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally
-		{
-			TraceOut("T__111", 35);
-			LeaveRule("T__111", 35);
-			LeaveRule_T__111();
-		}
-	}
-	// $ANTLR end "T__111"
-
 	partial void EnterRule_NUMBER_LITERATE();
 	partial void LeaveRule_NUMBER_LITERATE();
 
@@ -1423,8 +1386,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mNUMBER_LITERATE()
 	{
 		EnterRule_NUMBER_LITERATE();
-		EnterRule("NUMBER_LITERATE", 36);
-		TraceIn("NUMBER_LITERATE", 36);
+		EnterRule("NUMBER_LITERATE", 35);
+		TraceIn("NUMBER_LITERATE", 35);
 		try
 		{
 			int _type = NUMBER_LITERATE;
@@ -1555,8 +1518,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("NUMBER_LITERATE", 36);
-			LeaveRule("NUMBER_LITERATE", 36);
+			TraceOut("NUMBER_LITERATE", 35);
+			LeaveRule("NUMBER_LITERATE", 35);
 			LeaveRule_NUMBER_LITERATE();
 		}
 	}
@@ -1570,8 +1533,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mHEX_LITERATE()
 	{
 		EnterRule_HEX_LITERATE();
-		EnterRule("HEX_LITERATE", 37);
-		TraceIn("HEX_LITERATE", 37);
+		EnterRule("HEX_LITERATE", 36);
+		TraceIn("HEX_LITERATE", 36);
 		try
 		{
 			int _type = HEX_LITERATE;
@@ -1637,8 +1600,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("HEX_LITERATE", 37);
-			LeaveRule("HEX_LITERATE", 37);
+			TraceOut("HEX_LITERATE", 36);
+			LeaveRule("HEX_LITERATE", 36);
 			LeaveRule_HEX_LITERATE();
 		}
 	}
@@ -1652,8 +1615,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mSTRING_LITERATE()
 	{
 		EnterRule_STRING_LITERATE();
-		EnterRule("STRING_LITERATE", 38);
-		TraceIn("STRING_LITERATE", 38);
+		EnterRule("STRING_LITERATE", 37);
+		TraceIn("STRING_LITERATE", 37);
 		try
 		{
 			int _type = STRING_LITERATE;
@@ -1787,8 +1750,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("STRING_LITERATE", 38);
-			LeaveRule("STRING_LITERATE", 38);
+			TraceOut("STRING_LITERATE", 37);
+			LeaveRule("STRING_LITERATE", 37);
 			LeaveRule_STRING_LITERATE();
 		}
 	}
@@ -1802,8 +1765,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mESCAPE_SEQUENCE()
 	{
 		EnterRule_ESCAPE_SEQUENCE();
-		EnterRule("ESCAPE_SEQUENCE", 39);
-		TraceIn("ESCAPE_SEQUENCE", 39);
+		EnterRule("ESCAPE_SEQUENCE", 38);
+		TraceIn("ESCAPE_SEQUENCE", 38);
 		try
 		{
 			// C:\\work\\ReoScript\\ReoScript.g:388:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) )
@@ -1831,8 +1794,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ESCAPE_SEQUENCE", 39);
-			LeaveRule("ESCAPE_SEQUENCE", 39);
+			TraceOut("ESCAPE_SEQUENCE", 38);
+			LeaveRule("ESCAPE_SEQUENCE", 38);
 			LeaveRule_ESCAPE_SEQUENCE();
 		}
 	}
@@ -1846,8 +1809,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGNMENT()
 	{
 		EnterRule_ASSIGNMENT();
-		EnterRule("ASSIGNMENT", 40);
-		TraceIn("ASSIGNMENT", 40);
+		EnterRule("ASSIGNMENT", 39);
+		TraceIn("ASSIGNMENT", 39);
 		try
 		{
 			int _type = ASSIGNMENT;
@@ -1866,8 +1829,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGNMENT", 40);
-			LeaveRule("ASSIGNMENT", 40);
+			TraceOut("ASSIGNMENT", 39);
+			LeaveRule("ASSIGNMENT", 39);
 			LeaveRule_ASSIGNMENT();
 		}
 	}
@@ -1881,8 +1844,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_PLUS()
 	{
 		EnterRule_ASSIGN_PLUS();
-		EnterRule("ASSIGN_PLUS", 41);
-		TraceIn("ASSIGN_PLUS", 41);
+		EnterRule("ASSIGN_PLUS", 40);
+		TraceIn("ASSIGN_PLUS", 40);
 		try
 		{
 			int _type = ASSIGN_PLUS;
@@ -1902,8 +1865,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_PLUS", 41);
-			LeaveRule("ASSIGN_PLUS", 41);
+			TraceOut("ASSIGN_PLUS", 40);
+			LeaveRule("ASSIGN_PLUS", 40);
 			LeaveRule_ASSIGN_PLUS();
 		}
 	}
@@ -1917,8 +1880,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_MINUS()
 	{
 		EnterRule_ASSIGN_MINUS();
-		EnterRule("ASSIGN_MINUS", 42);
-		TraceIn("ASSIGN_MINUS", 42);
+		EnterRule("ASSIGN_MINUS", 41);
+		TraceIn("ASSIGN_MINUS", 41);
 		try
 		{
 			int _type = ASSIGN_MINUS;
@@ -1938,8 +1901,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_MINUS", 42);
-			LeaveRule("ASSIGN_MINUS", 42);
+			TraceOut("ASSIGN_MINUS", 41);
+			LeaveRule("ASSIGN_MINUS", 41);
 			LeaveRule_ASSIGN_MINUS();
 		}
 	}
@@ -1953,8 +1916,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_MUL()
 	{
 		EnterRule_ASSIGN_MUL();
-		EnterRule("ASSIGN_MUL", 43);
-		TraceIn("ASSIGN_MUL", 43);
+		EnterRule("ASSIGN_MUL", 42);
+		TraceIn("ASSIGN_MUL", 42);
 		try
 		{
 			int _type = ASSIGN_MUL;
@@ -1974,8 +1937,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_MUL", 43);
-			LeaveRule("ASSIGN_MUL", 43);
+			TraceOut("ASSIGN_MUL", 42);
+			LeaveRule("ASSIGN_MUL", 42);
 			LeaveRule_ASSIGN_MUL();
 		}
 	}
@@ -1989,8 +1952,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_DIV()
 	{
 		EnterRule_ASSIGN_DIV();
-		EnterRule("ASSIGN_DIV", 44);
-		TraceIn("ASSIGN_DIV", 44);
+		EnterRule("ASSIGN_DIV", 43);
+		TraceIn("ASSIGN_DIV", 43);
 		try
 		{
 			int _type = ASSIGN_DIV;
@@ -2010,8 +1973,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_DIV", 44);
-			LeaveRule("ASSIGN_DIV", 44);
+			TraceOut("ASSIGN_DIV", 43);
+			LeaveRule("ASSIGN_DIV", 43);
 			LeaveRule_ASSIGN_DIV();
 		}
 	}
@@ -2025,8 +1988,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_REM()
 	{
 		EnterRule_ASSIGN_REM();
-		EnterRule("ASSIGN_REM", 45);
-		TraceIn("ASSIGN_REM", 45);
+		EnterRule("ASSIGN_REM", 44);
+		TraceIn("ASSIGN_REM", 44);
 		try
 		{
 			int _type = ASSIGN_REM;
@@ -2046,8 +2009,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_REM", 45);
-			LeaveRule("ASSIGN_REM", 45);
+			TraceOut("ASSIGN_REM", 44);
+			LeaveRule("ASSIGN_REM", 44);
 			LeaveRule_ASSIGN_REM();
 		}
 	}
@@ -2061,8 +2024,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_AND()
 	{
 		EnterRule_ASSIGN_AND();
-		EnterRule("ASSIGN_AND", 46);
-		TraceIn("ASSIGN_AND", 46);
+		EnterRule("ASSIGN_AND", 45);
+		TraceIn("ASSIGN_AND", 45);
 		try
 		{
 			int _type = ASSIGN_AND;
@@ -2082,8 +2045,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_AND", 46);
-			LeaveRule("ASSIGN_AND", 46);
+			TraceOut("ASSIGN_AND", 45);
+			LeaveRule("ASSIGN_AND", 45);
 			LeaveRule_ASSIGN_AND();
 		}
 	}
@@ -2097,8 +2060,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_OR()
 	{
 		EnterRule_ASSIGN_OR();
-		EnterRule("ASSIGN_OR", 47);
-		TraceIn("ASSIGN_OR", 47);
+		EnterRule("ASSIGN_OR", 46);
+		TraceIn("ASSIGN_OR", 46);
 		try
 		{
 			int _type = ASSIGN_OR;
@@ -2118,8 +2081,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_OR", 47);
-			LeaveRule("ASSIGN_OR", 47);
+			TraceOut("ASSIGN_OR", 46);
+			LeaveRule("ASSIGN_OR", 46);
 			LeaveRule_ASSIGN_OR();
 		}
 	}
@@ -2133,8 +2096,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_REV()
 	{
 		EnterRule_ASSIGN_REV();
-		EnterRule("ASSIGN_REV", 48);
-		TraceIn("ASSIGN_REV", 48);
+		EnterRule("ASSIGN_REV", 47);
+		TraceIn("ASSIGN_REV", 47);
 		try
 		{
 			int _type = ASSIGN_REV;
@@ -2154,8 +2117,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_REV", 48);
-			LeaveRule("ASSIGN_REV", 48);
+			TraceOut("ASSIGN_REV", 47);
+			LeaveRule("ASSIGN_REV", 47);
 			LeaveRule_ASSIGN_REV();
 		}
 	}
@@ -2169,8 +2132,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_LSHIFT()
 	{
 		EnterRule_ASSIGN_LSHIFT();
-		EnterRule("ASSIGN_LSHIFT", 49);
-		TraceIn("ASSIGN_LSHIFT", 49);
+		EnterRule("ASSIGN_LSHIFT", 48);
+		TraceIn("ASSIGN_LSHIFT", 48);
 		try
 		{
 			int _type = ASSIGN_LSHIFT;
@@ -2190,8 +2153,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_LSHIFT", 49);
-			LeaveRule("ASSIGN_LSHIFT", 49);
+			TraceOut("ASSIGN_LSHIFT", 48);
+			LeaveRule("ASSIGN_LSHIFT", 48);
 			LeaveRule_ASSIGN_LSHIFT();
 		}
 	}
@@ -2205,8 +2168,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_RSHIFT()
 	{
 		EnterRule_ASSIGN_RSHIFT();
-		EnterRule("ASSIGN_RSHIFT", 50);
-		TraceIn("ASSIGN_RSHIFT", 50);
+		EnterRule("ASSIGN_RSHIFT", 49);
+		TraceIn("ASSIGN_RSHIFT", 49);
 		try
 		{
 			int _type = ASSIGN_RSHIFT;
@@ -2226,8 +2189,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_RSHIFT", 50);
-			LeaveRule("ASSIGN_RSHIFT", 50);
+			TraceOut("ASSIGN_RSHIFT", 49);
+			LeaveRule("ASSIGN_RSHIFT", 49);
 			LeaveRule_ASSIGN_RSHIFT();
 		}
 	}
@@ -2241,8 +2204,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mCOMMA()
 	{
 		EnterRule_COMMA();
-		EnterRule("COMMA", 51);
-		TraceIn("COMMA", 51);
+		EnterRule("COMMA", 50);
+		TraceIn("COMMA", 50);
 		try
 		{
 			int _type = COMMA;
@@ -2261,8 +2224,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("COMMA", 51);
-			LeaveRule("COMMA", 51);
+			TraceOut("COMMA", 50);
+			LeaveRule("COMMA", 50);
 			LeaveRule_COMMA();
 		}
 	}
@@ -2276,8 +2239,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mLPAREN()
 	{
 		EnterRule_LPAREN();
-		EnterRule("LPAREN", 52);
-		TraceIn("LPAREN", 52);
+		EnterRule("LPAREN", 51);
+		TraceIn("LPAREN", 51);
 		try
 		{
 			int _type = LPAREN;
@@ -2296,8 +2259,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("LPAREN", 52);
-			LeaveRule("LPAREN", 52);
+			TraceOut("LPAREN", 51);
+			LeaveRule("LPAREN", 51);
 			LeaveRule_LPAREN();
 		}
 	}
@@ -2311,8 +2274,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mRPAREN()
 	{
 		EnterRule_RPAREN();
-		EnterRule("RPAREN", 53);
-		TraceIn("RPAREN", 53);
+		EnterRule("RPAREN", 52);
+		TraceIn("RPAREN", 52);
 		try
 		{
 			int _type = RPAREN;
@@ -2331,8 +2294,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("RPAREN", 53);
-			LeaveRule("RPAREN", 53);
+			TraceOut("RPAREN", 52);
+			LeaveRule("RPAREN", 52);
 			LeaveRule_RPAREN();
 		}
 	}
@@ -2346,8 +2309,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mLBRACE()
 	{
 		EnterRule_LBRACE();
-		EnterRule("LBRACE", 54);
-		TraceIn("LBRACE", 54);
+		EnterRule("LBRACE", 53);
+		TraceIn("LBRACE", 53);
 		try
 		{
 			int _type = LBRACE;
@@ -2366,8 +2329,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("LBRACE", 54);
-			LeaveRule("LBRACE", 54);
+			TraceOut("LBRACE", 53);
+			LeaveRule("LBRACE", 53);
 			LeaveRule_LBRACE();
 		}
 	}
@@ -2381,8 +2344,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mRBRACE()
 	{
 		EnterRule_RBRACE();
-		EnterRule("RBRACE", 55);
-		TraceIn("RBRACE", 55);
+		EnterRule("RBRACE", 54);
+		TraceIn("RBRACE", 54);
 		try
 		{
 			int _type = RBRACE;
@@ -2401,8 +2364,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("RBRACE", 55);
-			LeaveRule("RBRACE", 55);
+			TraceOut("RBRACE", 54);
+			LeaveRule("RBRACE", 54);
 			LeaveRule_RBRACE();
 		}
 	}
@@ -2416,8 +2379,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mLCURLY()
 	{
 		EnterRule_LCURLY();
-		EnterRule("LCURLY", 56);
-		TraceIn("LCURLY", 56);
+		EnterRule("LCURLY", 55);
+		TraceIn("LCURLY", 55);
 		try
 		{
 			int _type = LCURLY;
@@ -2436,8 +2399,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("LCURLY", 56);
-			LeaveRule("LCURLY", 56);
+			TraceOut("LCURLY", 55);
+			LeaveRule("LCURLY", 55);
 			LeaveRule_LCURLY();
 		}
 	}
@@ -2451,8 +2414,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mRCURLY()
 	{
 		EnterRule_RCURLY();
-		EnterRule("RCURLY", 57);
-		TraceIn("RCURLY", 57);
+		EnterRule("RCURLY", 56);
+		TraceIn("RCURLY", 56);
 		try
 		{
 			int _type = RCURLY;
@@ -2471,8 +2434,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("RCURLY", 57);
-			LeaveRule("RCURLY", 57);
+			TraceOut("RCURLY", 56);
+			LeaveRule("RCURLY", 56);
 			LeaveRule_RCURLY();
 		}
 	}
@@ -2486,8 +2449,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mCOLON()
 	{
 		EnterRule_COLON();
-		EnterRule("COLON", 58);
-		TraceIn("COLON", 58);
+		EnterRule("COLON", 57);
+		TraceIn("COLON", 57);
 		try
 		{
 			int _type = COLON;
@@ -2506,8 +2469,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("COLON", 58);
-			LeaveRule("COLON", 58);
+			TraceOut("COLON", 57);
+			LeaveRule("COLON", 57);
 			LeaveRule_COLON();
 		}
 	}
@@ -2521,8 +2484,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mDOT()
 	{
 		EnterRule_DOT();
-		EnterRule("DOT", 59);
-		TraceIn("DOT", 59);
+		EnterRule("DOT", 58);
+		TraceIn("DOT", 58);
 		try
 		{
 			int _type = DOT;
@@ -2541,8 +2504,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("DOT", 59);
-			LeaveRule("DOT", 59);
+			TraceOut("DOT", 58);
+			LeaveRule("DOT", 58);
 			LeaveRule_DOT();
 		}
 	}
@@ -2556,8 +2519,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mNOT()
 	{
 		EnterRule_NOT();
-		EnterRule("NOT", 60);
-		TraceIn("NOT", 60);
+		EnterRule("NOT", 59);
+		TraceIn("NOT", 59);
 		try
 		{
 			int _type = NOT;
@@ -2576,8 +2539,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("NOT", 60);
-			LeaveRule("NOT", 60);
+			TraceOut("NOT", 59);
+			LeaveRule("NOT", 59);
 			LeaveRule_NOT();
 		}
 	}
@@ -2591,8 +2554,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mINCREMENT()
 	{
 		EnterRule_INCREMENT();
-		EnterRule("INCREMENT", 61);
-		TraceIn("INCREMENT", 61);
+		EnterRule("INCREMENT", 60);
+		TraceIn("INCREMENT", 60);
 		try
 		{
 			int _type = INCREMENT;
@@ -2612,8 +2575,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("INCREMENT", 61);
-			LeaveRule("INCREMENT", 61);
+			TraceOut("INCREMENT", 60);
+			LeaveRule("INCREMENT", 60);
 			LeaveRule_INCREMENT();
 		}
 	}
@@ -2627,8 +2590,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mDECREMENT()
 	{
 		EnterRule_DECREMENT();
-		EnterRule("DECREMENT", 62);
-		TraceIn("DECREMENT", 62);
+		EnterRule("DECREMENT", 61);
+		TraceIn("DECREMENT", 61);
 		try
 		{
 			int _type = DECREMENT;
@@ -2648,8 +2611,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("DECREMENT", 62);
-			LeaveRule("DECREMENT", 62);
+			TraceOut("DECREMENT", 61);
+			LeaveRule("DECREMENT", 61);
 			LeaveRule_DECREMENT();
 		}
 	}
@@ -2663,8 +2626,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mCONDITION()
 	{
 		EnterRule_CONDITION();
-		EnterRule("CONDITION", 63);
-		TraceIn("CONDITION", 63);
+		EnterRule("CONDITION", 62);
+		TraceIn("CONDITION", 62);
 		try
 		{
 			int _type = CONDITION;
@@ -2683,8 +2646,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("CONDITION", 63);
-			LeaveRule("CONDITION", 63);
+			TraceOut("CONDITION", 62);
+			LeaveRule("CONDITION", 62);
 			LeaveRule_CONDITION();
 		}
 	}
@@ -2698,8 +2661,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mELSE()
 	{
 		EnterRule_ELSE();
-		EnterRule("ELSE", 64);
-		TraceIn("ELSE", 64);
+		EnterRule("ELSE", 63);
+		TraceIn("ELSE", 63);
 		try
 		{
 			int _type = ELSE;
@@ -2719,8 +2682,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ELSE", 64);
-			LeaveRule("ELSE", 64);
+			TraceOut("ELSE", 63);
+			LeaveRule("ELSE", 63);
 			LeaveRule_ELSE();
 		}
 	}
@@ -2734,8 +2697,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mTYPE()
 	{
 		EnterRule_TYPE();
-		EnterRule("TYPE", 65);
-		TraceIn("TYPE", 65);
+		EnterRule("TYPE", 64);
+		TraceIn("TYPE", 64);
 		try
 		{
 			int _type = TYPE;
@@ -2755,8 +2718,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("TYPE", 65);
-			LeaveRule("TYPE", 65);
+			TraceOut("TYPE", 64);
+			LeaveRule("TYPE", 64);
 			LeaveRule_TYPE();
 		}
 	}
@@ -2770,8 +2733,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mTRUE()
 	{
 		EnterRule_TRUE();
-		EnterRule("TRUE", 66);
-		TraceIn("TRUE", 66);
+		EnterRule("TRUE", 65);
+		TraceIn("TRUE", 65);
 		try
 		{
 			int _type = TRUE;
@@ -2791,8 +2754,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("TRUE", 66);
-			LeaveRule("TRUE", 66);
+			TraceOut("TRUE", 65);
+			LeaveRule("TRUE", 65);
 			LeaveRule_TRUE();
 		}
 	}
@@ -2806,8 +2769,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mFALSE()
 	{
 		EnterRule_FALSE();
-		EnterRule("FALSE", 67);
-		TraceIn("FALSE", 67);
+		EnterRule("FALSE", 66);
+		TraceIn("FALSE", 66);
 		try
 		{
 			int _type = FALSE;
@@ -2827,8 +2790,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("FALSE", 67);
-			LeaveRule("FALSE", 67);
+			TraceOut("FALSE", 66);
+			LeaveRule("FALSE", 66);
 			LeaveRule_FALSE();
 		}
 	}
@@ -2842,8 +2805,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mNULL()
 	{
 		EnterRule_NULL();
-		EnterRule("NULL", 68);
-		TraceIn("NULL", 68);
+		EnterRule("NULL", 67);
+		TraceIn("NULL", 67);
 		try
 		{
 			int _type = NULL;
@@ -2863,8 +2826,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("NULL", 68);
-			LeaveRule("NULL", 68);
+			TraceOut("NULL", 67);
+			LeaveRule("NULL", 67);
 			LeaveRule_NULL();
 		}
 	}
@@ -2878,8 +2841,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mTHIS()
 	{
 		EnterRule_THIS();
-		EnterRule("THIS", 69);
-		TraceIn("THIS", 69);
+		EnterRule("THIS", 68);
+		TraceIn("THIS", 68);
 		try
 		{
 			int _type = THIS;
@@ -2899,8 +2862,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("THIS", 69);
-			LeaveRule("THIS", 69);
+			TraceOut("THIS", 68);
+			LeaveRule("THIS", 68);
 			LeaveRule_THIS();
 		}
 	}
@@ -2914,8 +2877,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mUNDEFINED()
 	{
 		EnterRule_UNDEFINED();
-		EnterRule("UNDEFINED", 70);
-		TraceIn("UNDEFINED", 70);
+		EnterRule("UNDEFINED", 69);
+		TraceIn("UNDEFINED", 69);
 		try
 		{
 			int _type = UNDEFINED;
@@ -2935,8 +2898,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("UNDEFINED", 70);
-			LeaveRule("UNDEFINED", 70);
+			TraceOut("UNDEFINED", 69);
+			LeaveRule("UNDEFINED", 69);
 			LeaveRule_UNDEFINED();
 		}
 	}
@@ -2950,8 +2913,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mCOMMENT()
 	{
 		EnterRule_COMMENT();
-		EnterRule("COMMENT", 71);
-		TraceIn("COMMENT", 71);
+		EnterRule("COMMENT", 70);
+		TraceIn("COMMENT", 70);
 		try
 		{
 			int _type = COMMENT;
@@ -3029,8 +2992,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("COMMENT", 71);
-			LeaveRule("COMMENT", 71);
+			TraceOut("COMMENT", 70);
+			LeaveRule("COMMENT", 70);
 			LeaveRule_COMMENT();
 		}
 	}
@@ -3044,8 +3007,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mLINE_COMMENT()
 	{
 		EnterRule_LINE_COMMENT();
-		EnterRule("LINE_COMMENT", 72);
-		TraceIn("LINE_COMMENT", 72);
+		EnterRule("LINE_COMMENT", 71);
+		TraceIn("LINE_COMMENT", 71);
 		try
 		{
 			int _type = LINE_COMMENT;
@@ -3106,8 +3069,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("LINE_COMMENT", 72);
-			LeaveRule("LINE_COMMENT", 72);
+			TraceOut("LINE_COMMENT", 71);
+			LeaveRule("LINE_COMMENT", 71);
 			LeaveRule_LINE_COMMENT();
 		}
 	}
@@ -3121,8 +3084,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mIDENTIFIER()
 	{
 		EnterRule_IDENTIFIER();
-		EnterRule("IDENTIFIER", 73);
-		TraceIn("IDENTIFIER", 73);
+		EnterRule("IDENTIFIER", 72);
+		TraceIn("IDENTIFIER", 72);
 		try
 		{
 			int _type = IDENTIFIER;
@@ -3191,8 +3154,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("IDENTIFIER", 73);
-			LeaveRule("IDENTIFIER", 73);
+			TraceOut("IDENTIFIER", 72);
+			LeaveRule("IDENTIFIER", 72);
 			LeaveRule_IDENTIFIER();
 		}
 	}
@@ -3206,8 +3169,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mNEWLINE()
 	{
 		EnterRule_NEWLINE();
-		EnterRule("NEWLINE", 74);
-		TraceIn("NEWLINE", 74);
+		EnterRule("NEWLINE", 73);
+		TraceIn("NEWLINE", 73);
 		try
 		{
 			int _type = NEWLINE;
@@ -3255,8 +3218,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("NEWLINE", 74);
-			LeaveRule("NEWLINE", 74);
+			TraceOut("NEWLINE", 73);
+			LeaveRule("NEWLINE", 73);
 			LeaveRule_NEWLINE();
 		}
 	}
@@ -3270,8 +3233,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mWS()
 	{
 		EnterRule_WS();
-		EnterRule("WS", 75);
-		TraceIn("WS", 75);
+		EnterRule("WS", 74);
+		TraceIn("WS", 74);
 		try
 		{
 			int _type = WS;
@@ -3364,8 +3327,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("WS", 75);
-			LeaveRule("WS", 75);
+			TraceOut("WS", 74);
+			LeaveRule("WS", 74);
 			LeaveRule_WS();
 		}
 	}
@@ -3379,8 +3342,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mSEMI()
 	{
 		EnterRule_SEMI();
-		EnterRule("SEMI", 76);
-		TraceIn("SEMI", 76);
+		EnterRule("SEMI", 75);
+		TraceIn("SEMI", 75);
 		try
 		{
 			int _type = SEMI;
@@ -3399,8 +3362,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("SEMI", 76);
-			LeaveRule("SEMI", 76);
+			TraceOut("SEMI", 75);
+			LeaveRule("SEMI", 75);
 			LeaveRule_SEMI();
 		}
 	}
@@ -3408,8 +3371,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 
 	public override void mTokens()
 	{
-		// C:\\work\\ReoScript\\ReoScript.g:1:8: ( AND | DIV | EQUALS | GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN | LOGICAL_AND | LOGICAL_OR | LSHIFT | MINUS | MOD | MUL | NOT_EQUALS | OR | PLUS | RSHIFT | XOR | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | T__108 | T__109 | T__110 | T__111 | NUMBER_LITERATE | HEX_LITERATE | STRING_LITERATE | ASSIGNMENT | ASSIGN_PLUS | ASSIGN_MINUS | ASSIGN_MUL | ASSIGN_DIV | ASSIGN_REM | ASSIGN_AND | ASSIGN_OR | ASSIGN_REV | ASSIGN_LSHIFT | ASSIGN_RSHIFT | COMMA | LPAREN | RPAREN | LBRACE | RBRACE | LCURLY | RCURLY | COLON | DOT | NOT | INCREMENT | DECREMENT | CONDITION | ELSE | TYPE | TRUE | FALSE | NULL | THIS | UNDEFINED | COMMENT | LINE_COMMENT | IDENTIFIER | NEWLINE | WS | SEMI )
-		int alt13=75;
+		// C:\\work\\ReoScript\\ReoScript.g:1:8: ( AND | DIV | EQUALS | GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN | LOGICAL_AND | LOGICAL_OR | LSHIFT | MINUS | MOD | MUL | NOT_EQUALS | OR | PLUS | RSHIFT | XOR | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | T__108 | T__109 | T__110 | NUMBER_LITERATE | HEX_LITERATE | STRING_LITERATE | ASSIGNMENT | ASSIGN_PLUS | ASSIGN_MINUS | ASSIGN_MUL | ASSIGN_DIV | ASSIGN_REM | ASSIGN_AND | ASSIGN_OR | ASSIGN_REV | ASSIGN_LSHIFT | ASSIGN_RSHIFT | COMMA | LPAREN | RPAREN | LBRACE | RBRACE | LCURLY | RCURLY | COLON | DOT | NOT | INCREMENT | DECREMENT | CONDITION | ELSE | TYPE | TRUE | FALSE | NULL | THIS | UNDEFINED | COMMENT | LINE_COMMENT | IDENTIFIER | NEWLINE | WS | SEMI )
+		int alt13=74;
 		try { DebugEnterDecision(13, false);
 		try
 		{
@@ -3731,369 +3694,360 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 35:
 			DebugEnterAlt(35);
-			// C:\\work\\ReoScript\\ReoScript.g:1:252: T__111
+			// C:\\work\\ReoScript\\ReoScript.g:1:252: NUMBER_LITERATE
 			{
 			DebugLocation(1, 252);
-			mT__111(); 
+			mNUMBER_LITERATE(); 
 
 			}
 			break;
 		case 36:
 			DebugEnterAlt(36);
-			// C:\\work\\ReoScript\\ReoScript.g:1:259: NUMBER_LITERATE
+			// C:\\work\\ReoScript\\ReoScript.g:1:268: HEX_LITERATE
 			{
-			DebugLocation(1, 259);
-			mNUMBER_LITERATE(); 
+			DebugLocation(1, 268);
+			mHEX_LITERATE(); 
 
 			}
 			break;
 		case 37:
 			DebugEnterAlt(37);
-			// C:\\work\\ReoScript\\ReoScript.g:1:275: HEX_LITERATE
+			// C:\\work\\ReoScript\\ReoScript.g:1:281: STRING_LITERATE
 			{
-			DebugLocation(1, 275);
-			mHEX_LITERATE(); 
+			DebugLocation(1, 281);
+			mSTRING_LITERATE(); 
 
 			}
 			break;
 		case 38:
 			DebugEnterAlt(38);
-			// C:\\work\\ReoScript\\ReoScript.g:1:288: STRING_LITERATE
+			// C:\\work\\ReoScript\\ReoScript.g:1:297: ASSIGNMENT
 			{
-			DebugLocation(1, 288);
-			mSTRING_LITERATE(); 
+			DebugLocation(1, 297);
+			mASSIGNMENT(); 
 
 			}
 			break;
 		case 39:
 			DebugEnterAlt(39);
-			// C:\\work\\ReoScript\\ReoScript.g:1:304: ASSIGNMENT
+			// C:\\work\\ReoScript\\ReoScript.g:1:308: ASSIGN_PLUS
 			{
-			DebugLocation(1, 304);
-			mASSIGNMENT(); 
+			DebugLocation(1, 308);
+			mASSIGN_PLUS(); 
 
 			}
 			break;
 		case 40:
 			DebugEnterAlt(40);
-			// C:\\work\\ReoScript\\ReoScript.g:1:315: ASSIGN_PLUS
+			// C:\\work\\ReoScript\\ReoScript.g:1:320: ASSIGN_MINUS
 			{
-			DebugLocation(1, 315);
-			mASSIGN_PLUS(); 
+			DebugLocation(1, 320);
+			mASSIGN_MINUS(); 
 
 			}
 			break;
 		case 41:
 			DebugEnterAlt(41);
-			// C:\\work\\ReoScript\\ReoScript.g:1:327: ASSIGN_MINUS
+			// C:\\work\\ReoScript\\ReoScript.g:1:333: ASSIGN_MUL
 			{
-			DebugLocation(1, 327);
-			mASSIGN_MINUS(); 
+			DebugLocation(1, 333);
+			mASSIGN_MUL(); 
 
 			}
 			break;
 		case 42:
 			DebugEnterAlt(42);
-			// C:\\work\\ReoScript\\ReoScript.g:1:340: ASSIGN_MUL
+			// C:\\work\\ReoScript\\ReoScript.g:1:344: ASSIGN_DIV
 			{
-			DebugLocation(1, 340);
-			mASSIGN_MUL(); 
+			DebugLocation(1, 344);
+			mASSIGN_DIV(); 
 
 			}
 			break;
 		case 43:
 			DebugEnterAlt(43);
-			// C:\\work\\ReoScript\\ReoScript.g:1:351: ASSIGN_DIV
+			// C:\\work\\ReoScript\\ReoScript.g:1:355: ASSIGN_REM
 			{
-			DebugLocation(1, 351);
-			mASSIGN_DIV(); 
+			DebugLocation(1, 355);
+			mASSIGN_REM(); 
 
 			}
 			break;
 		case 44:
 			DebugEnterAlt(44);
-			// C:\\work\\ReoScript\\ReoScript.g:1:362: ASSIGN_REM
+			// C:\\work\\ReoScript\\ReoScript.g:1:366: ASSIGN_AND
 			{
-			DebugLocation(1, 362);
-			mASSIGN_REM(); 
+			DebugLocation(1, 366);
+			mASSIGN_AND(); 
 
 			}
 			break;
 		case 45:
 			DebugEnterAlt(45);
-			// C:\\work\\ReoScript\\ReoScript.g:1:373: ASSIGN_AND
+			// C:\\work\\ReoScript\\ReoScript.g:1:377: ASSIGN_OR
 			{
-			DebugLocation(1, 373);
-			mASSIGN_AND(); 
+			DebugLocation(1, 377);
+			mASSIGN_OR(); 
 
 			}
 			break;
 		case 46:
 			DebugEnterAlt(46);
-			// C:\\work\\ReoScript\\ReoScript.g:1:384: ASSIGN_OR
+			// C:\\work\\ReoScript\\ReoScript.g:1:387: ASSIGN_REV
 			{
-			DebugLocation(1, 384);
-			mASSIGN_OR(); 
+			DebugLocation(1, 387);
+			mASSIGN_REV(); 
 
 			}
 			break;
 		case 47:
 			DebugEnterAlt(47);
-			// C:\\work\\ReoScript\\ReoScript.g:1:394: ASSIGN_REV
+			// C:\\work\\ReoScript\\ReoScript.g:1:398: ASSIGN_LSHIFT
 			{
-			DebugLocation(1, 394);
-			mASSIGN_REV(); 
+			DebugLocation(1, 398);
+			mASSIGN_LSHIFT(); 
 
 			}
 			break;
 		case 48:
 			DebugEnterAlt(48);
-			// C:\\work\\ReoScript\\ReoScript.g:1:405: ASSIGN_LSHIFT
+			// C:\\work\\ReoScript\\ReoScript.g:1:412: ASSIGN_RSHIFT
 			{
-			DebugLocation(1, 405);
-			mASSIGN_LSHIFT(); 
+			DebugLocation(1, 412);
+			mASSIGN_RSHIFT(); 
 
 			}
 			break;
 		case 49:
 			DebugEnterAlt(49);
-			// C:\\work\\ReoScript\\ReoScript.g:1:419: ASSIGN_RSHIFT
+			// C:\\work\\ReoScript\\ReoScript.g:1:426: COMMA
 			{
-			DebugLocation(1, 419);
-			mASSIGN_RSHIFT(); 
+			DebugLocation(1, 426);
+			mCOMMA(); 
 
 			}
 			break;
 		case 50:
 			DebugEnterAlt(50);
-			// C:\\work\\ReoScript\\ReoScript.g:1:433: COMMA
+			// C:\\work\\ReoScript\\ReoScript.g:1:432: LPAREN
 			{
-			DebugLocation(1, 433);
-			mCOMMA(); 
+			DebugLocation(1, 432);
+			mLPAREN(); 
 
 			}
 			break;
 		case 51:
 			DebugEnterAlt(51);
-			// C:\\work\\ReoScript\\ReoScript.g:1:439: LPAREN
+			// C:\\work\\ReoScript\\ReoScript.g:1:439: RPAREN
 			{
 			DebugLocation(1, 439);
-			mLPAREN(); 
+			mRPAREN(); 
 
 			}
 			break;
 		case 52:
 			DebugEnterAlt(52);
-			// C:\\work\\ReoScript\\ReoScript.g:1:446: RPAREN
+			// C:\\work\\ReoScript\\ReoScript.g:1:446: LBRACE
 			{
 			DebugLocation(1, 446);
-			mRPAREN(); 
+			mLBRACE(); 
 
 			}
 			break;
 		case 53:
 			DebugEnterAlt(53);
-			// C:\\work\\ReoScript\\ReoScript.g:1:453: LBRACE
+			// C:\\work\\ReoScript\\ReoScript.g:1:453: RBRACE
 			{
 			DebugLocation(1, 453);
-			mLBRACE(); 
+			mRBRACE(); 
 
 			}
 			break;
 		case 54:
 			DebugEnterAlt(54);
-			// C:\\work\\ReoScript\\ReoScript.g:1:460: RBRACE
+			// C:\\work\\ReoScript\\ReoScript.g:1:460: LCURLY
 			{
 			DebugLocation(1, 460);
-			mRBRACE(); 
+			mLCURLY(); 
 
 			}
 			break;
 		case 55:
 			DebugEnterAlt(55);
-			// C:\\work\\ReoScript\\ReoScript.g:1:467: LCURLY
+			// C:\\work\\ReoScript\\ReoScript.g:1:467: RCURLY
 			{
 			DebugLocation(1, 467);
-			mLCURLY(); 
+			mRCURLY(); 
 
 			}
 			break;
 		case 56:
 			DebugEnterAlt(56);
-			// C:\\work\\ReoScript\\ReoScript.g:1:474: RCURLY
+			// C:\\work\\ReoScript\\ReoScript.g:1:474: COLON
 			{
 			DebugLocation(1, 474);
-			mRCURLY(); 
+			mCOLON(); 
 
 			}
 			break;
 		case 57:
 			DebugEnterAlt(57);
-			// C:\\work\\ReoScript\\ReoScript.g:1:481: COLON
+			// C:\\work\\ReoScript\\ReoScript.g:1:480: DOT
 			{
-			DebugLocation(1, 481);
-			mCOLON(); 
+			DebugLocation(1, 480);
+			mDOT(); 
 
 			}
 			break;
 		case 58:
 			DebugEnterAlt(58);
-			// C:\\work\\ReoScript\\ReoScript.g:1:487: DOT
+			// C:\\work\\ReoScript\\ReoScript.g:1:484: NOT
 			{
-			DebugLocation(1, 487);
-			mDOT(); 
+			DebugLocation(1, 484);
+			mNOT(); 
 
 			}
 			break;
 		case 59:
 			DebugEnterAlt(59);
-			// C:\\work\\ReoScript\\ReoScript.g:1:491: NOT
+			// C:\\work\\ReoScript\\ReoScript.g:1:488: INCREMENT
 			{
-			DebugLocation(1, 491);
-			mNOT(); 
+			DebugLocation(1, 488);
+			mINCREMENT(); 
 
 			}
 			break;
 		case 60:
 			DebugEnterAlt(60);
-			// C:\\work\\ReoScript\\ReoScript.g:1:495: INCREMENT
+			// C:\\work\\ReoScript\\ReoScript.g:1:498: DECREMENT
 			{
-			DebugLocation(1, 495);
-			mINCREMENT(); 
+			DebugLocation(1, 498);
+			mDECREMENT(); 
 
 			}
 			break;
 		case 61:
 			DebugEnterAlt(61);
-			// C:\\work\\ReoScript\\ReoScript.g:1:505: DECREMENT
+			// C:\\work\\ReoScript\\ReoScript.g:1:508: CONDITION
 			{
-			DebugLocation(1, 505);
-			mDECREMENT(); 
+			DebugLocation(1, 508);
+			mCONDITION(); 
 
 			}
 			break;
 		case 62:
 			DebugEnterAlt(62);
-			// C:\\work\\ReoScript\\ReoScript.g:1:515: CONDITION
+			// C:\\work\\ReoScript\\ReoScript.g:1:518: ELSE
 			{
-			DebugLocation(1, 515);
-			mCONDITION(); 
+			DebugLocation(1, 518);
+			mELSE(); 
 
 			}
 			break;
 		case 63:
 			DebugEnterAlt(63);
-			// C:\\work\\ReoScript\\ReoScript.g:1:525: ELSE
+			// C:\\work\\ReoScript\\ReoScript.g:1:523: TYPE
 			{
-			DebugLocation(1, 525);
-			mELSE(); 
+			DebugLocation(1, 523);
+			mTYPE(); 
 
 			}
 			break;
 		case 64:
 			DebugEnterAlt(64);
-			// C:\\work\\ReoScript\\ReoScript.g:1:530: TYPE
+			// C:\\work\\ReoScript\\ReoScript.g:1:528: TRUE
 			{
-			DebugLocation(1, 530);
-			mTYPE(); 
+			DebugLocation(1, 528);
+			mTRUE(); 
 
 			}
 			break;
 		case 65:
 			DebugEnterAlt(65);
-			// C:\\work\\ReoScript\\ReoScript.g:1:535: TRUE
+			// C:\\work\\ReoScript\\ReoScript.g:1:533: FALSE
 			{
-			DebugLocation(1, 535);
-			mTRUE(); 
+			DebugLocation(1, 533);
+			mFALSE(); 
 
 			}
 			break;
 		case 66:
 			DebugEnterAlt(66);
-			// C:\\work\\ReoScript\\ReoScript.g:1:540: FALSE
+			// C:\\work\\ReoScript\\ReoScript.g:1:539: NULL
 			{
-			DebugLocation(1, 540);
-			mFALSE(); 
+			DebugLocation(1, 539);
+			mNULL(); 
 
 			}
 			break;
 		case 67:
 			DebugEnterAlt(67);
-			// C:\\work\\ReoScript\\ReoScript.g:1:546: NULL
+			// C:\\work\\ReoScript\\ReoScript.g:1:544: THIS
 			{
-			DebugLocation(1, 546);
-			mNULL(); 
+			DebugLocation(1, 544);
+			mTHIS(); 
 
 			}
 			break;
 		case 68:
 			DebugEnterAlt(68);
-			// C:\\work\\ReoScript\\ReoScript.g:1:551: THIS
+			// C:\\work\\ReoScript\\ReoScript.g:1:549: UNDEFINED
 			{
-			DebugLocation(1, 551);
-			mTHIS(); 
+			DebugLocation(1, 549);
+			mUNDEFINED(); 
 
 			}
 			break;
 		case 69:
 			DebugEnterAlt(69);
-			// C:\\work\\ReoScript\\ReoScript.g:1:556: UNDEFINED
+			// C:\\work\\ReoScript\\ReoScript.g:1:559: COMMENT
 			{
-			DebugLocation(1, 556);
-			mUNDEFINED(); 
+			DebugLocation(1, 559);
+			mCOMMENT(); 
 
 			}
 			break;
 		case 70:
 			DebugEnterAlt(70);
-			// C:\\work\\ReoScript\\ReoScript.g:1:566: COMMENT
+			// C:\\work\\ReoScript\\ReoScript.g:1:567: LINE_COMMENT
 			{
-			DebugLocation(1, 566);
-			mCOMMENT(); 
+			DebugLocation(1, 567);
+			mLINE_COMMENT(); 
 
 			}
 			break;
 		case 71:
 			DebugEnterAlt(71);
-			// C:\\work\\ReoScript\\ReoScript.g:1:574: LINE_COMMENT
+			// C:\\work\\ReoScript\\ReoScript.g:1:580: IDENTIFIER
 			{
-			DebugLocation(1, 574);
-			mLINE_COMMENT(); 
+			DebugLocation(1, 580);
+			mIDENTIFIER(); 
 
 			}
 			break;
 		case 72:
 			DebugEnterAlt(72);
-			// C:\\work\\ReoScript\\ReoScript.g:1:587: IDENTIFIER
+			// C:\\work\\ReoScript\\ReoScript.g:1:591: NEWLINE
 			{
-			DebugLocation(1, 587);
-			mIDENTIFIER(); 
+			DebugLocation(1, 591);
+			mNEWLINE(); 
 
 			}
 			break;
 		case 73:
 			DebugEnterAlt(73);
-			// C:\\work\\ReoScript\\ReoScript.g:1:598: NEWLINE
+			// C:\\work\\ReoScript\\ReoScript.g:1:599: WS
 			{
-			DebugLocation(1, 598);
-			mNEWLINE(); 
+			DebugLocation(1, 599);
+			mWS(); 
 
 			}
 			break;
 		case 74:
 			DebugEnterAlt(74);
-			// C:\\work\\ReoScript\\ReoScript.g:1:606: WS
+			// C:\\work\\ReoScript\\ReoScript.g:1:602: SEMI
 			{
-			DebugLocation(1, 606);
-			mWS(); 
-
-			}
-			break;
-		case 75:
-			DebugEnterAlt(75);
-			// C:\\work\\ReoScript\\ReoScript.g:1:609: SEMI
-			{
-			DebugLocation(1, 609);
+			DebugLocation(1, 602);
 			mSEMI(); 
 
 			}
@@ -4182,15 +4136,15 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			"\x1\xFFFF\x1\x2F\x1\x33\x1\x36\x1\x39\x1\x3C\x1\x3F\x1\x42\x1\x44\x1"+
 			"\x46\x1\x48\x1\x4B\x1\x4D\x9\x28\x1\xFFFF\x1\x19\x1\x5E\xB\xFFFF\x4\x28"+
 			"\x2\xFFFF\x1\x64\xD\xFFFF\x1\x66\x2\xFFFF\x1\x68\x12\xFFFF\x7\x28\x1"+
-			"\x71\x1\x28\x1\x73\x5\x28\x2\xFFFF\x5\x28\x5\xFFFF\x5\x28\x1\x84\x2\x28"+
-			"\x1\xFFFF\x1\x28\x1\xFFFF\x1\x88\x5\x28\x1\x8E\x4\x28\x1\x93\x4\x28\x1"+
-			"\xFFFF\x3\x28\x1\xFFFF\x1\x9B\x3\x28\x1\x9F\x1\xFFFF\x1\xA0\x1\xA1\x1"+
-			"\x28\x1\xA3\x1\xFFFF\x5\x28\x1\xA9\x1\x28\x1\xFFFF\x2\x28\x1\xAD\x3\xFFFF"+
-			"\x1\x28\x1\xFFFF\x2\x28\x1\xB1\x2\x28\x1\xFFFF\x1\xB4\x1\xB5\x1\xB6\x1"+
-			"\xFFFF\x2\x28\x1\xB9\x1\xFFFF\x1\xBA\x1\x28\x3\xFFFF\x1\x28\x1\xBD\x2"+
-			"\xFFFF\x1\xBE\x1\x28\x2\xFFFF\x1\xC0\x1\xFFFF";
+			"\x71\x1\x28\x1\x73\x5\x28\x2\xFFFF\x5\x28\x5\xFFFF\x5\x28\x1\x83\x2\x28"+
+			"\x1\xFFFF\x1\x28\x1\xFFFF\x1\x87\x5\x28\x1\x8D\x4\x28\x1\x92\x3\x28\x1"+
+			"\xFFFF\x3\x28\x1\xFFFF\x1\x99\x3\x28\x1\x9D\x1\xFFFF\x1\x9E\x1\x9F\x1"+
+			"\x28\x1\xA1\x1\xFFFF\x4\x28\x1\xA6\x1\x28\x1\xFFFF\x2\x28\x1\xAA\x3\xFFFF"+
+			"\x1\x28\x1\xFFFF\x2\x28\x1\xAE\x1\x28\x1\xFFFF\x1\xB0\x1\xB1\x1\xB2\x1"+
+			"\xFFFF\x2\x28\x1\xB5\x1\xFFFF\x1\x28\x3\xFFFF\x1\x28\x1\xB8\x1\xFFFF"+
+			"\x1\xB9\x1\x28\x2\xFFFF\x1\xBB\x1\xFFFF";
 		private const string DFA13_eofS =
-			"\xC1\xFFFF";
+			"\xBC\xFFFF";
 		private const string DFA13_minS =
 			"\x1\x9\x1\x26\x1\x2A\x2\x3D\x1\x3C\x1\x3D\x1\x2D\x3\x3D\x1\x2B\x1\x3D"+
 			"\x1\x72\x1\x61\x1\x65\x1\x61\x1\x66\x2\x65\x1\x77\x1\x68\x1\xFFFF\x1"+
@@ -4200,13 +4154,12 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			"\x2\xFFFF\x1\x73\x1\x72\x1\x75\x1\x69\x1\x64\x5\xFFFF\x1\x61\x1\x65\x1"+
 			"\x74\x1\x61\x1\x65\x1\x30\x1\x63\x1\x73\x1\xFFFF\x1\x6F\x1\xFFFF\x1\x30"+
 			"\x1\x6C\x1\x75\x1\x74\x1\x6C\x1\x65\x1\x30\x1\x65\x1\x73\x1\x65\x1\x6B"+
-			"\x1\x30\x1\x69\x1\x75\x1\x74\x1\x61\x1\xFFFF\x1\x74\x1\x65\x1\x72\x1"+
-			"\xFFFF\x1\x30\x1\x72\x1\x63\x1\x65\x1\x30\x1\xFFFF\x2\x30\x1\x66\x1\x30"+
-			"\x1\xFFFF\x1\x6E\x1\x6C\x1\x65\x1\x63\x1\x69\x1\x30\x1\x74\x1\xFFFF\x1"+
-			"\x6E\x1\x68\x1\x30\x3\xFFFF\x1\x69\x1\xFFFF\x1\x75\x1\x74\x1\x30\x1\x68"+
-			"\x1\x6F\x1\xFFFF\x3\x30\x1\xFFFF\x1\x6E\x1\x65\x1\x30\x1\xFFFF\x1\x30"+
-			"\x1\x6E\x3\xFFFF\x1\x65\x1\x30\x2\xFFFF\x1\x30\x1\x64\x2\xFFFF\x1\x30"+
-			"\x1\xFFFF";
+			"\x1\x30\x1\x69\x1\x75\x1\x74\x1\xFFFF\x1\x74\x1\x65\x1\x72\x1\xFFFF\x1"+
+			"\x30\x1\x72\x1\x63\x1\x65\x1\x30\x1\xFFFF\x2\x30\x1\x66\x1\x30\x1\xFFFF"+
+			"\x1\x6E\x1\x6C\x1\x65\x1\x69\x1\x30\x1\x74\x1\xFFFF\x1\x6E\x1\x68\x1"+
+			"\x30\x3\xFFFF\x1\x69\x1\xFFFF\x1\x75\x1\x74\x1\x30\x1\x6F\x1\xFFFF\x3"+
+			"\x30\x1\xFFFF\x1\x6E\x1\x65\x1\x30\x1\xFFFF\x1\x6E\x3\xFFFF\x1\x65\x1"+
+			"\x30\x1\xFFFF\x1\x30\x1\x64\x2\xFFFF\x1\x30\x1\xFFFF";
 		private const string DFA13_maxS =
 			"\x1\x7E\x2\x3D\x2\x3E\x1\x3D\x1\x7C\x6\x3D\x1\x72\x1\x6F\x1\x65\x1\x75"+
 			"\x1\x6E\x1\x75\x1\x65\x1\x77\x1\x68\x1\xFFFF\x1\x78\x1\x39\xB\xFFFF\x1"+
@@ -4216,26 +4169,26 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			"\x1\x75\x1\x69\x1\x64\x5\xFFFF\x1\x61\x1\x65\x1\x74\x1\x61\x1\x65\x1"+
 			"\x7A\x1\x63\x1\x73\x1\xFFFF\x1\x6F\x1\xFFFF\x1\x7A\x1\x6C\x1\x75\x1\x74"+
 			"\x1\x6C\x1\x65\x1\x7A\x1\x65\x1\x73\x1\x65\x1\x6B\x1\x7A\x1\x69\x1\x75"+
-			"\x1\x74\x1\x61\x1\xFFFF\x1\x74\x1\x65\x1\x72\x1\xFFFF\x1\x7A\x1\x72\x1"+
-			"\x63\x1\x65\x1\x7A\x1\xFFFF\x2\x7A\x1\x66\x1\x7A\x1\xFFFF\x1\x6E\x1\x6C"+
-			"\x1\x65\x1\x63\x1\x69\x1\x7A\x1\x74\x1\xFFFF\x1\x6E\x1\x68\x1\x7A\x3"+
-			"\xFFFF\x1\x69\x1\xFFFF\x1\x75\x1\x74\x1\x7A\x1\x68\x1\x6F\x1\xFFFF\x3"+
-			"\x7A\x1\xFFFF\x1\x6E\x1\x65\x1\x7A\x1\xFFFF\x1\x7A\x1\x6E\x3\xFFFF\x1"+
-			"\x65\x1\x7A\x2\xFFFF\x1\x7A\x1\x64\x2\xFFFF\x1\x7A\x1\xFFFF";
+			"\x1\x74\x1\xFFFF\x1\x74\x1\x65\x1\x72\x1\xFFFF\x1\x7A\x1\x72\x1\x63\x1"+
+			"\x65\x1\x7A\x1\xFFFF\x2\x7A\x1\x66\x1\x7A\x1\xFFFF\x1\x6E\x1\x6C\x1\x65"+
+			"\x1\x69\x1\x7A\x1\x74\x1\xFFFF\x1\x6E\x1\x68\x1\x7A\x3\xFFFF\x1\x69\x1"+
+			"\xFFFF\x1\x75\x1\x74\x1\x7A\x1\x6F\x1\xFFFF\x3\x7A\x1\xFFFF\x1\x6E\x1"+
+			"\x65\x1\x7A\x1\xFFFF\x1\x6E\x3\xFFFF\x1\x65\x1\x7A\x1\xFFFF\x1\x7A\x1"+
+			"\x64\x2\xFFFF\x1\x7A\x1\xFFFF";
 		private const string DFA13_acceptS =
-			"\x16\xFFFF\x1\x23\x2\xFFFF\x1\x24\x1\x26\x1\x32\x1\x33\x1\x34\x1\x35"+
-			"\x1\x36\x1\x37\x1\x38\x1\x39\x1\x3E\x4\xFFFF\x1\x48\x2\xFFFF\x1\x4A\x1"+
-			"\x4B\x1\x8\x1\x2D\x1\x1\x1\x2B\x1\x46\x1\x47\x1\x2\x1\x3\x1\x13\x1\x27"+
-			"\x1\x4\x1\xFFFF\x1\x5\x1\x6\x1\xFFFF\x1\x7\x1\x9\x1\x2E\x1\xF\x1\x29"+
-			"\x1\x3D\x1\xB\x1\x2C\x1\xC\x1\x2A\x1\xD\x1\xE\x1\x3B\x1\x28\x1\x3C\x1"+
-			"\x10\x1\x2F\x1\x12\xF\xFFFF\x1\x25\x1\x3A\x5\xFFFF\x1\x49\x1\x31\x1\x11"+
-			"\x1\x30\x1\xA\x8\xFFFF\x1\x1C\x1\xFFFF\x1\x1E\x10\xFFFF\x1\x19\x3\xFFFF"+
-			"\x1\x1F\x5\xFFFF\x1\x40\x4\xFFFF\x1\x15\x7\xFFFF\x1\x43\x3\xFFFF\x1\x3F"+
-			"\x1\x41\x1\x44\x1\xFFFF\x1\x14\x5\xFFFF\x1\x42\x3\xFFFF\x1\x22\x3\xFFFF"+
-			"\x1\x18\x2\xFFFF\x1\x1D\x1\x20\x1\x21\x2\xFFFF\x1\x17\x1\x1A\x2\xFFFF"+
-			"\x1\x16\x1\x1B\x1\xFFFF\x1\x45";
+			"\x16\xFFFF\x1\x22\x2\xFFFF\x1\x23\x1\x25\x1\x31\x1\x32\x1\x33\x1\x34"+
+			"\x1\x35\x1\x36\x1\x37\x1\x38\x1\x3D\x4\xFFFF\x1\x47\x2\xFFFF\x1\x49\x1"+
+			"\x4A\x1\x8\x1\x2C\x1\x1\x1\x2A\x1\x45\x1\x46\x1\x2\x1\x3\x1\x13\x1\x26"+
+			"\x1\x4\x1\xFFFF\x1\x5\x1\x6\x1\xFFFF\x1\x7\x1\x9\x1\x2D\x1\xF\x1\x28"+
+			"\x1\x3C\x1\xB\x1\x2B\x1\xC\x1\x29\x1\xD\x1\xE\x1\x3A\x1\x27\x1\x3B\x1"+
+			"\x10\x1\x2E\x1\x12\xF\xFFFF\x1\x24\x1\x39\x5\xFFFF\x1\x48\x1\x30\x1\x11"+
+			"\x1\x2F\x1\xA\x8\xFFFF\x1\x1B\x1\xFFFF\x1\x1D\xF\xFFFF\x1\x19\x3\xFFFF"+
+			"\x1\x1E\x5\xFFFF\x1\x3F\x4\xFFFF\x1\x15\x6\xFFFF\x1\x42\x3\xFFFF\x1\x3E"+
+			"\x1\x40\x1\x43\x1\xFFFF\x1\x14\x4\xFFFF\x1\x41\x3\xFFFF\x1\x21\x3\xFFFF"+
+			"\x1\x18\x1\xFFFF\x1\x1C\x1\x1F\x1\x20\x2\xFFFF\x1\x17\x2\xFFFF\x1\x16"+
+			"\x1\x1A\x1\xFFFF\x1\x44";
 		private const string DFA13_specialS =
-			"\xC1\xFFFF}>";
+			"\xBC\xFFFF}>";
 		private static readonly string[] DFA13_transitionS =
 			{
 				"\x1\x2B\x1\x2A\x2\xFFFF\x1\x29\x12\xFFFF\x1\x2B\x1\xA\x1\x1A\x1\xFFFF"+
@@ -4353,86 +4306,80 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 				"\x1\x80",
 				"\x1\x81",
 				"\x1\x82",
-				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x4\x28\x1\x83\x15"+
-				"\x28",
+				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
+				"\x1\x84",
 				"\x1\x85",
+				"",
 				"\x1\x86",
 				"",
-				"\x1\x87",
-				"",
 				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
+				"\x1\x88",
 				"\x1\x89",
 				"\x1\x8A",
 				"\x1\x8B",
 				"\x1\x8C",
-				"\x1\x8D",
 				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
+				"\x1\x8E",
 				"\x1\x8F",
 				"\x1\x90",
 				"\x1\x91",
-				"\x1\x92",
 				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
+				"\x1\x93",
 				"\x1\x94",
 				"\x1\x95",
+				"",
 				"\x1\x96",
 				"\x1\x97",
-				"",
 				"\x1\x98",
-				"\x1\x99",
+				"",
+				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
 				"\x1\x9A",
-				"",
-				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
+				"\x1\x9B",
 				"\x1\x9C",
-				"\x1\x9D",
-				"\x1\x9E",
 				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
 				"",
 				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
 				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
+				"\x1\xA0",
+				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
+				"",
 				"\x1\xA2",
-				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
-				"",
+				"\x1\xA3",
 				"\x1\xA4",
 				"\x1\xA5",
-				"\x1\xA6",
-				"\x1\xA7",
-				"\x1\xA8",
 				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
-				"\x1\xAA",
+				"\x1\xA7",
+				"",
+				"\x1\xA8",
+				"\x1\xA9",
+				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
+				"",
+				"",
 				"",
 				"\x1\xAB",
+				"",
 				"\x1\xAC",
+				"\x1\xAD",
 				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
-				"",
-				"",
-				"",
-				"\x1\xAE",
-				"",
 				"\x1\xAF",
-				"\x1\xB0",
-				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
-				"\x1\xB2",
-				"\x1\xB3",
 				"",
 				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
 				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
 				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
+				"",
+				"\x1\xB3",
+				"\x1\xB4",
+				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
+				"",
+				"\x1\xB6",
+				"",
+				"",
 				"",
 				"\x1\xB7",
-				"\x1\xB8",
 				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
 				"",
 				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
-				"\x1\xBB",
-				"",
-				"",
-				"",
-				"\x1\xBC",
-				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
-				"",
-				"",
-				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
-				"\x1\xBF",
+				"\x1\xBA",
 				"",
 				"",
 				"\xA\x28\x7\xFFFF\x1A\x28\x4\xFFFF\x1\x28\x1\xFFFF\x1A\x28",
@@ -4470,7 +4417,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			this.transition = DFA13_transition;
 		}
 
-		public override string Description { get { return "1:1: Tokens : ( AND | DIV | EQUALS | GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN | LOGICAL_AND | LOGICAL_OR | LSHIFT | MINUS | MOD | MUL | NOT_EQUALS | OR | PLUS | RSHIFT | XOR | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | T__108 | T__109 | T__110 | T__111 | NUMBER_LITERATE | HEX_LITERATE | STRING_LITERATE | ASSIGNMENT | ASSIGN_PLUS | ASSIGN_MINUS | ASSIGN_MUL | ASSIGN_DIV | ASSIGN_REM | ASSIGN_AND | ASSIGN_OR | ASSIGN_REV | ASSIGN_LSHIFT | ASSIGN_RSHIFT | COMMA | LPAREN | RPAREN | LBRACE | RBRACE | LCURLY | RCURLY | COLON | DOT | NOT | INCREMENT | DECREMENT | CONDITION | ELSE | TYPE | TRUE | FALSE | NULL | THIS | UNDEFINED | COMMENT | LINE_COMMENT | IDENTIFIER | NEWLINE | WS | SEMI );"; } }
+		public override string Description { get { return "1:1: Tokens : ( AND | DIV | EQUALS | GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN | LOGICAL_AND | LOGICAL_OR | LSHIFT | MINUS | MOD | MUL | NOT_EQUALS | OR | PLUS | RSHIFT | XOR | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | T__108 | T__109 | T__110 | NUMBER_LITERATE | HEX_LITERATE | STRING_LITERATE | ASSIGNMENT | ASSIGN_PLUS | ASSIGN_MINUS | ASSIGN_MUL | ASSIGN_DIV | ASSIGN_REM | ASSIGN_AND | ASSIGN_OR | ASSIGN_REV | ASSIGN_LSHIFT | ASSIGN_RSHIFT | COMMA | LPAREN | RPAREN | LBRACE | RBRACE | LCURLY | RCURLY | COLON | DOT | NOT | INCREMENT | DECREMENT | CONDITION | ELSE | TYPE | TRUE | FALSE | NULL | THIS | UNDEFINED | COMMENT | LINE_COMMENT | IDENTIFIER | NEWLINE | WS | SEMI );"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{
