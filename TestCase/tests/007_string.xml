@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="007" name="string" disabled="true">
+  <test-case id="001">
+    <script>
+      var t = debug.assert;
+
+      var a = "hello";
+      
+      t(a == "hello");
+      t(a.length == 5);
+    </script>
+  </test-case>
+
+  <test-case id="002">
+    <script>
+      var t = debug.assert;
+
+      var a = "hello" + " world";
+      
+      t(a == "hello world");
+      t(a.length == 11);
+      
+      a += '!';
+      t(a == "hello world!");
+      t(a.length == 12);
+      
+    </script>
+  </test-case>
+
+  <test-case id="003">
+    <script>
+      var t = debug.assert;
+
+      var a = "hello", b = "world";
+      var c = a + " " + b;
+
+      t(c == "hello world");
+      t(c.length == 11);
+
+      t(c.endsWith('world'));
+      t(c.startsWith('hello'));
+
+    </script>
+  </test-case>
+
+  <test-case id="004">
+    <script>
+      var t = debug.assert;
+
+      var a = ".".repeat(3);
+
+      t(a == "...");
+      t(a.length == 3);
+    </script>
+  </test-case>
+
+  <test-case id="005">
+    <script>
+      var t = debug.assert;
+
+      var a = "hello world";
+      t( a.charAt(6) == 'w' );
+      t( a.charAt(0) == 'h' );
+      t( a.charAt(10) == 'd' );
+      
+      t( a[6] == 'w' );
+      t( a[0] == 'h' );
+      t( a[10] == 'd' );
+      
+      t( a.charAt(-1) == '' );
+      t( a.charAt(11) == '' );
+    </script>
+  </test-case>
+
+  <test-case id="006">
+    <script>
+      var t = debug.assert;
+
+      var a = "hello world";
+
+      t( a.indexOf('w') == 6 );
+      t( a.indexOf('h') == 0 );
+      t( a.indexOf('d') == 10 );
+
+      t( a.indexOf('a') == -1 );
+      t( a.indexOf('') == 0 );
+    </script>
+  </test-case>
+
+  <test-case id="010">
+    <script>
+      var t = debug.assert;
+
+      var a = "hello world";
+
+      a[5] = '-';
+      t(a == "hello-world");
+      
+      a[11] = '!';
+      t(a == "hello-world!");
+      
+    </script>
+  </test-case>
+
+  <test-case id="020">
+    <script>
+      var t = debug.assert;
+
+      t( String != null );
+      
+      var str = new String();
+      t( str != null );
+
+    </script>
+  </test-case>
+</test-suite>

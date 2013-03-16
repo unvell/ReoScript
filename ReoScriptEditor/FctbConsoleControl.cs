@@ -38,6 +38,11 @@ namespace Unvell.ReoScript.Editor
 
 		private void clearToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			Clear();
+		}
+
+		public void Clear()
+		{
 			fctb.Clear();
 		}
 

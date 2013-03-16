@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="005" name="object">
+  
+  <test-case id="001">
+    <script>
+      var t = debug.assert;
+
+      var obj = { a : 10 };
+      
+      t( obj != null );
+      t( obj.a == 10 );
+      
+      obj.b = 20;
+      t( obj.b == 20 );
+      
+      t( obj.a + obj.b == 30 );
+    </script>
+  </test-case>
+
+  <test-case id="002">
+    <script>
+      var t = debug.assert;
+
+      var obj = { a : 10, b: 20, 'c': 30 };
+
+      var s = '';
+      for(key in obj){
+        if(key == 'a' || key =='b' || key=='c') {
+          if(s.length>0) s+=', ';
+          s+=key;
+        }
+      }
+      
+      t( s == "a, b, c" );
+      
+    </script>
+  </test-case>
+
+  <test-case id="010">
+    <script>
+      var t = debug.assert;
+      
+      function A() {
+        this.a = 10;
+      }
+      
+      t( new A().a == 10 );
+    </script>
+  </test-case>
+
+  <test-case id="011" desc="Initializer">
+    <script>
+      var t = debug.assert;
+
+      function A() {
+        this.a = 10;
+      }
+
+      var a = new A() {
+       b : 20,
+      };
+
+      t( a.a == 10 );
+      t( a.b == 20 );
+
+    </script>
+  </test-case>
+
+  <test-case id="012">
+    <script>
+			var t = debug.assert;
+
+			function A() {
+				this.a = 10;
+			}
+
+			var obj = {
+				b: { Con: A }
+			};
+
+			var c = [null, obj];
+
+			var inst = new c[1].b.Con();
+			t( inst != null );
+			t( inst.a == 10 );
+
+		</script>
+  </test-case>
+
+	<test-case id="020" name="delete property (todo)">
+		<script>
+			var t = debug.assert;
+
+			var a = { hello: 'world' };
+			t( a.hello != null );
+			
+			delete a.hello;
+			// TODO
+			//t( a.hello == null );
+
+		</script>
+	</test-case>
+</test-suite>

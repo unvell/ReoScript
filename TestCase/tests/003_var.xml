@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="003" name="var">
+  <test-case id="001">
+    <script>
+      var t = debug.assert;
+
+      var a = 10, b = 20;
+
+      t(a == 10);
+      t(b == 20);
+    </script>
+  </test-case>
+  
+  <test-case id="002">
+    <script>
+      var t = debug.assert;
+
+      var a = 10;
+      t(a==10);
+      
+      var b = a + 10;
+      t( b == 20 );
+      t( a == b - 10 );
+      
+      var c = a * b;
+      t( c == 200 );
+      t( b == 200 / a );
+      
+      var d = a / b;
+      t( d == 0.5 );
+      t( a == b * 0.5 ); 
+      
+      t( a == 10 );
+      t( b == 20 );
+      t( c == 200 );
+      t( d == 0.5 );
+    </script>
+  </test-case>
+
+  <test-case id="003">
+    <script>
+      var t = debug.assert;
+    
+      var a = 10, b = 20;
+      var c = b / a, d = a * b;
+      
+      var e = ( c == d / 100 );
+      
+      t(e == true);
+    </script>
+  </test-case>
+
+  <test-case id="004" name="bool">
+    <script>
+      var t = debug.assert;
+
+      var a = true, b = false;
+
+      t(a == !b);
+      t(a != b);
+
+      t(!(a &lt; b));
+      t(!(a &gt; b));
+    </script>
+  </test-case>
+
+  <test-case id="005" name="global">
+    <script>
+      var t = debug.assert;
+
+      t( undefined == null );
+
+      var a = 10;					// local variable in global scope
+													// is global variable
+      t( a != null );
+      
+      a = null;						// clear variable
+			
+      t( a == null &amp;&amp; a == undefined );
+    </script>
+  </test-case>
+
+	<test-case id="010" name="scope">
+		<script>
+      var t = debug.assert;
+
+      var a = 10;
+			t( this.a == 10 ); // global variable
+			
+			function () {
+				a = 20;					// access global variable in function
+			} ();
+			
+			t( a == 20 );
+			
+			function () {
+				var a = 30;			// access local variable in function
+												// should not to modify global variable
+			} ();
+			
+			t( a == 20 );
+			
+    </script>
+	</test-case>
+</test-suite>

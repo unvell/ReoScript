@@ -48,6 +48,11 @@
 			this.scriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.enableDirectAccessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.enableImportNamespacesAndClassesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.enableAutoImportDependencyTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.enableEventBindingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.splitter1 = new System.Windows.Forms.Splitter();
@@ -66,11 +71,6 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.runToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.stopToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.enableDirectAccessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.enableImportNamespacesAndClassesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.enableAutoImportDependencyTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.enableEventBindingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.editor = new Unvell.ReoScript.Editor.ReoScriptEditorControl();
 			this.console = new Unvell.ReoScript.Editor.FctbConsoleControl();
 			this.menuStrip1.SuspendLayout();
@@ -218,15 +218,54 @@
 			this.runToolStripMenuItem.Image = global::Unvell.ReoScript.Editor.Properties.Resources.PlayHS;
 			this.runToolStripMenuItem.Name = "runToolStripMenuItem";
 			this.runToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-			this.runToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+			this.runToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.runToolStripMenuItem.Text = "&Run";
 			// 
 			// stopToolStripMenuItem
 			// 
 			this.stopToolStripMenuItem.Image = global::Unvell.ReoScript.Editor.Properties.Resources.StopHS;
 			this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-			this.stopToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+			this.stopToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.stopToolStripMenuItem.Text = "&Stop";
+			// 
+			// toolsToolStripMenuItem
+			// 
+			this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enableDirectAccessToolStripMenuItem,
+            this.enableImportNamespacesAndClassesToolStripMenuItem,
+            this.enableAutoImportDependencyTypeToolStripMenuItem,
+            this.enableEventBindingToolStripMenuItem});
+			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(50, 22);
+			this.toolsToolStripMenuItem.Text = "&Tools";
+			// 
+			// enableDirectAccessToolStripMenuItem
+			// 
+			this.enableDirectAccessToolStripMenuItem.CheckOnClick = true;
+			this.enableDirectAccessToolStripMenuItem.Name = "enableDirectAccessToolStripMenuItem";
+			this.enableDirectAccessToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.enableDirectAccessToolStripMenuItem.Text = "Enable DirectAccess";
+			// 
+			// enableImportNamespacesAndClassesToolStripMenuItem
+			// 
+			this.enableImportNamespacesAndClassesToolStripMenuItem.CheckOnClick = true;
+			this.enableImportNamespacesAndClassesToolStripMenuItem.Name = "enableImportNamespacesAndClassesToolStripMenuItem";
+			this.enableImportNamespacesAndClassesToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.enableImportNamespacesAndClassesToolStripMenuItem.Text = "Enable Import Namespaces and Classes";
+			// 
+			// enableAutoImportDependencyTypeToolStripMenuItem
+			// 
+			this.enableAutoImportDependencyTypeToolStripMenuItem.CheckOnClick = true;
+			this.enableAutoImportDependencyTypeToolStripMenuItem.Name = "enableAutoImportDependencyTypeToolStripMenuItem";
+			this.enableAutoImportDependencyTypeToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.enableAutoImportDependencyTypeToolStripMenuItem.Text = "Enable Auto Import Dependency Type";
+			// 
+			// enableEventBindingToolStripMenuItem
+			// 
+			this.enableEventBindingToolStripMenuItem.CheckOnClick = true;
+			this.enableEventBindingToolStripMenuItem.Name = "enableEventBindingToolStripMenuItem";
+			this.enableEventBindingToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.enableEventBindingToolStripMenuItem.Text = "Enable Event Binding";
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -286,7 +325,7 @@
 			this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.newToolStripButton.Name = "newToolStripButton";
 			this.newToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.newToolStripButton.Text = "toolStripButton1";
+			this.newToolStripButton.Text = "New Script";
 			// 
 			// openToolStripButton
 			// 
@@ -295,7 +334,7 @@
 			this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.openToolStripButton.Name = "openToolStripButton";
 			this.openToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.openToolStripButton.Text = "toolStripButton2";
+			this.openToolStripButton.Text = "Open Script";
 			// 
 			// saveToolStripButton
 			// 
@@ -304,7 +343,7 @@
 			this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.saveToolStripButton.Name = "saveToolStripButton";
 			this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.saveToolStripButton.Text = "toolStripButton3";
+			this.saveToolStripButton.Text = "Save Script";
 			// 
 			// toolStripSeparator1
 			// 
@@ -318,7 +357,7 @@
 			this.cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.cutToolStripButton.Name = "cutToolStripButton";
 			this.cutToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.cutToolStripButton.Text = "toolStripButton4";
+			this.cutToolStripButton.Text = "Cut";
 			// 
 			// copyToolStripButton
 			// 
@@ -327,7 +366,7 @@
 			this.copyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.copyToolStripButton.Name = "copyToolStripButton";
 			this.copyToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.copyToolStripButton.Text = "toolStripButton5";
+			this.copyToolStripButton.Text = "Copy";
 			// 
 			// pasteToolStripDropDownButton
 			// 
@@ -336,7 +375,7 @@
 			this.pasteToolStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.pasteToolStripDropDownButton.Name = "pasteToolStripDropDownButton";
 			this.pasteToolStripDropDownButton.Size = new System.Drawing.Size(23, 22);
-			this.pasteToolStripDropDownButton.Text = "toolStripDropDownButton1";
+			this.pasteToolStripDropDownButton.Text = "Paste";
 			// 
 			// toolStripSeparator2
 			// 
@@ -350,7 +389,7 @@
 			this.undoToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.undoToolStripButton.Name = "undoToolStripButton";
 			this.undoToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.undoToolStripButton.Text = "toolStripButton6";
+			this.undoToolStripButton.Text = "Undo";
 			// 
 			// redoToolStripButton
 			// 
@@ -359,7 +398,7 @@
 			this.redoToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.redoToolStripButton.Name = "redoToolStripButton";
 			this.redoToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.redoToolStripButton.Text = "toolStripButton7";
+			this.redoToolStripButton.Text = "Redo";
 			// 
 			// toolStripSeparator3
 			// 
@@ -373,7 +412,7 @@
 			this.runToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.runToolStripButton.Name = "runToolStripButton";
 			this.runToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.runToolStripButton.Text = "toolStripButton8";
+			this.runToolStripButton.Text = "Run";
 			// 
 			// stopToolStripButton
 			// 
@@ -383,46 +422,7 @@
 			this.stopToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.stopToolStripButton.Name = "stopToolStripButton";
 			this.stopToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.stopToolStripButton.Text = "toolStripButton1";
-			// 
-			// toolsToolStripMenuItem
-			// 
-			this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enableDirectAccessToolStripMenuItem,
-            this.enableImportNamespacesAndClassesToolStripMenuItem,
-            this.enableAutoImportDependencyTypeToolStripMenuItem,
-            this.enableEventBindingToolStripMenuItem});
-			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(50, 22);
-			this.toolsToolStripMenuItem.Text = "&Tools";
-			// 
-			// enableDirectAccessToolStripMenuItem
-			// 
-			this.enableDirectAccessToolStripMenuItem.CheckOnClick = true;
-			this.enableDirectAccessToolStripMenuItem.Name = "enableDirectAccessToolStripMenuItem";
-			this.enableDirectAccessToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
-			this.enableDirectAccessToolStripMenuItem.Text = "Enable DirectAccess";
-			// 
-			// enableImportNamespacesAndClassesToolStripMenuItem
-			// 
-			this.enableImportNamespacesAndClassesToolStripMenuItem.CheckOnClick = true;
-			this.enableImportNamespacesAndClassesToolStripMenuItem.Name = "enableImportNamespacesAndClassesToolStripMenuItem";
-			this.enableImportNamespacesAndClassesToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
-			this.enableImportNamespacesAndClassesToolStripMenuItem.Text = "Enable Import Namespaces and Classes";
-			// 
-			// enableAutoImportDependencyTypeToolStripMenuItem
-			// 
-			this.enableAutoImportDependencyTypeToolStripMenuItem.CheckOnClick = true;
-			this.enableAutoImportDependencyTypeToolStripMenuItem.Name = "enableAutoImportDependencyTypeToolStripMenuItem";
-			this.enableAutoImportDependencyTypeToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
-			this.enableAutoImportDependencyTypeToolStripMenuItem.Text = "Enable Auto Import Dependency Type";
-			// 
-			// enableEventBindingToolStripMenuItem
-			// 
-			this.enableEventBindingToolStripMenuItem.CheckOnClick = true;
-			this.enableEventBindingToolStripMenuItem.Name = "enableEventBindingToolStripMenuItem";
-			this.enableEventBindingToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
-			this.enableEventBindingToolStripMenuItem.Text = "Enable Event Binding";
+			this.stopToolStripButton.Text = "Stop";
 			// 
 			// editor
 			// 

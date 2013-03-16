@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="022" name="params">
+	<test-case id="001">
+		<script>
+			function test_params(a) {
+				debug.assert( a == 10 );
+			}
+			
+			test_params( 10 );
+		</script>
+	</test-case>
+
+	<test-case id="002">
+		<script>
+      function test_params(a,b,c) {
+				debug.assert( a==10 &amp;&amp; b==20 &amp;&amp; c==30 );
+			}
+			test_params( 10, 20, 30 );
+		</script>
+	</test-case>
+
+	<test-case id="003">
+		<script>
+      var a = 10;
+      var b = [20];
+      var c = { p : 30 };
+
+      function test_params(a,b,c) {
+				debug.assert( a==10 &amp;&amp; b==20 &amp;&amp; c==30 );
+			}
+			test_params( a, b[0], c.p );
+
+		</script>
+	</test-case>
+
+	<test-case id="004">
+		<script>
+      var obj = { a : 10, b : 20, c : 30 };
+
+      function test_params(obj) {
+				debug.assert( obj.a==10 &amp;&amp; obj.b==20 &amp;&amp; obj.c==30 );
+			}
+			test_params( obj );
+
+		</script>
+	</test-case>
+
+  <test-case id="005">
+    <script>
+      var a = 10, b = 20, c = 30;
+      
+      function test_params(a,b,c) {
+				debug.assert( a==30 &amp;&amp; b==-10 &amp;&amp; c==200 );
+      }
+      
+      test_params( a+b, a-b, a*b );
+    </script>
+  </test-case>
+ 
+  <test-case id="010">
+    <script>
+      var t = debug.assert;
+      
+      function A() {
+        this.getB = function(b) {
+          t( b == 20 );
+        };
+      }
+
+      function getA(a) {
+        t( a == 10 );
+        return new A();
+      }
+
+      getA(10).getB(20);
+    </script>
+  </test-case>
+
+  <test-case id="011">
+    <script>
+      var t = debug.assert;
+      
+      var a = null;
+      a = { a : function(args) { t( args == __args__.length ); return a; } };
+      
+      a.a(1).a(2,a).a(3,a,a).a(1);
+    </script>
+  </test-case>
+  
+</test-suite>

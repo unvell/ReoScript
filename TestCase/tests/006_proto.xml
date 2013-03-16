@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="006" name="proto">
+
+  <test-case id="001" name="instance">
+    <script>
+      var t = debug.assert;
+
+      function A() { }
+
+      var a = new A();
+
+      t( a.__proto__ == A.prototype );
+    </script>
+  </test-case>
+
+  <test-case id="002" name="property extension">
+    <script>
+      var t = debug.assert;
+
+      Array.prototype.reverse = function() {
+        var rs = [];
+        for(var i=this.length-1;i&gt;=0;i--) {
+          rs.push(this[i]);
+        }
+        return rs;
+      };
+      
+      var a = [1,2,3].reverse();
+      
+      t( a[0] == 3 );
+      t( a[1] == 2 );
+      t( a[2] == 1 );
+      
+    </script>
+  </test-case>
+  
+  <test-case id="003" name="own property">
+    <script>
+      var t = debug.assert;
+
+      function A() {
+        this.funInProto = function() { return "fun in instance"; };
+      }
+
+      var a = new A();
+
+      t( a.funInProto() == "fun in instance" );
+     
+      t( a.hasOwnProperty('funInProto') == true );
+      t( A.prototype.hasOwnProperty('funInProto') == false);
+      
+      t( a.hasOwnProperty('hasOwnProperty') == false );
+    </script>
+  </test-case>
+
+  <test-case id="004" name="string">
+    <script>
+      var t = debug.assert;
+
+      var str = "hello world";
+      
+      t( str.hasOwnProperty('trim') == false );
+      t( str.hasOwnProperty('length') == true );
+    </script>
+  </test-case>
+
+  <test-case id="005">
+    <script>
+      var t = debug.assert;
+
+      var str = "hello world";
+      t( str.fun == null );
+      
+      String.prototype.fun = function() {};
+      t( str.fun != null );
+      
+      t( str.hasOwnProperty('fun') == false );
+      t( String.prototype.hasOwnProperty('fun') == true );
+      
+    </script>
+  </test-case>
+
+  <test-case id="006">
+    <script>
+      var t = debug.assert;
+
+      function A() { }
+      var a = new A(), b = { };
+      
+      A.prototype.age = 10;
+			
+      t( a.age == 10 );
+      t( a.hasOwnProperty('age') == false );
+      
+      t( b.age == null );
+      t( b.hasOwnProperty('age') == false );
+
+    </script>
+  </test-case>
+
+  <test-case id="007" name="inherit">
+    <script>
+      var t = debug.assert;
+
+      var arr = [];
+      
+      function Super() {
+        this.run = function() { return 'run'; };
+      }
+      
+      function SubClass() {
+        this.__proto__ = new Super();
+        
+        this.run2 = function() { return 'run2'; };
+      }
+      
+      var sub = new SubClass();
+      
+      t( sub.run != null );
+      t( sub.run2 != null );
+           
+			t( sub.run() == 'run' );
+			t( sub.run2() == 'run2' );
+    </script>
+  </test-case>
+</test-suite>

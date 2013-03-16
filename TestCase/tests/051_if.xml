@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="051" name="if">
+
+  <test-case id="001">
+    <script>
+      var t = debug.assert;
+
+      var a = 10, b = 20;
+      if( a + b >= 30 )
+        t( true );
+      else
+        t( false );
+        
+    </script>
+  </test-case>
+
+</test-suite>

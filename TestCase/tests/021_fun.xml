@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="021" name="fun">
+  <test-case id="001" name="normal function">
+    <script>
+      var t = debug.assert;
+
+      function plus(a, b) {
+        return a + b;
+      }
+
+      t( plus(10, 20) == 30 );
+      t( plus(10, -10) == 0 );
+
+    </script>
+  </test-case>
+  
+  <test-case id="002" name="normal function">
+    <script>
+      var t = debug.assert;
+
+      function total(a, b) {
+        return (a+b) * (b-a+1) / 2;
+      }
+
+      // 1+2+3+...+9 = 45
+      t( total(1, 9) == 45 );
+      t( total(1, 5) == 15 );
+      t( total(10, 20) == 165 );
+      t( total(1, 100) == 5050 );
+
+    </script>
+  </test-case>
+
+  <!-- var inner function -->
+  <test-case id="003" name="local var in function">
+    <script>
+      var t = debug.assert;
+
+      function plus(a, b) {
+        var c = a + b;
+        return c;
+      }
+			
+			t( c == null );
+      t( plus(10, 20) == 30 );
+
+    </script>
+  </test-case>
+
+	<test-case id="004" name="nested calling">
+		<script>
+			var t = debug.assert;
+	
+			plus = function(a, b) { return a + b; };
+			sub  = function(a, b) { return a - b; };
+			mul  = function(a, b) { return a * b; };
+			div  = function(a, b) { return a / b; };
+
+			t( div( sub( mul( plus(2, 3), 10), 30), 5) == 4 );
+			
+		</script>
+	</test-case>
+
+	<test-case id="005" name="nested function">
+		<script>
+			var t = debug.assert;
+
+			function f(a) {
+				function f(b) {
+					function f(c) {
+						function f(d) {
+							return d / 5;
+						}
+						return f(c - 30);
+					}
+					return f(b * 10);
+				}
+				return f(a + 3);
+			}
+			
+			t( f(2) == 4 );
+
+		</script>
+	</test-case>
+
+  <test-case id="006" name="nested anonymous function">
+    <script>
+      var t = debug.assert;
+
+      t( function(a) {
+        return function(b) {
+          return function(c) {
+            return function(d) {
+              return d / 5;
+            } (c - 30);
+          } (b * 10);
+        } (a + 3);
+      }
+      (2) == 4 );
+
+    </script>
+  </test-case>
+	
+  <test-case id="011">
+    <script>
+      var rs = function(a) { return [n, a, b]; } ('hello world')[1];
+      debug.assert( rs == 'hello world' );
+    </script>
+  </test-case>
+
+  <test-case id="012" name="">
+    <script>
+      var t = debug.assert;
+
+			var date;
+			
+      var obj = {
+        getDayOfMonth : function() {
+          return date = new Date().getDate();
+        }
+      };
+			
+			t( date == null );
+
+    </script>
+  </test-case>
+
+</test-suite>

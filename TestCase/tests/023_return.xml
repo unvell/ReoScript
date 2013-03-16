@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="056" name="">
+
+  <test-case id="001">
+    <script>
+			var t = debug.assert;
+
+			var a = new Array();
+		</script>
+  </test-case>
+
+</test-suite>

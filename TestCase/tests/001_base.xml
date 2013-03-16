@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="001" name="base">
+  <test-case id="001">
+    <script>
+      debug.assert(true);
+    </script>
+  </test-case>
+
+  <test-case id="002">
+    <script>
+      var t = debug.assert;
+			
+			var a = 4;
+			var b = new Number(a); 
+			
+			t( b.toString(2) == '100' );
+			
+    </script>
+  </test-case>
+</test-suite>

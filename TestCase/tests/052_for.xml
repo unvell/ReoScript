@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="052" name="for">
+
+  <test-case id="001">
+    <script>
+      var t = debug.assert;
+
+      var o=0;
+      for(var i=0;i&lt;10;i++)
+        o+=i;
+        
+      t( o == 45 );
+        
+    </script>
+  </test-case>
+
+  <test-case id="002">
+    <script>
+      var t = debug.assert;
+
+      var o = '';
+      
+      var s = 'hello world!';
+      
+      for(var i=0;i&lt;s.length;i++)
+        if(s[i] != ' ' &amp;&amp; s[i] != '!')
+          o += s[i];
+      
+      t( o == 'helloworld' );
+
+    </script>
+  </test-case>
+
+	<test-case id="003">
+		<script>
+			var t = debug.assert;
+			
+			var arr = [ 1, 2, 3, 4, 5 ];
+			
+			var sum = 0;
+			for(element in arr) sum += element;
+			
+			t( sum == 15 );
+		</script>
+	</test-case>
+
+	<test-case id="004">
+		<script>
+			var t = debug.assert;
+
+			var str = "hello";
+
+			var arr = [];
+			for(char in str) arr.push(char);
+
+			t( arr[0] == 'h' );
+			t( arr[4] == 'o' );
+		</script>
+	</test-case>
+
+  <test-case id="005">
+    <script>
+			var t = debug.assert;
+
+		  var a = [[1,2,3],[4,5,6],[7,8,9]];
+      
+      var o = '';
+      for(i=0;i&lt;a.length;i++)
+        for(k=0;k&lt;a[i].length;k++)
+          o+=a[i][k];
+      
+      t(o == '123456789');
+      
+		  var a = [[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5]];
+      var o = '';
+      
+      for(i=0;i&lt;a.length;i++)
+      {
+        if(i>1) break;
+       
+        for(k=0;k&lt;a[i].length;k++)
+        {
+          if(k>2) break;
+        
+          o+=a[i][k];
+        }
+      }
+      
+      t(o == '123123');
+		</script>
+  </test-case>
+</test-suite>

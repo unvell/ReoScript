@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="055" name="switch">
+
+  <test-case id="001">
+    <script>
+			var t = debug.assert;
+
+			var str = "She sells sea-shells on the sea-shore";
+
+			var s = 0, e = 0, l = 0, spaces = 0, others = 0;
+			
+			for(var i=0; i &lt; str.length; i++) {
+				switch( str[i] ) {
+					case 'S':
+					case 's':
+						s++;
+						break;
+						
+					case 'e':
+						e++;
+						break;
+						
+					case 'l':
+						l++;
+						break;
+					
+					case 't':
+					case 'h':
+					case 'o':
+					case 'n':
+					case 'r':
+					case 'a':
+					case '-':
+						others++;
+						break;
+					
+					default:
+						// count spaces
+						spaces++;
+						break;
+				}
+			}
+			
+			t( s == 8 );
+			t( e == 7 );
+			t( l == 4 );
+			t( spaces == 5 );
+			t( others == 13 );
+		</script>
+  </test-case>
+
+</test-suite>

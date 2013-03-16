@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="009" name="array">
+  
+  <test-case id="001">
+    <script>
+      var t = debug.assert;
+
+      var arr = [1,2,3,4,5,6,7];
+      
+      t( arr.length == 7 );
+      t( arr[0] == 1 );
+      t( arr[6] == 7 );
+
+    </script>
+  </test-case>
+
+  <test-case id="002">
+    <script>
+      var t = debug.assert;
+
+      var arr = [];
+      
+      arr.push(1);
+      arr.push(2, 3, 4);
+      arr.push(5, 6, 7);
+
+      t( arr.length == 7 );
+      t( arr[0] == 1 );
+      t( arr[6] == 7 );
+
+    </script>
+  </test-case>
+
+  <test-case id="003">
+    <script>
+      var t = debug.assert;
+
+      var arr = [1,2,3,4,5];
+      
+      arr[0] = 9;
+      t( arr[0] + arr[1] == 11 );
+
+    </script>
+  </test-case>
+
+  <test-case id="010">
+    <script>
+      var t = debug.assert;
+
+      var a = 1, b = 2, c = 3;
+      var arr = [ a, b, c, b * c, a + c];
+
+      t( arr[0] == 1 );
+      t( arr[1] == 2 );
+      t( arr[2] == 3 );
+      t( arr[3] == 6 );
+      t( arr[4] == 4 );
+
+      arr[0] = function() { 
+        return (a + b) * 2;
+      };
+      
+      t( arr[0]() == 6 );
+			
+			a = 15;
+			b = 5;
+			t( arr[0]() == 40 );
+      
+    </script>
+  </test-case>
+</test-suite>

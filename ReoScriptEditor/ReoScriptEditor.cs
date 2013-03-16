@@ -1,6 +1,8 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 // 
-// ReoScript
+// ReoScript 
+// 
+// HP: http://www.unvell.com/ReoScript
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -11,7 +13,7 @@
 //
 // Email: lujing@unvell.com
 //
-// Copyright (C) unvell.com, 2013. All Rights Reserved
+// Copyright (C) unvell, 2012-2013. All Rights Reserved
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -93,7 +95,7 @@ namespace Unvell.ReoScript.Editor
 
 				stopToolStripButton.Enabled =
 					stopToolStripMenuItem.Enabled =
-					!runToolStripMenuItem.Enabled;
+					running;
 
 				if (!running)
 				{
@@ -103,15 +105,14 @@ namespace Unvell.ReoScript.Editor
 
 			stopToolStripButton.Click += (s, e) => ForceStop();
 			stopToolStripMenuItem.Click += (s, e) => ForceStop();
-
-
-			//srm.EnableDirectAccess = true;
-			//srm.IgnoreCLRExceptions = true;
-
-			//srm.SetGlobalVariable("obj", new ClassA());
 		}
 
-	
+		protected override void OnClosing(CancelEventArgs e)
+		{
+			ForceStop();
+
+			base.OnClosing(e);
+		}
 
 		private void ForceStop()
 		{
@@ -121,7 +122,7 @@ namespace Unvell.ReoScript.Editor
 		private void NewFile()
 		{
 			Script = string.Empty;
-			srm.ResetContext();
+			ResetMachine();
 		}
 
 		public void LoadFile()
@@ -137,6 +138,8 @@ namespace Unvell.ReoScript.Editor
 					}
 				}
 			}
+
+			ResetMachine();
 		}
 
 		public void SaveFile()
@@ -195,7 +198,7 @@ namespace Unvell.ReoScript.Editor
 
 		void LogValue(object v)
 		{
-			if (v is AbstractFunctionValue)
+			if (v is AbstractFunctionObject)
 			{
 				Log(v.ToString());
 			}
@@ -261,12 +264,29 @@ namespace Unvell.ReoScript.Editor
 		{
 			base.OnLoad(e);
 
+			ResetMachine();
+
 			GetMachineSwitches();
 
 			enableDirectAccessToolStripMenuItem.Click += (ss, ee) => SetMachineSwitches();
 			enableImportNamespacesAndClassesToolStripMenuItem.Click += (ss, ee) => SetMachineSwitches();
 			enableAutoImportDependencyTypeToolStripMenuItem.Click += (ss, ee) => SetMachineSwitches();
 			enableEventBindingToolStripMenuItem.Click += (ss, ee) => SetMachineSwitches();
+		}
+
+		private void ResetMachine()
+		{
+			srm.ResetContext();
+
+			ObjectValue consoleObj = srm["console"] as ObjectValue;
+			if (consoleObj != null)
+			{
+				consoleObj["clear"] = new NativeFunctionObject("clear", (srm2, owner, args) =>
+				{
+					console.Clear();
+					return null;
+				});
+			}
 		}
 
 		private void GetMachineSwitches()

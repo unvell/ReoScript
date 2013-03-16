@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="002" name="expr">
+  <test-case id="001">
+    <script>
+      var t = debug.assert;
+      
+      t( 1 + 2 * 3 == 7 );
+      t( (1 + 2) * 3 == 9 );
+      t( -1 - 2 == -3 );
+      t( -1 * -1 == 1 );
+      t( -(1+2) == -3 );
+      t( (1+2) * (3+4) == 21 );
+    </script>
+  </test-case>
+
+  <test-case id="002">
+    <script>
+      var t = debug.assert;
+
+      t( 0.5 * 0.5 == 0.25 );
+      t( -1.5 + 1.5 == 0 );
+      t( -(2.5 * 3.5) == -8.75 );
+      t( 3.3333333333 * 3.3333333333 == 11.11111111088889 );
+    </script>
+  </test-case>
+
+  <test-case id="003">
+    <script>
+      var t = debug.assert;
+
+      t( 2 + 3 + 1 == 2 * 3 );
+      t( 0.5 * 2 == 3 - 2 );
+      t( 5 / 2 == 1 + 1.5 );
+      
+    </script>
+  </test-case>
+
+  <test-case id="004">
+    <script>
+      var t = debug.assert;
+
+      t(1 &lt; 2);
+      t(1.5 &gt; 1);
+      t(1.333 &lt; 1.334);
+      
+      t(2 != 1);
+
+    </script>
+  </test-case>
+
+  <test-case id="005">
+    <script>
+      var t = debug.assert;
+
+      var a = 10;
+      a += 20;
+      t( a == 30 );
+      
+      a++;
+      t( a == 31 );
+      
+      a-=-0.55;
+      t( a == 31.55 );
+
+    </script>
+  </test-case>
+
+  <!-- Bit computing -->
+  <test-case id="100">
+    <script>
+      var t = debug.assert;
+
+      t( 1 &lt;&lt; 1 == 2);
+      t( 2 &gt;&gt; 1 == 1);
+
+      var a = 1;
+      a &lt;&lt;= 1;
+      t(a == 2);
+
+      a &gt;&gt;= 1;
+      t(a == 1);
+
+    </script>
+  </test-case>
+
+  <test-case id="101">
+    <script>
+      var t = debug.assert;
+
+      t( 0b011 == 3 );
+
+      t( (0b0101 | 0b1010) == 0b1111 );
+      t( (0b1111 &amp; 0b0101) == 0b0101 );
+      
+      t( (0b0011 &lt;&lt; 2) == 0b1100 );
+      t( (0b1100 &gt;&gt; 2) == 0b0011 );
+
+    </script>
+  </test-case>
+</test-suite>

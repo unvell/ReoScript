@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="011" name="math">
+  
+  <test-case id="001">
+    <script>
+      var t = debug.assert;
+
+			t( Math != null );      
+    </script>
+  </test-case>
+	
+	<test-case id="002">
+    <script>
+      var t = debug.assert;
+	
+	    t( Math.min(10, 20) == 10 );
+      t( Math.max(5.22, 10.2233) == 10.2233 );
+
+      t( Math.PI == 3.141592653589793 );
+      t( Math.E == 2.71828182845904 );
+      t( Math.LN2 == 0.6931471805599453 );
+      t( Math.LN10 == 2.302585092994046 );
+    </script>
+  </test-case>
+
+  <test-case id="003">
+    <script>
+      var t = debug.assert;
+
+      t( Math.floor(3.22) == 3 );
+      t( Math.floor(3.65) == 3 );
+
+      t( Math.round(3.22) == 3 );
+      t( Math.round(3.65) == 4 );
+
+      t( Math.random() &gt; 0 );
+      t( Math.random() &lt; 1 );
+
+    </script>
+  </test-case>
+</test-suite>

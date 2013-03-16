@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="012" name="date">
+  
+  <test-case id="001">
+    <script>
+      var t = debug.assert;
+
+      t( new Date() != null );
+      t( new Date().getDate() != 0 );
+
+      var date = new Date();
+      var day = date.getDate();
+
+      t( date != null );
+      t( day != null );
+      
+    </script>
+  </test-case>
+
+  <test-case id="002">
+    <script>
+      var t = debug.assert;
+
+    </script>
+  </test-case>
+</test-suite>

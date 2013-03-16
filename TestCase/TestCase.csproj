@@ -5,17 +5,15 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0802DFE2-D172-4099-8538-DC2C114152D1}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{561F035D-EFC9-4F28-99AD-1F363438E89C}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Unvell.ReoScript.Editor</RootNamespace>
-    <AssemblyName>Unvell.ReoScriptEditor</AssemblyName>
+    <RootNamespace>Unvell.ReoScript.TestCase</RootNamespace>
+    <AssemblyName>Unvell.ReoScript.TestCase</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>
     </StartupObject>
-    <TargetFrameworkSubset>
-    </TargetFrameworkSubset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,12 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FastColoredTextBox, Version=2.9.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Ref\FastColoredTextBox.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
@@ -50,110 +50,102 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AboutBox.Designer.cs">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FctbConsoleControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FctbConsoleControl.Designer.cs">
-      <DependentUpon>FctbConsoleControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AboutBox.resx">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FctbConsoleControl.resx">
-      <DependentUpon>FctbConsoleControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReoScriptEditor.resx">
-      <DependentUpon>ReoScriptEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReoScriptEditorControl.resx">
-      <DependentUpon>ReoScriptEditorControl.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="scripts\winform.rs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ReoScriptEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ReoScriptEditor.designer.cs">
-      <DependentUpon>ReoScriptEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ReoScriptEditorControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ReoScriptEditorControl.Designer.cs">
-      <DependentUpon>ReoScriptEditorControl.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ReoScriptEditor\ReoScriptEditor.csproj">
+      <Project>{0802DFE2-D172-4099-8538-DC2C114152D1}</Project>
+      <Name>ReoScriptEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ReoScript\ReoScript.csproj">
       <Project>{544005E7-F55A-42E2-8DDB-B43F95F27C69}</Project>
       <Name>ReoScript</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\NewDocumentHS.png" />
+    <None Include="scripts\default.rs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\openHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PlayHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SaveAllHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\saveHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\StopHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\CutHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PasteHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\CopyHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Edit_UndoHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Edit_RedoHS.png" />
-    <None Include="scripts\default.rs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ANTLR 3 License.txt">
+    <Content Include="tests\005_object.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="FastColoredTextBox License.txt">
+    <Content Include="tests\011_math.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\002_expr.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\022_params.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\007_string.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\001_base.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\003_var.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\051_if.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\052_for.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\021_fun.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\009_array.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\012_date.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\055_switch.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\053_while.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\006_proto.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\056_.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\024_lambda.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\008_number.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tests\023_return.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
