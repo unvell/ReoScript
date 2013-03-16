@@ -1,11 +1,26 @@
-﻿
-// ReoScript core library
+﻿///////////////////////////////////////////////////////////////////////////////
 //
-// copyright (c) 2013 unvell, all rights reserved.
+// ReoScript Core Library
+// 
+// HP: http://www.unvell.com/ReoScript
+// 
+// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+// KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+// PURPOSE.
 //
+// License: GNU Lesser General Public License (LGPLv3)
+//
+// Email: lujing@unvell.com
+//
+// Copyright (C) unvell, 2012-2013. All Rights Reserved
+//
+///////////////////////////////////////////////////////////////////////////////
 
-// Console
-this.console = { log: function(t) { __stdout__(t); } };
+// console
+if (this.console != null) {
+	this.console.log = function(t) { __stdout__(t); }
+}
 
 // Math
 if (this.Math != null) {

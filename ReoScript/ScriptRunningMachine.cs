@@ -17,7 +17,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -707,32 +706,6 @@ namespace Unvell.ReoScript
 			return null;
 		});
 
-		private static readonly NativeFunctionObject __setTimeout__ = new NativeFunctionObject("setTimeout", (srm, owner, args) =>
-		{
-			if (args.Length < 2) return 0;
-
-			int interval = ScriptRunningMachine.GetIntParam(args, 1, 1000);
-
-			srm.CallTimeout(args[0], interval);
-
-			return 1; // TODO: thread id
-		});
-
-		private static readonly NativeFunctionObject __alert__ = new NativeFunctionObject("alert", (srm, owner, args) =>
-		{
-			if (args.Length > 0)
-			{
-				MessageBox.Show(Convert.ToString(args[0]));
-			}
-			return null;
-		});
-
-		private static readonly NativeFunctionObject __eval__ = new NativeFunctionObject("eval", (srm, owner, args) =>
-		{
-			if (args.Length == 0) return false;
-			return srm.CalcExpression(Convert.ToString(args[0]));
-		});
-
 		private static readonly NativeFunctionObject __parseInt__ = new NativeFunctionObject("parseInt", (srm, owner, args) =>
 		{
 			if (args.Length == 0) return 0;
@@ -762,9 +735,6 @@ namespace Unvell.ReoScript
 		{
 			// built-in native functions
 			this[__stdout__.Name] = __stdout__;
-			this[__eval__.Name] = __eval__;
-			this[__setTimeout__.Name] = __setTimeout__;
-			this[__alert__.Name] = __alert__;
 			this[__parseInt__.Name] = __parseInt__;
 		}
 
@@ -2624,10 +2594,19 @@ namespace Unvell.ReoScript
 			}
 
 			object indexValue = srm.ParseNode((CommonTree)t.Children[1]);
-			while (indexValue is IAccess) indexValue = ((IAccess)indexValue).Get();
-			int index = ScriptRunningMachine.GetIntValue(indexValue);
+			if (indexValue is IAccess) indexValue = ((IAccess)indexValue).Get();
 
-			return new ArrayAccess(value, index, srm);
+			if (indexValue is StringObject || indexValue is string)
+			{
+				// index access for object
+				return new PropertyAccess(value, Convert.ToString(indexValue), srm);
+			}
+			else
+			{
+				// index access for array
+				int index = ScriptRunningMachine.GetIntValue(indexValue);
+				return new ArrayAccess(value, index, srm);
+			}
 		}
 
 		#endregion
@@ -2900,7 +2879,7 @@ namespace Unvell.ReoScript
 	/// Property value of the global object will not be removed after script is 
 	/// finished running, use multi-instance to solve this or invoke ResetContext.
 	/// </summary>
-	public class ScriptRunningMachine
+	public sealed class ScriptRunningMachine
 	{
 		#region Const & Keywords
 	
@@ -2926,8 +2905,29 @@ namespace Unvell.ReoScript
 
 		#region Constructor
 
+		/// <summary>
+		/// Specifies what features can be supported by SRM.
+		/// After modify this value call the Reset method to apply changes.
+		/// </summary>
+		public CoreFeatures CoreFeatures { get; set; }
+
+		/// <summary>
+		/// Construct SRM with Standard feature support.
+		/// </summary>
 		public ScriptRunningMachine()
+			: this(CoreFeatures.StandardFeatures)
 		{
+			//this();
+		}
+
+		/// <summary>
+		/// Construct SRM with specified feature support.
+		/// </summary>
+		/// <param name="coreFeatures">Specifies what features can be supported by SRM.</param>
+		public ScriptRunningMachine(CoreFeatures coreFeatures)
+		{
+			this.CoreFeatures = coreFeatures;
+
 			ResetContext();
 		}
 
@@ -2966,24 +2966,10 @@ namespace Unvell.ReoScript
 			CurrentContext = sc;
 
 			// load core library
-			InitRootObject();
+			BuiltinConstructors.ApplyToScriptRunningMachine(this);
 			LoadCoreLibraries(sc);
 
 			if (Resetted != null) Resetted(this, null);
-		}
-
-		private void InitRootObject()
-		{
-			// built-in object constructors
-			SetGlobalVariable(BuiltinConstructors.ObjectFunction.Name, BuiltinConstructors.ObjectFunction);
-			SetGlobalVariable(BuiltinConstructors.StringFunction.Name, BuiltinConstructors.StringFunction);
-			SetGlobalVariable(BuiltinConstructors.NumberFunction.Name, BuiltinConstructors.NumberFunction);
-			SetGlobalVariable(BuiltinConstructors.DateFunction.Name, BuiltinConstructors.DateFunction);
-			SetGlobalVariable(BuiltinConstructors.ArrayFunction.Name, BuiltinConstructors.ArrayFunction);
-			SetGlobalVariable(BuiltinConstructors.FunctionFunction.Name, BuiltinConstructors.FunctionFunction);
-
-			// built-in objects
-			SetGlobalVariable("Math", new MathObject());
 		}
 
 		internal BuiltinConstructors BuiltinConstructors = new BuiltinConstructors();
@@ -3958,7 +3944,12 @@ namespace Unvell.ReoScript
 			if (script.RootNode == null) return null;
 
 			object v = ParseNode(script.RootNode);
-			while (v is IAccess) v = ((IAccess)v).Get();
+			
+			// retrieve value from accessor
+			if (v is IAccess) v = ((IAccess)v).Get();
+
+			// retrieve value from ReturnNode
+			if (v is ReturnNode) v = ((ReturnNode)v).Value;
 
 			return v;
 		}
@@ -4403,8 +4394,6 @@ namespace Unvell.ReoScript
 
 		public BuiltinConstructors()
 		{
-			//FIXME: prototype does not exists before instance created
-
 			ObjectFunction = new ObjectConstructorFunction();
 			StringFunction = new StringConstructorFunction();
 
@@ -4454,6 +4443,62 @@ namespace Unvell.ReoScript
 				});
 
 			ArrayFunction = new ArrayConstructorFunction();
+	
+		}
+
+		private static readonly NativeFunctionObject __setTimeout__ = new NativeFunctionObject("setTimeout", (srm, owner, args) =>
+		{
+			if (args.Length < 2) return 0;
+
+			int interval = ScriptRunningMachine.GetIntParam(args, 1, 1000);
+
+			srm.CallTimeout(args[0], interval);
+
+			return 1; // TODO: thread id
+		});
+
+		private static readonly NativeFunctionObject __alert__ = new NativeFunctionObject("alert", (srm, owner, args) =>
+		{
+			if (args.Length > 0)
+			{
+				MessageBox.Show(Convert.ToString(args[0]));
+			}
+			return null;
+		});
+
+		private static readonly NativeFunctionObject __eval__ = new NativeFunctionObject("eval", (srm, owner, args) =>
+		{
+			if (args.Length == 0) return false;
+			return srm.CalcExpression(Convert.ToString(args[0]));
+		});
+
+		public void ApplyToScriptRunningMachine(ScriptRunningMachine srm)
+		{
+			if (srm.CurrentContext != null && srm.CurrentContext.GlobalObject != null)
+			{
+				// built-in object constructors
+				srm.SetGlobalVariable(ObjectFunction.Name, ObjectFunction);
+				srm.SetGlobalVariable(StringFunction.Name, StringFunction);
+				srm.SetGlobalVariable(NumberFunction.Name, NumberFunction);
+				srm.SetGlobalVariable(DateFunction.Name, DateFunction);
+				srm.SetGlobalVariable(ArrayFunction.Name, ArrayFunction);
+				srm.SetGlobalVariable(FunctionFunction.Name, FunctionFunction);
+
+				// built-in objects
+				srm.SetGlobalVariable("Math", new MathObject());
+
+				if ((srm.CoreFeatures & CoreFeatures.Console) == CoreFeatures.Console)
+					srm.CurrentContext.GlobalObject["console"] = new ObjectValue();
+
+				if((srm.CoreFeatures & CoreFeatures.Eval) == CoreFeatures.Eval)
+					srm.CurrentContext.GlobalObject[__eval__.Name] = __eval__;
+
+				if((srm.CoreFeatures & CoreFeatures.SetTimeout) == CoreFeatures.SetTimeout)
+					srm.CurrentContext.GlobalObject[__setTimeout__.Name] = __setTimeout__;
+
+				if((srm.CoreFeatures & CoreFeatures.Alert) == CoreFeatures.Alert)
+					srm.CurrentContext.GlobalObject[__alert__.Name] = __alert__;
+			}
 		}
 	}
 	#endregion
@@ -4495,10 +4540,56 @@ namespace Unvell.ReoScript
 		AutoImportRelationType = 0x10,
 	}
 
-	public enum CoreLibrary
+	/// <summary>
+	/// Specifies what features can be supported by ScriptRunningMachine.
+	/// </summary>
+	public enum CoreFeatures
 	{
-		BuiltinType,
-		ArrayExtension,
+		/// <summary>
+		/// A set of standard features will be supported. (Compatible with ECMAScript)
+		/// Contains the alert, eval, setTimeout, setInterval functions and console object.
+		/// </summary>
+		StandardFeatures = Alert | Console | Eval | SetTimeout | SetInterval,
+
+		/// <summary>
+		/// Extended Feature supported by ReoScript (Non-compatible with ECMAScript)
+		/// </summary>
+		ExtendedFeatures = ArrayExtension,
+
+		/// <summary>
+		/// Only the built-in types will be supported
+		/// </summary>
+		None = 0x0,
+
+		/// <summary>
+		/// alert function support
+		/// </summary>
+		Alert = 0x1,
+		
+		/// <summary>
+		/// eval function support
+		/// </summary>
+		Eval = 0x2,
+
+		/// <summary>
+		/// setTimeout function support
+		/// </summary>
+		SetTimeout = 0x4,
+
+		/// <summary>
+		/// setInterval function support
+		/// </summary>
+		SetInterval = 0x8,
+
+		/// <summary>
+		/// console object support
+		/// </summary>
+		Console = 0x10,
+
+		/// <summary>
+		/// Array extension feature support
+		/// </summary>
+		ArrayExtension = 0x20,
 	}
 
 	#endregion
@@ -4564,7 +4655,10 @@ namespace Unvell.ReoScript
 		}
 	}
 
-	public class DebugMonitor
+	/// <summary>
+	/// Provides debug ability for ScriptRunningMachine 
+	/// </summary>
+	public class ScriptDebugger
 	{
 		public static readonly string DEBUG_OBJECT_NAME = "debug";
 
@@ -4580,7 +4674,7 @@ namespace Unvell.ReoScript
 			set { totalObjectCreated = value; }
 		}
 
-		public DebugMonitor(ScriptRunningMachine srm)
+		public ScriptDebugger(ScriptRunningMachine srm)
 		{
 			this.Srm = srm;
 
@@ -4619,6 +4713,7 @@ namespace Unvell.ReoScript
 
 			//if (DebugObject != null)
 			//{
+			//  // FIXME: causes StackOverflowException
 			//  Srm.InvokeFunctionIfExisted(DebugObject, "onObjectCreated", e.Object);
 			//}
 		}

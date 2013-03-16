@@ -76,7 +76,7 @@ namespace Unvell.ReoScript
 		{
 			if (isDebugMode)
 			{
-				OutLn("ReoScript Machine Console (ver1.0)");
+				OutLn("ReoScript Machine Console (ver1.1)");
 				OutLn("type /help to see help topic.\n");
 			}
 

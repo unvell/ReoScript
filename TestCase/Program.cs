@@ -56,7 +56,7 @@ namespace Unvell.ReoScript.TestCase
 			//}
 			return hasErrors ? 1 : 0;
 		}
-	}		
+	}
 
 	class TestCaseFailureException : Exception{
 		public TestCaseFailureException(string msg) :
@@ -75,8 +75,8 @@ namespace Unvell.ReoScript.TestCase
 		{
 			bool hasErrors = false;
 
-			ScriptRunningMachine srm = new ScriptRunningMachine();
-			DebugMonitor debugMonitor = new DebugMonitor(srm);
+			ScriptRunningMachine srm = new ScriptRunningMachine(CoreFeatures.None);
+			ScriptDebugger debugMonitor = new ScriptDebugger(srm);
 
 			int testCases = 0, success = 0, failed = 0;
 
