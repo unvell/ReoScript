@@ -19,7 +19,7 @@ ReoScript provides a simple script Editor it can be used to write and execute sc
 
 ## Hello World!
 
-1. Download or build the following DLLs, add they into reference list of target project
+1. Download or build the following DLLs, add them into reference list of target project
 
     Antlr3.Runtime.dll
     Unvell.ReoScript.dll
