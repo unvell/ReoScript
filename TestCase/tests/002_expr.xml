@@ -66,6 +66,30 @@
     </script>
   </test-case>
 
+  <test-case id="006">
+    <script>
+      var t = debug.assert;
+
+      var a = [0, 1, 2];
+      a[1]++;
+      
+      t(a[1] == 2);
+
+    </script>
+  </test-case>
+
+  <test-case id="007">
+    <script>
+      var t = debug.assert;
+
+      var a = 1;
+      t( a+++a+++a++ == 6 );
+  
+      t( a == 4 );
+
+    </script>
+  </test-case>
+  
   <!-- Bit computing -->
   <test-case id="100">
     <script>

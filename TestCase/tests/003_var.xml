@@ -71,36 +71,36 @@
 
       t( undefined == null );
 
-      var a = 10;					// local variable in global scope
-													// is global variable
+      var a = 10;         // local variable in global scope
+                          // is global variable
       t( a != null );
       
-      a = null;						// clear variable
-			
+      a = null;           // clear variable
+      
       t( a == null &amp;&amp; a == undefined );
     </script>
   </test-case>
 
-	<test-case id="010" name="scope">
-		<script>
+  <test-case id="010" name="scope">
+    <script>
       var t = debug.assert;
 
       var a = 10;
-			t( this.a == 10 ); // global variable
-			
-			function () {
-				a = 20;					// access global variable in function
-			} ();
-			
-			t( a == 20 );
-			
-			function () {
-				var a = 30;			// access local variable in function
-												// should not to modify global variable
-			} ();
-			
-			t( a == 20 );
-			
+      t( this.a == 10 );  // global variable
+      
+      function () {
+        a = 20;           // access global variable in function
+      } ();
+      
+      t( a == 20 );
+      
+      function () {
+        var a = 30;       // access local variable in function
+                          // should not to modify global variable
+      } ();
+      
+      t( a == 20 );
+      
     </script>
 	</test-case>
 </test-suite>

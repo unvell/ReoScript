@@ -6,14 +6,14 @@
     <script>
       var t = debug.assert;
 
-			var i = 0, sum = 0;
-					
-			while( i++ &lt; 100 ) {
-				sum += i;
-			}
-			
-			t( i == 101 );
-			t( sum == 5050 );
+      var i = 0, sum = 0;
+
+      while( i++ &lt; 100 ) {
+        sum += i;
+      }
+
+      t( i == 101 );
+      t( sum == 5050 );
         
     </script>
   </test-case>

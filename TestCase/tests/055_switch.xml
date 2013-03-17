@@ -4,50 +4,73 @@
 
   <test-case id="001">
     <script>
-			var t = debug.assert;
+      var t = debug.assert;
 
-			var str = "She sells sea-shells on the sea-shore";
+      var str = "She sells sea-shells on the sea-shore";
 
-			var s = 0, e = 0, l = 0, spaces = 0, others = 0;
-			
-			for(var i=0; i &lt; str.length; i++) {
-				switch( str[i] ) {
-					case 'S':
-					case 's':
-						s++;
-						break;
-						
-					case 'e':
-						e++;
-						break;
-						
-					case 'l':
-						l++;
-						break;
-					
-					case 't':
-					case 'h':
-					case 'o':
-					case 'n':
-					case 'r':
-					case 'a':
-					case '-':
-						others++;
-						break;
-					
-					default:
-						// count spaces
-						spaces++;
-						break;
-				}
-			}
-			
-			t( s == 8 );
-			t( e == 7 );
-			t( l == 4 );
-			t( spaces == 5 );
-			t( others == 13 );
-		</script>
+    var s = 0, e = 0, l = 0, spaces = 0, others = 0;
+
+      for(var i=0; i &lt; str.length; i++) {
+        switch( str[i] ) {
+          case 'S':
+          case 's':
+            s++;
+            break;
+
+          case 'e':
+            e++;
+            break;
+
+          case 'l':
+            l++;
+            break;
+
+          case 't':
+          case 'h':
+          case 'o':
+          case 'n':
+          case 'r':
+          case 'a':
+          case '-':
+            others++;
+            break;
+
+          default:
+            // count spaces
+            spaces++;
+            break;
+        }
+      }
+
+      t( s == 8 );
+      t( e == 7 );
+      t( l == 4 );
+      t( spaces == 5 );
+      t( others == 13 );
+    </script>
   </test-case>
 
+
+  <test-case id="002" name="return in switch">
+    <script>
+      var t = debug.assert;
+
+      var a = function(b) {
+        switch(b) {
+          default:
+            return -1;
+          case 1:
+            return 10;
+          case 2:
+            return 20;
+        }
+        
+        return -2;
+      };
+      
+      t( a(1) == 10 );
+      t( a(2) == 20 );
+      t( a(3) == -1 );
+    </script>
+  </test-case>
 </test-suite>

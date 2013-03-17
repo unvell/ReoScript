@@ -6,15 +6,15 @@
     <script>
       var t = debug.assert;
 
-			t( Math != null );      
+      t( Math != null );      
     </script>
   </test-case>
-	
-	<test-case id="002">
+
+  <test-case id="002">
     <script>
       var t = debug.assert;
-	
-	    t( Math.min(10, 20) == 10 );
+
+      t( Math.min(10, 20) == 10 );
       t( Math.max(5.22, 10.2233) == 10.2233 );
 
       t( Math.PI == 3.141592653589793 );

@@ -88,7 +88,7 @@
       var a = new A(), b = { };
       
       A.prototype.age = 10;
-			
+
       t( a.age == 10 );
       t( a.hasOwnProperty('age') == false );
       
@@ -119,8 +119,8 @@
       t( sub.run != null );
       t( sub.run2 != null );
            
-			t( sub.run() == 'run' );
-			t( sub.run2() == 'run2' );
+      t( sub.run() == 'run' );
+      t( sub.run2() == 'run2' );
     </script>
   </test-case>
 </test-suite>

@@ -13,83 +13,83 @@
 
   <test-case id="002" name="anonymous lambda">
     <script>
-			var t = debug.assert;
+      var t = debug.assert;
 
-			t( (a, b) => { return a + b; } (10, 20) == 30 );
+      t( (a, b) => { return a + b; } (10, 20) == 30 );
 
-			t( ( ((a,b)=>a+b)(2,3) ) == 5 );
+      t( ( ((a,b)=>a+b)(2,3) ) == 5 );
 
 		</script>
   </test-case>
 
   <test-case id="003" name="nested anonymous lambda">
     <script>
-			var t = debug.assert;
+      var t = debug.assert;
 
-			t( ( ((a,b)=>a+b)( ((x)=>x*2)(5), ((y)=>y/2)(8) ) ) == 14 );
-		</script>
+      t( ( ((a,b)=>a+b)( ((x)=>x*2)(5), ((y)=>y/2)(8) ) ) == 14 );
+    </script>
   </test-case>
-  
+
   <test-case id="010" name="where">
     <script>
       var t = debug.assert;
 
       var arr = [1, 2, 5, 7, 8, 10, 12, 15, 17, 18, 19];
-			
+      
       Array.prototype.equals = targetArray => {
         if( targetArray == null 
           || this.length != targetArray.length) 
           return false;
         
-			  for(var i=0; i&lt;this.length; i++)
-				  if( rs[i] != targetArray[i] )
+        for(var i=0; i&lt;this.length; i++)
+          if( rs[i] != targetArray[i] )
             return false;
-  				
-				return true;
-			};
+        
+        return true;
+      };
       
-			Array.prototype.where = predicate => {
-				var result = [];
-				
-				for(var element in this)
-					if( predicate(element) )
-						result.push(element);
+      Array.prototype.where = predicate => {
+        var result = [];
+        
+        for(var element in this)
+          if( predicate(element) )
+            result.push(element);
 
-				return result;
-			};
+        return result;
+      };
       
-			var get_nos = n => Math.floor(n / 2) == n / 2;
-			
-			var rs = arr.where( get_nos );
-			
+      var get_nos = n => Math.floor(n / 2) == n / 2;
+      
+      var rs = arr.where( get_nos );
+      
       t( rs != null );
-			t( rs.equals([2, 8, 10, 12, 18]) );
+      t( rs.equals([2, 8, 10, 12, 18]) );
 
     	rs = arr.where( n => n &gt;= 10 );
-			
+      
       t( rs != null );
-			t( rs.equals([10, 12, 15, 17, 18, 19]) );
+      t( rs.equals([10, 12, 15, 17, 18, 19]) );
 
     </script>
   </test-case>
 
-	<test-case id="011" name="where sum">
-		<script>
+  <test-case id="011" name="where sum">
+    <script>
       var t = debug.assert;
 
       var arr = [1, 2, 5, 7, 8, 10, 12, 15, 17, 18, 19];
       
- 			Array.prototype.where = predicate => {
-				var result = [];
-				
-				for(var element in this)
-					if( predicate(element) )
-						result.push(element);
+      Array.prototype.where = predicate => {
+        var result = [];
 
-				return result;
-			};
+        for(var element in this)
+          if( predicate(element) )
+            result.push(element);
 
-			Array.prototype.sum = selector => {
+        return result;
+      };
+
+      Array.prototype.sum = selector => {
         var total = 0;
         
         for(element in this) 
@@ -97,15 +97,15 @@
           total += (selector == null ? element : selector(element));
         }
 
-				return total;
-			};
-			
+        return total;
+      };
+      
       t( arr.where( n => n &lt; 10 ).sum() == 23 );  // 1+2+5+7+8
       
       t( [1,2,3,4,5].where(n=&gt;n&gt;=3).sum() == 12 ); // 3+4+5
-							
+      
     </script>
-	</test-case>
+  </test-case>
 
   <test-case id="011" name="object sum">
     <script>
@@ -121,7 +121,7 @@
                   new Sales(2007, 210),
                   new Sales(2008, 190), ];
 
-			Array.prototype.sum = selector => {
+      Array.prototype.sum = selector => {
         var total = 0;
         
         for(element in this) 
@@ -129,10 +129,10 @@
           total += (selector == null ? element : selector(element));
         }
 
-				return total;
-			};
+        return total;
+      };
 
-			Array.prototype.min = selector => {
+      Array.prototype.min = selector => {
         var min = null;
         
         for(element in this) 
@@ -141,9 +141,9 @@
           if(min == null || min &gt; val) min = val;
         }
 
-				return min;
-			};
-			
+        return min;
+      };
+      
       // min year
       t( arr.min(obj => obj.year) == 2005 );
 
@@ -152,7 +152,7 @@
 
       // total amount
       t( arr.sum(obj => obj.amount) == 630 );
-							
+      
     </script>
   </test-case>
 </test-suite>

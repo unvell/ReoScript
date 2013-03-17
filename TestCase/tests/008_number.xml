@@ -5,8 +5,6 @@
   <test-case id="001">
     <script>
       var t = debug.assert;
-
-			
     </script>
   </test-case>
 

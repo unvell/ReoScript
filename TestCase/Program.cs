@@ -75,7 +75,7 @@ namespace Unvell.ReoScript.TestCase
 		{
 			bool hasErrors = false;
 
-			ScriptRunningMachine srm = new ScriptRunningMachine(CoreFeatures.None);
+			ScriptRunningMachine srm = new ScriptRunningMachine();
 			ScriptDebugger debugMonitor = new ScriptDebugger(srm);
 
 			int testCases = 0, success = 0, failed = 0;

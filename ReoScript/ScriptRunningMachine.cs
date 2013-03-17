@@ -199,7 +199,7 @@ namespace Unvell.ReoScript
 		#endregion
 	}
 
-	class ObjectConstructorFunction : TypedNativeFunctionValue
+	class ObjectConstructorFunction : TypedNativeFunctionObject
 	{
 		private ObjectValue rootPrototype = new ObjectValue();
 
@@ -317,7 +317,7 @@ namespace Unvell.ReoScript
 
 		#endregion
 	}
-	class StringConstructorFunction : TypedNativeFunctionValue
+	class StringConstructorFunction : TypedNativeFunctionObject
 	{
 		public StringConstructorFunction()
 			: base("String")
@@ -593,32 +593,32 @@ namespace Unvell.ReoScript
 
 		public Func<ScriptRunningMachine, object, object[], object> Body { get; set; }
 	}
-	public class TypedNativeFunctionValue : NativeFunctionObject
+	public class TypedNativeFunctionObject : NativeFunctionObject
 	{
 		public Type Type { get; set; }
 
 		public Action<ObjectValue> PrototypeBuilder { get; set; }
 
-		public TypedNativeFunctionValue(string name)
+		public TypedNativeFunctionObject(string name)
 			: this(null, name, null, null)
 		{
 			// this()
 		}
 
-		public TypedNativeFunctionValue(Type type, string name)
+		public TypedNativeFunctionObject(Type type, string name)
 			: this(type, name, null, null)
 		{
 			// this()
 		}
 
-		public TypedNativeFunctionValue(Type type, string name,
+		public TypedNativeFunctionObject(Type type, string name,
 			Func<ScriptRunningMachine, object, object[], object> body)
 			: this(type, name, body, null)
 		{
 			// this()
 		}
 
-		public TypedNativeFunctionValue(Type type, string name,
+		public TypedNativeFunctionObject(Type type, string name,
 			Func<ScriptRunningMachine, object, object[], object> body,
 			Action<ObjectValue> prototypeBuilder)
 			: base(name, body)
@@ -639,7 +639,7 @@ namespace Unvell.ReoScript
 
 					if (ci == null)
 					{
-						throw new AWDLRuntimeException("Cannot create .Net object with incorrect parameters.");
+						throw new ReoScriptRuntimeException("Cannot create .Net object with incorrect parameters.");
 					}
 
 					cargs = new object[args.Length];
@@ -655,7 +655,7 @@ namespace Unvell.ReoScript
 			}
 			catch (Exception ex)
 			{
-				throw new AWDLRuntimeException("Error to create .Net instance: " + this.Type.ToString(), ex);
+				throw new ReoScriptRuntimeException("Error to create .Net instance: " + this.Type.ToString(), ex);
 			}
 		}
 
@@ -671,6 +671,12 @@ namespace Unvell.ReoScript
 			}
 
 			return obj;
+		}
+	}
+	public class TypedNativeFunctionObject<T> : NativeFunctionObject
+	{
+		public TypedNativeFunctionObject() : base(typeof(T).Name)
+		{
 		}
 	}
 	#endregion
@@ -885,7 +891,7 @@ namespace Unvell.ReoScript
 		#endregion
 
 	}
-	class ArrayConstructorFunction : TypedNativeFunctionValue
+	class ArrayConstructorFunction : TypedNativeFunctionObject
 	{
 		public ArrayConstructorFunction() :
 			base(typeof(ArrayObject), "Array") { }
@@ -928,32 +934,58 @@ namespace Unvell.ReoScript
 	#endregion
 	#endregion
 
+	#region Class
+	public abstract class XBClass : ISyntaxTreeReturn
+	{
+		private Dictionary<string, object> Members {get;set;}
+
+		public XBClass()
+		{
+			Members = new Dictionary<string, object>();
+		}
+
+		public virtual object this[string identifier]
+		{
+			get
+			{
+				return Members.ContainsKey(identifier) ? Members[identifier] : null;
+			}
+			set
+			{
+				Members[identifier] = value;
+			}
+		}
+
+		public abstract string TypeName { get; }
+	}
+	#endregion
+
 	#region Exceptions
 	#region AWDLException
-	public class AWDLException : Exception
+	public class ReoScriptException : Exception
 	{
-		public AWDLException(string msg) : base(msg) { }
-		public AWDLException(string msg, Exception inner) : base(msg, inner) { }
+		public ReoScriptException(string msg) : base(msg) { }
+		public ReoScriptException(string msg, Exception inner) : base(msg, inner) { }
 	}
 	#endregion
 	#region AWDLSyntaxErrorException
-	class AWDLSyntaxErrorException : AWDLException
+	class ReoScriptSyntaxErrorException : ReoScriptException
 	{
-		public AWDLSyntaxErrorException(string msg) : base(msg) { }
-		public AWDLSyntaxErrorException(string msg, Exception inner) : base(msg, inner) { }
+		public ReoScriptSyntaxErrorException(string msg) : base(msg) { }
+		public ReoScriptSyntaxErrorException(string msg, Exception inner) : base(msg, inner) { }
 	}
 	#endregion
 	#region AWDLRuntimeException
-	public class AWDLRuntimeException : AWDLException
+	public class ReoScriptRuntimeException : ReoScriptException
 	{
-		public AWDLRuntimeException(string msg) : base(msg) { }
-		public AWDLRuntimeException(string msg, Exception inner) : base(msg, inner) { }
+		public ReoScriptRuntimeException(string msg) : base(msg) { }
+		public ReoScriptRuntimeException(string msg, Exception inner) : base(msg, inner) { }
 	}
 	#endregion AWDLRuntimeException
-	public class AWDLAssertionException : AWDLRuntimeException
+	public class ReoScriptAssertionException : ReoScriptRuntimeException
 	{
-		public AWDLAssertionException(string msg) : base(msg) { }
-		public AWDLAssertionException(string caused, string excepted)
+		public ReoScriptAssertionException(string msg) : base(msg) { }
+		public ReoScriptAssertionException(string caused, string excepted)
 			: base(string.Format("excepte {0} but {1}", excepted, caused)) { }
 	}
 	#endregion
@@ -1793,7 +1825,7 @@ namespace Unvell.ReoScript
 			IAccess access = srm.ParseNode((CommonTree)t.Children[0]) as IAccess;
 			if (access == null)
 			{
-				throw new AWDLRuntimeException("only property, indexer, and variable can be used as increment or decrement statement.");
+				throw new ReoScriptRuntimeException("only property, indexer, and variable can be used as increment or decrement statement.");
 			}
 
 			object oldValue = access.Get();
@@ -1804,7 +1836,7 @@ namespace Unvell.ReoScript
 
 			if (!(oldValue is double || oldValue is int || oldValue is long))
 			{
-				throw new AWDLRuntimeException("only interger can be used as increment or decrement statement.");
+				throw new ReoScriptRuntimeException("only interger can be used as increment or decrement statement.");
 			}
 
 			double value = Convert.ToDouble(oldValue);
@@ -1827,7 +1859,7 @@ namespace Unvell.ReoScript
 			IAccess access = srm.ParseNode((CommonTree)t.Children[0]) as IAccess;
 			if (access == null)
 			{
-				throw new AWDLRuntimeException("only property, indexer, and variable can be used as increment or decrement statement.");
+				throw new ReoScriptRuntimeException("only property, indexer, and variable can be used as increment or decrement statement.");
 			}
 			object oldValue = access.Get();
 			if (oldValue == null)
@@ -1837,7 +1869,7 @@ namespace Unvell.ReoScript
 
 			if (!(oldValue is double || oldValue is int || oldValue is long))
 			{
-				throw new AWDLRuntimeException("only interger can be used as increment or decrement statement.");
+				throw new ReoScriptRuntimeException("only interger can be used as increment or decrement statement.");
 			}
 
 			double value = Convert.ToDouble(oldValue);
@@ -1860,7 +1892,7 @@ namespace Unvell.ReoScript
 			object value = srm.ParseNode((CommonTree)t.Children[0]);
 			if (!(value is bool))
 			{
-				throw new AWDLRuntimeException("only boolean expression can be used for conditional expression.");
+				throw new ReoScriptRuntimeException("only boolean expression can be used for conditional expression.");
 			}
 			bool condition = (bool)value;
 			return condition ? srm.ParseNode((CommonTree)t.Children[1]) : srm.ParseNode((CommonTree)t.Children[2]);
@@ -2120,6 +2152,10 @@ namespace Unvell.ReoScript
 				{
 					if (doParse) return null;
 				}
+				else if (caseTree.Type == ReoScriptLexer.RETURN)
+				{
+					if (doParse) return srm.ParseNode(caseTree);
+				}
 				else if (caseTree.Type == ReoScriptLexer.SWITCH_CASE_ELSE)
 				{
 					defaultCaseLine = i;
@@ -2179,7 +2215,7 @@ namespace Unvell.ReoScript
 
 					if (booleanValue == null)
 					{
-						throw new AWDLRuntimeException("only boolean expression can be used as test condition.");
+						throw new ReoScriptRuntimeException("only boolean expression can be used as test condition.");
 					}
 					else if (!((bool)booleanValue))
 					{
@@ -2394,7 +2430,7 @@ namespace Unvell.ReoScript
 							if (srm.EnableDirectAccess && srm.IsDirectAccessObject(ownerObj))
 							{
 								object[] args = srm.GetParameterList(
-										(t.ChildCount == 0 ? null : t.Children[1] as CommonTree));
+										(t.ChildCount <= 1 ? null : t.Children[1] as CommonTree));
 
 								MethodInfo mi = ScriptRunningMachine.FindCLRMethodAmbiguous(ownerObj,
 									ScriptRunningMachine.GetNativeIdentifierName(methodName), args);
@@ -2402,18 +2438,6 @@ namespace Unvell.ReoScript
 								if (mi != null)
 								{
 									ParameterInfo[] paramTypeList = mi.GetParameters();
-
-									//if (paramTypeList.Length != args.Length)
-									//{
-									//  if (srm.IgnoreCLRExceptions)
-									//  {
-									//    return null;
-									//  }
-									//  else
-									//  {
-									//    throw new AWDLRuntimeException("Direct access to CLR method with not matched argument list: " + methodName);
-									//  }
-									//}
 
 									try
 									{
@@ -2443,7 +2467,7 @@ namespace Unvell.ReoScript
 
 					if (funObj == null)
 					{
-						throw new AWDLRuntimeException(string.Format("{0} has no method '{1}'", ownerObj, methodName));
+						throw new ReoScriptRuntimeException(string.Format("{0} has no method '{1}'", ownerObj, methodName));
 					}
 				}
 				else
@@ -2454,14 +2478,14 @@ namespace Unvell.ReoScript
 
 			if (funObj == null)
 			{
-				throw new AWDLRuntimeException("Function is not defined: " + t.Children[0].ToString());
+				throw new ReoScriptRuntimeException("Function is not defined: " + t.Children[0].ToString());
 			}
 
 			if (ownerObj == null) ownerObj = srm.CurrentContext.ThisObject;
 
 			if (!(funObj is AbstractFunctionObject))
 			{
-				throw new AWDLRuntimeException("Object is not a function: " + Convert.ToString(funObj));
+				throw new ReoScriptRuntimeException("Object is not a function: " + Convert.ToString(funObj));
 			}
 
 			return srm.InvokeFunction(ownerObj, ((AbstractFunctionObject)funObj),
@@ -2508,7 +2532,7 @@ namespace Unvell.ReoScript
 				depth++;
 			}
 
-			if (constructTree == null) throw new AWDLRuntimeException("unexpected end in new operation.");
+			if (constructTree == null) throw new ReoScriptRuntimeException("unexpected end in new operation.");
 
 			// get constructor if it is need to retrieve from other Accessors
 			object constructorValue = srm.ParseNode(constructTree.Children[0] as CommonTree);
@@ -2524,18 +2548,18 @@ namespace Unvell.ReoScript
 				Type type = srm.GetImportedTypeFromNamespaces(constructorName);
 				if (type != null)
 				{
-					constructorValue = new TypedNativeFunctionValue(type, type.Name, null);
+					constructorValue = new TypedNativeFunctionObject(type, type.Name, null);
 				}
 			}
 
 			if (constructorValue == null)
 			{
-				throw new AWDLRuntimeException("Constructor function not found: " + constructorName);
+				throw new ReoScriptRuntimeException("Constructor function not found: " + constructorName);
 			}
 
 			if (!(constructorValue is AbstractFunctionObject))
 			{
-				throw new AWDLRuntimeException("Constructor is not a function type: " + constructorName);
+				throw new ReoScriptRuntimeException("Constructor is not a function type: " + constructorName);
 			}
 			else
 			{
@@ -2547,7 +2571,7 @@ namespace Unvell.ReoScript
 
 				object obj = srm.CreateNewObject(funObj, args);
 
-				// committedDepth > 0 means there is some primaryExpressions is remaining.
+				// committedDepth > 0 means there is some primaryExpressions are remaining.
 				// replace current construction tree and call srm to execute the remaining.
 				if (committedDepth > 0)
 				{
@@ -2590,7 +2614,7 @@ namespace Unvell.ReoScript
 
 			if (value == null)
 			{
-				throw new AWDLRuntimeException("Attempt to access an array that is null or undefined.");
+				throw new ReoScriptRuntimeException("Attempt to access an array that is null or undefined.");
 			}
 
 			object indexValue = srm.ParseNode((CommonTree)t.Children[1]);
@@ -2624,17 +2648,17 @@ namespace Unvell.ReoScript
 			value = srm.ParseNode((CommonTree)t.Children[0]);
 			if (value is IAccess) value = ((IAccess)value).Get();
 
-			if (value == null) throw new AWDLRuntimeException("Attempt to access property of null or undefined object.");
+			if (value == null) throw new ReoScriptRuntimeException("Attempt to access property of null or undefined object.");
 
 			if (!(value is ObjectValue))
 			{
 				if (value is ISyntaxTreeReturn)
 				{
-					throw new AWDLRuntimeException(string.Format("Attempt to access an object '{0}' that is not Object type.", value.ToString()));
+					throw new ReoScriptRuntimeException(string.Format("Attempt to access an object '{0}' that is not Object type.", value.ToString()));
 				}
 				else if (!srm.EnableDirectAccess)
 				{
-					throw new AWDLRuntimeException(string.Format("Attempt to access an object '{0}' that is not Object type. Make sure that object type is Object. Or to access a .Net object, set WorkMode to enable DirectAccess.", value.ToString()));
+					throw new ReoScriptRuntimeException(string.Format("Attempt to access an object '{0}' that is not Object type. Make sure that object type is Object. Or to access a .Net object, set WorkMode to enable DirectAccess.", value.ToString()));
 				}
 			}
 
@@ -2652,6 +2676,49 @@ namespace Unvell.ReoScript
 		public object Parse(CommonTree t, ScriptRunningMachine srm)
 		{
 			//TODO
+			return null;
+		}
+
+		#endregion
+	}
+
+	#endregion
+
+	#region Class
+	class ClassDefineNodeParser : INodeParser
+	{
+		#region INodeParser Members
+
+		public object Parse(CommonTree t, ScriptRunningMachine srm)
+		{
+			XBClass cls = default(XBClass);
+			return cls;
+		}
+
+		#endregion
+	}
+
+	class ClassMemberDefineNodeParser : INodeParser
+	{
+		#region INodeParser Members
+
+		public object Parse(CommonTree t, ScriptRunningMachine srm)
+		{
+			throw new NotImplementedException();
+		}
+
+		#endregion
+	}
+	#endregion
+	#region Tag
+	class TagNodeParser : INodeParser
+	{
+		#region INodeParser Members
+
+		public object Parse(CommonTree t, ScriptRunningMachine srm)
+		{
+
+			//srm.CurrentContext[
 			return null;
 		}
 
@@ -3162,7 +3229,7 @@ namespace Unvell.ReoScript
 
 			ctx.ImportedTypes.Add(type);
 
-			SetGlobalVariable(type.Name, new TypedNativeFunctionValue(type, type.Name, null));
+			SetGlobalVariable(type.Name, new TypedNativeFunctionObject(type, type.Name, null));
 		}
 
 		/// <summary>
@@ -3548,7 +3615,7 @@ namespace Unvell.ReoScript
 				return returnValue != null ? returnValue.Value : null;
 			}
 			else
-				throw new AWDLRuntimeException("Object is not a function: " + Convert.ToString(funObject));
+				throw new ReoScriptRuntimeException("Object is not a function: " + Convert.ToString(funObject));
 		}
 
 		/// <summary>
@@ -3573,7 +3640,7 @@ namespace Unvell.ReoScript
 		}
 		#endregion
 
-		#region Call Async
+		#region Async Calling
 		private bool isForceStop = false;
 
 		/// <summary>
@@ -3875,7 +3942,7 @@ namespace Unvell.ReoScript
 
 		#endregion
 
-		#region Load & Interpreter
+		#region Load & Run
 		/// <summary>
 		/// Load script library from given stream. 
 		/// </summary>
@@ -3922,20 +3989,25 @@ namespace Unvell.ReoScript
 			}
 			catch (RecognitionException ex)
 			{
-				throw new AWDLSyntaxErrorException("syntax error near at " + ex.Character + "(" + ex.Line + ": " + ex.CharPositionInLine + ")");
+				throw new ReoScriptSyntaxErrorException("syntax error near at " + ex.Character + "(" + ex.Line + ": " + ex.CharPositionInLine + ")");
 			}
 		}
 
 		/// <summary>
-		/// Run specified ReoScript script. Note that semicolon is required at end of every line. 
+		/// Run specified ReoScript script. (Note that semicolon is required at end of line)
 		/// </summary>
-		/// <param name="script">statements contained in script will be executed</param>
-		/// <returns>value of statement last be executed</returns>
+		/// <param name="script">script to execute</param>
+		/// <returns>result of last exected statement</returns>
 		public object Run(string script)
 		{
 			return RunCompiledScript(Compile(script));
 		}
 
+		/// <summary>
+		/// Run compiled script
+		/// </summary>
+		/// <param name="script">compiled script object to execute</param>
+		/// <returns>result of last exected statement</returns>
 		public object RunCompiledScript(CompiledScript script)
 		{
 			// clear ForceStop flag
@@ -3943,6 +4015,7 @@ namespace Unvell.ReoScript
 
 			if (script.RootNode == null) return null;
 
+			// parse syntax tree
 			object v = ParseNode(script.RootNode);
 			
 			// retrieve value from accessor
@@ -3978,43 +4051,41 @@ namespace Unvell.ReoScript
 
 		private FunctionDefineNodeParser globalFunctionDefineNodeParser = new FunctionDefineNodeParser();
 
+		/// <summary>
+		/// Compile script (Pre-parse script to improve executing speed). 
+		/// </summary>
+		/// <param name="script">script to compile</param>
+		/// <returns>A compiled script object</returns>
 		public CompiledScript Compile(string script)
 		{
 			ReoScriptLexer lex = new ReoScriptLexer(new ANTLRStringStream(script));
 			CommonTokenStream tokens = new CommonTokenStream(lex);
 			ReoScriptParser parser = new ReoScriptParser(tokens);
 
-			try
-			{
-				// read script and build ASTree
-				CommonTree t = parser.script().Tree as CommonTree;
+			// read script and build ASTree
+			CommonTree t = parser.script().Tree;
 
-				if (t != null)
+			if (t != null)
+			{
+				// scan 1st level and define global functions
+				for (int i = 0; i < t.ChildCount; i++)
 				{
-					// scan 1st level and define global functions
-					for (int i = 0; i < t.ChildCount; i++)
+					if (t.Children[i].Type == ReoScriptLexer.FUNCTION_DEFINE)
 					{
-						if (t.Children[i].Type == ReoScriptLexer.FUNCTION_DEFINE)
+						if (t.Children[i].ChildCount > 0 && t.Children[i] is CommonTree)
 						{
-							if (t.Children[i].ChildCount > 0 && t.Children[i] is CommonTree)
-							{
-								globalFunctionDefineNodeParser.Parse(t.Children[i] as CommonTree, this);
-							}
+							globalFunctionDefineNodeParser.Parse(t.Children[i] as CommonTree, this);
 						}
 					}
 				}
+			}
 
-				return new CompiledScript { RootNode = t };
-			}
-			catch (RecognitionException ex)
-			{
-				throw new AWDLSyntaxErrorException("syntax error near at " + ex.Character + "(" + ex.Line + ": " + ex.CharPositionInLine + ")");
-			}
+			return new CompiledScript { RootNode = t };
 		}
 
 		#endregion
 
-		#region Adapter Operations
+		#region Node Parsing
 		private IParserAdapter parserAdapter = new AWDLLogicSyntaxParserAdapter();
 
 		internal IParserAdapter ParserAdapter
@@ -4028,14 +4099,44 @@ namespace Unvell.ReoScript
 			this.parserAdapter = adapter;
 			return oldAdapter;
 		}
-		#endregion
 
-		#region Node Parsing
 		internal object ParseNode(CommonTree t)
 		{
 			if (t == null || IsForceStop)
 			{
 				return null;
+			}
+
+			if (t is CommonErrorNode)
+			{
+				CommonErrorNode errorNode = (CommonErrorNode)t;
+
+				string msg = null;
+
+				if (errorNode.trappedException != null)
+				{
+					RecognitionException re = (RecognitionException)errorNode.trappedException;
+
+					msg = string.Format("syntax error at {0} in line {1}", re.CharPositionInLine, re.Line);
+
+					if (re is MismatchedTokenException)
+					{
+						MismatchedTokenException mte = (MismatchedTokenException)re;
+						msg += string.Format(", expect {0}", mte.TokenNames[mte.Expecting]);
+					}
+					else if (re is NoViableAltException)
+					{
+						NoViableAltException nvae = (NoViableAltException)re;
+						msg += ", no viable alt";
+					}
+				}
+
+				if (msg == null)
+				{
+					msg = "syntax error";
+				}
+
+				throw new ReoScriptSyntaxErrorException(msg);
 			}
 
 			INodeParser parser = null;
@@ -4145,18 +4246,10 @@ namespace Unvell.ReoScript
 			{
 				for (int i = 0; i < argCount; i++)
 				{
-					// pass anonymous function
-					//if (paramsTree.Children[i].Type == ReoScriptLexer.ANONYMOUS_FUNCTION)
-					//{
-					//  args[i] = (paramsTree.Children[0] as CommonTree).Children[1];
-					//}
-					//else
-					//{
 					object val = ParseNode((CommonTree)paramsTree.Children[i]);
 					if (val is IAccess) val = ((IAccess)val).Get();
 
 					args[i] = val;
-					//}
 				}
 			}
 
@@ -4169,7 +4262,7 @@ namespace Unvell.ReoScript
 			while (value is IAccess) value = ((IAccess)value);
 			if (!(value is decimal))
 			{
-				throw new AWDLRuntimeException("parameter must be numeric.");
+				throw new ReoScriptRuntimeException("parameter must be numeric.");
 			}
 			return (decimal)value;
 		}
@@ -4290,7 +4383,7 @@ namespace Unvell.ReoScript
 						}
 						catch (Exception ex)
 						{
-							throw new AWDLException("cannot convert to .Net object from value: " + value, ex);
+							throw new ReoScriptException("cannot convert to .Net object from value: " + value, ex);
 						}
 
 						CombineObject(obj, (ObjectValue)value);
@@ -4371,6 +4464,13 @@ namespace Unvell.ReoScript
 		//internal event EventHandler<ReoScriptObjectEventArgs> PropertyDeleted;
 		public event EventHandler Resetted;
 		#endregion
+
+		#region Namespace & Class
+		private readonly Dictionary<string, XBClass> classDefines = new Dictionary<string, XBClass>();
+
+
+
+		#endregion
 	}
 
 	#region CompiledScript
@@ -4387,9 +4487,9 @@ namespace Unvell.ReoScript
 	{
 		internal ObjectConstructorFunction ObjectFunction;
 		internal StringConstructorFunction StringFunction;
-		internal TypedNativeFunctionValue FunctionFunction;
-		internal TypedNativeFunctionValue NumberFunction;
-		internal TypedNativeFunctionValue DateFunction;
+		internal TypedNativeFunctionObject FunctionFunction;
+		internal TypedNativeFunctionObject NumberFunction;
+		internal TypedNativeFunctionObject DateFunction;
 		internal ArrayConstructorFunction ArrayFunction;
 
 		public BuiltinConstructors()
@@ -4397,7 +4497,7 @@ namespace Unvell.ReoScript
 			ObjectFunction = new ObjectConstructorFunction();
 			StringFunction = new StringConstructorFunction();
 
-			FunctionFunction = new TypedNativeFunctionValue
+			FunctionFunction = new TypedNativeFunctionObject
 				(typeof(FunctionObject), "Function", (srm, owner, args) =>
 				{
 					FunctionObject fun = owner as FunctionObject;
@@ -4406,7 +4506,7 @@ namespace Unvell.ReoScript
 					return fun;
 				});
 
-			NumberFunction = new TypedNativeFunctionValue
+			NumberFunction = new TypedNativeFunctionObject
 				(typeof(NumberObject), "Number", (srm, owner, args) =>
 				{
 					NumberObject num = owner as NumberObject;
@@ -4434,7 +4534,7 @@ namespace Unvell.ReoScript
 					});
 				});
 
-			DateFunction = new TypedNativeFunctionValue
+			DateFunction = new TypedNativeFunctionObject
 				(typeof(DateObject), "Date", (srm, owner, args) =>
 				{
 					DateObject dateObj = owner as DateObject;
@@ -4695,7 +4795,7 @@ namespace Unvell.ReoScript
 				{
 					if (args.Length > 0 && (args[0] as bool?) != true)
 					{
-						throw new AWDLAssertionException(args.Length > 1 ? Convert.ToString(args[1]) : string.Empty);
+						throw new ReoScriptAssertionException(args.Length > 1 ? Convert.ToString(args[1]) : string.Empty);
 					}
 					return null;
 				});

@@ -32,47 +32,47 @@
     </script>
   </test-case>
 
-	<test-case id="003">
-		<script>
-			var t = debug.assert;
-			
-			var arr = [ 1, 2, 3, 4, 5 ];
-			
-			var sum = 0;
-			for(element in arr) sum += element;
-			
-			t( sum == 15 );
-		</script>
-	</test-case>
+  <test-case id="003">
+    <script>
+      var t = debug.assert;
 
-	<test-case id="004">
-		<script>
-			var t = debug.assert;
+      var arr = [ 1, 2, 3, 4, 5 ];
 
-			var str = "hello";
+      var sum = 0;
+      for(element in arr) sum += element;
 
-			var arr = [];
-			for(char in str) arr.push(char);
+      t( sum == 15 );
+    </script>
+  </test-case>
 
-			t( arr[0] == 'h' );
-			t( arr[4] == 'o' );
-		</script>
-	</test-case>
+  <test-case id="004">
+    <script>
+      var t = debug.assert;
+
+      var str = "hello";
+
+      var arr = [];
+      for(char in str) arr.push(char);
+
+      t( arr[0] == 'h' );
+      t( arr[4] == 'o' );
+    </script>
+  </test-case>
 
   <test-case id="005">
     <script>
-			var t = debug.assert;
+      var t = debug.assert;
 
-		  var a = [[1,2,3],[4,5,6],[7,8,9]];
-      
+      var a = [[1,2,3],[4,5,6],[7,8,9]];
+
       var o = '';
       for(i=0;i&lt;a.length;i++)
         for(k=0;k&lt;a[i].length;k++)
           o+=a[i][k];
-      
+
       t(o == '123456789');
-      
-		  var a = [[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5]];
+
+      var a = [[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5]];
       var o = '';
       
       for(i=0;i&lt;a.length;i++)
@@ -88,6 +88,6 @@
       }
       
       t(o == '123123');
-		</script>
+    </script>
   </test-case>
 </test-suite>

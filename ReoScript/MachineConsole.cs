@@ -167,7 +167,7 @@ namespace Unvell.ReoScript
 						{
 							srm.Run(line);
 						}
-						catch (AWDLException ex)
+						catch (ReoScriptException ex)
 						{
 							Console.WriteLine("error: " + ex.Message + "\n");
 						}

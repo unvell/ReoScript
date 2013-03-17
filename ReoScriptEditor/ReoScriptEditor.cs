@@ -264,8 +264,6 @@ namespace Unvell.ReoScript.Editor
 		{
 			base.OnLoad(e);
 
-			ResetMachine();
-
 			GetMachineSwitches();
 
 			enableDirectAccessToolStripMenuItem.Click += (ss, ee) => SetMachineSwitches();

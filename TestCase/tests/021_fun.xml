@@ -41,48 +41,48 @@
         var c = a + b;
         return c;
       }
-			
-			t( c == null );
+
+      t( c == null );
       t( plus(10, 20) == 30 );
 
     </script>
   </test-case>
 
-	<test-case id="004" name="nested calling">
-		<script>
-			var t = debug.assert;
-	
-			plus = function(a, b) { return a + b; };
-			sub  = function(a, b) { return a - b; };
-			mul  = function(a, b) { return a * b; };
-			div  = function(a, b) { return a / b; };
+  <test-case id="004" name="nested calling">
+    <script>
+      var t = debug.assert;
 
-			t( div( sub( mul( plus(2, 3), 10), 30), 5) == 4 );
-			
-		</script>
-	</test-case>
+      plus = function(a, b) { return a + b; };
+      sub  = function(a, b) { return a - b; };
+      mul  = function(a, b) { return a * b; };
+      div  = function(a, b) { return a / b; };
 
-	<test-case id="005" name="nested function">
-		<script>
-			var t = debug.assert;
+      t( div( sub( mul( plus(2, 3), 10), 30), 5) == 4 );
 
-			function f(a) {
-				function f(b) {
-					function f(c) {
-						function f(d) {
-							return d / 5;
-						}
-						return f(c - 30);
-					}
-					return f(b * 10);
-				}
-				return f(a + 3);
-			}
-			
-			t( f(2) == 4 );
+    </script>
+  </test-case>
 
-		</script>
-	</test-case>
+  <test-case id="005" name="nested function">
+    <script>
+      var t = debug.assert;
+
+      function f(a) {
+        function f(b) {
+          function f(c) {
+            function f(d) {
+              return d / 5;
+            }
+            return f(c - 30);
+          }
+          return f(b * 10);
+        }
+        return f(a + 3);
+      }
+
+      t( f(2) == 4 );
+
+    </script>
+  </test-case>
 
   <test-case id="006" name="nested anonymous function">
     <script>
@@ -101,7 +101,7 @@
 
     </script>
   </test-case>
-	
+
   <test-case id="011">
     <script>
       var rs = function(a) { return [n, a, b]; } ('hello world')[1];
@@ -113,17 +113,30 @@
     <script>
       var t = debug.assert;
 
-			var date;
-			
+      var date;
+
       var obj = {
         getDayOfMonth : function() {
           return date = new Date().getDate();
         }
       };
-			
-			t( date == null );
+
+      t( date == null );
 
     </script>
   </test-case>
+
+  <test-case id="013" name="loop reference">
+    <script>
+      var t = debug.assert;
+
+      var arr = null;
+      arr = [ { a : function () { return arr; } } ];
+
+      t( arr[0].a()[0].a() == arr );
+
+    </script>
+  </test-case>
+
 
 </test-suite>
