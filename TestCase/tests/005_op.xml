@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="005" name="op">
+ 
+  <test-case id="001" name="obj+">
+    <script>
+      var t = debug.assert;
+
+      var a = { x: 10 };
+      var b = { y: 20 };
+
+      var c = a + b;
+      t( c.x == 10 );
+      t( c.y == 20 );
+
+      var d = { z: 3.14 };
+      t( (a + b + d).z == 3.14 );
+
+      var e = a;
+      e += d;
+
+      t( e.z == 3.14 );
+
+    </script>
+  </test-case>
+
+  <test-case id="001" name="obj^">
+    <script>
+      var t = debug.assert;
+
+      var a = { a: 10, b: 20, c: 30 };
+      var b = { b: 40, e: 50 };
+
+      var c = a ^ b;
+      t( c.hasOwnProperty('a') == false );
+      t( c.hasOwnProperty('b') == true );
+      t( c.hasOwnProperty('c') == false );
+
+      t( c.b == 20 );
+
+    </script>
+  </test-case>
+</test-suite>

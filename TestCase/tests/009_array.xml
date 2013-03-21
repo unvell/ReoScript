@@ -44,6 +44,27 @@
     </script>
   </test-case>
 
+  <test-case id="004" name="remove element">
+    <script>
+      var t = debug.assert;
+
+      var arr = [1,2,3,4,5];
+      
+      arr.splice(0,1);
+      t(arr.length==4);
+      
+      arr.splice(1,1,10,11);
+      t(arr.length==5);
+
+      t(arr[0] == 2);
+      t(arr[1] == 10);
+      t(arr[2] == 11);
+      t(arr[3] == 4);
+      t(arr[4] == 5);
+
+    </script>
+  </test-case>
+
   <test-case id="010">
     <script>
       var t = debug.assert;

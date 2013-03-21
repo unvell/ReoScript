@@ -1,8 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 // 
-// ReoScript 
-// 
-// HP: http://www.unvell.com/ReoScript
+// ReoScript SRM Console
+// http://www.unvell.com/ReoScript
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE

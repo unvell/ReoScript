@@ -89,6 +89,30 @@
 
     </script>
   </test-case>
+
+  <test-case id="008" name="logic and">
+    <script>
+      var t = debug.assert;
+
+      var a = { b: true };
+      
+      t(1==1 &amp;&amp; a.b);
+
+    </script>
+  </test-case>
+
+  <test-case id="009" name="less than">
+    <script>
+      var t = debug.assert;
+
+      var a = 10;
+      t( a &lt; 100 );
+      
+      var obj = { a : 10 };
+      t( obj.a &lt; 100 );
+
+    </script>
+  </test-case>
   
   <!-- Bit computing -->
   <test-case id="100">

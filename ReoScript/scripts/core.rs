@@ -28,4 +28,21 @@ if (this.Math != null) {
   this.Math.E = 2.71828182845904;
   this.Math.LN2 = 0.6931471805599453;
   this.Math.LN10 = 2.302585092994046;
+
+  this.Math.min = function(a, b) { return a > b ? b : a; };
+  this.Math.max = function(a, b) { return a > b ? a : b; };
+}
+
+if (Array != null && Array.prototype != null) {
+
+  // remove element
+  Array.prototype.remove = function(element) {
+    for (var i = 0; i < this.length; i++) {
+      if (this[i] == element) {
+        this.splice(i, 1);
+        return;
+      }
+    }
+  };
+  
 }

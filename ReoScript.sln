@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReoScriptEditor", "ReoScrip
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCase", "TestCase\TestCase.csproj", "{561F035D-EFC9-4F28-99AD-1F363438E89C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XBlend", "XBlend\XBlend.csproj", "{B264DE50-49EC-42AB-B93F-B8B01A2DD160}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,10 +25,6 @@ Global
 		{561F035D-EFC9-4F28-99AD-1F363438E89C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{561F035D-EFC9-4F28-99AD-1F363438E89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{561F035D-EFC9-4F28-99AD-1F363438E89C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B264DE50-49EC-42AB-B93F-B8B01A2DD160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B264DE50-49EC-42AB-B93F-B8B01A2DD160}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B264DE50-49EC-42AB-B93F-B8B01A2DD160}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B264DE50-49EC-42AB-B93F-B8B01A2DD160}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

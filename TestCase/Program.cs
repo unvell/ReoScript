@@ -126,7 +126,8 @@ namespace Unvell.ReoScript.TestCase
 				//Console.WriteLine();
 			}
 
-			Console.WriteLine("\n    {0,3} test cases, {1} success, {2} failure", testCases, success, failed);
+			Console.WriteLine("\n    {0,3} test cases, {1} successed, {2} failed, {3} skipped",
+				testCases, success, failed, (testCases - success - failed));
 			Console.WriteLine("  {0,5} objects created.\n", debugMonitor.TotalObjectCreated);
 
 			return hasErrors;
