@@ -37,10 +37,25 @@ namespace Unvell.ReoScript.TestCase
 		[STAThread]
 		static int Main(string[] args)
 		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
+			//Application.EnableVisualStyles();
+			//Application.SetCompatibleTextRenderingDefault(false);
 
-			bool hasErrors = new TestCaseRunner().Run(args.Length > 0 ? args[0] : null);
+			List<string> ids = new List<string>();
+			List<string> enabledTags = new List<string>();
+
+			foreach (string a in args)
+			{
+				if (a.StartsWith("-et"))
+				{
+					enabledTags.Add(a.Substring(3, a.Length - 3).ToLower());
+				}
+				else
+				{
+					ids.Add(args[0]);
+				}
+			}
+
+			bool hasErrors = new TestCaseRunner().Run(ids, enabledTags);
 			
 			//using (ReoScriptEditor editor = new ReoScriptEditor())
 			//{
@@ -71,7 +86,7 @@ namespace Unvell.ReoScript.TestCase
 
 		private static readonly XmlSerializer xmlSuiteSerializer = new XmlSerializer(typeof(XmlTestSuite));
 
-		public bool Run(string testCaseId)
+		public bool Run(List<string> ids, List<string> enabledTags)
 		{
 			bool hasErrors = false;
 
@@ -89,6 +104,14 @@ namespace Unvell.ReoScript.TestCase
 					testCases += suite.TestCases.Count;
 				}
 
+				if (!string.IsNullOrEmpty(suite.Tag))
+				{
+					string[] tags = suite.Tag.ToLower().Split(' ');
+
+					if (!enabledTags.Any(t => tags.Contains(t)))
+						continue;
+				}
+
 				DateTime dt;
 
 				suite.TestCases.ForEach(t =>
@@ -96,7 +119,7 @@ namespace Unvell.ReoScript.TestCase
 					string caseId = string.Format("{0,3}-{1,3}", suite.Id, t.Id);
 
 					if (t.Disabled || string.IsNullOrEmpty(t.Script)
-						|| (!string.IsNullOrEmpty(testCaseId) && testCaseId!= caseId)) 
+						|| (ids.Count > 0 && !ids.Any(id => caseId.Contains(id))))
 						return;
 
 					srm.Reset();
@@ -142,6 +165,9 @@ namespace Unvell.ReoScript.TestCase
 
 		[XmlAttribute("name")]
 		public string Name { get; set; }
+
+		[XmlAttribute("tag")]
+		public string Tag { get; set; }
 
 		[XmlElement("test-case")]
 		public List<XmlTestCase> TestCases { get; set; }

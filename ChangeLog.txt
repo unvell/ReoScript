@@ -1,0 +1,54 @@
+
+v1.1.4 3/24/2013
+ - New: setTimeout, setInterval supported to pass parameters
+ - New: Multi-context to thread safety support
+ - New: delete keyword to delete property is available
+ - New: Add typeof keyword
+ - New: removeOwnProperty method added into root prototype object
+ - New: Add performance test cases
+ - New: Math.cos and Math.tan added
+ - Fixed: Priority to boolean operator(&& ||) 
+ - Fixed: for...in statement support to declare local variables
+ - Changed: Combine Reset and ResetContext method to SRM
+ - Changed: Rename srm.DeleteGlobalVariable to srm.RemoveGlobalVariable
+ - Changed: Replace SRM to ScriptContext in NativeFunctionObject invoking
+
+v1.1.2 3/21/2012
+ - New: Add setInterval, clearTimeout, clearInterval support
+ - New: ^ operator is available to find properties existed in both A and B object
+ - New: Add error position info in Runtime Exception
+ - Fixed: Return does not work in switch
+ - Fixed: Syntax error exception
+ - Fixed: && operator returns incorrect result when float calculating
+ - Fixed: Other bugs (and test-cases)
+ - Changed: Make ArrayObject public
+
+v1.1.0 3/16/2012
+ - New: Improved performance for async-calling
+ - New: Lambda Expression is available
+ - New: Fully prototype mechanism supported
+ - New: Date type is available
+ - New: InvokeFunctionIfExisted method is available to SRM
+ - New: Binary literal supported (e.g. 0b0101)
+ - New: DebugMonitor for SRM is available (support debug.assert)
+ - New: Enumerator Extension is available
+ - New: CoreFeatures enum is available to create SRM with limited features
+ - New: TestCases added
+ - Fixed: sometimes parameter passing is wrong when function calling
+ - Fixed: Variable scope issue
+ - Fixed: Check and return the value from ReturnNode in Run method
+ - Changed: Rename NativeFunctionValue to NativeFunctionObject
+
+v1.0.4 3/11/2012
+ - New: Enumeration supported (for ... in)
+ - New: Precompiling supported
+ - New: Plus(+) operator to combine two objects
+ - Fixed: string can be used as identifier to an object literal
+ - Fixed: return an incorrect string type after combining two strings
+
+v1.0.3 2/12/2012
+ - New: Event Binding supported
+ 
+v1.0.0 2/1/2012
+ - ReoScript released
+ 

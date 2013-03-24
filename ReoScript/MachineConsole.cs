@@ -133,15 +133,7 @@ namespace Unvell.ReoScript
 					}
 					else if (line.Equals("?"))
 					{
-						for (int i = 0; i < srm.CurrentContext.GetCurrentCallScope().Variables.Count; i++)
-						{
-							Dictionary<string, object> variables = srm.CurrentContext.GetCurrentCallScope().Variables;
-							foreach (string varName in variables.Keys)
-							{
-								for (int e = 0; e < i; e++) Out("\t");
-								OutLn(varName);
-							}
-						}
+						OutLn(srm.GlobalObject.DumpObject());
 					}
 					else if (line.StartsWith("?"))
 					{

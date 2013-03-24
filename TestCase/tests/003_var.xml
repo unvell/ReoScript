@@ -81,6 +81,21 @@
     </script>
   </test-case>
 
+  <test-case id="006" name="increment">
+    <script>
+      var t = debug.assert;
+  
+      var o1 = {a: 0};
+      
+      t( o1.a++ == 0 );
+      t( o1.a == 1 );
+      
+      var arr = [0,1,2,3];
+      t( arr[1]++==1 );
+      t( arr[1]==2 );
+    </script>
+  </test-case>
+
   <test-case id="010" name="scope">
     <script>
       var t = debug.assert;

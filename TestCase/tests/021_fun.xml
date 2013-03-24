@@ -102,6 +102,37 @@
     </script>
   </test-case>
 
+  <test-case id="007" name="variable owner">
+    <script>
+      var t = debug.assert;
+
+      a = 10;
+      t( script.a == 10 );
+      
+      this.a = 20;
+      t(a == 20);
+      
+      function() {
+        var a = 30;
+        
+        t( this.a == 20 );
+        t( a == 30 );
+        
+        a = 40;
+        
+        t( this.a == 20 );
+        t( a == 40 );
+      } ();
+      
+      function(a) {
+        t( a == 50 );
+        t( this.a == 20 );
+        t( script.a == 20 );
+      }(50);
+
+    </script>
+  </test-case>
+  
   <test-case id="011">
     <script>
       var rs = function(a) { return [n, a, b]; } ('hello world')[1];

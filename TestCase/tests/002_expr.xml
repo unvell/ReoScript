@@ -90,7 +90,7 @@
     </script>
   </test-case>
 
-  <test-case id="008" name="logic and">
+  <test-case id="008" name="bool and">
     <script>
       var t = debug.assert;
 
@@ -101,7 +101,21 @@
     </script>
   </test-case>
 
-  <test-case id="009" name="less than">
+  <test-case id="009" name="bool and priority">
+    <script>
+      var t = debug.assert;
+
+      var a = { b: 10 };
+      a = null;
+      
+      // should not crashed
+      t( (a != null &amp;&amp; a.b != null) == false );
+      t( a == null || a.b == null );
+
+    </script>
+  </test-case>
+
+  <test-case id="010" name="less than">
     <script>
       var t = debug.assert;
 

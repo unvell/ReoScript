@@ -65,6 +65,24 @@
     </script>
   </test-case>
 
+  <test-case id="005" name="remove in iteration">
+    <script>
+      var t = debug.assert;
+
+      var arr = [1,2,3,4,5];
+
+      for(e in arr)
+        if(e==3) arr.splice(2,1);
+        
+      t( arr.length == 4 );
+      t( arr[0] == 1 );
+      t( arr[1] == 2 );
+      t( arr[2] == 4 );
+      t( arr[3] == 5 );
+
+    </script>
+  </test-case>
+  
   <test-case id="010">
     <script>
       var t = debug.assert;

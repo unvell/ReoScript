@@ -149,16 +149,39 @@
     </script>
   </test-case>
 
-  <test-case id="020" name="delete property (todo)">
+  <test-case id="020" name="delete property">
     <script>
       var t = debug.assert;
 
-      var a = { hello: 'world' };
+      var a = { hello: 'world', b:function() {} };
       t( a.hello != null );
+      t( a.b != 10 );
 
       delete a.hello;
-      // TODO
-      //t( a.hello == null );
+      t( a.hello == null );
+      
+      delete a.b;
+      t( a.b == null );
+
+    </script>
+  </test-case>
+
+  <test-case id="021" name="delete property in iteration">
+    <script>
+      var t = debug.assert;
+
+      var obj = { a:10, b:20, c:30, d:40 };
+      
+      for(key in obj) {
+        if( key == 'b' )
+          delete obj.c;
+      }
+      
+      t( obj != null );
+      t( obj.a == 10 );
+      t( obj.b == 20 );
+      t( obj.c == null );
+      t( obj.d == 40 );
 
     </script>
   </test-case>

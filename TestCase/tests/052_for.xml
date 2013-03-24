@@ -90,4 +90,25 @@
       t(o == '123123');
     </script>
   </test-case>
+
+  <test-case id="006" name="variable scope">
+    <script>
+      var t = debug.assert;
+
+      var arr = [1,2,3];
+      
+      // a in global
+      for(a in arr) t(a!=null);
+      t(a == 3);
+      
+      // b used in function but declared in global
+      function() { for(b in arr) t(b != null); } ();
+      t(b == 3);
+      
+      // c used and declared in local
+      function() { for(var c in arr) t(c != null); } ();
+      t(c == null);
+      
+    </script>
+  </test-case>
 </test-suite>

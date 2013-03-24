@@ -274,12 +274,12 @@ namespace Unvell.ReoScript.Editor
 
 		private void ResetMachine()
 		{
-			srm.ResetContext();
+			srm.Reset();
 
 			ObjectValue consoleObj = srm["console"] as ObjectValue;
 			if (consoleObj != null)
 			{
-				consoleObj["clear"] = new NativeFunctionObject("clear", (srm2, owner, args) =>
+				consoleObj["clear"] = new NativeFunctionObject("clear", (ctx, owner, args) =>
 				{
 					console.Clear();
 					return null;

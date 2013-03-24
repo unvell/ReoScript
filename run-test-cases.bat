@@ -7,7 +7,7 @@ cd TestCase\bin\Release
 echo Start run test cases...
 echo.
 
-Unvell.ReoScript.TestCase.exe
+Unvell.ReoScript.TestCase.exe -etpfmc
 if %errorlevel% == 1 goto error
 if %errorlevel% == 0 goto success
 
@@ -23,8 +23,7 @@ goto end
 
 :success
 
-echo.
-echo All test cases ran successfully.
+echo All test cases passed expected.
 echo.
 
 :end
