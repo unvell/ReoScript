@@ -2,7 +2,7 @@ ReoScript
 =========
 **Script language interpreter for .Net programs**
 
-ReoScript is a JavaScript like script language interpreter implemented in C#. It be designed for inclusion in applications that require a built-in, easy to use, scalable script language with no dependencies other language like C/C++.
+ReoScript is a powerful JavaScript-like script language interpreter implemented in C#. It be designed for inclusion in applications that require a built-in, easy to use, scalable script language with no dependencies other language like C/C++.
 
 ## Features
 
@@ -22,10 +22,10 @@ ReoScript provides a simple script Editor it can be used to write and execute sc
 
 ## Hello World!
 
-1. Download or build the following DLLs, add them into reference list of target project
+1. Download or build the following DLLs, add references to target project
 
-    Antlr3.Runtime.dll
-    Unvell.ReoScript.dll
+    - Antlr3.Runtime.dll
+    - Unvell.ReoScript.dll
 
 2. Import the following namespace
     
@@ -37,12 +37,15 @@ ReoScript provides a simple script Editor it can be used to write and execute sc
     
     srm.Run("alert('hello world!');");
 
-    (Note that last semicolon in ReoScript is required)
+    (semicolons at end of line in ReoScript are required)
 
 ## Offical Website
    Find more Sample programs and Documents at:
    http://www.unvell.com/ReoScript
 
+   Language Specification see the test-cases:
+   https://github.com/unvell/ReoScript/tree/master/TestCase/tests
+   
 ## Third-Party
 
 The following softwares may be included in this product:
