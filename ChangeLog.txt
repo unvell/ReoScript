@@ -1,4 +1,4 @@
-v1.1.5 
+v1.1.5 4/11/2013
  - New: Add NaN keyword
  - New: Add import file default path (workpath)
  - New: Add toString method in root prototype object
