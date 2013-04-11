@@ -19,7 +19,7 @@
 
 // console
 if (this.console != null) {
-	this.console.log = function(t) { __stdout__(t); }
+	this.console.log = function(t) { __stdoutln__(t); }
 }
 
 // Math
@@ -31,18 +31,4 @@ if (this.Math != null) {
 
   this.Math.min = function(a, b) { return a > b ? b : a; };
   this.Math.max = function(a, b) { return a > b ? a : b; };
-}
-
-if (Array != null && Array.prototype != null) {
-
-  // remove element
-  Array.prototype.remove = function(element) {
-    for (var i = 0; i < this.length; i++) {
-      if (this[i] == element) {
-        this.splice(i, 1);
-        return;
-      }
-    }
-  };
-  
 }

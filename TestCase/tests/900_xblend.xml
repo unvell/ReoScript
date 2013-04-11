@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="900" name="xblend">
+
+  <test-case id="001">
+    <script>
+      var t = debug.assert;
+      
+      function User() { }
+      
+      var usr1 = &lt;User /&gt;;
+      t( usr1 != null );
+      
+      t( typeof usr1 == 'User' );
+      
+    </script>
+  </test-case>
+
+</test-suite>

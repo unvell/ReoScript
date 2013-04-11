@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <test-suite id="021" name="fun">
-  <test-case id="001" name="normal function">
+  <test-case id="001" name="normal">
     <script>
       var t = debug.assert;
 
@@ -15,7 +15,7 @@
     </script>
   </test-case>
   
-  <test-case id="002" name="normal function">
+  <test-case id="002" name="normal 2">
     <script>
       var t = debug.assert;
 
@@ -33,7 +33,7 @@
   </test-case>
 
   <!-- var inner function -->
-  <test-case id="003" name="local var in function">
+  <test-case id="003" name="local var">
     <script>
       var t = debug.assert;
 
@@ -44,6 +44,7 @@
 
       t( c == null );
       t( plus(10, 20) == 30 );
+      t( c == null );
 
     </script>
   </test-case>
@@ -62,7 +63,7 @@
     </script>
   </test-case>
 
-  <test-case id="005" name="nested function">
+  <test-case id="005" name="nested define">
     <script>
       var t = debug.assert;
 
@@ -107,10 +108,10 @@
       var t = debug.assert;
 
       a = 10;
-      t( script.a == 10 );
+      t( this.a == 10 );
       
       this.a = 20;
-      t(a == 20);
+      t( a == 20 );
       
       function() {
         var a = 30;
@@ -129,6 +130,19 @@
         t( this.a == 20 );
         t( script.a == 20 );
       }(50);
+
+    </script>
+  </test-case>
+
+  <test-case id="008" name="call after fun">
+    <script>
+      var t = debug.assert;
+
+      t( a() == 10 );
+      
+      function a() { 
+        return 10;
+      }
 
     </script>
   </test-case>

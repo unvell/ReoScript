@@ -127,6 +127,25 @@
 
     </script>
   </test-case>
+
+  <test-case id="011" name="NaN">
+    <script>
+      var t = debug.assert;
+
+      var a = 10;
+      t( a != NaN );
+      
+      t( NaN == NaN );
+      t( 'NaN' != NaN );
+      
+      t( NaN + 1 == NaN );
+      t( 1 + NaN == NaN );
+      
+      a = 'hello'.charCodeAt(-1);
+      t( a == NaN );
+      
+    </script>
+  </test-case>
   
   <!-- Bit computing -->
   <test-case id="100">

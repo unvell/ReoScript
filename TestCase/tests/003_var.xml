@@ -17,7 +17,7 @@
       var t = debug.assert;
 
       var a = 10;
-      t(a==10);
+      t( a == 10 );
       
       var b = a + 10;
       t( b == 20 );

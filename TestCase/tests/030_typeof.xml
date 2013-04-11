@@ -2,12 +2,82 @@
 
 <test-suite id="030" name="typeof">
 
-  <test-case id="001">
+  <test-case id="001" name="unary">
     <script>
       var t = debug.assert;
       
-      t( typeof 'a' == 'String' );
+      t( typeof 'a', 'String' );
+      t( typeof [1,2,3], 'Array' );
+      t( typeof {a:10}, 'Object' );
+      t( typeof (new String()), 'String' );
+      t( typeof (new Number()), 'Number' );
+      t( typeof (new Object()), 'Object' );
+      t( typeof (new Date()), 'Date' );
+      t( typeof [{}][0], 'Object' );
+      t( typeof Function, 'Function' );
+      t( typeof function(){}, 'Function' );
+      
+      t( typeof null, null );
+      t( typeof undefined, null );
+      t( typeof null, undefined );
+      t( typeof undefined, undefined );
+      
     </script>
   </test-case>
 
+  <test-case id="002" name="var">
+    <script>
+      var t = debug.assert;
+      
+      var a = 'string';
+      t( typeof a, 'String' );
+      
+      a = function() {};
+      t( typeof a, 'Function' );
+      
+      function hello() {}
+      t( typeof hello, 'Function' );
+            
+    </script>
+  </test-case>
+
+  <test-case id="003" name="return">
+    <script>
+      var t = debug.assert;
+      
+      function fun1() { return 'a'; }
+      t( typeof fun1(), 'String' );
+      
+      var b = function() { return new Date(); } ();
+      t( typeof b, 'Date' );
+      
+    </script>
+  </test-case>
+
+  <test-case id="004" name="instance">
+    <script>
+      var t = debug.assert;
+      
+      function User() {}
+      var usr1 = new User();
+      
+      t( typeof usr1, 'User' );
+      
+      var Guest = User;
+      var usr2 = new Guest();
+      t( typeof usr2, 'User' );     
+    </script>
+  </test-case>
+
+  <test-case id="005" name="anonymous constructor">
+    <script>
+      var t = debug.assert;
+      
+      var User = function() {};
+      var usr1 = new User();
+      
+      t( typeof usr1, 'Function' );
+      
+    </script>
+  </test-case>
 </test-suite>

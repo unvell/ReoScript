@@ -1,3 +1,12 @@
+v1.1.5 
+ - New: Add NaN keyword
+ - New: Add import file default path (workpath)
+ - New: Add toString method in root prototype object
+ - New: Add Stopwatch in debug object
+ - New: __stdout__ and __stdoutln__ supported
+ - New: Add 'confirm' internal function (CoreFeatures.Alert)
+ - Fixed: Convert to float failed in GetFloatValue of SRM
+ - Changed: 'import' keyword using path of current file
 
 v1.1.4 3/24/2013
  - New: setTimeout, setInterval supported to pass parameters
@@ -13,7 +22,7 @@ v1.1.4 3/24/2013
  - Changed: Rename srm.DeleteGlobalVariable to srm.RemoveGlobalVariable
  - Changed: Replace SRM to ScriptContext in NativeFunctionObject invoking
 
-v1.1.2 3/21/2012
+v1.1.2 3/21/2013
  - New: Add setInterval, clearTimeout, clearInterval support
  - New: ^ operator is available to find properties existed in both A and B object
  - New: Add error position info in Runtime Exception
@@ -23,7 +32,7 @@ v1.1.2 3/21/2012
  - Fixed: Other bugs (and test-cases)
  - Changed: Make ArrayObject public
 
-v1.1.0 3/16/2012
+v1.1.0 3/16/2013
  - New: Improved performance for async-calling
  - New: Lambda Expression is available
  - New: Fully prototype mechanism supported
@@ -39,16 +48,16 @@ v1.1.0 3/16/2012
  - Fixed: Check and return the value from ReturnNode in Run method
  - Changed: Rename NativeFunctionValue to NativeFunctionObject
 
-v1.0.4 3/11/2012
+v1.0.4 3/11/2013
  - New: Enumeration supported (for ... in)
  - New: Precompiling supported
  - New: Plus(+) operator to combine two objects
  - Fixed: string can be used as identifier to an object literal
  - Fixed: return an incorrect string type after combining two strings
 
-v1.0.3 2/12/2012
+v1.0.3 2/12/2013
  - New: Event Binding supported
  
-v1.0.0 2/1/2012
+v1.0.0 2/1/2013
  - ReoScript released
  

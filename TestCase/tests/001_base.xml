@@ -3,7 +3,16 @@
 <test-suite id="001" name="base">
   <test-case id="001">
     <script>
+      
+      // check whether debugger currently supported
+      if( debug == null ) {
+        alert('No debugger supported. Try execute by test-case runner.');
+        return;
+      }
+
+      // dummy call debug.assert
       debug.assert(true);
+      
     </script>
   </test-case>
 
@@ -12,7 +21,7 @@
       var t = debug.assert;
 			
 			var a = 4;
-			var b = new Number(a); 
+			var b = new Number(a);
 			
 			t( b.toString(2) == '100' );
 			

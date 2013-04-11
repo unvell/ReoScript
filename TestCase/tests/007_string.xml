@@ -88,7 +88,39 @@
     </script>
   </test-case>
 
-  <test-case id="010">
+  <test-case id="007" name="toString">
+    <script>
+      var t = debug.assert;
+
+      var obj1 = {};
+      
+      t( obj1.toString != null );
+      t( obj1.toString() == '[object Object]' );
+      
+      t( '->' + obj1.toString() == '->[object Object]' );
+      t( '->' + obj1 == '->[object Object]' );
+      
+      t( '.' + null == '.' );
+      
+    </script>
+  </test-case>
+
+  <test-case id="008" name="copy">
+    <script>
+      var t = debug.assert;
+
+      var a = 'abc';
+      var b = a;
+      
+      a += '123';
+      
+      t( a == 'abc123' );
+      t( b == 'abc' );
+      
+    </script>
+  </test-case>
+  
+  <test-case id="010" name="array modify">
     <script>
       var t = debug.assert;
 
@@ -103,7 +135,7 @@
     </script>
   </test-case>
 
-  <test-case id="020">
+  <test-case id="020" name="new">
     <script>
       var t = debug.assert;
 

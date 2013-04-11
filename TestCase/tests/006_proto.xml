@@ -121,6 +121,12 @@
            
       t( sub.run() == 'run' );
       t( sub.run2() == 'run2' );
+      
+      // override
+      sub.run = function() { return 'override'; };
+      t( sub.run() == 'override' );
+      t( sub.run2() == 'run2' );
+      
     </script>
   </test-case>
 </test-suite>

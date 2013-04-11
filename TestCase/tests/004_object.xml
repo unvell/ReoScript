@@ -25,7 +25,7 @@
       var obj = { a : 10, b: 20, 'c': 30 };
 
       var s = '';
-      for(key in obj){
+      for(key in obj) {
         if(key == 'a' || key =='b' || key=='c') {
           if(s.length>0) s+=', ';
           s+=key;
@@ -115,7 +115,7 @@
       }
 
       var obj = {
-        b: { Con: A }
+        b: { Con: A },
       };
 
       var c = [null, obj];
@@ -186,13 +186,46 @@
     </script>
   </test-case>
 
+  <test-case id="022" name="delete non-own property">
+    <script>
+      var t = debug.assert;
+
+      var obj = {};
+      
+      t( obj != null );
+      
+      t( obj.hasOwnProperty != null );
+      t( obj.hasOwnProperty('hasOwnProperty') == false );
+      
+      obj.removeOwnProperty('hasOwnProperty');
+      t( obj.hasOwnProperty != null );
+      t( obj.hasOwnProperty('hasOwnProperty') == false );
+      
+    </script>
+  </test-case>
+
   <test-case id="031" name="self call">
     <script>
       var t = debug.assert;
 
       var a = function() { return a; }
 
-      t( a()()()()()()() == a );
+      t( a()()()()()()()()()()()() == a );
+
+    </script>
+  </test-case>
+
+  <test-case id="100" name="namespace">
+    <script>
+      var t = debug.assert;
+
+      var name1 = { User: function() {} };
+      
+      t( name1 != null );
+      t( name1.User != null );
+      
+      var user1 = new name1.User();
+      t( user1 != null );
 
     </script>
   </test-case>

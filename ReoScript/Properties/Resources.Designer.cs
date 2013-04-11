@@ -66,5 +66,12 @@ namespace Unvell.ReoScript.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        internal static byte[] lib_debug {
+            get {
+                object obj = ResourceManager.GetObject("lib_debug", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

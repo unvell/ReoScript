@@ -15,11 +15,13 @@
     <script>
       var t = debug.assert;
 
+      // anonymous function
       t( (a, b) => { return a + b; } (10, 20) == 30 );
 
+      // anonymous lambda
       t( ( ((a,b)=>a+b)(2,3) ) == 5 );
 
-		</script>
+    </script>
   </test-case>
 
   <test-case id="003" name="nested anonymous lambda">

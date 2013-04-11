@@ -2,12 +2,31 @@
 
 <test-suite id="023" name="return">
 
-  <test-case id="001">
+  <test-case id="001" name="entry function">
     <script>
 			var t = debug.assert;
-
+    
+      t( true );
+      
+      return; // return in entry function
+      
+      t( false ); // should not be executed
 			
 		</script>
   </test-case>
+  
+  <test-case id="001" name="entry function">
+    <script>
+			var t = debug.assert;
+    
+      t( true );
+      
+      return; // return in entry function
+      
+      t( false ); // should not be executed
+			
+		</script>
+  </test-case>
+
 
 </test-suite>

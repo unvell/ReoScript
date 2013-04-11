@@ -70,6 +70,7 @@
     <None Include="app.config" />
     <None Include="scripts\array.rs" />
     <None Include="scripts\core.rs" />
+    <None Include="scripts\debug.rs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
