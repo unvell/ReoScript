@@ -46,6 +46,10 @@ ReoScript provides a simple script Editor it can be used to write and execute sc
    Language Specification see the test-cases:
    https://github.com/unvell/ReoScript/tree/master/TestCase/tests
    
+## Change Log
+
+   https://github.com/unvell/ReoScript/wiki/Change-Log
+   
 ## Third-Party
 
 The following softwares may be included in this product:
