@@ -29,13 +29,12 @@ ReoScript provides a simple script Editor it can be used to write and execute sc
 
 2. Import the following namespace
     
-    using Unvell.ReoScript;
+        using Unvell.ReoScript;
 
 3. Create ScriptRunningMachine and run script
     
-    ScriptRunningMachine srm = new ScriptRunningMachine();
-    
-    srm.Run("alert('hello world!');");
+        ScriptRunningMachine srm = new ScriptRunningMachine();
+        srm.Run("alert('hello world!');");
 
     (semicolons at end of line in ReoScript are required)
 
