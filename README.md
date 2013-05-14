@@ -7,7 +7,7 @@ ReoScript is a powerful JavaScript-like script language interpreter implemented 
 ## Features
 
 - Fully JavaScript statements and operators implement
-- JSON and Array literals
+- (JSON)[wiki/JSON) and Array literals
 - Fully prototype chain mechanism
 - Lambda Expression
 - Enhanced Array Enumerator and Collection Operations
@@ -24,8 +24,8 @@ ReoScript provides a simple script Editor it can be used to write and execute sc
 
 1. Download or build the following DLLs, add references to target project
 
-    * Antlr3.Runtime.dll
-    * Unvell.ReoScript.dll
+        Antlr3.Runtime.dll
+        Unvell.ReoScript.dll
 
 2. Import the following namespace
     
