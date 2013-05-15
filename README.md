@@ -2,7 +2,7 @@ ReoScript
 =========
 **Script language interpreter for .Net programs**
 
-ReoScript is a powerful JavaScript-like script language interpreter implemented in C#. It be designed for inclusion in applications that require a built-in, easy to use, scalable script language with no dependencies other language like C/C++.
+ReoScript is a powerful JavaScript-like script language engine implemented in C#. It was be designed for inclusion in applications that require a built-in, easy to use, scalable script language with no dependencies other language like C/C++.
 
 ## Features
 
@@ -11,10 +11,12 @@ ReoScript is a powerful JavaScript-like script language interpreter implemented 
 - Fully prototype chain mechanism
 - Lambda Expression
 - Enhanced Array Enumerator and Collection Operations
+- Console Runner
 - Data exchange with .Net CLR
 - Property Extension and Function Extension
 - Directly access .Net object with DirectAccess
-- Using .Net Types and Event Binding
+- Import and using .Net Types in script
+- Auto CLR Event Binding
 
 ReoScript is not completely compliant to JavaScript/ECMAScript standard, it has stricter syntax check and own additional syntax, function and object in order to enhance usability of data exchange. 
 
