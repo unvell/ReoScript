@@ -2,9 +2,28 @@
 
 <test-suite id="008" name="number">
   
-  <test-case id="001">
+  <test-case id="001" name="insensitive">
     <script>
       var t = debug.assert;
+      
+      t( 1 == 1 );
+      t( 1 == 1.0 );
+      t( 1 != 1.1 );
+      
+      t( 1 == "1" );
+      
+    </script>
+  </test-case>
+
+  <test-case id="005" name="binary">
+    <script>
+      var t = debug.assert;
+			
+			var a = 4;
+			var b = new Number(a);
+			
+			t( b.toString(2), '100' );
+			
     </script>
   </test-case>
 

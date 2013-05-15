@@ -115,7 +115,24 @@
     </script>
   </test-case>
 
-  <test-case id="010" name="less than">
+  <test-case id="010" name="bool constructor">
+    <script>
+      var t = debug.assert;
+
+      var bTrue = Boolean(true);
+      t( bTrue, true );
+
+      var bTrueObj = new Boolean(true);
+      t( typeof bTrueObj, 'object' );
+      t( bTrueObj instanceof Boolean );
+      
+      t( bTrueObj.valueOf != null );
+      t( bTrueObj.valueOf(), true );
+
+    </script>
+  </test-case>
+
+  <test-case id="011" name="less than">
     <script>
       var t = debug.assert;
 
@@ -128,7 +145,7 @@
     </script>
   </test-case>
 
-  <test-case id="011" name="NaN">
+  <test-case id="012" name="NaN">
     <script>
       var t = debug.assert;
 
@@ -146,9 +163,23 @@
       
     </script>
   </test-case>
+
+  <test-case id="013" name="===">
+    <script>
+      var t = debug.assert;
+
+      var a = new String(10);
+      
+      t( a == '10' );
+      t( a == 10 );
+      t( a !== '10' );
+      t( a !== 10 );
+      
+    </script>
+  </test-case>
   
   <!-- Bit computing -->
-  <test-case id="100">
+  <test-case id="020" name="binary">
     <script>
       var t = debug.assert;
 
@@ -165,7 +196,7 @@
     </script>
   </test-case>
 
-  <test-case id="101">
+  <test-case id="021" name="binary literal">
     <script>
       var t = debug.assert;
 

@@ -82,6 +82,33 @@
 
     </script>
   </test-case>
+
+  <test-case id="006" name="constructor">
+    <script>
+      var t = debug.assert;
+
+      var arr = new Array(1,2,3,4,5,6,7);
+      
+      t( arr.length == 7 );
+      t( arr[0] == 1 );
+      t( arr[6] == 7 );
+
+    </script>
+  </test-case>
+
+  <test-case id="007" name="indexOf">
+    <script>
+      var t = debug.assert;
+
+      var fun = function() { };
+      var arr = new Array(null, 3, "hello", function() { }, fun, 7);
+      
+      t( arr.indexOf(3) == 1 );
+      t( arr.indexOf(fun) == 4 );
+      t( arr.indexOf('hello') == 2 );
+
+    </script>
+  </test-case>
   
   <test-case id="010">
     <script>
@@ -108,4 +135,5 @@
       
     </script>
   </test-case>
+
 </test-suite>

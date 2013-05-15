@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.4 C:\\work\\ReoScript\\ReoScript.g 2013-03-31 10:38:23
+// $ANTLR 3.4 E:\\dotnet-projects\\ReoScript\\ReoScript.g 2013-05-10 16:32:35
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -31,12 +31,6 @@ namespace  Unvell.ReoScript
 public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 {
 	public const int EOF=-1;
-	public const int T__115=115;
-	public const int T__116=116;
-	public const int T__117=117;
-	public const int T__118=118;
-	public const int T__119=119;
-	public const int T__120=120;
 	public const int T__121=121;
 	public const int T__122=122;
 	public const int T__123=123;
@@ -53,6 +47,15 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	public const int T__134=134;
 	public const int T__135=135;
 	public const int T__136=136;
+	public const int T__137=137;
+	public const int T__138=138;
+	public const int T__139=139;
+	public const int T__140=140;
+	public const int T__141=141;
+	public const int T__142=142;
+	public const int T__143=143;
+	public const int T__144=144;
+	public const int T__145=145;
 	public const int AND=4;
 	public const int ANONYMOUS_FUNCTION=5;
 	public const int ARGUMENT_LIST=6;
@@ -82,88 +85,94 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	public const int CREATE=30;
 	public const int DECLARATION=31;
 	public const int DECREMENT=32;
-	public const int DELETE=33;
+	public const int DELETE_PROP=33;
 	public const int DIV=34;
 	public const int DOT=35;
 	public const int ELSE=36;
 	public const int EQUALS=37;
 	public const int ESCAPE_SEQUENCE=38;
-	public const int FALSE=39;
-	public const int FOREACH_STATEMENT=40;
-	public const int FOR_BODY=41;
-	public const int FOR_CONDITION=42;
-	public const int FOR_INIT=43;
-	public const int FOR_ITERATOR=44;
-	public const int FOR_STATEMENT=45;
-	public const int FUNCTION_CALL=46;
-	public const int FUNCTION_DEFINE=47;
-	public const int GREAT_EQUALS=48;
-	public const int GREAT_THAN=49;
-	public const int HEX_LITERATE=50;
-	public const int IDENTIFIER=51;
-	public const int IF_STATEMENT=52;
-	public const int IMPORT=53;
-	public const int INCREMENT=54;
-	public const int INSTANCEOF=55;
-	public const int LAMBDA_FUNCTION=56;
-	public const int LBRACE=57;
-	public const int LCURLY=58;
-	public const int LESS_EQUALS=59;
-	public const int LESS_THAN=60;
-	public const int LINE_COMMENT=61;
-	public const int LOCAL_DECLARE_ASSIGNMENT=62;
-	public const int LOGICAL_AND=63;
-	public const int LOGICAL_OR=64;
-	public const int LPAREN=65;
-	public const int LSHIFT=66;
-	public const int MEMBER_DECLARATION=67;
-	public const int MEMBER_MODIFIER=68;
-	public const int MINUS=69;
-	public const int MOD=70;
-	public const int MUL=71;
-	public const int NAN=72;
-	public const int NEWLINE=73;
-	public const int NOT=74;
-	public const int NOT_EQUALS=75;
-	public const int NULL=76;
-	public const int NUMBER_LITERATE=77;
-	public const int OBJECT_LITERAL=78;
-	public const int OR=79;
-	public const int PARAMETER_DEFINES=80;
-	public const int PARAMETER_DEFINE_WITH_DEFAULT_VALUE=81;
-	public const int PARAMETER_DEFINE_WITH_DEFAULT_VALUE_LIST=82;
-	public const int PLUS=83;
-	public const int POST_UNARY_STEP=84;
-	public const int PRE_UNARY=85;
-	public const int PRE_UNARY_STEP=86;
-	public const int PRIVATE=87;
-	public const int PROPERTY_ACCESS=88;
-	public const int PROTECTED=89;
-	public const int PUBLIC=90;
-	public const int RBRACE=91;
-	public const int RCURLY=92;
-	public const int RETURN=93;
-	public const int RPAREN=94;
-	public const int RSHIFT=95;
-	public const int SEMI=96;
-	public const int STRING_LITERATE=97;
-	public const int SWITCH=98;
-	public const int SWITCH_CASE=99;
-	public const int SWITCH_CASE_ELSE=100;
-	public const int TAG=101;
-	public const int TAG_ATTR=102;
-	public const int TAG_ATTR_LIST=103;
-	public const int TAG_NAME=104;
-	public const int TEMPLATE_DEFINE=105;
-	public const int TEMPLATE_TAG=106;
-	public const int THIS=107;
-	public const int TRUE=108;
-	public const int TYPE=109;
-	public const int TYPEOF=110;
-	public const int UNDEFINED=111;
-	public const int WHILE_STATEMENT=112;
-	public const int WS=113;
-	public const int XOR=114;
+	public const int FOREACH_STATEMENT=39;
+	public const int FOR_BODY=40;
+	public const int FOR_CONDITION=41;
+	public const int FOR_INIT=42;
+	public const int FOR_ITERATOR=43;
+	public const int FOR_STATEMENT=44;
+	public const int FUNCTION_CALL=45;
+	public const int FUNCTION_DEFINE=46;
+	public const int GREAT_EQUALS=47;
+	public const int GREAT_THAN=48;
+	public const int HEX_LITERATE=49;
+	public const int IDENTIFIER=50;
+	public const int IF_STATEMENT=51;
+	public const int IMPORT=52;
+	public const int INCREMENT=53;
+	public const int INSTANCEOF=54;
+	public const int LAMBDA_FUNCTION=55;
+	public const int LBRACE=56;
+	public const int LCURLY=57;
+	public const int LESS_EQUALS=58;
+	public const int LESS_THAN=59;
+	public const int LINE_COMMENT=60;
+	public const int LIT_FALSE=61;
+	public const int LIT_NULL=62;
+	public const int LIT_TRUE=63;
+	public const int LOCAL_DECLARE_ASSIGNMENT=64;
+	public const int LOGICAL_AND=65;
+	public const int LOGICAL_OR=66;
+	public const int LPAREN=67;
+	public const int LSHIFT=68;
+	public const int MEMBER_DECLARATION=69;
+	public const int MEMBER_MODIFIER=70;
+	public const int MINUS=71;
+	public const int MOD=72;
+	public const int MUL=73;
+	public const int NAN=74;
+	public const int NEWLINE=75;
+	public const int NOT=76;
+	public const int NOT_EQUALS=77;
+	public const int NUMBER_LITERATE=78;
+	public const int OBJECT_LITERAL=79;
+	public const int OR=80;
+	public const int PARAMETER_DEFINES=81;
+	public const int PARAMETER_DEFINE_WITH_DEFAULT_VALUE=82;
+	public const int PARAMETER_DEFINE_WITH_DEFAULT_VALUE_LIST=83;
+	public const int PLUS=84;
+	public const int POST_UNARY_STEP=85;
+	public const int PRE_UNARY=86;
+	public const int PRE_UNARY_STEP=87;
+	public const int PRIVATE=88;
+	public const int PROPERTY_ACCESS=89;
+	public const int PROTECTED=90;
+	public const int PUBLIC=91;
+	public const int RBRACE=92;
+	public const int RCURLY=93;
+	public const int RETURN=94;
+	public const int RPAREN=95;
+	public const int RSHIFT=96;
+	public const int SEMI=97;
+	public const int STRICT_EQUALS=98;
+	public const int STRICT_NOT_EQUALS=99;
+	public const int STRING_LITERATE=100;
+	public const int SWITCH=101;
+	public const int SWITCH_CASE=102;
+	public const int SWITCH_CASE_ELSE=103;
+	public const int TAG=104;
+	public const int TAG_ATTR=105;
+	public const int TAG_ATTR_LIST=106;
+	public const int TAG_NAME=107;
+	public const int TEMPLATE_DEFINE=108;
+	public const int TEMPLATE_TAG=109;
+	public const int THIS=110;
+	public const int TRY_CATCH=111;
+	public const int TRY_CATCH_CASE=112;
+	public const int TRY_CATCH_FINAL=113;
+	public const int TRY_CATCH_TRHOW=114;
+	public const int TYPE=115;
+	public const int TYPEOF=116;
+	public const int UNDEFINED=117;
+	public const int WHILE_STATEMENT=118;
+	public const int WS=119;
+	public const int XOR=120;
 
     // delegates
     // delegators
@@ -184,7 +193,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 
 		OnCreated();
 	}
-	public override string GrammarFileName { get { return "C:\\work\\ReoScript\\ReoScript.g"; } }
+	public override string GrammarFileName { get { return "E:\\dotnet-projects\\ReoScript\\ReoScript.g"; } }
 
 
 	partial void OnCreated();
@@ -205,9 +214,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = AND;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:10:5: ( '&' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:10:5: ( '&' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:10:7: '&'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:10:7: '&'
 			{
 			DebugLocation(10, 7);
 			Match('&'); 
@@ -240,9 +249,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = DIV;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:11:5: ( '/' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:11:5: ( '/' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:11:7: '/'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:11:7: '/'
 			{
 			DebugLocation(11, 7);
 			Match('/'); 
@@ -275,9 +284,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = EQUALS;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:12:8: ( '==' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:12:8: ( '==' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:12:10: '=='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:12:10: '=='
 			{
 			DebugLocation(12, 10);
 			Match("=="); 
@@ -311,9 +320,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = GREAT_EQUALS;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:13:14: ( '>=' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:13:14: ( '>=' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:13:16: '>='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:13:16: '>='
 			{
 			DebugLocation(13, 16);
 			Match(">="); 
@@ -347,9 +356,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = GREAT_THAN;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:14:12: ( '>' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:14:12: ( '>' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:14:14: '>'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:14:14: '>'
 			{
 			DebugLocation(14, 14);
 			Match('>'); 
@@ -382,9 +391,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LESS_EQUALS;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:15:13: ( '<=' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:15:13: ( '<=' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:15:15: '<='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:15:15: '<='
 			{
 			DebugLocation(15, 15);
 			Match("<="); 
@@ -418,9 +427,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LESS_THAN;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:16:11: ( '<' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:16:11: ( '<' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:16:13: '<'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:16:13: '<'
 			{
 			DebugLocation(16, 13);
 			Match('<'); 
@@ -453,9 +462,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LOGICAL_AND;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:17:13: ( '&&' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:17:13: ( '&&' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:17:15: '&&'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:17:15: '&&'
 			{
 			DebugLocation(17, 15);
 			Match("&&"); 
@@ -489,9 +498,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LOGICAL_OR;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:18:12: ( '||' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:18:12: ( '||' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:18:14: '||'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:18:14: '||'
 			{
 			DebugLocation(18, 14);
 			Match("||"); 
@@ -525,9 +534,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = LSHIFT;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:19:8: ( '<<' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:19:8: ( '<<' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:19:10: '<<'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:19:10: '<<'
 			{
 			DebugLocation(19, 10);
 			Match("<<"); 
@@ -561,9 +570,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = MINUS;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:20:7: ( '-' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:20:7: ( '-' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:20:9: '-'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:20:9: '-'
 			{
 			DebugLocation(20, 9);
 			Match('-'); 
@@ -596,9 +605,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = MOD;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:21:5: ( '%' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:21:5: ( '%' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:21:7: '%'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:21:7: '%'
 			{
 			DebugLocation(21, 7);
 			Match('%'); 
@@ -631,9 +640,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = MUL;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:22:5: ( '*' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:22:5: ( '*' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:22:7: '*'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:22:7: '*'
 			{
 			DebugLocation(22, 7);
 			Match('*'); 
@@ -666,9 +675,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = NOT_EQUALS;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:23:12: ( '!=' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:23:12: ( '!=' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:23:14: '!='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:23:14: '!='
 			{
 			DebugLocation(23, 14);
 			Match("!="); 
@@ -702,9 +711,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = OR;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:24:4: ( '|' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:24:4: ( '|' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:24:6: '|'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:24:6: '|'
 			{
 			DebugLocation(24, 6);
 			Match('|'); 
@@ -737,9 +746,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = PLUS;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:25:6: ( '+' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:25:6: ( '+' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:25:8: '+'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:25:8: '+'
 			{
 			DebugLocation(25, 8);
 			Match('+'); 
@@ -772,9 +781,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 			int _type = RSHIFT;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:26:8: ( '>>' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:26:8: ( '>>' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:26:10: '>>'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:26:10: '>>'
 			{
 			DebugLocation(26, 10);
 			Match(">>"); 
@@ -794,6 +803,78 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	}
 	// $ANTLR end "RSHIFT"
 
+	partial void EnterRule_STRICT_EQUALS();
+	partial void LeaveRule_STRICT_EQUALS();
+
+	// $ANTLR start "STRICT_EQUALS"
+	[GrammarRule("STRICT_EQUALS")]
+	private void mSTRICT_EQUALS()
+	{
+		EnterRule_STRICT_EQUALS();
+		EnterRule("STRICT_EQUALS", 18);
+		TraceIn("STRICT_EQUALS", 18);
+		try
+		{
+			int _type = STRICT_EQUALS;
+			int _channel = DefaultTokenChannel;
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:27:15: ( '===' )
+			DebugEnterAlt(1);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:27:17: '==='
+			{
+			DebugLocation(27, 17);
+			Match("==="); 
+
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally
+		{
+			TraceOut("STRICT_EQUALS", 18);
+			LeaveRule("STRICT_EQUALS", 18);
+			LeaveRule_STRICT_EQUALS();
+		}
+	}
+	// $ANTLR end "STRICT_EQUALS"
+
+	partial void EnterRule_STRICT_NOT_EQUALS();
+	partial void LeaveRule_STRICT_NOT_EQUALS();
+
+	// $ANTLR start "STRICT_NOT_EQUALS"
+	[GrammarRule("STRICT_NOT_EQUALS")]
+	private void mSTRICT_NOT_EQUALS()
+	{
+		EnterRule_STRICT_NOT_EQUALS();
+		EnterRule("STRICT_NOT_EQUALS", 19);
+		TraceIn("STRICT_NOT_EQUALS", 19);
+		try
+		{
+			int _type = STRICT_NOT_EQUALS;
+			int _channel = DefaultTokenChannel;
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:28:19: ( '!==' )
+			DebugEnterAlt(1);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:28:21: '!=='
+			{
+			DebugLocation(28, 21);
+			Match("!=="); 
+
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally
+		{
+			TraceOut("STRICT_NOT_EQUALS", 19);
+			LeaveRule("STRICT_NOT_EQUALS", 19);
+			LeaveRule_STRICT_NOT_EQUALS();
+		}
+	}
+	// $ANTLR end "STRICT_NOT_EQUALS"
+
 	partial void EnterRule_XOR();
 	partial void LeaveRule_XOR();
 
@@ -802,17 +883,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mXOR()
 	{
 		EnterRule_XOR();
-		EnterRule("XOR", 18);
-		TraceIn("XOR", 18);
+		EnterRule("XOR", 20);
+		TraceIn("XOR", 20);
 		try
 		{
 			int _type = XOR;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:27:5: ( '^' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:29:5: ( '^' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:27:7: '^'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:29:7: '^'
 			{
-			DebugLocation(27, 7);
+			DebugLocation(29, 7);
 			Match('^'); 
 
 			}
@@ -822,32 +903,32 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("XOR", 18);
-			LeaveRule("XOR", 18);
+			TraceOut("XOR", 20);
+			LeaveRule("XOR", 20);
 			LeaveRule_XOR();
 		}
 	}
 	// $ANTLR end "XOR"
 
-	partial void EnterRule_T__115();
-	partial void LeaveRule_T__115();
+	partial void EnterRule_T__121();
+	partial void LeaveRule_T__121();
 
-	// $ANTLR start "T__115"
-	[GrammarRule("T__115")]
-	private void mT__115()
+	// $ANTLR start "T__121"
+	[GrammarRule("T__121")]
+	private void mT__121()
 	{
-		EnterRule_T__115();
-		EnterRule("T__115", 19);
-		TraceIn("T__115", 19);
+		EnterRule_T__121();
+		EnterRule("T__121", 21);
+		TraceIn("T__121", 21);
 		try
 		{
-			int _type = T__115;
+			int _type = T__121;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:28:8: ( '/>' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:30:8: ( '/>' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:28:10: '/>'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:30:10: '/>'
 			{
-			DebugLocation(28, 10);
+			DebugLocation(30, 10);
 			Match("/>"); 
 
 
@@ -858,224 +939,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__115", 19);
-			LeaveRule("T__115", 19);
-			LeaveRule_T__115();
-		}
-	}
-	// $ANTLR end "T__115"
-
-	partial void EnterRule_T__116();
-	partial void LeaveRule_T__116();
-
-	// $ANTLR start "T__116"
-	[GrammarRule("T__116")]
-	private void mT__116()
-	{
-		EnterRule_T__116();
-		EnterRule("T__116", 20);
-		TraceIn("T__116", 20);
-		try
-		{
-			int _type = T__116;
-			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:29:8: ( '</' )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:29:10: '</'
-			{
-			DebugLocation(29, 10);
-			Match("</"); 
-
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally
-		{
-			TraceOut("T__116", 20);
-			LeaveRule("T__116", 20);
-			LeaveRule_T__116();
-		}
-	}
-	// $ANTLR end "T__116"
-
-	partial void EnterRule_T__117();
-	partial void LeaveRule_T__117();
-
-	// $ANTLR start "T__117"
-	[GrammarRule("T__117")]
-	private void mT__117()
-	{
-		EnterRule_T__117();
-		EnterRule("T__117", 21);
-		TraceIn("T__117", 21);
-		try
-		{
-			int _type = T__117;
-			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:30:8: ( '=>' )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:30:10: '=>'
-			{
-			DebugLocation(30, 10);
-			Match("=>"); 
-
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally
-		{
-			TraceOut("T__117", 21);
-			LeaveRule("T__117", 21);
-			LeaveRule_T__117();
-		}
-	}
-	// $ANTLR end "T__117"
-
-	partial void EnterRule_T__118();
-	partial void LeaveRule_T__118();
-
-	// $ANTLR start "T__118"
-	[GrammarRule("T__118")]
-	private void mT__118()
-	{
-		EnterRule_T__118();
-		EnterRule("T__118", 22);
-		TraceIn("T__118", 22);
-		try
-		{
-			int _type = T__118;
-			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:31:8: ( 'break' )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:31:10: 'break'
-			{
-			DebugLocation(31, 10);
-			Match("break"); 
-
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally
-		{
-			TraceOut("T__118", 22);
-			LeaveRule("T__118", 22);
-			LeaveRule_T__118();
-		}
-	}
-	// $ANTLR end "T__118"
-
-	partial void EnterRule_T__119();
-	partial void LeaveRule_T__119();
-
-	// $ANTLR start "T__119"
-	[GrammarRule("T__119")]
-	private void mT__119()
-	{
-		EnterRule_T__119();
-		EnterRule("T__119", 23);
-		TraceIn("T__119", 23);
-		try
-		{
-			int _type = T__119;
-			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:32:8: ( 'case' )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:32:10: 'case'
-			{
-			DebugLocation(32, 10);
-			Match("case"); 
-
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally
-		{
-			TraceOut("T__119", 23);
-			LeaveRule("T__119", 23);
-			LeaveRule_T__119();
-		}
-	}
-	// $ANTLR end "T__119"
-
-	partial void EnterRule_T__120();
-	partial void LeaveRule_T__120();
-
-	// $ANTLR start "T__120"
-	[GrammarRule("T__120")]
-	private void mT__120()
-	{
-		EnterRule_T__120();
-		EnterRule("T__120", 24);
-		TraceIn("T__120", 24);
-		try
-		{
-			int _type = T__120;
-			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:33:8: ( 'class' )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:33:10: 'class'
-			{
-			DebugLocation(33, 10);
-			Match("class"); 
-
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally
-		{
-			TraceOut("T__120", 24);
-			LeaveRule("T__120", 24);
-			LeaveRule_T__120();
-		}
-	}
-	// $ANTLR end "T__120"
-
-	partial void EnterRule_T__121();
-	partial void LeaveRule_T__121();
-
-	// $ANTLR start "T__121"
-	[GrammarRule("T__121")]
-	private void mT__121()
-	{
-		EnterRule_T__121();
-		EnterRule("T__121", 25);
-		TraceIn("T__121", 25);
-		try
-		{
-			int _type = T__121;
-			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:34:8: ( 'continue' )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:34:10: 'continue'
-			{
-			DebugLocation(34, 10);
-			Match("continue"); 
-
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally
-		{
-			TraceOut("T__121", 25);
-			LeaveRule("T__121", 25);
+			TraceOut("T__121", 21);
+			LeaveRule("T__121", 21);
 			LeaveRule_T__121();
 		}
 	}
@@ -1089,18 +954,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__122()
 	{
 		EnterRule_T__122();
-		EnterRule("T__122", 26);
-		TraceIn("T__122", 26);
+		EnterRule("T__122", 22);
+		TraceIn("T__122", 22);
 		try
 		{
 			int _type = T__122;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:35:8: ( 'default' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:31:8: ( '</' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:35:10: 'default'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:31:10: '</'
 			{
-			DebugLocation(35, 10);
-			Match("default"); 
+			DebugLocation(31, 10);
+			Match("</"); 
 
 
 			}
@@ -1110,8 +975,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__122", 26);
-			LeaveRule("T__122", 26);
+			TraceOut("T__122", 22);
+			LeaveRule("T__122", 22);
 			LeaveRule_T__122();
 		}
 	}
@@ -1125,18 +990,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__123()
 	{
 		EnterRule_T__123();
-		EnterRule("T__123", 27);
-		TraceIn("T__123", 27);
+		EnterRule("T__123", 23);
+		TraceIn("T__123", 23);
 		try
 		{
 			int _type = T__123;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:36:8: ( 'delete' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:32:8: ( '=>' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:36:10: 'delete'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:32:10: '=>'
 			{
-			DebugLocation(36, 10);
-			Match("delete"); 
+			DebugLocation(32, 10);
+			Match("=>"); 
 
 
 			}
@@ -1146,8 +1011,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__123", 27);
-			LeaveRule("T__123", 27);
+			TraceOut("T__123", 23);
+			LeaveRule("T__123", 23);
 			LeaveRule_T__123();
 		}
 	}
@@ -1161,18 +1026,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__124()
 	{
 		EnterRule_T__124();
-		EnterRule("T__124", 28);
-		TraceIn("T__124", 28);
+		EnterRule("T__124", 24);
+		TraceIn("T__124", 24);
 		try
 		{
 			int _type = T__124;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:37:8: ( 'for' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:33:8: ( 'break' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:37:10: 'for'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:33:10: 'break'
 			{
-			DebugLocation(37, 10);
-			Match("for"); 
+			DebugLocation(33, 10);
+			Match("break"); 
 
 
 			}
@@ -1182,8 +1047,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__124", 28);
-			LeaveRule("T__124", 28);
+			TraceOut("T__124", 24);
+			LeaveRule("T__124", 24);
 			LeaveRule_T__124();
 		}
 	}
@@ -1197,18 +1062,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__125()
 	{
 		EnterRule_T__125();
-		EnterRule("T__125", 29);
-		TraceIn("T__125", 29);
+		EnterRule("T__125", 25);
+		TraceIn("T__125", 25);
 		try
 		{
 			int _type = T__125;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:38:8: ( 'function' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:34:8: ( 'case' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:38:10: 'function'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:34:10: 'case'
 			{
-			DebugLocation(38, 10);
-			Match("function"); 
+			DebugLocation(34, 10);
+			Match("case"); 
 
 
 			}
@@ -1218,8 +1083,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__125", 29);
-			LeaveRule("T__125", 29);
+			TraceOut("T__125", 25);
+			LeaveRule("T__125", 25);
 			LeaveRule_T__125();
 		}
 	}
@@ -1233,18 +1098,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__126()
 	{
 		EnterRule_T__126();
-		EnterRule("T__126", 30);
-		TraceIn("T__126", 30);
+		EnterRule("T__126", 26);
+		TraceIn("T__126", 26);
 		try
 		{
 			int _type = T__126;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:39:8: ( 'if' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:35:8: ( 'catch' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:39:10: 'if'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:35:10: 'catch'
 			{
-			DebugLocation(39, 10);
-			Match("if"); 
+			DebugLocation(35, 10);
+			Match("catch"); 
 
 
 			}
@@ -1254,8 +1119,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__126", 30);
-			LeaveRule("T__126", 30);
+			TraceOut("T__126", 26);
+			LeaveRule("T__126", 26);
 			LeaveRule_T__126();
 		}
 	}
@@ -1269,18 +1134,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__127()
 	{
 		EnterRule_T__127();
-		EnterRule("T__127", 31);
-		TraceIn("T__127", 31);
+		EnterRule("T__127", 27);
+		TraceIn("T__127", 27);
 		try
 		{
 			int _type = T__127;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:40:8: ( 'import' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:36:8: ( 'class' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:40:10: 'import'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:36:10: 'class'
 			{
-			DebugLocation(40, 10);
-			Match("import"); 
+			DebugLocation(36, 10);
+			Match("class"); 
 
 
 			}
@@ -1290,8 +1155,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__127", 31);
-			LeaveRule("T__127", 31);
+			TraceOut("T__127", 27);
+			LeaveRule("T__127", 27);
 			LeaveRule_T__127();
 		}
 	}
@@ -1305,18 +1170,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__128()
 	{
 		EnterRule_T__128();
-		EnterRule("T__128", 32);
-		TraceIn("T__128", 32);
+		EnterRule("T__128", 28);
+		TraceIn("T__128", 28);
 		try
 		{
 			int _type = T__128;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:41:8: ( 'in' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:37:8: ( 'continue' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:41:10: 'in'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:37:10: 'continue'
 			{
-			DebugLocation(41, 10);
-			Match("in"); 
+			DebugLocation(37, 10);
+			Match("continue"); 
 
 
 			}
@@ -1326,8 +1191,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__128", 32);
-			LeaveRule("T__128", 32);
+			TraceOut("T__128", 28);
+			LeaveRule("T__128", 28);
 			LeaveRule_T__128();
 		}
 	}
@@ -1341,18 +1206,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__129()
 	{
 		EnterRule_T__129();
-		EnterRule("T__129", 33);
-		TraceIn("T__129", 33);
+		EnterRule("T__129", 29);
+		TraceIn("T__129", 29);
 		try
 		{
 			int _type = T__129;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:42:8: ( 'instanceof' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:38:8: ( 'default' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:42:10: 'instanceof'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:38:10: 'default'
 			{
-			DebugLocation(42, 10);
-			Match("instanceof"); 
+			DebugLocation(38, 10);
+			Match("default"); 
 
 
 			}
@@ -1362,8 +1227,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__129", 33);
-			LeaveRule("T__129", 33);
+			TraceOut("T__129", 29);
+			LeaveRule("T__129", 29);
 			LeaveRule_T__129();
 		}
 	}
@@ -1377,18 +1242,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__130()
 	{
 		EnterRule_T__130();
-		EnterRule("T__130", 34);
-		TraceIn("T__130", 34);
+		EnterRule("T__130", 30);
+		TraceIn("T__130", 30);
 		try
 		{
 			int _type = T__130;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:43:8: ( 'new' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:39:8: ( 'delete' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:43:10: 'new'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:39:10: 'delete'
 			{
-			DebugLocation(43, 10);
-			Match("new"); 
+			DebugLocation(39, 10);
+			Match("delete"); 
 
 
 			}
@@ -1398,8 +1263,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__130", 34);
-			LeaveRule("T__130", 34);
+			TraceOut("T__130", 30);
+			LeaveRule("T__130", 30);
 			LeaveRule_T__130();
 		}
 	}
@@ -1413,18 +1278,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__131()
 	{
 		EnterRule_T__131();
-		EnterRule("T__131", 35);
-		TraceIn("T__131", 35);
+		EnterRule("T__131", 31);
+		TraceIn("T__131", 31);
 		try
 		{
 			int _type = T__131;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:44:8: ( 'return' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:40:8: ( 'finally' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:44:10: 'return'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:40:10: 'finally'
 			{
-			DebugLocation(44, 10);
-			Match("return"); 
+			DebugLocation(40, 10);
+			Match("finally"); 
 
 
 			}
@@ -1434,8 +1299,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__131", 35);
-			LeaveRule("T__131", 35);
+			TraceOut("T__131", 31);
+			LeaveRule("T__131", 31);
 			LeaveRule_T__131();
 		}
 	}
@@ -1449,18 +1314,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__132()
 	{
 		EnterRule_T__132();
-		EnterRule("T__132", 36);
-		TraceIn("T__132", 36);
+		EnterRule("T__132", 32);
+		TraceIn("T__132", 32);
 		try
 		{
 			int _type = T__132;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:45:8: ( 'switch' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:41:8: ( 'for' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:45:10: 'switch'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:41:10: 'for'
 			{
-			DebugLocation(45, 10);
-			Match("switch"); 
+			DebugLocation(41, 10);
+			Match("for"); 
 
 
 			}
@@ -1470,8 +1335,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__132", 36);
-			LeaveRule("T__132", 36);
+			TraceOut("T__132", 32);
+			LeaveRule("T__132", 32);
 			LeaveRule_T__132();
 		}
 	}
@@ -1485,18 +1350,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__133()
 	{
 		EnterRule_T__133();
-		EnterRule("T__133", 37);
-		TraceIn("T__133", 37);
+		EnterRule("T__133", 33);
+		TraceIn("T__133", 33);
 		try
 		{
 			int _type = T__133;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:46:8: ( 'template' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:42:8: ( 'function' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:46:10: 'template'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:42:10: 'function'
 			{
-			DebugLocation(46, 10);
-			Match("template"); 
+			DebugLocation(42, 10);
+			Match("function"); 
 
 
 			}
@@ -1506,8 +1371,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__133", 37);
-			LeaveRule("T__133", 37);
+			TraceOut("T__133", 33);
+			LeaveRule("T__133", 33);
 			LeaveRule_T__133();
 		}
 	}
@@ -1521,18 +1386,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__134()
 	{
 		EnterRule_T__134();
-		EnterRule("T__134", 38);
-		TraceIn("T__134", 38);
+		EnterRule("T__134", 34);
+		TraceIn("T__134", 34);
 		try
 		{
 			int _type = T__134;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:47:8: ( 'typeof' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:43:8: ( 'if' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:47:10: 'typeof'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:43:10: 'if'
 			{
-			DebugLocation(47, 10);
-			Match("typeof"); 
+			DebugLocation(43, 10);
+			Match("if"); 
 
 
 			}
@@ -1542,8 +1407,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__134", 38);
-			LeaveRule("T__134", 38);
+			TraceOut("T__134", 34);
+			LeaveRule("T__134", 34);
 			LeaveRule_T__134();
 		}
 	}
@@ -1557,18 +1422,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__135()
 	{
 		EnterRule_T__135();
-		EnterRule("T__135", 39);
-		TraceIn("T__135", 39);
+		EnterRule("T__135", 35);
+		TraceIn("T__135", 35);
 		try
 		{
 			int _type = T__135;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:48:8: ( 'while' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:44:8: ( 'import' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:48:10: 'while'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:44:10: 'import'
 			{
-			DebugLocation(48, 10);
-			Match("while"); 
+			DebugLocation(44, 10);
+			Match("import"); 
 
 
 			}
@@ -1578,8 +1443,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__135", 39);
-			LeaveRule("T__135", 39);
+			TraceOut("T__135", 35);
+			LeaveRule("T__135", 35);
 			LeaveRule_T__135();
 		}
 	}
@@ -1593,17 +1458,341 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mT__136()
 	{
 		EnterRule_T__136();
-		EnterRule("T__136", 40);
-		TraceIn("T__136", 40);
+		EnterRule("T__136", 36);
+		TraceIn("T__136", 36);
 		try
 		{
 			int _type = T__136;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:49:8: ( '~' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:45:8: ( 'in' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:49:10: '~'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:45:10: 'in'
+			{
+			DebugLocation(45, 10);
+			Match("in"); 
+
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally
+		{
+			TraceOut("T__136", 36);
+			LeaveRule("T__136", 36);
+			LeaveRule_T__136();
+		}
+	}
+	// $ANTLR end "T__136"
+
+	partial void EnterRule_T__137();
+	partial void LeaveRule_T__137();
+
+	// $ANTLR start "T__137"
+	[GrammarRule("T__137")]
+	private void mT__137()
+	{
+		EnterRule_T__137();
+		EnterRule("T__137", 37);
+		TraceIn("T__137", 37);
+		try
+		{
+			int _type = T__137;
+			int _channel = DefaultTokenChannel;
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:46:8: ( 'new' )
+			DebugEnterAlt(1);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:46:10: 'new'
+			{
+			DebugLocation(46, 10);
+			Match("new"); 
+
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally
+		{
+			TraceOut("T__137", 37);
+			LeaveRule("T__137", 37);
+			LeaveRule_T__137();
+		}
+	}
+	// $ANTLR end "T__137"
+
+	partial void EnterRule_T__138();
+	partial void LeaveRule_T__138();
+
+	// $ANTLR start "T__138"
+	[GrammarRule("T__138")]
+	private void mT__138()
+	{
+		EnterRule_T__138();
+		EnterRule("T__138", 38);
+		TraceIn("T__138", 38);
+		try
+		{
+			int _type = T__138;
+			int _channel = DefaultTokenChannel;
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:47:8: ( 'return' )
+			DebugEnterAlt(1);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:47:10: 'return'
+			{
+			DebugLocation(47, 10);
+			Match("return"); 
+
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally
+		{
+			TraceOut("T__138", 38);
+			LeaveRule("T__138", 38);
+			LeaveRule_T__138();
+		}
+	}
+	// $ANTLR end "T__138"
+
+	partial void EnterRule_T__139();
+	partial void LeaveRule_T__139();
+
+	// $ANTLR start "T__139"
+	[GrammarRule("T__139")]
+	private void mT__139()
+	{
+		EnterRule_T__139();
+		EnterRule("T__139", 39);
+		TraceIn("T__139", 39);
+		try
+		{
+			int _type = T__139;
+			int _channel = DefaultTokenChannel;
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:48:8: ( 'switch' )
+			DebugEnterAlt(1);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:48:10: 'switch'
+			{
+			DebugLocation(48, 10);
+			Match("switch"); 
+
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally
+		{
+			TraceOut("T__139", 39);
+			LeaveRule("T__139", 39);
+			LeaveRule_T__139();
+		}
+	}
+	// $ANTLR end "T__139"
+
+	partial void EnterRule_T__140();
+	partial void LeaveRule_T__140();
+
+	// $ANTLR start "T__140"
+	[GrammarRule("T__140")]
+	private void mT__140()
+	{
+		EnterRule_T__140();
+		EnterRule("T__140", 40);
+		TraceIn("T__140", 40);
+		try
+		{
+			int _type = T__140;
+			int _channel = DefaultTokenChannel;
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:49:8: ( 'template' )
+			DebugEnterAlt(1);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:49:10: 'template'
 			{
 			DebugLocation(49, 10);
+			Match("template"); 
+
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally
+		{
+			TraceOut("T__140", 40);
+			LeaveRule("T__140", 40);
+			LeaveRule_T__140();
+		}
+	}
+	// $ANTLR end "T__140"
+
+	partial void EnterRule_T__141();
+	partial void LeaveRule_T__141();
+
+	// $ANTLR start "T__141"
+	[GrammarRule("T__141")]
+	private void mT__141()
+	{
+		EnterRule_T__141();
+		EnterRule("T__141", 41);
+		TraceIn("T__141", 41);
+		try
+		{
+			int _type = T__141;
+			int _channel = DefaultTokenChannel;
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:50:8: ( 'throw' )
+			DebugEnterAlt(1);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:50:10: 'throw'
+			{
+			DebugLocation(50, 10);
+			Match("throw"); 
+
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally
+		{
+			TraceOut("T__141", 41);
+			LeaveRule("T__141", 41);
+			LeaveRule_T__141();
+		}
+	}
+	// $ANTLR end "T__141"
+
+	partial void EnterRule_T__142();
+	partial void LeaveRule_T__142();
+
+	// $ANTLR start "T__142"
+	[GrammarRule("T__142")]
+	private void mT__142()
+	{
+		EnterRule_T__142();
+		EnterRule("T__142", 42);
+		TraceIn("T__142", 42);
+		try
+		{
+			int _type = T__142;
+			int _channel = DefaultTokenChannel;
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:51:8: ( 'try' )
+			DebugEnterAlt(1);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:51:10: 'try'
+			{
+			DebugLocation(51, 10);
+			Match("try"); 
+
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally
+		{
+			TraceOut("T__142", 42);
+			LeaveRule("T__142", 42);
+			LeaveRule_T__142();
+		}
+	}
+	// $ANTLR end "T__142"
+
+	partial void EnterRule_T__143();
+	partial void LeaveRule_T__143();
+
+	// $ANTLR start "T__143"
+	[GrammarRule("T__143")]
+	private void mT__143()
+	{
+		EnterRule_T__143();
+		EnterRule("T__143", 43);
+		TraceIn("T__143", 43);
+		try
+		{
+			int _type = T__143;
+			int _channel = DefaultTokenChannel;
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:52:8: ( 'typeof' )
+			DebugEnterAlt(1);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:52:10: 'typeof'
+			{
+			DebugLocation(52, 10);
+			Match("typeof"); 
+
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally
+		{
+			TraceOut("T__143", 43);
+			LeaveRule("T__143", 43);
+			LeaveRule_T__143();
+		}
+	}
+	// $ANTLR end "T__143"
+
+	partial void EnterRule_T__144();
+	partial void LeaveRule_T__144();
+
+	// $ANTLR start "T__144"
+	[GrammarRule("T__144")]
+	private void mT__144()
+	{
+		EnterRule_T__144();
+		EnterRule("T__144", 44);
+		TraceIn("T__144", 44);
+		try
+		{
+			int _type = T__144;
+			int _channel = DefaultTokenChannel;
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:53:8: ( 'while' )
+			DebugEnterAlt(1);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:53:10: 'while'
+			{
+			DebugLocation(53, 10);
+			Match("while"); 
+
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally
+		{
+			TraceOut("T__144", 44);
+			LeaveRule("T__144", 44);
+			LeaveRule_T__144();
+		}
+	}
+	// $ANTLR end "T__144"
+
+	partial void EnterRule_T__145();
+	partial void LeaveRule_T__145();
+
+	// $ANTLR start "T__145"
+	[GrammarRule("T__145")]
+	private void mT__145()
+	{
+		EnterRule_T__145();
+		EnterRule("T__145", 45);
+		TraceIn("T__145", 45);
+		try
+		{
+			int _type = T__145;
+			int _channel = DefaultTokenChannel;
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:54:8: ( '~' )
+			DebugEnterAlt(1);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:54:10: '~'
+			{
+			DebugLocation(54, 10);
 			Match('~'); 
 
 			}
@@ -1613,12 +1802,12 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__136", 40);
-			LeaveRule("T__136", 40);
-			LeaveRule_T__136();
+			TraceOut("T__145", 45);
+			LeaveRule("T__145", 45);
+			LeaveRule_T__145();
 		}
 	}
-	// $ANTLR end "T__136"
+	// $ANTLR end "T__145"
 
 	partial void EnterRule_NUMBER_LITERATE();
 	partial void LeaveRule_NUMBER_LITERATE();
@@ -1628,18 +1817,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mNUMBER_LITERATE()
 	{
 		EnterRule_NUMBER_LITERATE();
-		EnterRule("NUMBER_LITERATE", 41);
-		TraceIn("NUMBER_LITERATE", 41);
+		EnterRule("NUMBER_LITERATE", 46);
+		TraceIn("NUMBER_LITERATE", 46);
 		try
 		{
 			int _type = NUMBER_LITERATE;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:444:2: ( ( ( '0' .. '9' )* '.' )? ( '0' .. '9' )+ )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:476:2: ( ( ( '0' .. '9' )* '.' )? ( '0' .. '9' )+ )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:444:4: ( ( '0' .. '9' )* '.' )? ( '0' .. '9' )+
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:476:4: ( ( '0' .. '9' )* '.' )? ( '0' .. '9' )+
 			{
-			DebugLocation(444, 4);
-			// C:\\work\\ReoScript\\ReoScript.g:444:4: ( ( '0' .. '9' )* '.' )?
+			DebugLocation(476, 4);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:476:4: ( ( '0' .. '9' )* '.' )?
 			int alt2=2;
 			try { DebugEnterSubRule(2);
 			try { DebugEnterDecision(2, false);
@@ -1657,10 +1846,10 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:444:5: ( '0' .. '9' )* '.'
+				// E:\\dotnet-projects\\ReoScript\\ReoScript.g:476:5: ( '0' .. '9' )* '.'
 				{
-				DebugLocation(444, 5);
-				// C:\\work\\ReoScript\\ReoScript.g:444:5: ( '0' .. '9' )*
+				DebugLocation(476, 5);
+				// E:\\dotnet-projects\\ReoScript\\ReoScript.g:476:5: ( '0' .. '9' )*
 				try { DebugEnterSubRule(1);
 				while (true)
 				{
@@ -1679,9 +1868,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// C:\\work\\ReoScript\\ReoScript.g:
+						// E:\\dotnet-projects\\ReoScript\\ReoScript.g:
 						{
-						DebugLocation(444, 5);
+						DebugLocation(476, 5);
 						input.Consume();
 
 
@@ -1698,7 +1887,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 
 				} finally { DebugExitSubRule(1); }
 
-				DebugLocation(444, 16);
+				DebugLocation(476, 16);
 				Match('.'); 
 
 				}
@@ -1707,8 +1896,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			}
 			} finally { DebugExitSubRule(2); }
 
-			DebugLocation(444, 21);
-			// C:\\work\\ReoScript\\ReoScript.g:444:21: ( '0' .. '9' )+
+			DebugLocation(476, 21);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:476:21: ( '0' .. '9' )+
 			int cnt3=0;
 			try { DebugEnterSubRule(3);
 			while (true)
@@ -1728,9 +1917,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:
+					// E:\\dotnet-projects\\ReoScript\\ReoScript.g:
 					{
-					DebugLocation(444, 21);
+					DebugLocation(476, 21);
 					input.Consume();
 
 
@@ -1760,8 +1949,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("NUMBER_LITERATE", 41);
-			LeaveRule("NUMBER_LITERATE", 41);
+			TraceOut("NUMBER_LITERATE", 46);
+			LeaveRule("NUMBER_LITERATE", 46);
 			LeaveRule_NUMBER_LITERATE();
 		}
 	}
@@ -1775,22 +1964,22 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mHEX_LITERATE()
 	{
 		EnterRule_HEX_LITERATE();
-		EnterRule("HEX_LITERATE", 42);
-		TraceIn("HEX_LITERATE", 42);
+		EnterRule("HEX_LITERATE", 47);
+		TraceIn("HEX_LITERATE", 47);
 		try
 		{
 			int _type = HEX_LITERATE;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:448:2: ( '0' 'x' ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+ )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:480:2: ( '0' 'x' ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+ )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:448:4: '0' 'x' ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:480:4: '0' 'x' ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+
 			{
-			DebugLocation(448, 4);
+			DebugLocation(480, 4);
 			Match('0'); 
-			DebugLocation(448, 8);
+			DebugLocation(480, 8);
 			Match('x'); 
-			DebugLocation(448, 12);
-			// C:\\work\\ReoScript\\ReoScript.g:448:12: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+
+			DebugLocation(480, 12);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:480:12: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+
 			int cnt4=0;
 			try { DebugEnterSubRule(4);
 			while (true)
@@ -1810,9 +1999,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:
+					// E:\\dotnet-projects\\ReoScript\\ReoScript.g:
 					{
-					DebugLocation(448, 12);
+					DebugLocation(480, 12);
 					input.Consume();
 
 
@@ -1842,8 +2031,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("HEX_LITERATE", 42);
-			LeaveRule("HEX_LITERATE", 42);
+			TraceOut("HEX_LITERATE", 47);
+			LeaveRule("HEX_LITERATE", 47);
 			LeaveRule_HEX_LITERATE();
 		}
 	}
@@ -1857,22 +2046,22 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mBINARY_LITERATE()
 	{
 		EnterRule_BINARY_LITERATE();
-		EnterRule("BINARY_LITERATE", 43);
-		TraceIn("BINARY_LITERATE", 43);
+		EnterRule("BINARY_LITERATE", 48);
+		TraceIn("BINARY_LITERATE", 48);
 		try
 		{
 			int _type = BINARY_LITERATE;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:452:2: ( '0' 'b' ( '0' | '1' )+ )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:484:2: ( '0' 'b' ( '0' | '1' )+ )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:452:4: '0' 'b' ( '0' | '1' )+
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:484:4: '0' 'b' ( '0' | '1' )+
 			{
-			DebugLocation(452, 4);
+			DebugLocation(484, 4);
 			Match('0'); 
-			DebugLocation(452, 8);
+			DebugLocation(484, 8);
 			Match('b'); 
-			DebugLocation(452, 12);
-			// C:\\work\\ReoScript\\ReoScript.g:452:12: ( '0' | '1' )+
+			DebugLocation(484, 12);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:484:12: ( '0' | '1' )+
 			int cnt5=0;
 			try { DebugEnterSubRule(5);
 			while (true)
@@ -1892,9 +2081,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:
+					// E:\\dotnet-projects\\ReoScript\\ReoScript.g:
 					{
-					DebugLocation(452, 12);
+					DebugLocation(484, 12);
 					input.Consume();
 
 
@@ -1924,8 +2113,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("BINARY_LITERATE", 43);
-			LeaveRule("BINARY_LITERATE", 43);
+			TraceOut("BINARY_LITERATE", 48);
+			LeaveRule("BINARY_LITERATE", 48);
 			LeaveRule_BINARY_LITERATE();
 		}
 	}
@@ -1939,13 +2128,13 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mSTRING_LITERATE()
 	{
 		EnterRule_STRING_LITERATE();
-		EnterRule("STRING_LITERATE", 44);
-		TraceIn("STRING_LITERATE", 44);
+		EnterRule("STRING_LITERATE", 49);
+		TraceIn("STRING_LITERATE", 49);
 		try
 		{
 			int _type = STRING_LITERATE;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:456:2: ( '\"' (~ '\"' )* '\"' | '\\'' (~ '\\'' )* '\\'' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:488:2: ( '\"' (~ '\"' )* '\"' | '\\'' (~ '\\'' )* '\\'' )
 			int alt8=2;
 			try { DebugEnterDecision(8, false);
 			int LA8_0 = input.LA(1);
@@ -1969,12 +2158,12 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:457:3: '\"' (~ '\"' )* '\"'
+				// E:\\dotnet-projects\\ReoScript\\ReoScript.g:489:3: '\"' (~ '\"' )* '\"'
 				{
-				DebugLocation(457, 3);
+				DebugLocation(489, 3);
 				Match('\"'); 
-				DebugLocation(457, 7);
-				// C:\\work\\ReoScript\\ReoScript.g:457:7: (~ '\"' )*
+				DebugLocation(489, 7);
+				// E:\\dotnet-projects\\ReoScript\\ReoScript.g:489:7: (~ '\"' )*
 				try { DebugEnterSubRule(6);
 				while (true)
 				{
@@ -1993,9 +2182,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// C:\\work\\ReoScript\\ReoScript.g:
+						// E:\\dotnet-projects\\ReoScript\\ReoScript.g:
 						{
-						DebugLocation(457, 7);
+						DebugLocation(489, 7);
 						input.Consume();
 
 
@@ -2012,19 +2201,19 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 
 				} finally { DebugExitSubRule(6); }
 
-				DebugLocation(457, 13);
+				DebugLocation(489, 13);
 				Match('\"'); 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:458:4: '\\'' (~ '\\'' )* '\\''
+				// E:\\dotnet-projects\\ReoScript\\ReoScript.g:490:4: '\\'' (~ '\\'' )* '\\''
 				{
-				DebugLocation(458, 4);
+				DebugLocation(490, 4);
 				Match('\''); 
-				DebugLocation(458, 9);
-				// C:\\work\\ReoScript\\ReoScript.g:458:9: (~ '\\'' )*
+				DebugLocation(490, 9);
+				// E:\\dotnet-projects\\ReoScript\\ReoScript.g:490:9: (~ '\\'' )*
 				try { DebugEnterSubRule(7);
 				while (true)
 				{
@@ -2043,9 +2232,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// C:\\work\\ReoScript\\ReoScript.g:
+						// E:\\dotnet-projects\\ReoScript\\ReoScript.g:
 						{
-						DebugLocation(458, 9);
+						DebugLocation(490, 9);
 						input.Consume();
 
 
@@ -2062,7 +2251,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 
 				} finally { DebugExitSubRule(7); }
 
-				DebugLocation(458, 16);
+				DebugLocation(490, 16);
 				Match('\''); 
 
 				}
@@ -2074,8 +2263,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("STRING_LITERATE", 44);
-			LeaveRule("STRING_LITERATE", 44);
+			TraceOut("STRING_LITERATE", 49);
+			LeaveRule("STRING_LITERATE", 49);
 			LeaveRule_STRING_LITERATE();
 		}
 	}
@@ -2089,17 +2278,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mESCAPE_SEQUENCE()
 	{
 		EnterRule_ESCAPE_SEQUENCE();
-		EnterRule("ESCAPE_SEQUENCE", 45);
-		TraceIn("ESCAPE_SEQUENCE", 45);
+		EnterRule("ESCAPE_SEQUENCE", 50);
+		TraceIn("ESCAPE_SEQUENCE", 50);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:466:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:498:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:466:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:498:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
 			{
-			DebugLocation(466, 9);
+			DebugLocation(498, 9);
 			Match('\\'); 
-			DebugLocation(466, 14);
+			DebugLocation(498, 14);
 			if (input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t')
 			{
 				input.Consume();
@@ -2118,8 +2307,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ESCAPE_SEQUENCE", 45);
-			LeaveRule("ESCAPE_SEQUENCE", 45);
+			TraceOut("ESCAPE_SEQUENCE", 50);
+			LeaveRule("ESCAPE_SEQUENCE", 50);
 			LeaveRule_ESCAPE_SEQUENCE();
 		}
 	}
@@ -2133,17 +2322,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGNMENT()
 	{
 		EnterRule_ASSIGNMENT();
-		EnterRule("ASSIGNMENT", 46);
-		TraceIn("ASSIGNMENT", 46);
+		EnterRule("ASSIGNMENT", 51);
+		TraceIn("ASSIGNMENT", 51);
 		try
 		{
 			int _type = ASSIGNMENT;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:480:13: ( '=' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:512:13: ( '=' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:480:15: '='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:512:15: '='
 			{
-			DebugLocation(480, 15);
+			DebugLocation(512, 15);
 			Match('='); 
 
 			}
@@ -2153,8 +2342,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGNMENT", 46);
-			LeaveRule("ASSIGNMENT", 46);
+			TraceOut("ASSIGNMENT", 51);
+			LeaveRule("ASSIGNMENT", 51);
 			LeaveRule_ASSIGNMENT();
 		}
 	}
@@ -2168,17 +2357,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_PLUS()
 	{
 		EnterRule_ASSIGN_PLUS();
-		EnterRule("ASSIGN_PLUS", 47);
-		TraceIn("ASSIGN_PLUS", 47);
+		EnterRule("ASSIGN_PLUS", 52);
+		TraceIn("ASSIGN_PLUS", 52);
 		try
 		{
 			int _type = ASSIGN_PLUS;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:477:14: ( '+=' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:509:14: ( '+=' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:477:16: '+='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:509:16: '+='
 			{
-			DebugLocation(477, 16);
+			DebugLocation(509, 16);
 			Match("+="); 
 
 
@@ -2189,8 +2378,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_PLUS", 47);
-			LeaveRule("ASSIGN_PLUS", 47);
+			TraceOut("ASSIGN_PLUS", 52);
+			LeaveRule("ASSIGN_PLUS", 52);
 			LeaveRule_ASSIGN_PLUS();
 		}
 	}
@@ -2204,17 +2393,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_MINUS()
 	{
 		EnterRule_ASSIGN_MINUS();
-		EnterRule("ASSIGN_MINUS", 48);
-		TraceIn("ASSIGN_MINUS", 48);
+		EnterRule("ASSIGN_MINUS", 53);
+		TraceIn("ASSIGN_MINUS", 53);
 		try
 		{
 			int _type = ASSIGN_MINUS;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:478:14: ( '-=' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:510:14: ( '-=' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:478:16: '-='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:510:16: '-='
 			{
-			DebugLocation(478, 16);
+			DebugLocation(510, 16);
 			Match("-="); 
 
 
@@ -2225,8 +2414,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_MINUS", 48);
-			LeaveRule("ASSIGN_MINUS", 48);
+			TraceOut("ASSIGN_MINUS", 53);
+			LeaveRule("ASSIGN_MINUS", 53);
 			LeaveRule_ASSIGN_MINUS();
 		}
 	}
@@ -2240,17 +2429,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_MUL()
 	{
 		EnterRule_ASSIGN_MUL();
-		EnterRule("ASSIGN_MUL", 49);
-		TraceIn("ASSIGN_MUL", 49);
+		EnterRule("ASSIGN_MUL", 54);
+		TraceIn("ASSIGN_MUL", 54);
 		try
 		{
 			int _type = ASSIGN_MUL;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:479:13: ( '*=' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:511:13: ( '*=' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:479:15: '*='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:511:15: '*='
 			{
-			DebugLocation(479, 15);
+			DebugLocation(511, 15);
 			Match("*="); 
 
 
@@ -2261,8 +2450,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_MUL", 49);
-			LeaveRule("ASSIGN_MUL", 49);
+			TraceOut("ASSIGN_MUL", 54);
+			LeaveRule("ASSIGN_MUL", 54);
 			LeaveRule_ASSIGN_MUL();
 		}
 	}
@@ -2276,17 +2465,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_DIV()
 	{
 		EnterRule_ASSIGN_DIV();
-		EnterRule("ASSIGN_DIV", 50);
-		TraceIn("ASSIGN_DIV", 50);
+		EnterRule("ASSIGN_DIV", 55);
+		TraceIn("ASSIGN_DIV", 55);
 		try
 		{
 			int _type = ASSIGN_DIV;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:480:13: ( '/=' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:512:13: ( '/=' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:480:15: '/='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:512:15: '/='
 			{
-			DebugLocation(480, 15);
+			DebugLocation(512, 15);
 			Match("/="); 
 
 
@@ -2297,8 +2486,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_DIV", 50);
-			LeaveRule("ASSIGN_DIV", 50);
+			TraceOut("ASSIGN_DIV", 55);
+			LeaveRule("ASSIGN_DIV", 55);
 			LeaveRule_ASSIGN_DIV();
 		}
 	}
@@ -2312,17 +2501,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_REM()
 	{
 		EnterRule_ASSIGN_REM();
-		EnterRule("ASSIGN_REM", 51);
-		TraceIn("ASSIGN_REM", 51);
+		EnterRule("ASSIGN_REM", 56);
+		TraceIn("ASSIGN_REM", 56);
 		try
 		{
 			int _type = ASSIGN_REM;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:481:13: ( '%=' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:513:13: ( '%=' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:481:15: '%='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:513:15: '%='
 			{
-			DebugLocation(481, 15);
+			DebugLocation(513, 15);
 			Match("%="); 
 
 
@@ -2333,8 +2522,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_REM", 51);
-			LeaveRule("ASSIGN_REM", 51);
+			TraceOut("ASSIGN_REM", 56);
+			LeaveRule("ASSIGN_REM", 56);
 			LeaveRule_ASSIGN_REM();
 		}
 	}
@@ -2348,17 +2537,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_AND()
 	{
 		EnterRule_ASSIGN_AND();
-		EnterRule("ASSIGN_AND", 52);
-		TraceIn("ASSIGN_AND", 52);
+		EnterRule("ASSIGN_AND", 57);
+		TraceIn("ASSIGN_AND", 57);
 		try
 		{
 			int _type = ASSIGN_AND;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:482:13: ( '&=' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:514:13: ( '&=' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:482:15: '&='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:514:15: '&='
 			{
-			DebugLocation(482, 15);
+			DebugLocation(514, 15);
 			Match("&="); 
 
 
@@ -2369,8 +2558,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_AND", 52);
-			LeaveRule("ASSIGN_AND", 52);
+			TraceOut("ASSIGN_AND", 57);
+			LeaveRule("ASSIGN_AND", 57);
 			LeaveRule_ASSIGN_AND();
 		}
 	}
@@ -2384,17 +2573,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_OR()
 	{
 		EnterRule_ASSIGN_OR();
-		EnterRule("ASSIGN_OR", 53);
-		TraceIn("ASSIGN_OR", 53);
+		EnterRule("ASSIGN_OR", 58);
+		TraceIn("ASSIGN_OR", 58);
 		try
 		{
 			int _type = ASSIGN_OR;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:483:12: ( '|=' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:515:12: ( '|=' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:483:14: '|='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:515:14: '|='
 			{
-			DebugLocation(483, 14);
+			DebugLocation(515, 14);
 			Match("|="); 
 
 
@@ -2405,8 +2594,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_OR", 53);
-			LeaveRule("ASSIGN_OR", 53);
+			TraceOut("ASSIGN_OR", 58);
+			LeaveRule("ASSIGN_OR", 58);
 			LeaveRule_ASSIGN_OR();
 		}
 	}
@@ -2420,17 +2609,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_REV()
 	{
 		EnterRule_ASSIGN_REV();
-		EnterRule("ASSIGN_REV", 54);
-		TraceIn("ASSIGN_REV", 54);
+		EnterRule("ASSIGN_REV", 59);
+		TraceIn("ASSIGN_REV", 59);
 		try
 		{
 			int _type = ASSIGN_REV;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:484:13: ( '^=' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:516:13: ( '^=' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:484:15: '^='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:516:15: '^='
 			{
-			DebugLocation(484, 15);
+			DebugLocation(516, 15);
 			Match("^="); 
 
 
@@ -2441,8 +2630,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_REV", 54);
-			LeaveRule("ASSIGN_REV", 54);
+			TraceOut("ASSIGN_REV", 59);
+			LeaveRule("ASSIGN_REV", 59);
 			LeaveRule_ASSIGN_REV();
 		}
 	}
@@ -2456,17 +2645,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_LSHIFT()
 	{
 		EnterRule_ASSIGN_LSHIFT();
-		EnterRule("ASSIGN_LSHIFT", 55);
-		TraceIn("ASSIGN_LSHIFT", 55);
+		EnterRule("ASSIGN_LSHIFT", 60);
+		TraceIn("ASSIGN_LSHIFT", 60);
 		try
 		{
 			int _type = ASSIGN_LSHIFT;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:485:15: ( '<<=' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:517:15: ( '<<=' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:485:17: '<<='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:517:17: '<<='
 			{
-			DebugLocation(485, 17);
+			DebugLocation(517, 17);
 			Match("<<="); 
 
 
@@ -2477,8 +2666,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_LSHIFT", 55);
-			LeaveRule("ASSIGN_LSHIFT", 55);
+			TraceOut("ASSIGN_LSHIFT", 60);
+			LeaveRule("ASSIGN_LSHIFT", 60);
 			LeaveRule_ASSIGN_LSHIFT();
 		}
 	}
@@ -2492,17 +2681,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mASSIGN_RSHIFT()
 	{
 		EnterRule_ASSIGN_RSHIFT();
-		EnterRule("ASSIGN_RSHIFT", 56);
-		TraceIn("ASSIGN_RSHIFT", 56);
+		EnterRule("ASSIGN_RSHIFT", 61);
+		TraceIn("ASSIGN_RSHIFT", 61);
 		try
 		{
 			int _type = ASSIGN_RSHIFT;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:486:15: ( '>>=' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:518:15: ( '>>=' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:486:17: '>>='
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:518:17: '>>='
 			{
-			DebugLocation(486, 17);
+			DebugLocation(518, 17);
 			Match(">>="); 
 
 
@@ -2513,8 +2702,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ASSIGN_RSHIFT", 56);
-			LeaveRule("ASSIGN_RSHIFT", 56);
+			TraceOut("ASSIGN_RSHIFT", 61);
+			LeaveRule("ASSIGN_RSHIFT", 61);
 			LeaveRule_ASSIGN_RSHIFT();
 		}
 	}
@@ -2528,17 +2717,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mCOMMA()
 	{
 		EnterRule_COMMA();
-		EnterRule("COMMA", 57);
-		TraceIn("COMMA", 57);
+		EnterRule("COMMA", 62);
+		TraceIn("COMMA", 62);
 		try
 		{
 			int _type = COMMA;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:488:9: ( ',' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:520:9: ( ',' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:488:11: ','
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:520:11: ','
 			{
-			DebugLocation(488, 11);
+			DebugLocation(520, 11);
 			Match(','); 
 
 			}
@@ -2548,8 +2737,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("COMMA", 57);
-			LeaveRule("COMMA", 57);
+			TraceOut("COMMA", 62);
+			LeaveRule("COMMA", 62);
 			LeaveRule_COMMA();
 		}
 	}
@@ -2563,17 +2752,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mLPAREN()
 	{
 		EnterRule_LPAREN();
-		EnterRule("LPAREN", 58);
-		TraceIn("LPAREN", 58);
+		EnterRule("LPAREN", 63);
+		TraceIn("LPAREN", 63);
 		try
 		{
 			int _type = LPAREN;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:489:10: ( '(' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:521:10: ( '(' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:489:12: '('
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:521:12: '('
 			{
-			DebugLocation(489, 12);
+			DebugLocation(521, 12);
 			Match('('); 
 
 			}
@@ -2583,8 +2772,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("LPAREN", 58);
-			LeaveRule("LPAREN", 58);
+			TraceOut("LPAREN", 63);
+			LeaveRule("LPAREN", 63);
 			LeaveRule_LPAREN();
 		}
 	}
@@ -2598,17 +2787,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mRPAREN()
 	{
 		EnterRule_RPAREN();
-		EnterRule("RPAREN", 59);
-		TraceIn("RPAREN", 59);
+		EnterRule("RPAREN", 64);
+		TraceIn("RPAREN", 64);
 		try
 		{
 			int _type = RPAREN;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:490:10: ( ')' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:522:10: ( ')' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:490:12: ')'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:522:12: ')'
 			{
-			DebugLocation(490, 12);
+			DebugLocation(522, 12);
 			Match(')'); 
 
 			}
@@ -2618,8 +2807,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("RPAREN", 59);
-			LeaveRule("RPAREN", 59);
+			TraceOut("RPAREN", 64);
+			LeaveRule("RPAREN", 64);
 			LeaveRule_RPAREN();
 		}
 	}
@@ -2633,17 +2822,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mLBRACE()
 	{
 		EnterRule_LBRACE();
-		EnterRule("LBRACE", 60);
-		TraceIn("LBRACE", 60);
+		EnterRule("LBRACE", 65);
+		TraceIn("LBRACE", 65);
 		try
 		{
 			int _type = LBRACE;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:491:10: ( '[' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:523:10: ( '[' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:491:12: '['
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:523:12: '['
 			{
-			DebugLocation(491, 12);
+			DebugLocation(523, 12);
 			Match('['); 
 
 			}
@@ -2653,8 +2842,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("LBRACE", 60);
-			LeaveRule("LBRACE", 60);
+			TraceOut("LBRACE", 65);
+			LeaveRule("LBRACE", 65);
 			LeaveRule_LBRACE();
 		}
 	}
@@ -2668,17 +2857,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mRBRACE()
 	{
 		EnterRule_RBRACE();
-		EnterRule("RBRACE", 61);
-		TraceIn("RBRACE", 61);
+		EnterRule("RBRACE", 66);
+		TraceIn("RBRACE", 66);
 		try
 		{
 			int _type = RBRACE;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:492:10: ( ']' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:524:10: ( ']' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:492:12: ']'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:524:12: ']'
 			{
-			DebugLocation(492, 12);
+			DebugLocation(524, 12);
 			Match(']'); 
 
 			}
@@ -2688,8 +2877,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("RBRACE", 61);
-			LeaveRule("RBRACE", 61);
+			TraceOut("RBRACE", 66);
+			LeaveRule("RBRACE", 66);
 			LeaveRule_RBRACE();
 		}
 	}
@@ -2703,17 +2892,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mLCURLY()
 	{
 		EnterRule_LCURLY();
-		EnterRule("LCURLY", 62);
-		TraceIn("LCURLY", 62);
+		EnterRule("LCURLY", 67);
+		TraceIn("LCURLY", 67);
 		try
 		{
 			int _type = LCURLY;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:493:10: ( '{' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:525:10: ( '{' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:493:12: '{'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:525:12: '{'
 			{
-			DebugLocation(493, 12);
+			DebugLocation(525, 12);
 			Match('{'); 
 
 			}
@@ -2723,8 +2912,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("LCURLY", 62);
-			LeaveRule("LCURLY", 62);
+			TraceOut("LCURLY", 67);
+			LeaveRule("LCURLY", 67);
 			LeaveRule_LCURLY();
 		}
 	}
@@ -2738,17 +2927,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mRCURLY()
 	{
 		EnterRule_RCURLY();
-		EnterRule("RCURLY", 63);
-		TraceIn("RCURLY", 63);
+		EnterRule("RCURLY", 68);
+		TraceIn("RCURLY", 68);
 		try
 		{
 			int _type = RCURLY;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:494:10: ( '}' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:526:10: ( '}' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:494:12: '}'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:526:12: '}'
 			{
-			DebugLocation(494, 12);
+			DebugLocation(526, 12);
 			Match('}'); 
 
 			}
@@ -2758,8 +2947,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("RCURLY", 63);
-			LeaveRule("RCURLY", 63);
+			TraceOut("RCURLY", 68);
+			LeaveRule("RCURLY", 68);
 			LeaveRule_RCURLY();
 		}
 	}
@@ -2773,17 +2962,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mCOLON()
 	{
 		EnterRule_COLON();
-		EnterRule("COLON", 64);
-		TraceIn("COLON", 64);
+		EnterRule("COLON", 69);
+		TraceIn("COLON", 69);
 		try
 		{
 			int _type = COLON;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:495:9: ( ':' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:527:9: ( ':' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:495:11: ':'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:527:11: ':'
 			{
-			DebugLocation(495, 11);
+			DebugLocation(527, 11);
 			Match(':'); 
 
 			}
@@ -2793,8 +2982,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("COLON", 64);
-			LeaveRule("COLON", 64);
+			TraceOut("COLON", 69);
+			LeaveRule("COLON", 69);
 			LeaveRule_COLON();
 		}
 	}
@@ -2808,17 +2997,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mDOT()
 	{
 		EnterRule_DOT();
-		EnterRule("DOT", 65);
-		TraceIn("DOT", 65);
+		EnterRule("DOT", 70);
+		TraceIn("DOT", 70);
 		try
 		{
 			int _type = DOT;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:496:8: ( '.' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:528:8: ( '.' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:496:10: '.'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:528:10: '.'
 			{
-			DebugLocation(496, 10);
+			DebugLocation(528, 10);
 			Match('.'); 
 
 			}
@@ -2828,8 +3017,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("DOT", 65);
-			LeaveRule("DOT", 65);
+			TraceOut("DOT", 70);
+			LeaveRule("DOT", 70);
 			LeaveRule_DOT();
 		}
 	}
@@ -2843,17 +3032,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mNOT()
 	{
 		EnterRule_NOT();
-		EnterRule("NOT", 66);
-		TraceIn("NOT", 66);
+		EnterRule("NOT", 71);
+		TraceIn("NOT", 71);
 		try
 		{
 			int _type = NOT;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:497:8: ( '!' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:529:8: ( '!' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:497:10: '!'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:529:10: '!'
 			{
-			DebugLocation(497, 10);
+			DebugLocation(529, 10);
 			Match('!'); 
 
 			}
@@ -2863,8 +3052,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("NOT", 66);
-			LeaveRule("NOT", 66);
+			TraceOut("NOT", 71);
+			LeaveRule("NOT", 71);
 			LeaveRule_NOT();
 		}
 	}
@@ -2878,17 +3067,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mINCREMENT()
 	{
 		EnterRule_INCREMENT();
-		EnterRule("INCREMENT", 67);
-		TraceIn("INCREMENT", 67);
+		EnterRule("INCREMENT", 72);
+		TraceIn("INCREMENT", 72);
 		try
 		{
 			int _type = INCREMENT;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:499:12: ( '++' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:531:12: ( '++' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:499:14: '++'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:531:14: '++'
 			{
-			DebugLocation(499, 14);
+			DebugLocation(531, 14);
 			Match("++"); 
 
 
@@ -2899,8 +3088,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("INCREMENT", 67);
-			LeaveRule("INCREMENT", 67);
+			TraceOut("INCREMENT", 72);
+			LeaveRule("INCREMENT", 72);
 			LeaveRule_INCREMENT();
 		}
 	}
@@ -2914,17 +3103,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mDECREMENT()
 	{
 		EnterRule_DECREMENT();
-		EnterRule("DECREMENT", 68);
-		TraceIn("DECREMENT", 68);
+		EnterRule("DECREMENT", 73);
+		TraceIn("DECREMENT", 73);
 		try
 		{
 			int _type = DECREMENT;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:500:12: ( '--' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:532:12: ( '--' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:500:14: '--'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:532:14: '--'
 			{
-			DebugLocation(500, 14);
+			DebugLocation(532, 14);
 			Match("--"); 
 
 
@@ -2935,8 +3124,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("DECREMENT", 68);
-			LeaveRule("DECREMENT", 68);
+			TraceOut("DECREMENT", 73);
+			LeaveRule("DECREMENT", 73);
 			LeaveRule_DECREMENT();
 		}
 	}
@@ -2950,17 +3139,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mCONDITION()
 	{
 		EnterRule_CONDITION();
-		EnterRule("CONDITION", 69);
-		TraceIn("CONDITION", 69);
+		EnterRule("CONDITION", 74);
+		TraceIn("CONDITION", 74);
 		try
 		{
 			int _type = CONDITION;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:502:12: ( '?' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:534:12: ( '?' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:502:14: '?'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:534:14: '?'
 			{
-			DebugLocation(502, 14);
+			DebugLocation(534, 14);
 			Match('?'); 
 
 			}
@@ -2970,8 +3159,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("CONDITION", 69);
-			LeaveRule("CONDITION", 69);
+			TraceOut("CONDITION", 74);
+			LeaveRule("CONDITION", 74);
 			LeaveRule_CONDITION();
 		}
 	}
@@ -2985,17 +3174,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mELSE()
 	{
 		EnterRule_ELSE();
-		EnterRule("ELSE", 70);
-		TraceIn("ELSE", 70);
+		EnterRule("ELSE", 75);
+		TraceIn("ELSE", 75);
 		try
 		{
 			int _type = ELSE;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:503:8: ( 'else' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:535:8: ( 'else' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:503:10: 'else'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:535:10: 'else'
 			{
-			DebugLocation(503, 10);
+			DebugLocation(535, 10);
 			Match("else"); 
 
 
@@ -3006,8 +3195,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("ELSE", 70);
-			LeaveRule("ELSE", 70);
+			TraceOut("ELSE", 75);
+			LeaveRule("ELSE", 75);
 			LeaveRule_ELSE();
 		}
 	}
@@ -3021,17 +3210,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mPRIVATE()
 	{
 		EnterRule_PRIVATE();
-		EnterRule("PRIVATE", 71);
-		TraceIn("PRIVATE", 71);
+		EnterRule("PRIVATE", 76);
+		TraceIn("PRIVATE", 76);
 		try
 		{
 			int _type = PRIVATE;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:505:11: ( 'private' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:537:11: ( 'private' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:505:13: 'private'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:537:13: 'private'
 			{
-			DebugLocation(505, 13);
+			DebugLocation(537, 13);
 			Match("private"); 
 
 
@@ -3042,8 +3231,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("PRIVATE", 71);
-			LeaveRule("PRIVATE", 71);
+			TraceOut("PRIVATE", 76);
+			LeaveRule("PRIVATE", 76);
 			LeaveRule_PRIVATE();
 		}
 	}
@@ -3057,17 +3246,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mPROTECTED()
 	{
 		EnterRule_PROTECTED();
-		EnterRule("PROTECTED", 72);
-		TraceIn("PROTECTED", 72);
+		EnterRule("PROTECTED", 77);
+		TraceIn("PROTECTED", 77);
 		try
 		{
 			int _type = PROTECTED;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:506:12: ( 'protected' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:538:12: ( 'protected' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:506:14: 'protected'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:538:14: 'protected'
 			{
-			DebugLocation(506, 14);
+			DebugLocation(538, 14);
 			Match("protected"); 
 
 
@@ -3078,8 +3267,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("PROTECTED", 72);
-			LeaveRule("PROTECTED", 72);
+			TraceOut("PROTECTED", 77);
+			LeaveRule("PROTECTED", 77);
 			LeaveRule_PROTECTED();
 		}
 	}
@@ -3093,17 +3282,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mPUBLIC()
 	{
 		EnterRule_PUBLIC();
-		EnterRule("PUBLIC", 73);
-		TraceIn("PUBLIC", 73);
+		EnterRule("PUBLIC", 78);
+		TraceIn("PUBLIC", 78);
 		try
 		{
 			int _type = PUBLIC;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:507:10: ( 'public' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:539:10: ( 'public' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:507:12: 'public'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:539:12: 'public'
 			{
-			DebugLocation(507, 12);
+			DebugLocation(539, 12);
 			Match("public"); 
 
 
@@ -3114,8 +3303,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("PUBLIC", 73);
-			LeaveRule("PUBLIC", 73);
+			TraceOut("PUBLIC", 78);
+			LeaveRule("PUBLIC", 78);
 			LeaveRule_PUBLIC();
 		}
 	}
@@ -3129,17 +3318,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mTYPE()
 	{
 		EnterRule_TYPE();
-		EnterRule("TYPE", 74);
-		TraceIn("TYPE", 74);
+		EnterRule("TYPE", 79);
+		TraceIn("TYPE", 79);
 		try
 		{
 			int _type = TYPE;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:508:8: ( 'var' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:540:8: ( 'var' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:508:10: 'var'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:540:10: 'var'
 			{
-			DebugLocation(508, 10);
+			DebugLocation(540, 10);
 			Match("var"); 
 
 
@@ -3150,32 +3339,32 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("TYPE", 74);
-			LeaveRule("TYPE", 74);
+			TraceOut("TYPE", 79);
+			LeaveRule("TYPE", 79);
 			LeaveRule_TYPE();
 		}
 	}
 	// $ANTLR end "TYPE"
 
-	partial void EnterRule_TRUE();
-	partial void LeaveRule_TRUE();
+	partial void EnterRule_LIT_TRUE();
+	partial void LeaveRule_LIT_TRUE();
 
-	// $ANTLR start "TRUE"
-	[GrammarRule("TRUE")]
-	private void mTRUE()
+	// $ANTLR start "LIT_TRUE"
+	[GrammarRule("LIT_TRUE")]
+	private void mLIT_TRUE()
 	{
-		EnterRule_TRUE();
-		EnterRule("TRUE", 75);
-		TraceIn("TRUE", 75);
+		EnterRule_LIT_TRUE();
+		EnterRule("LIT_TRUE", 80);
+		TraceIn("LIT_TRUE", 80);
 		try
 		{
-			int _type = TRUE;
+			int _type = LIT_TRUE;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:509:8: ( 'true' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:541:11: ( 'true' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:509:10: 'true'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:541:13: 'true'
 			{
-			DebugLocation(509, 10);
+			DebugLocation(541, 13);
 			Match("true"); 
 
 
@@ -3186,32 +3375,32 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("TRUE", 75);
-			LeaveRule("TRUE", 75);
-			LeaveRule_TRUE();
+			TraceOut("LIT_TRUE", 80);
+			LeaveRule("LIT_TRUE", 80);
+			LeaveRule_LIT_TRUE();
 		}
 	}
-	// $ANTLR end "TRUE"
+	// $ANTLR end "LIT_TRUE"
 
-	partial void EnterRule_FALSE();
-	partial void LeaveRule_FALSE();
+	partial void EnterRule_LIT_FALSE();
+	partial void LeaveRule_LIT_FALSE();
 
-	// $ANTLR start "FALSE"
-	[GrammarRule("FALSE")]
-	private void mFALSE()
+	// $ANTLR start "LIT_FALSE"
+	[GrammarRule("LIT_FALSE")]
+	private void mLIT_FALSE()
 	{
-		EnterRule_FALSE();
-		EnterRule("FALSE", 76);
-		TraceIn("FALSE", 76);
+		EnterRule_LIT_FALSE();
+		EnterRule("LIT_FALSE", 81);
+		TraceIn("LIT_FALSE", 81);
 		try
 		{
-			int _type = FALSE;
+			int _type = LIT_FALSE;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:510:9: ( 'false' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:542:12: ( 'false' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:510:11: 'false'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:542:14: 'false'
 			{
-			DebugLocation(510, 11);
+			DebugLocation(542, 14);
 			Match("false"); 
 
 
@@ -3222,12 +3411,12 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("FALSE", 76);
-			LeaveRule("FALSE", 76);
-			LeaveRule_FALSE();
+			TraceOut("LIT_FALSE", 81);
+			LeaveRule("LIT_FALSE", 81);
+			LeaveRule_LIT_FALSE();
 		}
 	}
-	// $ANTLR end "FALSE"
+	// $ANTLR end "LIT_FALSE"
 
 	partial void EnterRule_THIS();
 	partial void LeaveRule_THIS();
@@ -3237,17 +3426,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mTHIS()
 	{
 		EnterRule_THIS();
-		EnterRule("THIS", 77);
-		TraceIn("THIS", 77);
+		EnterRule("THIS", 82);
+		TraceIn("THIS", 82);
 		try
 		{
 			int _type = THIS;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:511:8: ( 'this' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:543:8: ( 'this' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:511:10: 'this'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:543:10: 'this'
 			{
-			DebugLocation(511, 10);
+			DebugLocation(543, 10);
 			Match("this"); 
 
 
@@ -3258,32 +3447,32 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("THIS", 77);
-			LeaveRule("THIS", 77);
+			TraceOut("THIS", 82);
+			LeaveRule("THIS", 82);
 			LeaveRule_THIS();
 		}
 	}
 	// $ANTLR end "THIS"
 
-	partial void EnterRule_NULL();
-	partial void LeaveRule_NULL();
+	partial void EnterRule_LIT_NULL();
+	partial void LeaveRule_LIT_NULL();
 
-	// $ANTLR start "NULL"
-	[GrammarRule("NULL")]
-	private void mNULL()
+	// $ANTLR start "LIT_NULL"
+	[GrammarRule("LIT_NULL")]
+	private void mLIT_NULL()
 	{
-		EnterRule_NULL();
-		EnterRule("NULL", 78);
-		TraceIn("NULL", 78);
+		EnterRule_LIT_NULL();
+		EnterRule("LIT_NULL", 83);
+		TraceIn("LIT_NULL", 83);
 		try
 		{
-			int _type = NULL;
+			int _type = LIT_NULL;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:512:8: ( 'null' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:544:11: ( 'null' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:512:10: 'null'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:544:13: 'null'
 			{
-			DebugLocation(512, 10);
+			DebugLocation(544, 13);
 			Match("null"); 
 
 
@@ -3294,12 +3483,12 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("NULL", 78);
-			LeaveRule("NULL", 78);
-			LeaveRule_NULL();
+			TraceOut("LIT_NULL", 83);
+			LeaveRule("LIT_NULL", 83);
+			LeaveRule_LIT_NULL();
 		}
 	}
-	// $ANTLR end "NULL"
+	// $ANTLR end "LIT_NULL"
 
 	partial void EnterRule_UNDEFINED();
 	partial void LeaveRule_UNDEFINED();
@@ -3309,17 +3498,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mUNDEFINED()
 	{
 		EnterRule_UNDEFINED();
-		EnterRule("UNDEFINED", 79);
-		TraceIn("UNDEFINED", 79);
+		EnterRule("UNDEFINED", 84);
+		TraceIn("UNDEFINED", 84);
 		try
 		{
 			int _type = UNDEFINED;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:513:13: ( 'undefined' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:545:13: ( 'undefined' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:513:15: 'undefined'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:545:15: 'undefined'
 			{
-			DebugLocation(513, 15);
+			DebugLocation(545, 15);
 			Match("undefined"); 
 
 
@@ -3330,8 +3519,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("UNDEFINED", 79);
-			LeaveRule("UNDEFINED", 79);
+			TraceOut("UNDEFINED", 84);
+			LeaveRule("UNDEFINED", 84);
 			LeaveRule_UNDEFINED();
 		}
 	}
@@ -3345,17 +3534,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mNAN()
 	{
 		EnterRule_NAN();
-		EnterRule("NAN", 80);
-		TraceIn("NAN", 80);
+		EnterRule("NAN", 85);
+		TraceIn("NAN", 85);
 		try
 		{
 			int _type = NAN;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:514:8: ( 'NaN' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:546:8: ( 'NaN' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:514:10: 'NaN'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:546:10: 'NaN'
 			{
-			DebugLocation(514, 10);
+			DebugLocation(546, 10);
 			Match("NaN"); 
 
 
@@ -3366,12 +3555,48 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("NAN", 80);
-			LeaveRule("NAN", 80);
+			TraceOut("NAN", 85);
+			LeaveRule("NAN", 85);
 			LeaveRule_NAN();
 		}
 	}
 	// $ANTLR end "NAN"
+
+	partial void EnterRule_INSTANCEOF();
+	partial void LeaveRule_INSTANCEOF();
+
+	// $ANTLR start "INSTANCEOF"
+	[GrammarRule("INSTANCEOF")]
+	private void mINSTANCEOF()
+	{
+		EnterRule_INSTANCEOF();
+		EnterRule("INSTANCEOF", 86);
+		TraceIn("INSTANCEOF", 86);
+		try
+		{
+			int _type = INSTANCEOF;
+			int _channel = DefaultTokenChannel;
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:547:13: ( 'instanceof' )
+			DebugEnterAlt(1);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:547:15: 'instanceof'
+			{
+			DebugLocation(547, 15);
+			Match("instanceof"); 
+
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally
+		{
+			TraceOut("INSTANCEOF", 86);
+			LeaveRule("INSTANCEOF", 86);
+			LeaveRule_INSTANCEOF();
+		}
+	}
+	// $ANTLR end "INSTANCEOF"
 
 	partial void EnterRule_COMMENT();
 	partial void LeaveRule_COMMENT();
@@ -3381,21 +3606,21 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mCOMMENT()
 	{
 		EnterRule_COMMENT();
-		EnterRule("COMMENT", 81);
-		TraceIn("COMMENT", 81);
+		EnterRule("COMMENT", 87);
+		TraceIn("COMMENT", 87);
 		try
 		{
 			int _type = COMMENT;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:516:11: ( '/*' ( options {greedy=false; } : . )* '*/' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:549:11: ( '/*' ( options {greedy=false; } : . )* '*/' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:516:13: '/*' ( options {greedy=false; } : . )* '*/'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:549:13: '/*' ( options {greedy=false; } : . )* '*/'
 			{
-			DebugLocation(516, 13);
+			DebugLocation(549, 13);
 			Match("/*"); 
 
-			DebugLocation(516, 18);
-			// C:\\work\\ReoScript\\ReoScript.g:516:18: ( options {greedy=false; } : . )*
+			DebugLocation(549, 18);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:549:18: ( options {greedy=false; } : . )*
 			try { DebugEnterSubRule(9);
 			while (true)
 			{
@@ -3429,9 +3654,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:516:45: .
+					// E:\\dotnet-projects\\ReoScript\\ReoScript.g:549:45: .
 					{
-					DebugLocation(516, 45);
+					DebugLocation(549, 45);
 					MatchAny(); 
 
 					}
@@ -3447,10 +3672,10 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(9); }
 
-			DebugLocation(516, 49);
+			DebugLocation(549, 49);
 			Match("*/"); 
 
-			DebugLocation(516, 54);
+			DebugLocation(549, 54);
 			 _channel=HIDDEN; 
 
 			}
@@ -3460,8 +3685,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("COMMENT", 81);
-			LeaveRule("COMMENT", 81);
+			TraceOut("COMMENT", 87);
+			LeaveRule("COMMENT", 87);
 			LeaveRule_COMMENT();
 		}
 	}
@@ -3475,21 +3700,21 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mLINE_COMMENT()
 	{
 		EnterRule_LINE_COMMENT();
-		EnterRule("LINE_COMMENT", 82);
-		TraceIn("LINE_COMMENT", 82);
+		EnterRule("LINE_COMMENT", 88);
+		TraceIn("LINE_COMMENT", 88);
 		try
 		{
 			int _type = LINE_COMMENT;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:517:14: ( '//' (~ ( '\\r' | '\\n' ) )* )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:550:14: ( '//' (~ ( '\\r' | '\\n' ) )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:517:16: '//' (~ ( '\\r' | '\\n' ) )*
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:550:16: '//' (~ ( '\\r' | '\\n' ) )*
 			{
-			DebugLocation(517, 16);
+			DebugLocation(550, 16);
 			Match("//"); 
 
-			DebugLocation(517, 21);
-			// C:\\work\\ReoScript\\ReoScript.g:517:21: (~ ( '\\r' | '\\n' ) )*
+			DebugLocation(550, 21);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:550:21: (~ ( '\\r' | '\\n' ) )*
 			try { DebugEnterSubRule(10);
 			while (true)
 			{
@@ -3508,9 +3733,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:
+					// E:\\dotnet-projects\\ReoScript\\ReoScript.g:
 					{
-					DebugLocation(517, 21);
+					DebugLocation(550, 21);
 					input.Consume();
 
 
@@ -3527,7 +3752,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(10); }
 
-			DebugLocation(517, 35);
+			DebugLocation(550, 35);
 			 _channel=HIDDEN; 
 
 			}
@@ -3537,8 +3762,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("LINE_COMMENT", 82);
-			LeaveRule("LINE_COMMENT", 82);
+			TraceOut("LINE_COMMENT", 88);
+			LeaveRule("LINE_COMMENT", 88);
 			LeaveRule_LINE_COMMENT();
 		}
 	}
@@ -3552,17 +3777,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mIDENTIFIER()
 	{
 		EnterRule_IDENTIFIER();
-		EnterRule("IDENTIFIER", 83);
-		TraceIn("IDENTIFIER", 83);
+		EnterRule("IDENTIFIER", 89);
+		TraceIn("IDENTIFIER", 89);
 		try
 		{
 			int _type = IDENTIFIER;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:519:14: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '$' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )* )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:552:14: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '$' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:519:16: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '$' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )*
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:552:16: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '$' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )*
 			{
-			DebugLocation(519, 16);
+			DebugLocation(552, 16);
 			if (input.LA(1)=='$'||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z'))
 			{
 				input.Consume();
@@ -3575,8 +3800,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 				throw mse;
 			}
 
-			DebugLocation(519, 44);
-			// C:\\work\\ReoScript\\ReoScript.g:519:44: ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )*
+			DebugLocation(552, 44);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:552:44: ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '_' )*
 			try { DebugEnterSubRule(11);
 			while (true)
 			{
@@ -3595,9 +3820,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:
+					// E:\\dotnet-projects\\ReoScript\\ReoScript.g:
 					{
-					DebugLocation(519, 44);
+					DebugLocation(552, 44);
 					input.Consume();
 
 
@@ -3622,8 +3847,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("IDENTIFIER", 83);
-			LeaveRule("IDENTIFIER", 83);
+			TraceOut("IDENTIFIER", 89);
+			LeaveRule("IDENTIFIER", 89);
 			LeaveRule_IDENTIFIER();
 		}
 	}
@@ -3637,18 +3862,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mNEWLINE()
 	{
 		EnterRule_NEWLINE();
-		EnterRule("NEWLINE", 84);
-		TraceIn("NEWLINE", 84);
+		EnterRule("NEWLINE", 90);
+		TraceIn("NEWLINE", 90);
 		try
 		{
 			int _type = NEWLINE;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:520:11: ( ( '\\r' )? '\\n' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:553:11: ( ( '\\r' )? '\\n' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:520:13: ( '\\r' )? '\\n'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:553:13: ( '\\r' )? '\\n'
 			{
-			DebugLocation(520, 13);
-			// C:\\work\\ReoScript\\ReoScript.g:520:13: ( '\\r' )?
+			DebugLocation(553, 13);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:553:13: ( '\\r' )?
 			int alt12=2;
 			try { DebugEnterSubRule(12);
 			try { DebugEnterDecision(12, false);
@@ -3663,9 +3888,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:520:13: '\\r'
+				// E:\\dotnet-projects\\ReoScript\\ReoScript.g:553:13: '\\r'
 				{
-				DebugLocation(520, 13);
+				DebugLocation(553, 13);
 				Match('\r'); 
 
 				}
@@ -3674,9 +3899,9 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			}
 			} finally { DebugExitSubRule(12); }
 
-			DebugLocation(520, 19);
+			DebugLocation(553, 19);
 			Match('\n'); 
-			DebugLocation(520, 24);
+			DebugLocation(553, 24);
 			 _channel=HIDDEN; 
 
 			}
@@ -3686,8 +3911,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("NEWLINE", 84);
-			LeaveRule("NEWLINE", 84);
+			TraceOut("NEWLINE", 90);
+			LeaveRule("NEWLINE", 90);
 			LeaveRule_NEWLINE();
 		}
 	}
@@ -3701,18 +3926,18 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mWS()
 	{
 		EnterRule_WS();
-		EnterRule("WS", 85);
-		TraceIn("WS", 85);
+		EnterRule("WS", 91);
+		TraceIn("WS", 91);
 		try
 		{
 			int _type = WS;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:521:7: ( ( ' ' | '\\t' | NEWLINE )+ )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:554:7: ( ( ' ' | '\\t' | NEWLINE )+ )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:521:9: ( ' ' | '\\t' | NEWLINE )+
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:554:9: ( ' ' | '\\t' | NEWLINE )+
 			{
-			DebugLocation(521, 9);
-			// C:\\work\\ReoScript\\ReoScript.g:521:9: ( ' ' | '\\t' | NEWLINE )+
+			DebugLocation(554, 9);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:554:9: ( ' ' | '\\t' | NEWLINE )+
 			int cnt13=0;
 			try { DebugEnterSubRule(13);
 			while (true)
@@ -3744,27 +3969,27 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:521:10: ' '
+					// E:\\dotnet-projects\\ReoScript\\ReoScript.g:554:10: ' '
 					{
-					DebugLocation(521, 10);
+					DebugLocation(554, 10);
 					Match(' '); 
 
 					}
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// C:\\work\\ReoScript\\ReoScript.g:521:14: '\\t'
+					// E:\\dotnet-projects\\ReoScript\\ReoScript.g:554:14: '\\t'
 					{
-					DebugLocation(521, 14);
+					DebugLocation(554, 14);
 					Match('\t'); 
 
 					}
 					break;
 				case 3:
 					DebugEnterAlt(3);
-					// C:\\work\\ReoScript\\ReoScript.g:521:21: NEWLINE
+					// E:\\dotnet-projects\\ReoScript\\ReoScript.g:554:21: NEWLINE
 					{
-					DebugLocation(521, 21);
+					DebugLocation(554, 21);
 					mNEWLINE(); 
 
 					}
@@ -3785,7 +4010,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 
 			} finally { DebugExitSubRule(13); }
 
-			DebugLocation(521, 32);
+			DebugLocation(554, 32);
 			 _channel=HIDDEN; 
 
 			}
@@ -3795,8 +4020,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("WS", 85);
-			LeaveRule("WS", 85);
+			TraceOut("WS", 91);
+			LeaveRule("WS", 91);
 			LeaveRule_WS();
 		}
 	}
@@ -3810,17 +4035,17 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	private void mSEMI()
 	{
 		EnterRule_SEMI();
-		EnterRule("SEMI", 86);
-		TraceIn("SEMI", 86);
+		EnterRule("SEMI", 92);
+		TraceIn("SEMI", 92);
 		try
 		{
 			int _type = SEMI;
 			int _channel = DefaultTokenChannel;
-			// C:\\work\\ReoScript\\ReoScript.g:522:8: ( ';' )
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:555:8: ( ';' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:522:10: ';'
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:555:10: ';'
 			{
-			DebugLocation(522, 10);
+			DebugLocation(555, 10);
 			Match(';'); 
 
 			}
@@ -3830,8 +4055,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("SEMI", 86);
-			LeaveRule("SEMI", 86);
+			TraceOut("SEMI", 92);
+			LeaveRule("SEMI", 92);
 			LeaveRule_SEMI();
 		}
 	}
@@ -3839,8 +4064,8 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 
 	public override void mTokens()
 	{
-		// C:\\work\\ReoScript\\ReoScript.g:1:8: ( AND | DIV | EQUALS | GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN | LOGICAL_AND | LOGICAL_OR | LSHIFT | MINUS | MOD | MUL | NOT_EQUALS | OR | PLUS | RSHIFT | XOR | T__115 | T__116 | T__117 | T__118 | T__119 | T__120 | T__121 | T__122 | T__123 | T__124 | T__125 | T__126 | T__127 | T__128 | T__129 | T__130 | T__131 | T__132 | T__133 | T__134 | T__135 | T__136 | NUMBER_LITERATE | HEX_LITERATE | BINARY_LITERATE | STRING_LITERATE | ASSIGNMENT | ASSIGN_PLUS | ASSIGN_MINUS | ASSIGN_MUL | ASSIGN_DIV | ASSIGN_REM | ASSIGN_AND | ASSIGN_OR | ASSIGN_REV | ASSIGN_LSHIFT | ASSIGN_RSHIFT | COMMA | LPAREN | RPAREN | LBRACE | RBRACE | LCURLY | RCURLY | COLON | DOT | NOT | INCREMENT | DECREMENT | CONDITION | ELSE | PRIVATE | PROTECTED | PUBLIC | TYPE | TRUE | FALSE | THIS | NULL | UNDEFINED | NAN | COMMENT | LINE_COMMENT | IDENTIFIER | NEWLINE | WS | SEMI )
-		int alt14=85;
+		// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:8: ( AND | DIV | EQUALS | GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN | LOGICAL_AND | LOGICAL_OR | LSHIFT | MINUS | MOD | MUL | NOT_EQUALS | OR | PLUS | RSHIFT | STRICT_EQUALS | STRICT_NOT_EQUALS | XOR | T__121 | T__122 | T__123 | T__124 | T__125 | T__126 | T__127 | T__128 | T__129 | T__130 | T__131 | T__132 | T__133 | T__134 | T__135 | T__136 | T__137 | T__138 | T__139 | T__140 | T__141 | T__142 | T__143 | T__144 | T__145 | NUMBER_LITERATE | HEX_LITERATE | BINARY_LITERATE | STRING_LITERATE | ASSIGNMENT | ASSIGN_PLUS | ASSIGN_MINUS | ASSIGN_MUL | ASSIGN_DIV | ASSIGN_REM | ASSIGN_AND | ASSIGN_OR | ASSIGN_REV | ASSIGN_LSHIFT | ASSIGN_RSHIFT | COMMA | LPAREN | RPAREN | LBRACE | RBRACE | LCURLY | RCURLY | COLON | DOT | NOT | INCREMENT | DECREMENT | CONDITION | ELSE | PRIVATE | PROTECTED | PUBLIC | TYPE | LIT_TRUE | LIT_FALSE | THIS | LIT_NULL | UNDEFINED | NAN | INSTANCEOF | COMMENT | LINE_COMMENT | IDENTIFIER | NEWLINE | WS | SEMI )
+		int alt14=91;
 		try { DebugEnterDecision(14, false);
 		try
 		{
@@ -3856,7 +4081,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 		{
 		case 1:
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:1:10: AND
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:10: AND
 			{
 			DebugLocation(1, 10);
 			mAND(); 
@@ -3865,7 +4090,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 2:
 			DebugEnterAlt(2);
-			// C:\\work\\ReoScript\\ReoScript.g:1:14: DIV
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:14: DIV
 			{
 			DebugLocation(1, 14);
 			mDIV(); 
@@ -3874,7 +4099,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 3:
 			DebugEnterAlt(3);
-			// C:\\work\\ReoScript\\ReoScript.g:1:18: EQUALS
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:18: EQUALS
 			{
 			DebugLocation(1, 18);
 			mEQUALS(); 
@@ -3883,7 +4108,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 4:
 			DebugEnterAlt(4);
-			// C:\\work\\ReoScript\\ReoScript.g:1:25: GREAT_EQUALS
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:25: GREAT_EQUALS
 			{
 			DebugLocation(1, 25);
 			mGREAT_EQUALS(); 
@@ -3892,7 +4117,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 5:
 			DebugEnterAlt(5);
-			// C:\\work\\ReoScript\\ReoScript.g:1:38: GREAT_THAN
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:38: GREAT_THAN
 			{
 			DebugLocation(1, 38);
 			mGREAT_THAN(); 
@@ -3901,7 +4126,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 6:
 			DebugEnterAlt(6);
-			// C:\\work\\ReoScript\\ReoScript.g:1:49: LESS_EQUALS
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:49: LESS_EQUALS
 			{
 			DebugLocation(1, 49);
 			mLESS_EQUALS(); 
@@ -3910,7 +4135,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 7:
 			DebugEnterAlt(7);
-			// C:\\work\\ReoScript\\ReoScript.g:1:61: LESS_THAN
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:61: LESS_THAN
 			{
 			DebugLocation(1, 61);
 			mLESS_THAN(); 
@@ -3919,7 +4144,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 8:
 			DebugEnterAlt(8);
-			// C:\\work\\ReoScript\\ReoScript.g:1:71: LOGICAL_AND
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:71: LOGICAL_AND
 			{
 			DebugLocation(1, 71);
 			mLOGICAL_AND(); 
@@ -3928,7 +4153,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 9:
 			DebugEnterAlt(9);
-			// C:\\work\\ReoScript\\ReoScript.g:1:83: LOGICAL_OR
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:83: LOGICAL_OR
 			{
 			DebugLocation(1, 83);
 			mLOGICAL_OR(); 
@@ -3937,7 +4162,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 10:
 			DebugEnterAlt(10);
-			// C:\\work\\ReoScript\\ReoScript.g:1:94: LSHIFT
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:94: LSHIFT
 			{
 			DebugLocation(1, 94);
 			mLSHIFT(); 
@@ -3946,7 +4171,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 11:
 			DebugEnterAlt(11);
-			// C:\\work\\ReoScript\\ReoScript.g:1:101: MINUS
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:101: MINUS
 			{
 			DebugLocation(1, 101);
 			mMINUS(); 
@@ -3955,7 +4180,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 12:
 			DebugEnterAlt(12);
-			// C:\\work\\ReoScript\\ReoScript.g:1:107: MOD
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:107: MOD
 			{
 			DebugLocation(1, 107);
 			mMOD(); 
@@ -3964,7 +4189,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 13:
 			DebugEnterAlt(13);
-			// C:\\work\\ReoScript\\ReoScript.g:1:111: MUL
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:111: MUL
 			{
 			DebugLocation(1, 111);
 			mMUL(); 
@@ -3973,7 +4198,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 14:
 			DebugEnterAlt(14);
-			// C:\\work\\ReoScript\\ReoScript.g:1:115: NOT_EQUALS
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:115: NOT_EQUALS
 			{
 			DebugLocation(1, 115);
 			mNOT_EQUALS(); 
@@ -3982,7 +4207,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 15:
 			DebugEnterAlt(15);
-			// C:\\work\\ReoScript\\ReoScript.g:1:126: OR
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:126: OR
 			{
 			DebugLocation(1, 126);
 			mOR(); 
@@ -3991,7 +4216,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 16:
 			DebugEnterAlt(16);
-			// C:\\work\\ReoScript\\ReoScript.g:1:129: PLUS
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:129: PLUS
 			{
 			DebugLocation(1, 129);
 			mPLUS(); 
@@ -4000,7 +4225,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 17:
 			DebugEnterAlt(17);
-			// C:\\work\\ReoScript\\ReoScript.g:1:134: RSHIFT
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:134: RSHIFT
 			{
 			DebugLocation(1, 134);
 			mRSHIFT(); 
@@ -4009,612 +4234,666 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			break;
 		case 18:
 			DebugEnterAlt(18);
-			// C:\\work\\ReoScript\\ReoScript.g:1:141: XOR
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:141: STRICT_EQUALS
 			{
 			DebugLocation(1, 141);
-			mXOR(); 
+			mSTRICT_EQUALS(); 
 
 			}
 			break;
 		case 19:
 			DebugEnterAlt(19);
-			// C:\\work\\ReoScript\\ReoScript.g:1:145: T__115
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:155: STRICT_NOT_EQUALS
 			{
-			DebugLocation(1, 145);
-			mT__115(); 
+			DebugLocation(1, 155);
+			mSTRICT_NOT_EQUALS(); 
 
 			}
 			break;
 		case 20:
 			DebugEnterAlt(20);
-			// C:\\work\\ReoScript\\ReoScript.g:1:152: T__116
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:173: XOR
 			{
-			DebugLocation(1, 152);
-			mT__116(); 
+			DebugLocation(1, 173);
+			mXOR(); 
 
 			}
 			break;
 		case 21:
 			DebugEnterAlt(21);
-			// C:\\work\\ReoScript\\ReoScript.g:1:159: T__117
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:177: T__121
 			{
-			DebugLocation(1, 159);
-			mT__117(); 
+			DebugLocation(1, 177);
+			mT__121(); 
 
 			}
 			break;
 		case 22:
 			DebugEnterAlt(22);
-			// C:\\work\\ReoScript\\ReoScript.g:1:166: T__118
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:184: T__122
 			{
-			DebugLocation(1, 166);
-			mT__118(); 
+			DebugLocation(1, 184);
+			mT__122(); 
 
 			}
 			break;
 		case 23:
 			DebugEnterAlt(23);
-			// C:\\work\\ReoScript\\ReoScript.g:1:173: T__119
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:191: T__123
 			{
-			DebugLocation(1, 173);
-			mT__119(); 
+			DebugLocation(1, 191);
+			mT__123(); 
 
 			}
 			break;
 		case 24:
 			DebugEnterAlt(24);
-			// C:\\work\\ReoScript\\ReoScript.g:1:180: T__120
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:198: T__124
 			{
-			DebugLocation(1, 180);
-			mT__120(); 
+			DebugLocation(1, 198);
+			mT__124(); 
 
 			}
 			break;
 		case 25:
 			DebugEnterAlt(25);
-			// C:\\work\\ReoScript\\ReoScript.g:1:187: T__121
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:205: T__125
 			{
-			DebugLocation(1, 187);
-			mT__121(); 
+			DebugLocation(1, 205);
+			mT__125(); 
 
 			}
 			break;
 		case 26:
 			DebugEnterAlt(26);
-			// C:\\work\\ReoScript\\ReoScript.g:1:194: T__122
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:212: T__126
 			{
-			DebugLocation(1, 194);
-			mT__122(); 
+			DebugLocation(1, 212);
+			mT__126(); 
 
 			}
 			break;
 		case 27:
 			DebugEnterAlt(27);
-			// C:\\work\\ReoScript\\ReoScript.g:1:201: T__123
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:219: T__127
 			{
-			DebugLocation(1, 201);
-			mT__123(); 
+			DebugLocation(1, 219);
+			mT__127(); 
 
 			}
 			break;
 		case 28:
 			DebugEnterAlt(28);
-			// C:\\work\\ReoScript\\ReoScript.g:1:208: T__124
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:226: T__128
 			{
-			DebugLocation(1, 208);
-			mT__124(); 
+			DebugLocation(1, 226);
+			mT__128(); 
 
 			}
 			break;
 		case 29:
 			DebugEnterAlt(29);
-			// C:\\work\\ReoScript\\ReoScript.g:1:215: T__125
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:233: T__129
 			{
-			DebugLocation(1, 215);
-			mT__125(); 
+			DebugLocation(1, 233);
+			mT__129(); 
 
 			}
 			break;
 		case 30:
 			DebugEnterAlt(30);
-			// C:\\work\\ReoScript\\ReoScript.g:1:222: T__126
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:240: T__130
 			{
-			DebugLocation(1, 222);
-			mT__126(); 
+			DebugLocation(1, 240);
+			mT__130(); 
 
 			}
 			break;
 		case 31:
 			DebugEnterAlt(31);
-			// C:\\work\\ReoScript\\ReoScript.g:1:229: T__127
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:247: T__131
 			{
-			DebugLocation(1, 229);
-			mT__127(); 
+			DebugLocation(1, 247);
+			mT__131(); 
 
 			}
 			break;
 		case 32:
 			DebugEnterAlt(32);
-			// C:\\work\\ReoScript\\ReoScript.g:1:236: T__128
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:254: T__132
 			{
-			DebugLocation(1, 236);
-			mT__128(); 
+			DebugLocation(1, 254);
+			mT__132(); 
 
 			}
 			break;
 		case 33:
 			DebugEnterAlt(33);
-			// C:\\work\\ReoScript\\ReoScript.g:1:243: T__129
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:261: T__133
 			{
-			DebugLocation(1, 243);
-			mT__129(); 
+			DebugLocation(1, 261);
+			mT__133(); 
 
 			}
 			break;
 		case 34:
 			DebugEnterAlt(34);
-			// C:\\work\\ReoScript\\ReoScript.g:1:250: T__130
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:268: T__134
 			{
-			DebugLocation(1, 250);
-			mT__130(); 
+			DebugLocation(1, 268);
+			mT__134(); 
 
 			}
 			break;
 		case 35:
 			DebugEnterAlt(35);
-			// C:\\work\\ReoScript\\ReoScript.g:1:257: T__131
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:275: T__135
 			{
-			DebugLocation(1, 257);
-			mT__131(); 
+			DebugLocation(1, 275);
+			mT__135(); 
 
 			}
 			break;
 		case 36:
 			DebugEnterAlt(36);
-			// C:\\work\\ReoScript\\ReoScript.g:1:264: T__132
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:282: T__136
 			{
-			DebugLocation(1, 264);
-			mT__132(); 
+			DebugLocation(1, 282);
+			mT__136(); 
 
 			}
 			break;
 		case 37:
 			DebugEnterAlt(37);
-			// C:\\work\\ReoScript\\ReoScript.g:1:271: T__133
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:289: T__137
 			{
-			DebugLocation(1, 271);
-			mT__133(); 
+			DebugLocation(1, 289);
+			mT__137(); 
 
 			}
 			break;
 		case 38:
 			DebugEnterAlt(38);
-			// C:\\work\\ReoScript\\ReoScript.g:1:278: T__134
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:296: T__138
 			{
-			DebugLocation(1, 278);
-			mT__134(); 
+			DebugLocation(1, 296);
+			mT__138(); 
 
 			}
 			break;
 		case 39:
 			DebugEnterAlt(39);
-			// C:\\work\\ReoScript\\ReoScript.g:1:285: T__135
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:303: T__139
 			{
-			DebugLocation(1, 285);
-			mT__135(); 
+			DebugLocation(1, 303);
+			mT__139(); 
 
 			}
 			break;
 		case 40:
 			DebugEnterAlt(40);
-			// C:\\work\\ReoScript\\ReoScript.g:1:292: T__136
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:310: T__140
 			{
-			DebugLocation(1, 292);
-			mT__136(); 
+			DebugLocation(1, 310);
+			mT__140(); 
 
 			}
 			break;
 		case 41:
 			DebugEnterAlt(41);
-			// C:\\work\\ReoScript\\ReoScript.g:1:299: NUMBER_LITERATE
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:317: T__141
 			{
-			DebugLocation(1, 299);
-			mNUMBER_LITERATE(); 
+			DebugLocation(1, 317);
+			mT__141(); 
 
 			}
 			break;
 		case 42:
 			DebugEnterAlt(42);
-			// C:\\work\\ReoScript\\ReoScript.g:1:315: HEX_LITERATE
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:324: T__142
 			{
-			DebugLocation(1, 315);
-			mHEX_LITERATE(); 
+			DebugLocation(1, 324);
+			mT__142(); 
 
 			}
 			break;
 		case 43:
 			DebugEnterAlt(43);
-			// C:\\work\\ReoScript\\ReoScript.g:1:328: BINARY_LITERATE
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:331: T__143
 			{
-			DebugLocation(1, 328);
-			mBINARY_LITERATE(); 
+			DebugLocation(1, 331);
+			mT__143(); 
 
 			}
 			break;
 		case 44:
 			DebugEnterAlt(44);
-			// C:\\work\\ReoScript\\ReoScript.g:1:344: STRING_LITERATE
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:338: T__144
 			{
-			DebugLocation(1, 344);
-			mSTRING_LITERATE(); 
+			DebugLocation(1, 338);
+			mT__144(); 
 
 			}
 			break;
 		case 45:
 			DebugEnterAlt(45);
-			// C:\\work\\ReoScript\\ReoScript.g:1:360: ASSIGNMENT
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:345: T__145
 			{
-			DebugLocation(1, 360);
-			mASSIGNMENT(); 
+			DebugLocation(1, 345);
+			mT__145(); 
 
 			}
 			break;
 		case 46:
 			DebugEnterAlt(46);
-			// C:\\work\\ReoScript\\ReoScript.g:1:371: ASSIGN_PLUS
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:352: NUMBER_LITERATE
 			{
-			DebugLocation(1, 371);
-			mASSIGN_PLUS(); 
+			DebugLocation(1, 352);
+			mNUMBER_LITERATE(); 
 
 			}
 			break;
 		case 47:
 			DebugEnterAlt(47);
-			// C:\\work\\ReoScript\\ReoScript.g:1:383: ASSIGN_MINUS
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:368: HEX_LITERATE
 			{
-			DebugLocation(1, 383);
-			mASSIGN_MINUS(); 
+			DebugLocation(1, 368);
+			mHEX_LITERATE(); 
 
 			}
 			break;
 		case 48:
 			DebugEnterAlt(48);
-			// C:\\work\\ReoScript\\ReoScript.g:1:396: ASSIGN_MUL
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:381: BINARY_LITERATE
 			{
-			DebugLocation(1, 396);
-			mASSIGN_MUL(); 
+			DebugLocation(1, 381);
+			mBINARY_LITERATE(); 
 
 			}
 			break;
 		case 49:
 			DebugEnterAlt(49);
-			// C:\\work\\ReoScript\\ReoScript.g:1:407: ASSIGN_DIV
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:397: STRING_LITERATE
 			{
-			DebugLocation(1, 407);
-			mASSIGN_DIV(); 
+			DebugLocation(1, 397);
+			mSTRING_LITERATE(); 
 
 			}
 			break;
 		case 50:
 			DebugEnterAlt(50);
-			// C:\\work\\ReoScript\\ReoScript.g:1:418: ASSIGN_REM
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:413: ASSIGNMENT
 			{
-			DebugLocation(1, 418);
-			mASSIGN_REM(); 
+			DebugLocation(1, 413);
+			mASSIGNMENT(); 
 
 			}
 			break;
 		case 51:
 			DebugEnterAlt(51);
-			// C:\\work\\ReoScript\\ReoScript.g:1:429: ASSIGN_AND
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:424: ASSIGN_PLUS
 			{
-			DebugLocation(1, 429);
-			mASSIGN_AND(); 
+			DebugLocation(1, 424);
+			mASSIGN_PLUS(); 
 
 			}
 			break;
 		case 52:
 			DebugEnterAlt(52);
-			// C:\\work\\ReoScript\\ReoScript.g:1:440: ASSIGN_OR
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:436: ASSIGN_MINUS
 			{
-			DebugLocation(1, 440);
-			mASSIGN_OR(); 
+			DebugLocation(1, 436);
+			mASSIGN_MINUS(); 
 
 			}
 			break;
 		case 53:
 			DebugEnterAlt(53);
-			// C:\\work\\ReoScript\\ReoScript.g:1:450: ASSIGN_REV
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:449: ASSIGN_MUL
 			{
-			DebugLocation(1, 450);
-			mASSIGN_REV(); 
+			DebugLocation(1, 449);
+			mASSIGN_MUL(); 
 
 			}
 			break;
 		case 54:
 			DebugEnterAlt(54);
-			// C:\\work\\ReoScript\\ReoScript.g:1:461: ASSIGN_LSHIFT
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:460: ASSIGN_DIV
 			{
-			DebugLocation(1, 461);
-			mASSIGN_LSHIFT(); 
+			DebugLocation(1, 460);
+			mASSIGN_DIV(); 
 
 			}
 			break;
 		case 55:
 			DebugEnterAlt(55);
-			// C:\\work\\ReoScript\\ReoScript.g:1:475: ASSIGN_RSHIFT
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:471: ASSIGN_REM
 			{
-			DebugLocation(1, 475);
-			mASSIGN_RSHIFT(); 
+			DebugLocation(1, 471);
+			mASSIGN_REM(); 
 
 			}
 			break;
 		case 56:
 			DebugEnterAlt(56);
-			// C:\\work\\ReoScript\\ReoScript.g:1:489: COMMA
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:482: ASSIGN_AND
 			{
-			DebugLocation(1, 489);
-			mCOMMA(); 
+			DebugLocation(1, 482);
+			mASSIGN_AND(); 
 
 			}
 			break;
 		case 57:
 			DebugEnterAlt(57);
-			// C:\\work\\ReoScript\\ReoScript.g:1:495: LPAREN
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:493: ASSIGN_OR
 			{
-			DebugLocation(1, 495);
-			mLPAREN(); 
+			DebugLocation(1, 493);
+			mASSIGN_OR(); 
 
 			}
 			break;
 		case 58:
 			DebugEnterAlt(58);
-			// C:\\work\\ReoScript\\ReoScript.g:1:502: RPAREN
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:503: ASSIGN_REV
 			{
-			DebugLocation(1, 502);
-			mRPAREN(); 
+			DebugLocation(1, 503);
+			mASSIGN_REV(); 
 
 			}
 			break;
 		case 59:
 			DebugEnterAlt(59);
-			// C:\\work\\ReoScript\\ReoScript.g:1:509: LBRACE
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:514: ASSIGN_LSHIFT
 			{
-			DebugLocation(1, 509);
-			mLBRACE(); 
+			DebugLocation(1, 514);
+			mASSIGN_LSHIFT(); 
 
 			}
 			break;
 		case 60:
 			DebugEnterAlt(60);
-			// C:\\work\\ReoScript\\ReoScript.g:1:516: RBRACE
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:528: ASSIGN_RSHIFT
 			{
-			DebugLocation(1, 516);
-			mRBRACE(); 
+			DebugLocation(1, 528);
+			mASSIGN_RSHIFT(); 
 
 			}
 			break;
 		case 61:
 			DebugEnterAlt(61);
-			// C:\\work\\ReoScript\\ReoScript.g:1:523: LCURLY
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:542: COMMA
 			{
-			DebugLocation(1, 523);
-			mLCURLY(); 
+			DebugLocation(1, 542);
+			mCOMMA(); 
 
 			}
 			break;
 		case 62:
 			DebugEnterAlt(62);
-			// C:\\work\\ReoScript\\ReoScript.g:1:530: RCURLY
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:548: LPAREN
 			{
-			DebugLocation(1, 530);
-			mRCURLY(); 
+			DebugLocation(1, 548);
+			mLPAREN(); 
 
 			}
 			break;
 		case 63:
 			DebugEnterAlt(63);
-			// C:\\work\\ReoScript\\ReoScript.g:1:537: COLON
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:555: RPAREN
 			{
-			DebugLocation(1, 537);
-			mCOLON(); 
+			DebugLocation(1, 555);
+			mRPAREN(); 
 
 			}
 			break;
 		case 64:
 			DebugEnterAlt(64);
-			// C:\\work\\ReoScript\\ReoScript.g:1:543: DOT
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:562: LBRACE
 			{
-			DebugLocation(1, 543);
-			mDOT(); 
+			DebugLocation(1, 562);
+			mLBRACE(); 
 
 			}
 			break;
 		case 65:
 			DebugEnterAlt(65);
-			// C:\\work\\ReoScript\\ReoScript.g:1:547: NOT
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:569: RBRACE
 			{
-			DebugLocation(1, 547);
-			mNOT(); 
+			DebugLocation(1, 569);
+			mRBRACE(); 
 
 			}
 			break;
 		case 66:
 			DebugEnterAlt(66);
-			// C:\\work\\ReoScript\\ReoScript.g:1:551: INCREMENT
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:576: LCURLY
 			{
-			DebugLocation(1, 551);
-			mINCREMENT(); 
+			DebugLocation(1, 576);
+			mLCURLY(); 
 
 			}
 			break;
 		case 67:
 			DebugEnterAlt(67);
-			// C:\\work\\ReoScript\\ReoScript.g:1:561: DECREMENT
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:583: RCURLY
 			{
-			DebugLocation(1, 561);
-			mDECREMENT(); 
+			DebugLocation(1, 583);
+			mRCURLY(); 
 
 			}
 			break;
 		case 68:
 			DebugEnterAlt(68);
-			// C:\\work\\ReoScript\\ReoScript.g:1:571: CONDITION
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:590: COLON
 			{
-			DebugLocation(1, 571);
-			mCONDITION(); 
+			DebugLocation(1, 590);
+			mCOLON(); 
 
 			}
 			break;
 		case 69:
 			DebugEnterAlt(69);
-			// C:\\work\\ReoScript\\ReoScript.g:1:581: ELSE
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:596: DOT
 			{
-			DebugLocation(1, 581);
-			mELSE(); 
+			DebugLocation(1, 596);
+			mDOT(); 
 
 			}
 			break;
 		case 70:
 			DebugEnterAlt(70);
-			// C:\\work\\ReoScript\\ReoScript.g:1:586: PRIVATE
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:600: NOT
 			{
-			DebugLocation(1, 586);
-			mPRIVATE(); 
+			DebugLocation(1, 600);
+			mNOT(); 
 
 			}
 			break;
 		case 71:
 			DebugEnterAlt(71);
-			// C:\\work\\ReoScript\\ReoScript.g:1:594: PROTECTED
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:604: INCREMENT
 			{
-			DebugLocation(1, 594);
-			mPROTECTED(); 
+			DebugLocation(1, 604);
+			mINCREMENT(); 
 
 			}
 			break;
 		case 72:
 			DebugEnterAlt(72);
-			// C:\\work\\ReoScript\\ReoScript.g:1:604: PUBLIC
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:614: DECREMENT
 			{
-			DebugLocation(1, 604);
-			mPUBLIC(); 
+			DebugLocation(1, 614);
+			mDECREMENT(); 
 
 			}
 			break;
 		case 73:
 			DebugEnterAlt(73);
-			// C:\\work\\ReoScript\\ReoScript.g:1:611: TYPE
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:624: CONDITION
 			{
-			DebugLocation(1, 611);
-			mTYPE(); 
+			DebugLocation(1, 624);
+			mCONDITION(); 
 
 			}
 			break;
 		case 74:
 			DebugEnterAlt(74);
-			// C:\\work\\ReoScript\\ReoScript.g:1:616: TRUE
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:634: ELSE
 			{
-			DebugLocation(1, 616);
-			mTRUE(); 
+			DebugLocation(1, 634);
+			mELSE(); 
 
 			}
 			break;
 		case 75:
 			DebugEnterAlt(75);
-			// C:\\work\\ReoScript\\ReoScript.g:1:621: FALSE
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:639: PRIVATE
 			{
-			DebugLocation(1, 621);
-			mFALSE(); 
+			DebugLocation(1, 639);
+			mPRIVATE(); 
 
 			}
 			break;
 		case 76:
 			DebugEnterAlt(76);
-			// C:\\work\\ReoScript\\ReoScript.g:1:627: THIS
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:647: PROTECTED
 			{
-			DebugLocation(1, 627);
-			mTHIS(); 
+			DebugLocation(1, 647);
+			mPROTECTED(); 
 
 			}
 			break;
 		case 77:
 			DebugEnterAlt(77);
-			// C:\\work\\ReoScript\\ReoScript.g:1:632: NULL
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:657: PUBLIC
 			{
-			DebugLocation(1, 632);
-			mNULL(); 
+			DebugLocation(1, 657);
+			mPUBLIC(); 
 
 			}
 			break;
 		case 78:
 			DebugEnterAlt(78);
-			// C:\\work\\ReoScript\\ReoScript.g:1:637: UNDEFINED
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:664: TYPE
 			{
-			DebugLocation(1, 637);
-			mUNDEFINED(); 
+			DebugLocation(1, 664);
+			mTYPE(); 
 
 			}
 			break;
 		case 79:
 			DebugEnterAlt(79);
-			// C:\\work\\ReoScript\\ReoScript.g:1:647: NAN
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:669: LIT_TRUE
 			{
-			DebugLocation(1, 647);
-			mNAN(); 
+			DebugLocation(1, 669);
+			mLIT_TRUE(); 
 
 			}
 			break;
 		case 80:
 			DebugEnterAlt(80);
-			// C:\\work\\ReoScript\\ReoScript.g:1:651: COMMENT
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:678: LIT_FALSE
 			{
-			DebugLocation(1, 651);
-			mCOMMENT(); 
+			DebugLocation(1, 678);
+			mLIT_FALSE(); 
 
 			}
 			break;
 		case 81:
 			DebugEnterAlt(81);
-			// C:\\work\\ReoScript\\ReoScript.g:1:659: LINE_COMMENT
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:688: THIS
 			{
-			DebugLocation(1, 659);
-			mLINE_COMMENT(); 
+			DebugLocation(1, 688);
+			mTHIS(); 
 
 			}
 			break;
 		case 82:
 			DebugEnterAlt(82);
-			// C:\\work\\ReoScript\\ReoScript.g:1:672: IDENTIFIER
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:693: LIT_NULL
 			{
-			DebugLocation(1, 672);
-			mIDENTIFIER(); 
+			DebugLocation(1, 693);
+			mLIT_NULL(); 
 
 			}
 			break;
 		case 83:
 			DebugEnterAlt(83);
-			// C:\\work\\ReoScript\\ReoScript.g:1:683: NEWLINE
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:702: UNDEFINED
 			{
-			DebugLocation(1, 683);
-			mNEWLINE(); 
+			DebugLocation(1, 702);
+			mUNDEFINED(); 
 
 			}
 			break;
 		case 84:
 			DebugEnterAlt(84);
-			// C:\\work\\ReoScript\\ReoScript.g:1:691: WS
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:712: NAN
 			{
-			DebugLocation(1, 691);
-			mWS(); 
+			DebugLocation(1, 712);
+			mNAN(); 
 
 			}
 			break;
 		case 85:
 			DebugEnterAlt(85);
-			// C:\\work\\ReoScript\\ReoScript.g:1:694: SEMI
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:716: INSTANCEOF
 			{
-			DebugLocation(1, 694);
+			DebugLocation(1, 716);
+			mINSTANCEOF(); 
+
+			}
+			break;
+		case 86:
+			DebugEnterAlt(86);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:727: COMMENT
+			{
+			DebugLocation(1, 727);
+			mCOMMENT(); 
+
+			}
+			break;
+		case 87:
+			DebugEnterAlt(87);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:735: LINE_COMMENT
+			{
+			DebugLocation(1, 735);
+			mLINE_COMMENT(); 
+
+			}
+			break;
+		case 88:
+			DebugEnterAlt(88);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:748: IDENTIFIER
+			{
+			DebugLocation(1, 748);
+			mIDENTIFIER(); 
+
+			}
+			break;
+		case 89:
+			DebugEnterAlt(89);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:759: NEWLINE
+			{
+			DebugLocation(1, 759);
+			mNEWLINE(); 
+
+			}
+			break;
+		case 90:
+			DebugEnterAlt(90);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:767: WS
+			{
+			DebugLocation(1, 767);
+			mWS(); 
+
+			}
+			break;
+		case 91:
+			DebugEnterAlt(91);
+			// E:\\dotnet-projects\\ReoScript\\ReoScript.g:1:770: SEMI
+			{
+			DebugLocation(1, 770);
 			mSEMI(); 
 
 			}
@@ -4689,7 +4968,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			this.transition = DFA2_transition;
 		}
 
-		public override string Description { get { return "444:4: ( ( '0' .. '9' )* '.' )?"; } }
+		public override string Description { get { return "476:4: ( ( '0' .. '9' )* '.' )?"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{
@@ -4701,76 +4980,82 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 	{
 		private const string DFA14_eotS =
 			"\x1\xFFFF\x1\x31\x1\x36\x1\x39\x1\x3C\x1\x40\x1\x43\x1\x46\x1\x48\x1"+
-			"\x4A\x1\x4C\x1\x4F\x1\x51\xA\x2A\x1\xFFFF\x1\x1A\x1\x68\xB\xFFFF\x5\x2A"+
-			"\x2\xFFFF\x1\x6F\xE\xFFFF\x1\x71\x2\xFFFF\x1\x73\x13\xFFFF\x8\x2A\x1"+
-			"\x7D\x1\x2A\x1\x80\x9\x2A\x3\xFFFF\x6\x2A\x5\xFFFF\x6\x2A\x1\x97\x2\x2A"+
-			"\x1\xFFFF\x2\x2A\x1\xFFFF\x1\x9C\xC\x2A\x1\xA9\x1\x2A\x1\xAB\x1\x2A\x1"+
-			"\xAD\x4\x2A\x1\xFFFF\x4\x2A\x1\xFFFF\x1\xB6\x4\x2A\x1\xBB\x1\xBC\x1\x2A"+
-			"\x1\xBE\x3\x2A\x1\xFFFF\x1\x2A\x1\xFFFF\x1\xC3\x1\xFFFF\x1\xC4\x4\x2A"+
-			"\x1\xC9\x2\x2A\x1\xFFFF\x4\x2A\x2\xFFFF\x1\xD0\x1\xFFFF\x4\x2A\x2\xFFFF"+
-			"\x2\x2A\x1\xD7\x1\x2A\x1\xFFFF\x1\xD9\x1\x2A\x1\xDB\x1\xDC\x1\x2A\x1"+
-			"\xDE\x1\xFFFF\x2\x2A\x1\xE1\x2\x2A\x1\xE4\x1\xFFFF\x1\x2A\x1\xFFFF\x1"+
-			"\x2A\x2\xFFFF\x1\x2A\x1\xFFFF\x1\xE8\x1\x2A\x1\xFFFF\x1\x2A\x1\xEB\x1"+
-			"\xFFFF\x1\xEC\x1\x2A\x1\xEE\x1\xFFFF\x2\x2A\x2\xFFFF\x1\x2A\x1\xFFFF"+
-			"\x1\xF2\x1\xF3\x1\xF4\x3\xFFFF";
+			"\x4A\x1\x4C\x1\x4F\x1\x51\xA\x2A\x1\xFFFF\x1\x1A\x1\x69\xB\xFFFF\x5\x2A"+
+			"\x2\xFFFF\x1\x70\xA\xFFFF\x1\x72\x3\xFFFF\x1\x74\x2\xFFFF\x1\x76\xC\xFFFF"+
+			"\x1\x78\x6\xFFFF\x9\x2A\x1\x84\x1\x2A\x1\x87\x9\x2A\x3\xFFFF\x6\x2A\x9"+
+			"\xFFFF\x8\x2A\x1\xA2\x2\x2A\x1\xFFFF\x2\x2A\x1\xFFFF\x1\xA7\x6\x2A\x1"+
+			"\xAE\x7\x2A\x1\xB6\x1\x2A\x1\xB8\x1\x2A\x1\xBA\x6\x2A\x1\xFFFF\x4\x2A"+
+			"\x1\xFFFF\x1\xC5\x4\x2A\x1\xCA\x1\xFFFF\x1\xCB\x2\x2A\x1\xCE\x3\x2A\x1"+
+			"\xFFFF\x1\x2A\x1\xFFFF\x1\xD3\x1\xFFFF\x1\xD4\x1\xD5\x5\x2A\x1\xDB\x2"+
+			"\x2A\x1\xFFFF\x3\x2A\x1\xE1\x2\xFFFF\x1\x2A\x1\xE3\x1\xFFFF\x4\x2A\x3"+
+			"\xFFFF\x2\x2A\x1\xEA\x2\x2A\x1\xFFFF\x1\xED\x1\x2A\x1\xEF\x1\xF0\x1\x2A"+
+			"\x1\xFFFF\x1\xF2\x1\xFFFF\x2\x2A\x1\xF5\x2\x2A\x1\xF8\x1\xFFFF\x1\xF9"+
+			"\x1\x2A\x1\xFFFF\x1\x2A\x2\xFFFF\x1\x2A\x1\xFFFF\x1\xFD\x1\x2A\x1\xFFFF"+
+			"\x1\x2A\x1\x100\x2\xFFFF\x1\x101\x1\x2A\x1\x103\x1\xFFFF\x2\x2A\x2\xFFFF"+
+			"\x1\x2A\x1\xFFFF\x1\x107\x1\x108\x1\x109\x3\xFFFF";
 		private const string DFA14_eofS =
-			"\xF5\xFFFF";
+			"\x10A\xFFFF";
 		private const string DFA14_minS =
 			"\x1\x9\x1\x26\x1\x2A\x2\x3D\x1\x2F\x1\x3D\x1\x2D\x3\x3D\x1\x2B\x1\x3D"+
 			"\x1\x72\x1\x61\x1\x65\x1\x61\x1\x66\x2\x65\x1\x77\x1\x65\x1\x68\x1\xFFFF"+
 			"\x1\x62\x1\x30\xB\xFFFF\x1\x6C\x1\x72\x1\x61\x1\x6E\x1\x61\x1\xFFFF\x1"+
-			"\xA\x1\x9\xE\xFFFF\x1\x3D\x2\xFFFF\x1\x3D\x13\xFFFF\x1\x65\x1\x73\x1"+
-			"\x61\x1\x6E\x1\x66\x1\x72\x1\x6E\x1\x6C\x1\x30\x1\x70\x1\x30\x1\x77\x1"+
-			"\x6C\x1\x74\x1\x69\x1\x6D\x1\x70\x1\x75\x2\x69\x3\xFFFF\x1\x73\x1\x69"+
-			"\x1\x62\x1\x72\x1\x64\x1\x4E\x5\xFFFF\x1\x61\x1\x65\x1\x73\x1\x74\x1"+
-			"\x61\x1\x65\x1\x30\x1\x63\x1\x73\x1\xFFFF\x1\x6F\x1\x74\x1\xFFFF\x1\x30"+
-			"\x1\x6C\x1\x75\x1\x74\x1\x70\x2\x65\x1\x73\x1\x6C\x1\x65\x1\x76\x1\x74"+
-			"\x1\x6C\x1\x30\x1\x65\x1\x30\x1\x6B\x1\x30\x1\x73\x1\x69\x1\x75\x1\x74"+
-			"\x1\xFFFF\x1\x74\x1\x65\x1\x72\x1\x61\x1\xFFFF\x1\x30\x1\x72\x1\x63\x1"+
-			"\x6C\x1\x6F\x2\x30\x1\x65\x1\x30\x1\x61\x1\x65\x1\x69\x1\xFFFF\x1\x66"+
-			"\x1\xFFFF\x1\x30\x1\xFFFF\x1\x30\x1\x6E\x1\x6C\x1\x65\x1\x69\x1\x30\x1"+
-			"\x74\x1\x6E\x1\xFFFF\x1\x6E\x1\x68\x1\x61\x1\x66\x2\xFFFF\x1\x30\x1\xFFFF"+
-			"\x1\x74\x2\x63\x1\x69\x2\xFFFF\x1\x75\x1\x74\x1\x30\x1\x6F\x1\xFFFF\x1"+
-			"\x30\x1\x63\x2\x30\x1\x74\x1\x30\x1\xFFFF\x1\x65\x1\x74\x1\x30\x1\x6E"+
-			"\x1\x65\x1\x30\x1\xFFFF\x1\x6E\x1\xFFFF\x1\x65\x2\xFFFF\x1\x65\x1\xFFFF"+
-			"\x1\x30\x1\x65\x1\xFFFF\x1\x65\x1\x30\x1\xFFFF\x1\x30\x1\x6F\x1\x30\x1"+
-			"\xFFFF\x2\x64\x2\xFFFF\x1\x66\x1\xFFFF\x3\x30\x3\xFFFF";
+			"\xA\x1\x9\xA\xFFFF\x1\x3D\x3\xFFFF\x1\x3D\x2\xFFFF\x1\x3D\xC\xFFFF\x1"+
+			"\x3D\x6\xFFFF\x1\x65\x1\x73\x1\x61\x1\x6E\x1\x66\x1\x6E\x1\x72\x1\x6E"+
+			"\x1\x6C\x1\x30\x1\x70\x1\x30\x1\x77\x1\x6C\x1\x74\x1\x69\x1\x6D\x1\x69"+
+			"\x1\x75\x1\x70\x1\x69\x3\xFFFF\x1\x73\x1\x69\x1\x62\x1\x72\x1\x64\x1"+
+			"\x4E\x9\xFFFF\x1\x61\x1\x65\x1\x63\x1\x73\x1\x74\x1\x61\x1\x65\x1\x61"+
+			"\x1\x30\x1\x63\x1\x73\x1\xFFFF\x1\x6F\x1\x74\x1\xFFFF\x1\x30\x1\x6C\x1"+
+			"\x75\x1\x74\x1\x70\x1\x6F\x1\x73\x1\x30\x2\x65\x1\x6C\x1\x65\x1\x76\x1"+
+			"\x74\x1\x6C\x1\x30\x1\x65\x1\x30\x1\x6B\x1\x30\x1\x68\x1\x73\x1\x69\x1"+
+			"\x75\x1\x74\x1\x6C\x1\xFFFF\x1\x74\x1\x65\x1\x72\x1\x61\x1\xFFFF\x1\x30"+
+			"\x1\x72\x1\x63\x1\x6C\x1\x77\x1\x30\x1\xFFFF\x1\x30\x1\x6F\x1\x65\x1"+
+			"\x30\x1\x61\x1\x65\x1\x69\x1\xFFFF\x1\x66\x1\xFFFF\x1\x30\x1\xFFFF\x2"+
+			"\x30\x1\x6E\x1\x6C\x1\x65\x1\x6C\x1\x69\x1\x30\x1\x74\x1\x6E\x1\xFFFF"+
+			"\x1\x6E\x1\x68\x1\x61\x1\x30\x2\xFFFF\x1\x66\x1\x30\x1\xFFFF\x1\x74\x2"+
+			"\x63\x1\x69\x3\xFFFF\x1\x75\x1\x74\x1\x30\x1\x79\x1\x6F\x1\xFFFF\x1\x30"+
+			"\x1\x63\x2\x30\x1\x74\x1\xFFFF\x1\x30\x1\xFFFF\x1\x65\x1\x74\x1\x30\x1"+
+			"\x6E\x1\x65\x1\x30\x1\xFFFF\x1\x30\x1\x6E\x1\xFFFF\x1\x65\x2\xFFFF\x1"+
+			"\x65\x1\xFFFF\x1\x30\x1\x65\x1\xFFFF\x1\x65\x1\x30\x2\xFFFF\x1\x30\x1"+
+			"\x6F\x1\x30\x1\xFFFF\x2\x64\x2\xFFFF\x1\x66\x1\xFFFF\x3\x30\x3\xFFFF";
 		private const string DFA14_maxS =
 			"\x1\x7E\x1\x3D\x3\x3E\x1\x3D\x1\x7C\x6\x3D\x1\x72\x1\x6F\x1\x65\x1\x75"+
 			"\x1\x6E\x1\x75\x1\x65\x1\x77\x1\x79\x1\x68\x1\xFFFF\x1\x78\x1\x39\xB"+
-			"\xFFFF\x1\x6C\x1\x75\x1\x61\x1\x6E\x1\x61\x1\xFFFF\x1\xA\x1\x20\xE\xFFFF"+
-			"\x1\x3D\x2\xFFFF\x1\x3D\x13\xFFFF\x1\x65\x1\x73\x1\x61\x1\x6E\x1\x6C"+
-			"\x1\x72\x1\x6E\x1\x6C\x1\x7A\x1\x70\x1\x7A\x1\x77\x1\x6C\x1\x74\x1\x69"+
-			"\x1\x6D\x1\x70\x1\x75\x2\x69\x3\xFFFF\x1\x73\x1\x6F\x1\x62\x1\x72\x1"+
-			"\x64\x1\x4E\x5\xFFFF\x1\x61\x1\x65\x1\x73\x1\x74\x1\x61\x1\x65\x1\x7A"+
-			"\x1\x63\x1\x73\x1\xFFFF\x1\x6F\x1\x74\x1\xFFFF\x1\x7A\x1\x6C\x1\x75\x1"+
-			"\x74\x1\x70\x2\x65\x1\x73\x1\x6C\x1\x65\x1\x76\x1\x74\x1\x6C\x1\x7A\x1"+
-			"\x65\x1\x7A\x1\x6B\x1\x7A\x1\x73\x1\x69\x1\x75\x1\x74\x1\xFFFF\x1\x74"+
-			"\x1\x65\x1\x72\x1\x61\x1\xFFFF\x1\x7A\x1\x72\x1\x63\x1\x6C\x1\x6F\x2"+
-			"\x7A\x1\x65\x1\x7A\x1\x61\x1\x65\x1\x69\x1\xFFFF\x1\x66\x1\xFFFF\x1\x7A"+
-			"\x1\xFFFF\x1\x7A\x1\x6E\x1\x6C\x1\x65\x1\x69\x1\x7A\x1\x74\x1\x6E\x1"+
-			"\xFFFF\x1\x6E\x1\x68\x1\x61\x1\x66\x2\xFFFF\x1\x7A\x1\xFFFF\x1\x74\x2"+
-			"\x63\x1\x69\x2\xFFFF\x1\x75\x1\x74\x1\x7A\x1\x6F\x1\xFFFF\x1\x7A\x1\x63"+
-			"\x2\x7A\x1\x74\x1\x7A\x1\xFFFF\x1\x65\x1\x74\x1\x7A\x1\x6E\x1\x65\x1"+
-			"\x7A\x1\xFFFF\x1\x6E\x1\xFFFF\x1\x65\x2\xFFFF\x1\x65\x1\xFFFF\x1\x7A"+
-			"\x1\x65\x1\xFFFF\x1\x65\x1\x7A\x1\xFFFF\x1\x7A\x1\x6F\x1\x7A\x1\xFFFF"+
+			"\xFFFF\x1\x6C\x1\x75\x1\x61\x1\x6E\x1\x61\x1\xFFFF\x1\xA\x1\x20\xA\xFFFF"+
+			"\x1\x3D\x3\xFFFF\x1\x3D\x2\xFFFF\x1\x3D\xC\xFFFF\x1\x3D\x6\xFFFF\x1\x65"+
+			"\x1\x74\x1\x61\x1\x6E\x1\x6C\x1\x6E\x1\x72\x1\x6E\x1\x6C\x1\x7A\x1\x70"+
+			"\x1\x7A\x1\x77\x1\x6C\x1\x74\x1\x69\x1\x6D\x1\x72\x1\x79\x1\x70\x1\x69"+
+			"\x3\xFFFF\x1\x73\x1\x6F\x1\x62\x1\x72\x1\x64\x1\x4E\x9\xFFFF\x1\x61\x1"+
+			"\x65\x1\x63\x1\x73\x1\x74\x1\x61\x1\x65\x1\x61\x1\x7A\x1\x63\x1\x73\x1"+
+			"\xFFFF\x1\x6F\x1\x74\x1\xFFFF\x1\x7A\x1\x6C\x1\x75\x1\x74\x1\x70\x1\x6F"+
+			"\x1\x73\x1\x7A\x2\x65\x1\x6C\x1\x65\x1\x76\x1\x74\x1\x6C\x1\x7A\x1\x65"+
+			"\x1\x7A\x1\x6B\x1\x7A\x1\x68\x1\x73\x1\x69\x1\x75\x1\x74\x1\x6C\x1\xFFFF"+
+			"\x1\x74\x1\x65\x1\x72\x1\x61\x1\xFFFF\x1\x7A\x1\x72\x1\x63\x1\x6C\x1"+
+			"\x77\x1\x7A\x1\xFFFF\x1\x7A\x1\x6F\x1\x65\x1\x7A\x1\x61\x1\x65\x1\x69"+
+			"\x1\xFFFF\x1\x66\x1\xFFFF\x1\x7A\x1\xFFFF\x2\x7A\x1\x6E\x1\x6C\x1\x65"+
+			"\x1\x6C\x1\x69\x1\x7A\x1\x74\x1\x6E\x1\xFFFF\x1\x6E\x1\x68\x1\x61\x1"+
+			"\x7A\x2\xFFFF\x1\x66\x1\x7A\x1\xFFFF\x1\x74\x2\x63\x1\x69\x3\xFFFF\x1"+
+			"\x75\x1\x74\x1\x7A\x1\x79\x1\x6F\x1\xFFFF\x1\x7A\x1\x63\x2\x7A\x1\x74"+
+			"\x1\xFFFF\x1\x7A\x1\xFFFF\x1\x65\x1\x74\x1\x7A\x1\x6E\x1\x65\x1\x7A\x1"+
+			"\xFFFF\x1\x7A\x1\x6E\x1\xFFFF\x1\x65\x2\xFFFF\x1\x65\x1\xFFFF\x1\x7A"+
+			"\x1\x65\x1\xFFFF\x1\x65\x1\x7A\x2\xFFFF\x1\x7A\x1\x6F\x1\x7A\x1\xFFFF"+
 			"\x2\x64\x2\xFFFF\x1\x66\x1\xFFFF\x3\x7A\x3\xFFFF";
 		private const string DFA14_acceptS =
-			"\x17\xFFFF\x1\x28\x2\xFFFF\x1\x29\x1\x2C\x1\x38\x1\x39\x1\x3A\x1\x3B"+
-			"\x1\x3C\x1\x3D\x1\x3E\x1\x3F\x1\x44\x5\xFFFF\x1\x52\x2\xFFFF\x1\x54\x1"+
-			"\x55\x1\x8\x1\x33\x1\x1\x1\x13\x1\x31\x1\x50\x1\x51\x1\x2\x1\x3\x1\x15"+
-			"\x1\x2D\x1\x4\x1\xFFFF\x1\x5\x1\x6\x1\xFFFF\x1\x14\x1\x7\x1\x9\x1\x34"+
-			"\x1\xF\x1\x2F\x1\x43\x1\xB\x1\x32\x1\xC\x1\x30\x1\xD\x1\xE\x1\x41\x1"+
-			"\x2E\x1\x42\x1\x10\x1\x35\x1\x12\x14\xFFFF\x1\x2A\x1\x2B\x1\x40\x6\xFFFF"+
-			"\x1\x53\x1\x37\x1\x11\x1\x36\x1\xA\x9\xFFFF\x1\x1E\x2\xFFFF\x1\x20\x16"+
-			"\xFFFF\x1\x1C\x4\xFFFF\x1\x22\xC\xFFFF\x1\x49\x1\xFFFF\x1\x4F\x1\xFFFF"+
-			"\x1\x17\x8\xFFFF\x1\x4D\x4\xFFFF\x1\x4A\x1\x4C\x1\xFFFF\x1\x45\x4\xFFFF"+
-			"\x1\x16\x1\x18\x4\xFFFF\x1\x4B\x6\xFFFF\x1\x27\x6\xFFFF\x1\x1B\x1\xFFFF"+
-			"\x1\x1F\x1\xFFFF\x1\x23\x1\x24\x1\xFFFF\x1\x26\x2\xFFFF\x1\x48\x2\xFFFF"+
-			"\x1\x1A\x3\xFFFF\x1\x46\x2\xFFFF\x1\x19\x1\x1D\x1\xFFFF\x1\x25\x3\xFFFF"+
-			"\x1\x47\x1\x4E\x1\x21";
+			"\x17\xFFFF\x1\x2D\x2\xFFFF\x1\x2E\x1\x31\x1\x3D\x1\x3E\x1\x3F\x1\x40"+
+			"\x1\x41\x1\x42\x1\x43\x1\x44\x1\x49\x5\xFFFF\x1\x58\x2\xFFFF\x1\x5A\x1"+
+			"\x5B\x1\x8\x1\x38\x1\x1\x1\x15\x1\x36\x1\x56\x1\x57\x1\x2\x1\xFFFF\x1"+
+			"\x17\x1\x32\x1\x4\x1\xFFFF\x1\x5\x1\x6\x1\xFFFF\x1\x16\x1\x7\x1\x9\x1"+
+			"\x39\x1\xF\x1\x34\x1\x48\x1\xB\x1\x37\x1\xC\x1\x35\x1\xD\x1\xFFFF\x1"+
+			"\x46\x1\x33\x1\x47\x1\x10\x1\x3A\x1\x14\x15\xFFFF\x1\x2F\x1\x30\x1\x45"+
+			"\x6\xFFFF\x1\x59\x1\x12\x1\x3\x1\x3C\x1\x11\x1\x3B\x1\xA\x1\x13\x1\xE"+
+			"\xB\xFFFF\x1\x22\x2\xFFFF\x1\x24\x1A\xFFFF\x1\x20\x4\xFFFF\x1\x25\x6"+
+			"\xFFFF\x1\x2A\x7\xFFFF\x1\x4E\x1\xFFFF\x1\x54\x1\xFFFF\x1\x19\xA\xFFFF"+
+			"\x1\x52\x4\xFFFF\x1\x51\x1\x4F\x2\xFFFF\x1\x4A\x4\xFFFF\x1\x18\x1\x1A"+
+			"\x1\x1B\x5\xFFFF\x1\x50\x5\xFFFF\x1\x29\x1\xFFFF\x1\x2C\x6\xFFFF\x1\x1E"+
+			"\x2\xFFFF\x1\x23\x1\xFFFF\x1\x26\x1\x27\x1\xFFFF\x1\x2B\x2\xFFFF\x1\x4D"+
+			"\x2\xFFFF\x1\x1D\x1\x1F\x3\xFFFF\x1\x4B\x2\xFFFF\x1\x1C\x1\x21\x1\xFFFF"+
+			"\x1\x28\x3\xFFFF\x1\x4C\x1\x53\x1\x55";
 		private const string DFA14_specialS =
-			"\xF5\xFFFF}>";
+			"\x10A\xFFFF}>";
 		private static readonly string[] DFA14_transitionS =
 			{
 				"\x1\x2D\x1\x2C\x2\xFFFF\x1\x2B\x12\xFFFF\x1\x2D\x1\xA\x1\x1B\x1\xFFFF"+
@@ -4795,15 +5080,15 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 				"\x1\x52",
 				"\x1\x53\xA\xFFFF\x1\x54\x2\xFFFF\x1\x55",
 				"\x1\x56",
-				"\x1\x59\xD\xFFFF\x1\x57\x5\xFFFF\x1\x58",
-				"\x1\x5A\x6\xFFFF\x1\x5B\x1\x5C",
-				"\x1\x5D\xF\xFFFF\x1\x5E",
-				"\x1\x5F",
+				"\x1\x5A\x7\xFFFF\x1\x57\x5\xFFFF\x1\x58\x5\xFFFF\x1\x59",
+				"\x1\x5B\x6\xFFFF\x1\x5C\x1\x5D",
+				"\x1\x5E\xF\xFFFF\x1\x5F",
 				"\x1\x60",
-				"\x1\x61\x2\xFFFF\x1\x64\x9\xFFFF\x1\x63\x6\xFFFF\x1\x62",
-				"\x1\x65",
+				"\x1\x61",
+				"\x1\x62\x2\xFFFF\x1\x63\x9\xFFFF\x1\x64\x6\xFFFF\x1\x65",
+				"\x1\x66",
 				"",
-				"\x1\x67\x15\xFFFF\x1\x66",
+				"\x1\x68\x15\xFFFF\x1\x67",
 				"\xA\x1A",
 				"",
 				"",
@@ -4816,11 +5101,11 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 				"",
 				"",
 				"",
-				"\x1\x69",
-				"\x1\x6A\x2\xFFFF\x1\x6B",
-				"\x1\x6C",
+				"\x1\x6A",
+				"\x1\x6B\x2\xFFFF\x1\x6C",
 				"\x1\x6D",
 				"\x1\x6E",
+				"\x1\x6F",
 				"",
 				"\x1\x2C",
 				"\x2\x2D\x2\xFFFF\x1\x2D\x12\xFFFF\x1\x2D",
@@ -4834,190 +5119,211 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 				"",
 				"",
 				"",
+				"\x1\x71",
 				"",
 				"",
 				"",
-				"",
-				"\x1\x70",
-				"",
-				"",
-				"\x1\x72",
+				"\x1\x73",
 				"",
 				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"\x1\x74",
 				"\x1\x75",
-				"\x1\x76",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
 				"\x1\x77",
-				"\x1\x78\x5\xFFFF\x1\x79",
-				"\x1\x7A",
-				"\x1\x7B",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"\x1\x79",
+				"\x1\x7A\x1\x7B",
 				"\x1\x7C",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
-				"\x1\x7E",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x12\x2A\x1\x7F\x7"+
-				"\x2A",
+				"\x1\x7D",
+				"\x1\x7E\x5\xFFFF\x1\x7F",
+				"\x1\x80",
 				"\x1\x81",
 				"\x1\x82",
 				"\x1\x83",
-				"\x1\x84",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
 				"\x1\x85",
-				"\x1\x86",
-				"\x1\x87",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x12\x2A\x1\x86\x7"+
+				"\x2A",
 				"\x1\x88",
 				"\x1\x89",
-				"",
-				"",
-				"",
 				"\x1\x8A",
-				"\x1\x8B\x5\xFFFF\x1\x8C",
-				"\x1\x8D",
-				"\x1\x8E",
-				"\x1\x8F",
-				"\x1\x90",
-				"",
-				"",
-				"",
-				"",
-				"",
+				"\x1\x8B",
+				"\x1\x8C",
+				"\x1\x8E\x8\xFFFF\x1\x8D",
+				"\x1\x90\x3\xFFFF\x1\x8F",
 				"\x1\x91",
 				"\x1\x92",
+				"",
+				"",
+				"",
 				"\x1\x93",
-				"\x1\x94",
-				"\x1\x95",
+				"\x1\x94\x5\xFFFF\x1\x95",
 				"\x1\x96",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\x1\x97",
 				"\x1\x98",
 				"\x1\x99",
 				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
 				"\x1\x9A",
 				"\x1\x9B",
-				"",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\x1\x9C",
 				"\x1\x9D",
 				"\x1\x9E",
 				"\x1\x9F",
 				"\x1\xA0",
 				"\x1\xA1",
-				"\x1\xA2",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
 				"\x1\xA3",
 				"\x1\xA4",
+				"",
 				"\x1\xA5",
 				"\x1\xA6",
-				"\x1\xA7",
+				"",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
 				"\x1\xA8",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\x1\xA9",
 				"\x1\xAA",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\x1\xAB",
 				"\x1\xAC",
+				"\x1\xAD",
 				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
-				"\x1\xAE",
 				"\x1\xAF",
 				"\x1\xB0",
 				"\x1\xB1",
-				"",
 				"\x1\xB2",
 				"\x1\xB3",
 				"\x1\xB4",
 				"\x1\xB5",
-				"",
 				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
 				"\x1\xB7",
-				"\x1\xB8",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
 				"\x1\xB9",
-				"\x1\xBA",
 				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\x1\xBB",
+				"\x1\xBC",
 				"\x1\xBD",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\x1\xBE",
 				"\x1\xBF",
 				"\x1\xC0",
+				"",
 				"\x1\xC1",
-				"",
 				"\x1\xC2",
+				"\x1\xC3",
+				"\x1\xC4",
 				"",
 				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
-				"",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
-				"\x1\xC5",
 				"\x1\xC6",
 				"\x1\xC7",
 				"\x1\xC8",
+				"\x1\xC9",
 				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
-				"\x1\xCA",
-				"\x1\xCB",
 				"",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
 				"\x1\xCC",
 				"\x1\xCD",
-				"\x1\xCE",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
 				"\x1\xCF",
-				"",
-				"",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
-				"",
+				"\x1\xD0",
 				"\x1\xD1",
+				"",
 				"\x1\xD2",
-				"\x1\xD3",
-				"\x1\xD4",
 				"",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
 				"",
-				"\x1\xD5",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
 				"\x1\xD6",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\x1\xD7",
 				"\x1\xD8",
-				"",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\x1\xD9",
 				"\x1\xDA",
 				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\x1\xDC",
 				"\x1\xDD",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
 				"",
+				"\x1\xDE",
 				"\x1\xDF",
 				"\x1\xE0",
 				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"",
+				"",
 				"\x1\xE2",
-				"\x1\xE3",
 				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
 				"",
+				"\x1\xE4",
 				"\x1\xE5",
-				"",
 				"\x1\xE6",
-				"",
-				"",
 				"\x1\xE7",
 				"",
-				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"",
+				"",
+				"\x1\xE8",
 				"\x1\xE9",
-				"",
-				"\x1\xEA",
 				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\x1\xEB",
+				"\x1\xEC",
 				"",
 				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
-				"\x1\xED",
+				"\x1\xEE",
 				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
-				"",
-				"\x1\xEF",
-				"\x1\xF0",
-				"",
-				"",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
 				"\x1\xF1",
+				"",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"",
+				"\x1\xF3",
+				"\x1\xF4",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\x1\xF6",
+				"\x1\xF7",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\x1\xFA",
+				"",
+				"\x1\xFB",
+				"",
+				"",
+				"\x1\xFC",
+				"",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\x1\xFE",
+				"",
+				"\x1\xFF",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"",
+				"",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"\x1\x102",
+				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
+				"",
+				"\x1\x104",
+				"\x1\x105",
+				"",
+				"",
+				"\x1\x106",
 				"",
 				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
 				"\xA\x2A\x7\xFFFF\x1A\x2A\x4\xFFFF\x1\x2A\x1\xFFFF\x1A\x2A",
@@ -5058,7 +5364,7 @@ public partial class ReoScriptLexer : Antlr.Runtime.Lexer
 			this.transition = DFA14_transition;
 		}
 
-		public override string Description { get { return "1:1: Tokens : ( AND | DIV | EQUALS | GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN | LOGICAL_AND | LOGICAL_OR | LSHIFT | MINUS | MOD | MUL | NOT_EQUALS | OR | PLUS | RSHIFT | XOR | T__115 | T__116 | T__117 | T__118 | T__119 | T__120 | T__121 | T__122 | T__123 | T__124 | T__125 | T__126 | T__127 | T__128 | T__129 | T__130 | T__131 | T__132 | T__133 | T__134 | T__135 | T__136 | NUMBER_LITERATE | HEX_LITERATE | BINARY_LITERATE | STRING_LITERATE | ASSIGNMENT | ASSIGN_PLUS | ASSIGN_MINUS | ASSIGN_MUL | ASSIGN_DIV | ASSIGN_REM | ASSIGN_AND | ASSIGN_OR | ASSIGN_REV | ASSIGN_LSHIFT | ASSIGN_RSHIFT | COMMA | LPAREN | RPAREN | LBRACE | RBRACE | LCURLY | RCURLY | COLON | DOT | NOT | INCREMENT | DECREMENT | CONDITION | ELSE | PRIVATE | PROTECTED | PUBLIC | TYPE | TRUE | FALSE | THIS | NULL | UNDEFINED | NAN | COMMENT | LINE_COMMENT | IDENTIFIER | NEWLINE | WS | SEMI );"; } }
+		public override string Description { get { return "1:1: Tokens : ( AND | DIV | EQUALS | GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN | LOGICAL_AND | LOGICAL_OR | LSHIFT | MINUS | MOD | MUL | NOT_EQUALS | OR | PLUS | RSHIFT | STRICT_EQUALS | STRICT_NOT_EQUALS | XOR | T__121 | T__122 | T__123 | T__124 | T__125 | T__126 | T__127 | T__128 | T__129 | T__130 | T__131 | T__132 | T__133 | T__134 | T__135 | T__136 | T__137 | T__138 | T__139 | T__140 | T__141 | T__142 | T__143 | T__144 | T__145 | NUMBER_LITERATE | HEX_LITERATE | BINARY_LITERATE | STRING_LITERATE | ASSIGNMENT | ASSIGN_PLUS | ASSIGN_MINUS | ASSIGN_MUL | ASSIGN_DIV | ASSIGN_REM | ASSIGN_AND | ASSIGN_OR | ASSIGN_REV | ASSIGN_LSHIFT | ASSIGN_RSHIFT | COMMA | LPAREN | RPAREN | LBRACE | RBRACE | LCURLY | RCURLY | COLON | DOT | NOT | INCREMENT | DECREMENT | CONDITION | ELSE | PRIVATE | PROTECTED | PUBLIC | TYPE | LIT_TRUE | LIT_FALSE | THIS | LIT_NULL | UNDEFINED | NAN | INSTANCEOF | COMMENT | LINE_COMMENT | IDENTIFIER | NEWLINE | WS | SEMI );"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{

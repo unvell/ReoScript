@@ -1,25 +1,27 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 //
 // ReoScript Core Library
-// 
-// HP: http://www.unvell.com/ReoScript
+// http://www.unvell.com/ReoScript
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
 // PURPOSE.
 //
-// License: GNU Lesser General Public License (LGPLv3)
+// GNU Lesser General Public License (LGPLv3)
 //
-// Email: lujing@unvell.com
-//
+// lujing@unvell.com
 // Copyright (C) unvell, 2012-2013. All Rights Reserved
 //
 ///////////////////////////////////////////////////////////////////////////////
 
 // console
 if (this.console != null) {
-	this.console.log = function(t) { __stdoutln__(t); }
+  this.console.read = function() { return __stdin__(); };
+  this.console.readline = function() { return __stdinln__(); };
+
+  this.console.write = function(t) { __stdout__(t); };
+  this.console.log = function(t) { __stdoutln__(t); };
 }
 
 // Math
@@ -31,4 +33,10 @@ if (this.Math != null) {
 
   this.Math.min = function(a, b) { return a > b ? b : a; };
   this.Math.max = function(a, b) { return a > b ? a : b; };
+}
+
+// Error
+if (this.Error == null) {
+  this.Error = function Error() {
+  };
 }

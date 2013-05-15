@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="070" name="async">
+
+  <test-case id="001" name="setTimeout">
+    <script>
+      var t = debug.assert;
+      
+      var a = 0;
+      
+      var id = setTimeout(function(){a = 10;}, 10);
+      t( id >= 0 );
+      
+      var count = 0;
+      
+      while(a == 0) {
+        if(count++ > 100000) t(false);
+      }
+      
+    </script>
+  </test-case>
+
+  <test-case id="001" name="setInterval">
+    <script>
+      var t = debug.assert;
+      
+      var a = 0;
+      
+      var id = setInterval(function(){a++;}, 10);
+      t( id >= 0 );
+      
+      var count = 0;
+      
+      while(a &lt; 3) {
+        if(count++ > 100000) {
+          clearInterval(id);
+          t(false);
+        }
+      }
+      
+      clearInterval(id);
+      
+    </script>
+  </test-case>
+
+</test-suite>

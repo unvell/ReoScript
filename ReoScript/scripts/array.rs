@@ -1,18 +1,16 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 //
 // ReoScript Array Extension Library
-// 
-// HP: http://www.unvell.com/ReoScript
+// http://www.unvell.com/ReoScript
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
 // PURPOSE.
 //
-// License: GNU Lesser General Public License (LGPLv3)
+// GNU Lesser General Public License (LGPLv3)
 //
-// Email: lujing@unvell.com
-//
+// lujing@unvell.com
 // Copyright (C) unvell, 2012-2013. All Rights Reserved
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -26,7 +24,7 @@ if (Array != null && Array.prototype != null) {
       return false;
     
 	  for(var i=0; i < this.length; i++)
-		  if( rs[i] != targetArray[i] )
+		  if( this[i] != targetArray[i] )
         return false;
 			
 		return true;
@@ -50,8 +48,7 @@ if (Array != null && Array.prototype != null) {
 	Array.prototype.sum = selector => {
     var total = 0;
     
-    for(element in this) 
-    {
+    for(element in this) {
       total += (selector == null ? element : selector(element));
     }
 
@@ -60,7 +57,7 @@ if (Array != null && Array.prototype != null) {
 	
 	// get average of array
 	Array.prototype.ave = selector => {
-		if( this.length == 0 ) return 0;
+		if(this.length == 0) return 0;
 		
 		return this.sum() / this.length;
 	};
@@ -69,9 +66,8 @@ if (Array != null && Array.prototype != null) {
 	Array.prototype.min = selector => {
     var min = null;
     
-    for(element in this) 
-    {
-      var val = ( selector == null ? element : selector(element) );
+    for(element in this) {
+      var val = (selector == null ? element : selector(element));
       if(min == null || min > val) min = val;
     }
 
@@ -82,9 +78,8 @@ if (Array != null && Array.prototype != null) {
 	Array.prototype.max = selector => {
     var max = null;
     
-    for(element in this) 
-    {
-      var val = ( selector == null ? element : selector(element) );
+    for(element in this) {
+      var val = (selector == null ? element : selector(element));
       if(max == null || max < val) min = val;
     }
 
@@ -99,5 +94,12 @@ if (Array != null && Array.prototype != null) {
 	// return the last element
 	Array.prototype.last = function() {
 		return this.length > 0 ? this[this.length - 1] : null;
+	};
+	
+	// each 
+	Array.prototype.each = function(iterator) {
+	  for(element in this) {
+	    iterator.call(element);
+	  }
 	};
 }

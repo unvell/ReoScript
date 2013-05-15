@@ -8,10 +8,9 @@
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
 // PURPOSE.
 //
-// License: GNU Lesser General Public License (LGPLv3)
+// GNU Lesser General Public License (LGPLv3)
 //
-// Email: lujing@unvell.com
-//
+// lujing@unvell.com
 // Copyright (C) unvell, 2012-2013. All Rights Reserved
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -122,7 +121,13 @@ namespace Unvell.ReoScript
 		{
 			get
 			{
-				return Members.ContainsKey(identifier) ? Members[identifier] : null;
+				//if (identifier == ScriptRunningMachine.KEY_CONSTRUCTOR)
+				//{
+				//  return Members.ContainsKey(ScriptRunningMachine.KEY_CONSTRUCTOR) ? 
+				//    Members[ScriptRunningMachine.KEY_CONSTRUCTOR] : Constructor;
+				//}
+				//else
+					return Members.ContainsKey(identifier) ? Members[identifier] : null;
 			}
 			set
 			{
@@ -166,7 +171,7 @@ namespace Unvell.ReoScript
 			if (Members.Count > 0)
 			{
 				StringBuilder sb = new StringBuilder();
-				if (this is ArrayObject || this is StringObject || this is NumberObject)
+				if (this is ArrayObject || this is StringValue || this is NumberObject)
 				{
 					sb.AppendLine(string.Format("[object {0}: {1}]", Name, this.ToString()));
 				}
@@ -209,6 +214,8 @@ namespace Unvell.ReoScript
 		}
 
 		#endregion
+
+		public AbstractFunctionObject Constructor { get; set; }
 	}
 
 	class ObjectConstructorFunction : TypedNativeFunctionObject
@@ -243,6 +250,11 @@ namespace Unvell.ReoScript
 			rootPrototype["toString"] = new NativeFunctionObject("toString", (ctx, owner, args) =>
 			{
 				return owner.ToString();
+			});
+
+			rootPrototype["valueOf"] = new NativeFunctionObject("valueOf", (ctx, owner, args) =>
+			{
+				return owner;
 			});
 
 			// root object in prototype chain
@@ -308,16 +320,16 @@ namespace Unvell.ReoScript
 	}
 	#endregion
 	#region StringValue
-	public class StringObject : ObjectValue
+	public class StringValue : ObjectValue
 	{
 		public string String { get; set; }
 
-		public StringObject()
+		public StringValue()
 			: this(string.Empty)
 		{
 			// this()
 		}
-		public StringObject(string text)
+		public StringValue(string text)
 		{
 			String = text;
 			this["length"] = new ExternalProperty(() => { return String.Length; }, (v) => { });
@@ -325,6 +337,18 @@ namespace Unvell.ReoScript
 		public override bool Equals(object obj)
 		{
 			return (String == null && obj == null) ? false : String.Equals(Convert.ToString(obj));
+		}
+		public static bool operator==(StringValue str1, object str2)
+		{
+			if (!(str2 is StringValue)) return false;
+
+			return str1.Equals((StringValue)str2);
+		}
+		public static bool operator !=(StringValue str1, object str2)
+		{
+			if (!(str2 is StringValue)) return false;
+
+			return !str1.Equals((StringValue)str2);
 		}
 		public override int GetHashCode()
 		{
@@ -346,6 +370,15 @@ namespace Unvell.ReoScript
 
 		#endregion
 	}
+	public class StringObject : StringValue
+	{
+		public StringValue Value { get; set; }
+
+		public StringObject(StringValue value)
+		{
+			this.Value = value;
+		}
+	}
 	class StringConstructorFunction : TypedNativeFunctionObject
 	{
 		public StringConstructorFunction()
@@ -355,15 +388,25 @@ namespace Unvell.ReoScript
 
 		public override object Invoke(ScriptContext context, object owner, object[] args)
 		{
-			StringObject str = owner as StringObject;
-			if (str == null) str = context.CreateNewObject(this, false) as StringObject;
+			StringValue str = null;
+
+			if (owner is StringValue)
+			{
+				str = owner as StringValue;
+			}
+			else
+			{
+				str = new StringValue();
+			}
+
 			if (args != null && args.Length > 0) str.String = Convert.ToString(args[0]);
+
 			return str;
 		}
 
 		public override object CreateObject(ScriptContext context, object[] args)
 		{
-			return args == null || args.Length <= 0 ? new StringObject() : new StringObject(Convert.ToString(args[0]));
+			return new StringObject(args == null || args.Length <= 0 ? new StringValue() : new StringValue(Convert.ToString(args[0])));
 		}
 
 		public override object CreatePrototype(ScriptContext context)
@@ -375,21 +418,26 @@ namespace Unvell.ReoScript
 			{
 				obj["trim"] = new NativeFunctionObject("trim", (ctx, owner, args) =>
 				{
-					return new StringObject(((StringObject)owner).String = Convert.ToString(owner).Trim());
+					if (!(owner is StringValue)) return null;
+					return new StringValue(((StringValue)owner).String = Convert.ToString(owner).Trim());
 				});
 
 				obj["indexOf"] = new NativeFunctionObject("indexOf", (ctx, owner, args) =>
 				{
+					if (!(owner is StringValue)) return null;
 					return args.Length == 0 ? -1 : Convert.ToString(owner).IndexOf(Convert.ToString(args[0]));
 				});
 
 				obj["lastIndexOf"] = new NativeFunctionObject("lastIndexOf", (ctx, owner, args) =>
 				{
+					if (!(owner is StringValue)) return null;
 					return args.Length == 0 ? -1 : Convert.ToString(owner).LastIndexOf(Convert.ToString(args[0]));
 				});
 
 				obj["charAt"] = new NativeFunctionObject("charAt", (ctx, owner, args) =>
 				{
+					if (!(owner is StringValue)) return null;
+
 					string res = string.Empty;
 
 					if (args.Length > 0)
@@ -401,11 +449,13 @@ namespace Unvell.ReoScript
 							res = Convert.ToString(str[index]);
 					}
 
-					return new StringObject(res);
+					return new StringValue(res);
 				});
 
 				obj["charCodeAt"] = new NativeFunctionObject("charCodeAt", (ctx, owner, args) =>
 				{
+					if (!(owner is StringValue)) return null;
+
 					if (args.Length > 0)
 					{
 						int index = ScriptRunningMachine.GetIntParam(args, 0, -1);
@@ -420,42 +470,134 @@ namespace Unvell.ReoScript
 
 				obj["startsWith"] = new NativeFunctionObject("startsWith", (ctx, owner, args) =>
 				{
+					if (!(owner is StringValue)) return null;
 					return args.Length == 0 ? false : Convert.ToString(owner).StartsWith(Convert.ToString(args[0]));
 				});
 
 				obj["endsWith"] = new NativeFunctionObject("endWith", (ctx, owner, args) =>
 				{
+					if (!(owner is StringValue)) return null;
 					return args.Length == 0 ? false : Convert.ToString(owner).EndsWith(Convert.ToString(args[0]));
 				});
 
 				obj["repeat"] = new NativeFunctionObject("repeat", (ctx, owner, args) =>
 				{
+					if (!(owner is StringValue)) return null;
+
 					int count = ScriptRunningMachine.GetIntParam(args, 0, 0);
 
 					string result = string.Empty;
 
 					if (count > 0)
 					{
-						string str = ((StringObject)owner).String;
+						string str = ((StringValue)owner).String;
 						StringBuilder sb = new StringBuilder();
 						for (int i = 0; i < count; i++) sb.Append(str);
 						result = sb.ToString();
 					}
 
-					return new StringObject(result);
+					return new StringValue(result);
 				});
 
 				obj["join"] = new NativeFunctionObject("join", (ctx, owner, args) =>
 				{
+					if (!(owner is StringValue)) return null;
 					//TODO
-					return new StringObject();
+					return new StringValue();
+				});
+
+				obj["split"] = new NativeFunctionObject("split", (ctx, owner, args) =>
+				{
+					if (!(owner is StringValue)) return null;
+
+					string str = Convert.ToString(owner);
+
+					ArrayObject arr = ctx.CreateNewArray();
+					if (args.Length == 0)
+					{
+						arr.List.Add(str);
+					}
+					else
+					{
+						string separator = args[0] == null ? string.Empty : Convert.ToString(args[0]);
+						if (!string.IsNullOrEmpty(separator))
+						{
+							if (args.Length == 1)
+							{
+								arr.List.AddRange(str.Split(separator[0]));
+							}
+							else
+							{
+								arr.List.AddRange(str.Split(new char[] { separator[0] },
+									ScriptRunningMachine.GetIntParam(args, 1, 0)));
+							}
+						}
+					}
+
+					return arr;
+				});
+
+				obj["substr"] = new NativeFunctionObject("substr", (ctx, owner, args) =>
+				{
+					if (!(owner is StringValue)) return null;
+
+					string str = Convert.ToString(owner);
+					StringValue newstr = ctx.CreateString();
+
+					if (args.Length < 1)
+						return newstr;
+					else
+					{
+						int from = ScriptRunningMachine.GetIntParam(args, 0, 0);
+						if (from < 0 || from > str.Length - 1)
+						{
+							return newstr;
+						}
+
+						int len = ScriptRunningMachine.GetIntParam(args, 1, str.Length - from);
+
+						newstr.String = str.Substring(from, len);
+					}
+
+					return newstr;
+				});
+
+				obj["toLowerCase"] = new NativeFunctionObject("toLowerCase", (ctx, owner, args) =>
+				{
+					if (!(owner is StringValue)) return null;
+					return Convert.ToString(owner).ToLower();
+				});
+
+				obj["toUpperCase"] = new NativeFunctionObject("toUpperCase", (ctx, owner, args) =>
+				{
+					if (!(owner is StringValue)) return null;
+					return Convert.ToString(owner).ToUpper();
+				});
+
+				obj["valueOf"] = new NativeFunctionObject("valueOf", (ctx, owner, args) =>
+				{
+					if (owner is StringObject)
+						return ((StringObject)owner).Value;
+					else if (owner is StringValue)
+						return owner;
+					else
+						return null;
 				});
 			}
 
 			return obj;
 		}
 	}
-
+	#endregion
+	#region BooleanObject
+	class BooleanObject : ObjectValue
+	{
+		public bool Boolean { get; set; }
+		public BooleanObject(bool boolean)
+		{
+			this.Boolean = boolean;
+		}
+	}
 	#endregion
 
 	#region Extension Object
@@ -606,7 +748,8 @@ namespace Unvell.ReoScript
 
 		public override string ToString()
 		{
-			return "function " + Name + "() { ... }";
+			return string.IsNullOrEmpty(FunName) ? "function() {...}"
+				: "function " + FunName + "() {...}";
 		}
 
 		internal string DeclaredFilePath { get; set; }
@@ -629,7 +772,7 @@ namespace Unvell.ReoScript
 
 		public NativeFunctionObject(string name, Func<ScriptContext, object, object[], object> body)
 		{
-			this.Name = name;
+			this.FunName = name;
 			this.Body = body;
 		}
 
@@ -686,7 +829,7 @@ namespace Unvell.ReoScript
 
 					if (ci == null)
 					{
-						throw new ReoScriptRuntimeException("Cannot create .Net object with incorrect parameters.");
+						throw new ReoScriptRuntimeException(context, "Cannot create .Net object with incorrect parameters.");
 					}
 
 					cargs = new object[args.Length];
@@ -702,7 +845,7 @@ namespace Unvell.ReoScript
 			}
 			catch (Exception ex)
 			{
-				throw new ReoScriptRuntimeException("Error to create .Net instance: " + this.Type.ToString(), ex);
+				throw new ReoScriptRuntimeException(context, "Error to create .Net instance: " + this.Type.ToString(), null, ex);
 			}
 		}
 
@@ -727,6 +870,10 @@ namespace Unvell.ReoScript
 
 		public TypedNativeFunctionObject(string name)
 			: base(typeof(T), name) { }
+
+		public TypedNativeFunctionObject(string name, Func<ScriptContext, object, object[], object> body,
+			Action<ObjectValue> prototypeBuilder)
+			: base(typeof(T), name, body, prototypeBuilder) { }
 	}
 	#endregion
 
@@ -735,15 +882,26 @@ namespace Unvell.ReoScript
 	internal class WorldObject : ObjectValue
 	{
 		#region Built-in functions
+		private static readonly NativeFunctionObject __stdin__ = new NativeFunctionObject("__stdin__", (ctx, owner, args) =>
+		{
+			return ctx.Srm.StandardInputProvider.Read();
+		});
+
+		private static readonly NativeFunctionObject __stdinln__ = new NativeFunctionObject("__stdinln__", (ctx, owner, args) =>
+		{
+			return ctx.Srm.CreateNewString(ctx.Srm.StandardInputProvider.ReadLine());
+		});
+
 		private static readonly NativeFunctionObject __stdout__ = new NativeFunctionObject("__stdout__", (ctx, owner, args) =>
 		{
-			if (args.Length == 0)
+			if (args == null || args.Length == 0)
 			{
-				ctx.Srm.StdOutputWrite(string.Empty);
+				ctx.Srm.StandardIOWrite(0);
 			}
 			else
 			{
-				ctx.Srm.StdOutputWrite(args[0] == null ? ScriptRunningMachine.KEY_UNDEFINED : Convert.ToString(args[0]));
+				//ctx.Srm.StandardIOWrite(args[0] == null ? ScriptRunningMachine.KEY_UNDEFINED : Convert.ToString(args[0]));
+				ctx.Srm.StandardIOWrite(args[0]);
 			}
 
 			if (args.Length > 1)
@@ -755,7 +913,7 @@ namespace Unvell.ReoScript
 					sb.Append(args[0] == null ? ScriptRunningMachine.KEY_UNDEFINED : Convert.ToString(args[i]));
 				}
 
-				ctx.Srm.StdOutputWrite(sb.ToString());
+				ctx.Srm.StandardIOWrite(sb.ToString());
 			}
 
 			return null;
@@ -763,13 +921,13 @@ namespace Unvell.ReoScript
 
 		private static readonly NativeFunctionObject __stdoutln__ = new NativeFunctionObject("__stdoutln__", (ctx, owner, args) =>
 		{
-			if (args.Length == 0)
+			if (args == null || args.Length == 0 || (args.Length == 1 && args[0] == null))
 			{
-				ctx.Srm.StdOutputWriteLine(string.Empty);
+				ctx.Srm.StandardIOWriteLine(string.Empty);
 			}
 			else
 			{
-				ctx.Srm.StdOutputWriteLine(args[0] == null ? ScriptRunningMachine.KEY_UNDEFINED : Convert.ToString(args[0]));
+				ctx.Srm.StandardIOWriteLine(args[0] == null ? ScriptRunningMachine.KEY_UNDEFINED : Convert.ToString(args[0]));
 			}
 
 			if (args.Length > 1)
@@ -781,7 +939,7 @@ namespace Unvell.ReoScript
 					sb.Append(args[0] == null ? ScriptRunningMachine.KEY_UNDEFINED : Convert.ToString(args[i]));
 				}
 
-				ctx.Srm.StdOutputWriteLine(sb.ToString());
+				ctx.Srm.StandardIOWriteLine(sb.ToString());
 			}
 
 			return null;
@@ -836,10 +994,12 @@ namespace Unvell.ReoScript
 			this.Name = "Script";
 
 			// built-in native functions
-			this[__stdout__.Name] = __stdout__;
-			this[__stdoutln__.Name] = __stdoutln__;
-			this[__parseInt__.Name] = __parseInt__;
-			this[__isNaN__.Name] = __isNaN__;
+			this[__stdin__.FunName] = __stdin__;
+			this[__stdinln__.FunName] = __stdinln__;
+			this[__stdout__.FunName] = __stdout__;
+			this[__stdoutln__.FunName] = __stdoutln__;
+			this[__parseInt__.FunName] = __parseInt__;
+			this[__isNaN__.FunName] = __isNaN__;
 		}
 	}
 	#endregion
@@ -851,6 +1011,8 @@ namespace Unvell.ReoScript
 
 		public MathObject()
 		{
+			this.Name = "Object";
+
 			this["random"] = new NativeFunctionObject("random", (ctx, owner, args) =>
 			{
 				return rand.NextDouble();
@@ -1020,7 +1182,12 @@ namespace Unvell.ReoScript
 
 		public override object CreateObject(ScriptContext context, object[] args)
 		{
-			return new ArrayObject();
+			ArrayObject arr = new ArrayObject();
+			if (args != null)
+			{
+				arr.List.AddRange(args);
+			}
+			return arr;
 		}
 
 		public override object CreatePrototype(ScriptContext context)
@@ -1043,21 +1210,43 @@ namespace Unvell.ReoScript
 					return null;
 				});
 
-				objValue["splice"] = new NativeFunctionObject("splice", (ctx, owner, args) =>
+				objValue["slice"] = new NativeFunctionObject("slice", (ctx, owner, args) =>
 				{
-					if (args.Length < 2 || !(owner is ArrayObject)) return null;
-
-					int index = ScriptRunningMachine.GetIntParam(args, 0, 0);
-					int howmany = ScriptRunningMachine.GetIntParam(args, 1, 1);
+					if (args.Length < 1 || !(owner is ArrayObject)) return false;
 
 					ArrayObject arr = (ArrayObject)owner;
+					ArrayObject newArray = ctx.CreateNewArray();
+
+					int index = ScriptRunningMachine.GetIntParam(args, 0, 0);
+					if(index<0 || index>=arr.Length) {
+						return newArray;
+					}
+
+					int howmany = ScriptRunningMachine.GetIntParam(args, 1, arr.Length - index);
+
+					newArray.List.AddRange(arr.List.GetRange(index, howmany));
+
+					return newArray;
+				});
+
+				objValue["splice"] = new NativeFunctionObject("splice", (ctx, owner, args) =>
+				{
+					if (args.Length < 2 || !(owner is ArrayObject)) return false;
+
+					ArrayObject arr = (ArrayObject)owner;
+			
+					int index = ScriptRunningMachine.GetIntParam(args, 0, 0);
+					if(index<0) index=0;
+					if(index>=arr.Length) return false;
+
+					int howmany = ScriptRunningMachine.GetIntParam(args, 1, arr.Length - index);
 
 					arr.List.RemoveRange(index, howmany);
 
 					for (int i = 2; i < args.Length; i++)
 						arr.List.Insert(index++, args[i]);
 
-					return null;
+					return true;
 				});
 
 				objValue["remove"] = new NativeFunctionObject("remove", (ctx, owner, args) =>
@@ -1068,6 +1257,15 @@ namespace Unvell.ReoScript
 					arr.List.Remove(args[0]);
 
 					return null;
+				});
+
+				objValue["indexOf"] = new NativeFunctionObject("indexOf", (ctx, owner, args) =>
+				{
+					if (!(owner is ArrayObject)) return NaNValue.Value;
+
+					if (args == null || args.Length <= 0) return -1;
+
+					return ((ArrayObject)owner).List.IndexOf(args[0]);
 				});
 
 				objValue["sort"] = new NativeFunctionObject("sort", (ctx, owner, args) =>
@@ -1119,27 +1317,51 @@ namespace Unvell.ReoScript
 		public ReoScriptException(string msg, Exception inner) : base(msg, inner) { }
 	}
 	#endregion
-	#region AWDLSyntaxErrorException
-	class ReoScriptSyntaxErrorException : ReoScriptException
-	{
-		public ReoScriptSyntaxErrorException(string msg) : base(msg) { }
-		public ReoScriptSyntaxErrorException(string msg, Exception inner) : base(msg, inner) { }
-	}
-	#endregion
+	
 	#region AWDLRuntimeException
 	public class ReoScriptRuntimeException : ReoScriptException
 	{
+		public ScriptContext Context { get; set; }
 		public RuntimePosition Position { get; set; }
+		public object ErrorObject { get; set; }
 
-		public ReoScriptRuntimeException(string msg, RuntimePosition position)
-			: base(msg)
+		public ReoScriptRuntimeException(ScriptContext context, string msg, RuntimePosition position, Exception inner)
+			: this(context, msg, position, null, inner)
 		{
-			this.Position = position;
+		}
+		
+		public ReoScriptRuntimeException(ScriptContext context, string msg, RuntimePosition position, object errorObject)
+			: this(context, msg, position, errorObject, null)
+		{
 		}
 
-		public ReoScriptRuntimeException(string msg) : base(msg) { }
-		public ReoScriptRuntimeException(string msg, Exception inner) : base(msg, inner) { }
+		public ReoScriptRuntimeException(ScriptContext context, string msg, RuntimePosition position) 
+			: this(context, msg, position, null) 
+		{ 
+		}
+
+		public ReoScriptRuntimeException(ScriptContext context, string msg)
+			: this(context, msg, null)
+		{
+		}
+
+		public ReoScriptRuntimeException(ScriptContext context, string msg, RuntimePosition position, object errorObject, Exception inner)
+			: base(msg, inner)
+		{
+			this.Context = context;
+			this.Position = position;
+
+			if (errorObject == null && context != null)
+			{
+				errorObject = context.CreateNewObject(context.Srm.BuiltinConstructors.ErrorFunction);
+				((ObjectValue)errorObject)["message"] = msg;
+			}
+			this.ErrorObject = errorObject;
+			this.Context = context;
+		}
+
 	}
+	#region RuntimePosition
 	/// <summary>
 	/// A position identifies where does the errors happened. Contains char index, line number and full path name. 
 	/// </summary>
@@ -1191,18 +1413,26 @@ namespace Unvell.ReoScript
 		public string FilePath { get; set; }
 		public string Line { get; set; }
 	}
+	#endregion
 	#endregion AWDLRuntimeException
+	#region AWDLSyntaxErrorException
+	class ReoScriptSyntaxErrorException : ReoScriptRuntimeException
+	{
+		public ReoScriptSyntaxErrorException(ScriptContext context, string msg) : base(context, msg) { }
+		public ReoScriptSyntaxErrorException(ScriptContext context, string msg, Exception inner) : base(context, msg, null, inner) { }
+	}
+	#endregion
 	public class ReoScriptAssertionException : ReoScriptRuntimeException
 	{
-		public ReoScriptAssertionException() : this(string.Empty) { }
-		public ReoScriptAssertionException(string msg) : base(msg) { }
-		public ReoScriptAssertionException(string caused, string excepted)
-			: base(string.Format("excepte {0} but {1}", excepted, caused)) { }
+		public ReoScriptAssertionException(ScriptContext context) : this(context, string.Empty) { }
+		public ReoScriptAssertionException(ScriptContext context, string msg) : base(context, msg) { }
+		public ReoScriptAssertionException(ScriptContext context, string caused, string excepted)
+			: base(context, string.Format("excepte {0} but {1}", excepted, caused)) { }
 	}
 	public class ClassNotFoundException : ReoScriptRuntimeException
 	{
-		public ClassNotFoundException(string msg) : base(msg) { }
-		public ClassNotFoundException(string msg, Exception inner) : base(msg, inner) { }
+		public ClassNotFoundException(ScriptContext context, string msg) : base(context, msg) { }
+		public ClassNotFoundException(ScriptContext context, string msg, Exception inner) : base(context, msg, null, inner) { }
 	}
 	#endregion
 
@@ -1320,17 +1550,17 @@ namespace Unvell.ReoScript
 			{
 				((ArrayObject)array)[index] = value;
 			}
-			else if (array is StringObject)
+			else if (array is StringValue)
 			{
-				string str = ((StringObject)array).String;
+				string str = ((StringValue)array).String;
 				if (index < str.Length)
 				{
 					str = str.Substring(0, index) + Convert.ToString(value) + str.Substring(index + 1);
-					((StringObject)array).String = str;
+					((StringValue)array).String = str;
 				}
 				else
 				{
-					((StringObject)array).String += value;
+					((StringValue)array).String += value;
 				}
 			}
 			else if (Srm.EnableDirectAccess && Srm.IsDirectAccessObject(array))
@@ -1347,11 +1577,11 @@ namespace Unvell.ReoScript
 			{
 				return ((ArrayObject)array)[index];
 			}
-			else if (array is StringObject)
+			else if (array is StringValue)
 			{
 				string str = Convert.ToString(array);
-				return index >= 0 && index < str.Length ? new StringObject(str[index].ToString()) :
-					new StringObject();
+				return index >= 0 && index < str.Length ? new StringValue(str[index].ToString()) :
+					new StringValue();
 			}
 			else if (Srm.EnableDirectAccess && Srm.IsDirectAccessObject(array))
 			{
@@ -1855,7 +2085,7 @@ namespace Unvell.ReoScript
 			//  return double.IsNaN(val) ? NaNValue.Value : (object)val;
 			//}
 			if (left is string || right is string
-				|| left is StringObject || right is StringObject)
+				|| left is StringValue || right is StringValue)
 			{
 				return srm.CreateNewObject(context, srm.BuiltinConstructors.StringFunction,
 					new object[] { string.Empty + left + right });
@@ -2105,7 +2335,7 @@ namespace Unvell.ReoScript
 			IAccess access = srm.ParseNode((CommonTree)t.Children[0], ctx) as IAccess;
 			if (access == null)
 			{
-				throw new ReoScriptRuntimeException("only property, indexer, and variable can be used as increment or decrement statement.");
+				throw new ReoScriptRuntimeException(ctx, "only property, indexer, and variable can be used as increment or decrement statement.");
 			}
 
 			object oldValue = access.Get();
@@ -2116,7 +2346,7 @@ namespace Unvell.ReoScript
 
 			if (!(oldValue is double || oldValue is int || oldValue is long))
 			{
-				throw new ReoScriptRuntimeException("only interger can be used as increment or decrement statement.");
+				throw new ReoScriptRuntimeException(ctx, "only interger can be used as increment or decrement statement.");
 			}
 
 			double value = Convert.ToDouble(oldValue);
@@ -2139,7 +2369,7 @@ namespace Unvell.ReoScript
 			IAccess access = srm.ParseNode((CommonTree)t.Children[0], ctx) as IAccess;
 			if (access == null)
 			{
-				throw new ReoScriptRuntimeException("only property, indexer, and variable can be used as increment or decrement statement.");
+				throw new ReoScriptRuntimeException(ctx, "only property, indexer, and variable can be used as increment or decrement statement.");
 			}
 			object oldValue = access.Get();
 			if (oldValue == null)
@@ -2149,7 +2379,7 @@ namespace Unvell.ReoScript
 
 			if (!(oldValue is double || oldValue is int || oldValue is long))
 			{
-				throw new ReoScriptRuntimeException("only interger can be used as increment or decrement statement.");
+				throw new ReoScriptRuntimeException(ctx, "only interger can be used as increment or decrement statement.");
 			}
 
 			double value = Convert.ToDouble(oldValue);
@@ -2172,7 +2402,7 @@ namespace Unvell.ReoScript
 			object value = srm.ParseNode((CommonTree)t.Children[0], ctx);
 			if (!(value is bool))
 			{
-				throw new ReoScriptRuntimeException("only boolean expression can be used for conditional expression.");
+				throw new ReoScriptRuntimeException(ctx, "only boolean expression can be used for conditional expression.");
 			}
 			bool condition = (bool)value;
 			return condition ? srm.ParseNode((CommonTree)t.Children[1], ctx)
@@ -2206,13 +2436,13 @@ namespace Unvell.ReoScript
 			if (left == NaNValue.Value && right == NaNValue.Value) return true;
 			if (left == NaNValue.Value || right == NaNValue.Value) return false;
 
-			if (left is StringObject)
+			if (left is StringValue)
 			{
-				return ((StringObject)left).Equals(right);
+				return ((StringValue)left).Equals(right);
 			}
-			else if (right is StringObject)
+			else if (right is StringValue)
 			{
-				return ((StringObject)right).Equals(left);
+				return ((StringValue)right).Equals(left);
 			}
 			else
 			{
@@ -2245,6 +2475,21 @@ namespace Unvell.ReoScript
 		#endregion
 	}
 	#endregion
+	class ExprStrictEqualsNodeParser : RelationExpressionOperatorNodeParser
+	{
+		public override bool Compare(object left, object right)
+		{
+			return left == right;
+		}
+	}
+	class ExprStrictNotEqualsNodeParser : RelationExpressionOperatorNodeParser
+	{
+		public override bool Compare(object left, object right)
+		{
+			return left != right;
+		}
+	}
+
 	#region Greater Than >
 	class ExprGreaterThanNodeParser : RelationExpressionOperatorNodeParser
 	{
@@ -2510,7 +2755,7 @@ namespace Unvell.ReoScript
 
 					if (booleanValue == null)
 					{
-						throw new ReoScriptRuntimeException("only boolean expression can be used as test condition.");
+						throw new ReoScriptRuntimeException(ctx, "only boolean expression can be used as test condition.");
 					}
 					else if (!((bool)booleanValue))
 					{
@@ -2633,6 +2878,88 @@ namespace Unvell.ReoScript
 
 			// TODO: make ReturnNode single instance
 			return new ReturnNode(v);
+		}
+
+		#endregion
+	}
+	#endregion
+	#region Try Catch
+	class TryCatchNodeParser : INodeParser
+	{
+		#region INodeParser Members
+
+		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+		{
+			CommonTree tryBody = t.Children[0] as CommonTree;
+
+			string errorObjIdentifier = null;
+
+			CommonTree catchNode = t.Children[1] as CommonTree;
+			CommonTree catchBody = catchNode.Children[0] as CommonTree;
+
+			if (catchNode.ChildCount > 1)
+			{
+				errorObjIdentifier = catchNode.Children[1].Text;
+			}
+
+			CommonTree finallyNode = t.Children[2] as CommonTree;
+			CommonTree finallyBody = finallyNode.ChildCount > 0 ? finallyNode.Children[0] as CommonTree : null;
+
+			object ret = null;
+
+			try
+			{
+				ret = srm.ParseNode(tryBody, ctx);
+			}
+			catch (ReoScriptRuntimeException ex)
+			{
+				if (catchBody != null)
+				{
+					if (!string.IsNullOrEmpty(errorObjIdentifier))
+					{
+						CallScope currentScope = ctx.GetCurrentCallScope();
+						CallScope scope = new CallScope(currentScope.ThisObject, currentScope.CurrentFunction);
+						scope.Variables[errorObjIdentifier] = ex.ErrorObject;
+
+						ctx.PushCallStack(scope);
+
+						try
+						{
+							ret = srm.ParseNode(catchBody, ctx);
+						}
+						finally
+						{
+							ctx.PopCallStack();
+						}
+					}
+					else
+					{
+						ret = srm.ParseNode(catchBody, ctx);
+					}
+				}
+			}
+			finally
+			{
+				if (finallyBody != null) ret = srm.ParseNode(finallyBody, ctx);
+			}
+
+			return ret;
+		}
+
+		#endregion
+	}
+	#endregion
+	#region Throw
+	class ThrowNodeParser : INodeParser
+	{
+		#region INodeParser Members
+
+		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+		{
+			object obj = srm.ParseNode(t.Children[0] as CommonTree, ctx);
+			if (obj is IAccess) obj = ((IAccess)obj).Get();
+
+			throw new ReoScriptRuntimeException(ctx, string.Empty, null, obj);
 		}
 
 		#endregion
@@ -2782,7 +3109,7 @@ namespace Unvell.ReoScript
 
 					if (funObj == null)
 					{
-						throw new ReoScriptRuntimeException(string.Format("{0} has no method '{1}'", ownerObj, methodName));
+						throw new ReoScriptRuntimeException(context, string.Format("{0} has no method '{1}'", ownerObj, methodName));
 					}
 				}
 				else
@@ -2793,14 +3120,14 @@ namespace Unvell.ReoScript
 
 			if (funObj == null)
 			{
-				throw new ReoScriptRuntimeException("Function is not defined: " + t.Children[0].ToString());
+				throw new ReoScriptRuntimeException(context, "Function is not defined: " + t.Children[0].ToString());
 			}
 
 			if (ownerObj == null) ownerObj = context.ThisObject;
 
 			if (!(funObj is AbstractFunctionObject))
 			{
-				throw new ReoScriptRuntimeException("Object is not a function: " + Convert.ToString(funObj));
+				throw new ReoScriptRuntimeException(context, "Object is not a function: " + Convert.ToString(funObj));
 			}
 
 			CommonTree argTree = t.ChildCount < 2 ? null : t.Children[1] as CommonTree;
@@ -2847,7 +3174,7 @@ namespace Unvell.ReoScript
 				depth++;
 			}
 
-			if (constructTree == null) throw new ReoScriptRuntimeException("unexpected end in new operation.");
+			if (constructTree == null) throw new ReoScriptRuntimeException(context, "unexpected end in new operation.");
 
 			// get constructor if it is need to retrieve from other Accessors
 			object constructorValue = srm.ParseNode(constructTree.Children[0] as CommonTree, context);
@@ -2874,12 +3201,12 @@ namespace Unvell.ReoScript
 
 			if (constructorValue == null)
 			{
-				throw new ReoScriptRuntimeException("Constructor function not found: " + constructorName);
+				throw new ReoScriptRuntimeException(context, "Constructor not found: " + constructorName);
 			}
 
 			if (!(constructorValue is AbstractFunctionObject))
 			{
-				throw new ReoScriptRuntimeException("Constructor is not a function type: " + constructorName);
+				throw new ReoScriptRuntimeException(context, "Constructor is not a function type: " + constructorName);
 			}
 			else
 			{
@@ -2934,14 +3261,14 @@ namespace Unvell.ReoScript
 
 			if (value == null)
 			{
-				throw new ReoScriptRuntimeException("Attempt to access an array or object is null or undefined.",
+				throw new ReoScriptRuntimeException(context, "Attempt to access an array or object is null or undefined.",
 					new RuntimePosition(t.CharPositionInLine, t.Line, context.SourceFilePath));
 			}
 
 			object indexValue = srm.ParseNode((CommonTree)t.Children[1], context);
 			if (indexValue is IAccess) indexValue = ((IAccess)indexValue).Get();
 
-			if (indexValue is StringObject || indexValue is string)
+			if (indexValue is StringValue || indexValue is string)
 			{
 				// index access for object
 				return new PropertyAccess(srm, context, value, Convert.ToString(indexValue));
@@ -2969,7 +3296,7 @@ namespace Unvell.ReoScript
 			value = srm.ParseNode((CommonTree)t.Children[0], ctx);
 			if (value is IAccess) value = ((IAccess)value).Get();
 
-			if (value == null) throw new ReoScriptRuntimeException(
+			if (value == null) throw new ReoScriptRuntimeException(ctx, 
 				"Attempt to access property of null or undefined object" +
 				((t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
 				? (": " + t.Children[0].ToString()) : "."),
@@ -2979,13 +3306,13 @@ namespace Unvell.ReoScript
 			{
 				if (value is ISyntaxTreeReturn)
 				{
-					throw new ReoScriptRuntimeException(
+					throw new ReoScriptRuntimeException(ctx, 
 						string.Format("Attempt to access an object '{0}' that is not Object type.", value.ToString()),
 						new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
 				}
 				else if (!srm.EnableDirectAccess)
 				{
-					throw new ReoScriptRuntimeException(string.Format(
+					throw new ReoScriptRuntimeException(ctx, string.Format(
 						"Attempt to access an object '{0}' that is not in Object type. If want to access a .Net object, set WorkMode to enable DirectAccess.",
 						value.ToString()),
 						new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
@@ -3021,7 +3348,7 @@ namespace Unvell.ReoScript
 			{
 				if (t.Children[1].Type != ReoScriptLexer.IDENTIFIER)
 				{
-					throw new ReoScriptRuntimeException("delete keyword requires an identifier to delete property from object.",
+					throw new ReoScriptRuntimeException(ctx, "delete keyword requires an identifier to delete property from object.",
 						new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
 				}
 
@@ -3041,7 +3368,7 @@ namespace Unvell.ReoScript
 						msg += ".";
 					}
 
-					throw new ReoScriptRuntimeException(msg,
+					throw new ReoScriptRuntimeException(ctx, msg,
 						new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
 				}
 
@@ -3073,19 +3400,36 @@ namespace Unvell.ReoScript
 
 			if (obj == null)
 			{
-				return null;
+				return srm.BuiltinConstructors.ObjectFunction.FunName.ToLower();
 			}
-			else if (obj == NaNValue.Value)
+			else if (obj is bool)
 			{
-				return srm.BuiltinConstructors.NumberFunction.FunName;
+				return srm.BuiltinConstructors.BooleanFunction.FunName.ToLower();
+			}
+			else if (obj is double || obj is int || obj is char || obj is byte
+				|| obj is short || obj is long || obj is float)
+			{
+				return srm.BuiltinConstructors.NumberFunction.FunName.ToLower();
+			}
+			else if (obj is StringObject)
+			{
+				return srm.BuiltinConstructors.ObjectFunction.FunName.ToLower();
+			}
+			else if (obj is StringValue || obj is string)
+			{
+				return srm.BuiltinConstructors.StringFunction.FunName.ToLower();
+			}
+			else if (obj is AbstractFunctionObject)
+			{
+				return srm.BuiltinConstructors.FunctionFunction.FunName.ToLower();
 			}
 			else if (obj is ObjectValue)
 			{
-				return ((ObjectValue)obj).Name;
+				return srm.BuiltinConstructors.ObjectFunction.FunName.ToLower();
 			}
 			else if (obj is ISyntaxTreeReturn)
 			{
-				return null;
+				return srm.BuiltinConstructors.ObjectFunction.FunName.ToLower();
 			}
 			else
 			{
@@ -3095,6 +3439,39 @@ namespace Unvell.ReoScript
 
 		#endregion
 	}
+	#endregion
+	#region InstanceOf
+	class InstanceOfNodeParser : INodeParser
+	{
+		#region INodeParser Members
+
+		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+		{
+			object obj = srm.ParseNode(t.Children[0] as CommonTree, ctx);
+			if (obj is IAccess) obj = ((IAccess)obj).Get();
+
+			object constructor = srm.ParseNode(t.Children[1] as CommonTree, ctx);
+			if (constructor is IAccess) constructor = ((IAccess)constructor).Get();
+
+			if ( !(obj is ObjectValue)
+				|| !(constructor is AbstractFunctionObject)) return false;
+
+			ObjectValue objValue = ((ObjectValue)obj);
+
+			while (objValue != null)
+			{
+				bool instanceof = objValue.Constructor == constructor;
+				if (instanceof) return true;
+
+				objValue = objValue[ScriptRunningMachine.KEY___PROTO__] as ObjectValue;
+			}
+
+			return false;
+		}
+
+		#endregion
+	}
+
 	#endregion
 
 	#region Class
@@ -3135,7 +3512,7 @@ namespace Unvell.ReoScript
 
 			AbstractFunctionObject classConstructor = srm.GetClass(tagName) as AbstractFunctionObject;
 			if (classConstructor == null) throw
-				new ReoScriptRuntimeException("Class not found: " + tagName,
+				new ReoScriptRuntimeException(ctx, "Class not found: " + tagName,
 					new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
 
 			ObjectValue obj = srm.CreateNewObject(ctx, classConstructor) as ObjectValue;
@@ -3287,7 +3664,6 @@ namespace Unvell.ReoScript
 		#endregion
 	}
 
-	#endregion
 	class TemplateDefineNodeParser : INodeParser
 	{
 		#region INodeParser Members
@@ -3304,7 +3680,7 @@ namespace Unvell.ReoScript
 			TypedNativeFunctionObject typedConstructor = srm.GetClass(typeName) as TypedNativeFunctionObject;
 
 			if (typedConstructor == null)
-				throw new ReoScriptRuntimeException("Class not found: " + typeName,
+				throw new ReoScriptRuntimeException(ctx, "Class not found: " + typeName,
 					 new RuntimePosition(paramsTree.Parent.CharPositionInLine, paramsTree.Parent.Line, ctx.SourceFilePath));
 
 			TemplateConstructorObject templateDefine = new TemplateConstructorObject(tagName)
@@ -3332,7 +3708,6 @@ namespace Unvell.ReoScript
 		}
 		#endregion
 	}
-
 	class TemplateConstructorObject : TypedNativeFunctionObject
 	{
 		public TemplateConstructorObject(string name) : base(name) { }
@@ -3357,7 +3732,9 @@ namespace Unvell.ReoScript
 		{
 			return TypedConstructor.Invoke(context, owner, args);
 		}
-	}
+	}	
+	#endregion
+
 	#endregion
 
 	#region Parser Adapter
@@ -3390,10 +3767,13 @@ namespace Unvell.ReoScript
 			definedParser[ReoScriptLexer.CONTINUE] = new ContinueNodeParser();
 			definedParser[ReoScriptLexer.RETURN] = new ReturnNodeParser();
 			definedParser[ReoScriptLexer.CREATE] = new CreateObjectNodeParser();
+			definedParser[ReoScriptLexer.TRY_CATCH] = new TryCatchNodeParser();
+			definedParser[ReoScriptLexer.TRY_CATCH_TRHOW] = new ThrowNodeParser();
 			definedParser[ReoScriptLexer.ARRAY_ACCESS] = new ArrayAccessNodeParser();
 			definedParser[ReoScriptLexer.PROPERTY_ACCESS] = new PropertyAccessNodeParser();
-			definedParser[ReoScriptLexer.DELETE] = new DeletePropertyNodeParser();
+			definedParser[ReoScriptLexer.DELETE_PROP] = new DeletePropertyNodeParser();
 			definedParser[ReoScriptLexer.TYPEOF] = new TypeofNodeParser();
+			definedParser[ReoScriptLexer.INSTANCEOF] = new InstanceOfNodeParser();
 
 			definedParser[ReoScriptLexer.TAG] = new TagNodeParser();
 			definedParser[ReoScriptLexer.TEMPLATE_DEFINE] = new TemplateDefineNodeParser();
@@ -3422,6 +3802,8 @@ namespace Unvell.ReoScript
 			definedParser[ReoScriptLexer.CONDITION] = new ExprConditionNodeParser();
 			definedParser[ReoScriptLexer.EQUALS] = new ExprEqualsNodeParser();
 			definedParser[ReoScriptLexer.NOT_EQUALS] = new ExprNotEqualsNodeParser();
+			definedParser[ReoScriptLexer.STRICT_EQUALS] = new ExprStrictEqualsNodeParser();
+			definedParser[ReoScriptLexer.STRICT_NOT_EQUALS] = new ExprStrictNotEqualsNodeParser();
 			definedParser[ReoScriptLexer.GREAT_THAN] = new ExprGreaterThanNodeParser();
 			definedParser[ReoScriptLexer.GREAT_EQUALS] = new ExprGreaterOrEqualsNodeParser();
 			definedParser[ReoScriptLexer.LESS_THAN] = new ExprLessThanNodeParser();
@@ -3448,6 +3830,9 @@ namespace Unvell.ReoScript
 	#endregion
 
 	#region ScriptContext
+	/// <summary>
+	/// A script context used in multi-thread executing
+	/// </summary>
 	public class ScriptContext
 	{
 		/// <summary>
@@ -3564,31 +3949,64 @@ namespace Unvell.ReoScript
 			return Srm.CreateNewObject(this);
 		}
 
+		/// <summary>
+		/// Create an object using specified function constructor
+		/// </summary>
+		/// <param name="funObject">function constructor</param>
+		/// <returns>created object</returns>
 		public object CreateNewObject(AbstractFunctionObject funObject)
 		{
 			return Srm.CreateNewObject(this, funObject, true);
 		}
 
-		public object CreateNewObject(AbstractFunctionObject funObject, bool invokeConstructor)
+		/// <summary>
+		/// Create an object using specified function constructor without arguments specified
+		/// </summary>
+		/// <param name="funObject">function constructor</param>
+		/// <param name="invokeConstructor">specifies whether allow to call constructor</param>
+		/// <returns>created object</returns>
+		internal object CreateNewObject(AbstractFunctionObject funObject, bool invokeConstructor)
 		{
 			return Srm.CreateNewObject(this, funObject, invokeConstructor, null);
 		}
 
+		/// <summary>
+		/// Create an object using specified function constructor
+		/// </summary>
+		/// <param name="funObject">function constructor</param>
+		/// <param name="args">arguments for calling constructor</param>
+		/// <returns>created object</returns>
 		public object CreateNewObject(AbstractFunctionObject funObject, object[] args)
 		{
 			return Srm.CreateNewObject(this, funObject, true, args);
 		}
 
-		public object CreateNewObject(AbstractFunctionObject funObject, bool invokeConstructor, object[] args)
+		/// <summary>
+		/// Create an object using specified function constructor
+		/// </summary>
+		/// <param name="funObject">function constructor</param>
+		/// <param name="invokeConstructor">specifies whether allow to call constructor</param>
+		/// <param name="args">arguments for calling constructor</param>
+		/// <returns>created object</returns>
+		internal object CreateNewObject(AbstractFunctionObject funObject, bool invokeConstructor, object[] args)
 		{
 			return Srm.CreateNewObject(this, funObject, invokeConstructor);
 		}
 
-		public ObjectValue CreateNewArray()
+		/// <summary>
+		/// Create an empty array object
+		/// </summary>
+		/// <returns></returns>
+		public ArrayObject CreateNewArray()
 		{
 			return CreateNewArray(null);
 		}
 
+		/// <summary>
+		/// Create an array object with initial elements
+		/// </summary>
+		/// <param name="initElements"></param>
+		/// <returns></returns>
 		public ArrayObject CreateNewArray(params object[] initElements)
 		{
 			ArrayObject arr = Srm.CreateNewObject(this, Srm.BuiltinConstructors.ArrayFunction) as ArrayObject;
@@ -3597,6 +4015,35 @@ namespace Unvell.ReoScript
 				arr.List.AddRange(initElements);
 			}
 			return arr;
+		}
+		
+		/// <summary>
+		/// Create an empty string object
+		/// </summary>
+		/// <returns>created string object</returns>
+		public StringValue CreateString()
+		{
+			return CreateString(string.Empty);
+		}
+
+		/// <summary>
+		/// Create a string object with initial text
+		/// </summary>
+		/// <param name="str">primitive string in .Net</param>
+		/// <returns>created string object</returns>
+		public StringValue CreateString(string str)
+		{
+			return Srm.CreateNewString(str);
+		}
+
+		/// <summary>
+		/// Create a wrapper object of string
+		/// </summary>
+		/// <param name="str">primitive string in .Net</param>
+		/// <returns>created wrapper string object</returns>
+		internal StringObject CreateStringWrapper(string str)
+		{
+			return Srm.CreateNewObject(this, Srm.BuiltinConstructors.StringFunction, new object[] { str }) as StringObject;
 		}
 	}
 
@@ -3758,9 +4205,19 @@ namespace Unvell.ReoScript
 
 		internal void LoadCoreLibraries()
 		{
-			using (MemoryStream ms = new MemoryStream(Resources.lib_core))
+			MemoryStream ms;
+
+			using (ms = new MemoryStream(Resources.lib_core))
 			{
 				Load(ms);
+			}
+
+			if ((this.CoreFeatures & CoreFeatures.ArrayExtension) == CoreFeatures.ArrayExtension)
+			{
+				using (ms = new MemoryStream(Resources.lib_array))
+				{
+					Load(ms);
+				}
 			}
 		}
 
@@ -3893,11 +4350,12 @@ namespace Unvell.ReoScript
 			{
 				ObjectValue objValue = obj as ObjectValue;
 
-				objValue.Name = string.IsNullOrEmpty(constructor.FunName) ? 
+				objValue.Name = constructor.FunName == null ? 
 					constructor.Name : constructor.FunName;
 
 				// point to constructor
 				objValue[ScriptRunningMachine.KEY_CONSTRUCTOR] = constructor;
+				objValue.Constructor = constructor;
 
 				// get prototype from constructor
 				object prototype = constructor[KEY_PROTOTYPE];
@@ -3919,6 +4377,25 @@ namespace Unvell.ReoScript
 			return obj;
 		}
 
+		internal StringValue CreateNewString(string str)
+		{
+			StringValue strObj = new StringValue(ConvertEscapeLiterals(str)) { Name = "String" };
+
+			strObj[ScriptRunningMachine.KEY___PROTO__]
+				= BuiltinConstructors.StringFunction[ScriptRunningMachine.KEY_PROTOTYPE];
+
+			strObj[ScriptRunningMachine.KEY_CONSTRUCTOR]
+				= BuiltinConstructors.StringFunction;
+
+			strObj.Constructor = BuiltinConstructors.StringFunction;
+
+			if (NewObjectCreated != null)
+			{
+				NewObjectCreated(this, new ReoScriptObjectEventArgs(strObj, BuiltinConstructors.StringFunction));
+			}
+
+			return strObj;
+		}
 		#endregion
 
 		#region CLR Type Import
@@ -4354,7 +4831,7 @@ namespace Unvell.ReoScript
 				return returnValue != null ? returnValue.Value : null;
 			}
 			else
-				throw new ReoScriptRuntimeException("Object is not a function: " + Convert.ToString(funObject));
+				throw new ReoScriptRuntimeException(context, "Object is not a function: " + Convert.ToString(funObject));
 		}
 
 		/// <summary>
@@ -4520,7 +4997,10 @@ namespace Unvell.ReoScript
 
 						if (!forever)
 						{
-							timeoutList.Remove(bw);
+							lock (timeoutList)
+							{
+								timeoutList.Remove(bw);
+							}
 						}
 					} while (forever);
 				}
@@ -4530,7 +5010,10 @@ namespace Unvell.ReoScript
 				}
 			};
 
-			timeoutList.Add(bw);
+			lock (timeoutList)
+			{
+				timeoutList.Add(bw);
+			}
 			bw.RunWorkerAsync();
 
 			return bw.Id;
@@ -4545,13 +5028,16 @@ namespace Unvell.ReoScript
 
 		internal bool CancelAsyncCall(long id)
 		{
-			for (int i = 0; i < timeoutList.Count; i++)
+			lock (timeoutList)
 			{
-				if (timeoutList[i].Id == id)
+				for (int i = 0; i < timeoutList.Count; i++)
 				{
-					timeoutList[i].CancelAsync();
-					timeoutList.RemoveAt(i);
-					return true;
+					if (timeoutList[i].Id == id)
+					{
+						timeoutList[i].CancelAsync();
+						timeoutList.RemoveAt(i);
+						return true;
+					}
 				}
 			}
 
@@ -4679,16 +5165,25 @@ namespace Unvell.ReoScript
 		}
 		#endregion
 
-		#region Standard Input & Output
-		private List<IStdOutputListener> outputListeners;
+		#region Standard I/O Interface
+
+		private IStandardInputProvider standardInputProvider = new BuiltinConsoleInputProvider();
+
+		public IStandardInputProvider StandardInputProvider
+		{
+			get { return standardInputProvider; }
+			set { standardInputProvider = value; }
+		}
+
+		private List<IStandardOutputListener> outputListeners;
 
 		/// <summary>
 		/// Add a lisenter to get standard output of console.
 		/// </summary>
 		/// <param name="lisenter">a lisenter to get standard output of console</param>
-		public void AddStdOutputListener(IStdOutputListener lisenter)
+		public void AddStdOutputListener(IStandardOutputListener lisenter)
 		{
-			if (outputListeners == null) outputListeners = new List<IStdOutputListener>();
+			if (outputListeners == null) outputListeners = new List<IStandardOutputListener>();
 			outputListeners.Add(lisenter);
 		}
 
@@ -4697,7 +5192,7 @@ namespace Unvell.ReoScript
 		/// </summary>
 		/// <param name="listener">a lisenter to get standard output of console</param>
 		/// <returns>true if specified listener has already added.</returns>
-		public bool HasStdOutputListener(IStdOutputListener listener)
+		public bool HasStdOutputListener(IStandardOutputListener listener)
 		{
 			return outputListeners == null ? false : outputListeners.Contains(listener);
 		}
@@ -4706,35 +5201,35 @@ namespace Unvell.ReoScript
 		/// Remove listener from list of lisenters.
 		/// </summary>
 		/// <param name="lisenter">a lisenter to get standard output of console</param>
-		public void RemoveStdOutputListener(IStdOutputListener lisenter)
+		public void RemoveStdOutputListener(IStandardOutputListener lisenter)
 		{
 			if (outputListeners == null) return;
 			outputListeners.Remove(lisenter);
 		}
 
-		internal void StdOutputWrite(byte[] buf)
+		internal void StandardIOWrite(byte[] buf, int index, int count)
 		{
 			if (outputListeners != null)
 			{
-				outputListeners.ForEach(ol => ol.Write(buf));
+				outputListeners.ForEach(ol => ol.Write(buf, index, count));
 				Application.DoEvents();
 			}
 		}
 
-		internal void StdOutputWrite(string text)
+		internal void StandardIOWrite(object obj)
 		{
 			if (outputListeners != null)
 			{
-				outputListeners.ForEach(ol => ol.Write(text));
+				outputListeners.ForEach(ol => ol.Write(obj));
 				Application.DoEvents();
 			}
 		}
 
-		internal void StdOutputWriteLine(string line)
+		internal void StandardIOWriteLine(string line)
 		{
 			if (outputListeners != null)
 			{
-				outputListeners.ForEach(ol => ol.Write(line));
+				outputListeners.ForEach(ol => ol.WriteLine(line));
 				Application.DoEvents();
 			}
 		}
@@ -4770,7 +5265,7 @@ namespace Unvell.ReoScript
 		}
 
 		/// <summary>
-		/// Load script library from a file specified with its fully path name.
+		/// Load script library from a file specified with its fully path.
 		/// </summary>
 		/// <param name="path">file path to load script</param>
 		public void Load(string path)
@@ -4778,7 +5273,7 @@ namespace Unvell.ReoScript
 			FileInfo fi = new FileInfo(path);
 			if (!fi.Exists)
 			{
-				throw new ReoScriptRuntimeException("File Not Found: " + fi.FullName);
+				throw new ReoScriptRuntimeException(null, "File Not Found: " + fi.FullName);
 			}
 
 			Load(new ANTLRFileStream(path), path);
@@ -4801,7 +5296,7 @@ namespace Unvell.ReoScript
 			}
 			catch (RecognitionException ex)
 			{
-				throw new ReoScriptSyntaxErrorException("syntax error near at " + ex.Character + "(" + ex.Line + ": " + ex.CharPositionInLine + ")");
+				throw new ReoScriptSyntaxErrorException(null, "syntax error near at " + ex.Character + "(" + ex.Line + ": " + ex.CharPositionInLine + ")");
 			}
 		}
 
@@ -4865,13 +5360,18 @@ namespace Unvell.ReoScript
 
 		/// <summary>
 		/// Calculate value of ReoScript expression. Only an expression can be properly 
-		/// calculated by this method, control statement like if, for, and variable declaration 
-		/// passed into method will cause a runtime exception to be thrown. To execute all of
-		/// statements you may use Run method.
+		/// calculated by this method, control statements like if, for, switch and etc.
+		/// could not be executed and runtime exception will be caused. To execute all of
+		/// statements you should use Run method.
 		/// </summary>
 		/// <param name="expression">expression to be calculated</param>
 		/// <returns>value of expression</returns>
 		public object CalcExpression(string expression)
+		{
+			return CalcExpression(expression, new ScriptContext(this, entryFunction));
+		}
+
+		internal object CalcExpression(string expression, ScriptContext context)
 		{
 			ReoScriptLexer exprLex = new ReoScriptLexer(new ANTLRStringStream(expression));
 			CommonTokenStream exprTokens = new CommonTokenStream(exprLex);
@@ -4879,7 +5379,7 @@ namespace Unvell.ReoScript
 			CommonTree t = exprParser.expression().Tree as CommonTree;
 
 			isForceStop = false;
-			object v = ParseNode(t, new ScriptContext(this, entryFunction));
+			object v = ParseNode(t, context);
 			while (v is IAccess) v = ((IAccess)v).Get();
 
 			return v;
@@ -4977,7 +5477,7 @@ namespace Unvell.ReoScript
 					msg = "syntax error";
 				}
 
-				throw new ReoScriptSyntaxErrorException(msg);
+				throw new ReoScriptSyntaxErrorException(ctx, msg);
 			}
 
 			INodeParser parser = null;
@@ -5006,23 +5506,21 @@ namespace Unvell.ReoScript
 					case ReoScriptLexer.STRING_LITERATE:
 						string str = t.ToString();
 						str = str.Substring(1, str.Length - 2);
-						object strObj = CreateNewObject(ctx, BuiltinConstructors.StringFunction,
-							new object[] { ConvertEscapeLiterals(str) });
-						return strObj;
+						return CreateNewString(str);
 
-					case ReoScriptLexer.TRUE:
+					case ReoScriptLexer.LIT_TRUE:
 						return true;
 
-					case ReoScriptLexer.FALSE:
+					case ReoScriptLexer.LIT_FALSE:
 						return false;
 
-					case ReoScriptLexer.NULL:
+					case ReoScriptLexer.LIT_NULL:
 					case ReoScriptLexer.UNDEFINED:
 						return null;
 
 					case ReoScriptLexer.OBJECT_LITERAL:
 						if (t.ChildCount % 2 != 0)
-							throw new ReoScriptRuntimeException("object literal should be key/value pair.",
+							throw new ReoScriptRuntimeException(ctx, "object literal should be key/value pair.",
 								new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
 
 						ObjectValue val = CreateNewObject(ctx);
@@ -5117,7 +5615,7 @@ namespace Unvell.ReoScript
 			while (value is IAccess) value = ((IAccess)value);
 			if (!(value is decimal))
 			{
-				throw new ReoScriptRuntimeException("parameter must be numeric.");
+				throw new ReoScriptRuntimeException(ctx, "parameter must be numeric.");
 			}
 			return (decimal)value;
 		}
@@ -5144,9 +5642,9 @@ namespace Unvell.ReoScript
 			else if (obj is ISyntaxTreeReturn)
 			{
 				double v = def;
-				if (obj is StringObject)
+				if (obj is StringValue)
 				{
-					double.TryParse(((StringObject)obj).String, out v);
+					double.TryParse(((StringValue)obj).String, out v);
 				}
 				else if (obj is NumberObject)
 				{
@@ -5180,9 +5678,9 @@ namespace Unvell.ReoScript
 			else if (obj is ISyntaxTreeReturn)
 			{
 				long v = def;
-				if (obj is StringObject)
+				if (obj is StringValue)
 				{
-					long.TryParse(((StringObject)obj).String, out v);
+					long.TryParse(((StringValue)obj).String, out v);
 				}
 				else if (obj is NumberObject)
 				{
@@ -5212,9 +5710,9 @@ namespace Unvell.ReoScript
 			else if (obj is ISyntaxTreeReturn)
 			{
 				float v = def;
-				if (obj is StringObject)
+				if (obj is StringValue)
 				{
-					float.TryParse(((StringObject)obj).String, out v);
+					float.TryParse(((StringValue)obj).String, out v);
 				}
 				else if (obj is NumberObject)
 				{
@@ -5246,9 +5744,9 @@ namespace Unvell.ReoScript
 			else if (obj is ISyntaxTreeReturn)
 			{
 				double v = def;
-				if (obj is StringObject)
+				if (obj is StringValue)
 				{
-					double.TryParse(((StringObject)obj).String, out v);
+					double.TryParse(((StringValue)obj).String, out v);
 				}
 				return v;
 			}
@@ -5346,7 +5844,7 @@ namespace Unvell.ReoScript
 					{
 						try
 						{
-							if (type.IsEnum && value is StringObject || value is NumberObject)
+							if (type.IsEnum && value is StringValue || value is NumberObject)
 							{
 								obj = Enum.Parse(type, Convert.ToString(value));
 							}
@@ -5430,6 +5928,74 @@ namespace Unvell.ReoScript
 			}
 
 			return q == null || q.Count() == 0 ? null : q.First();
+		}
+
+		public static string ConvertToJSONString(object obj, Func<string, object, object> handler)
+		{
+			return ConvertToJSONString(obj, handler, true);
+		}
+
+		public static string ConvertToJSONString(object obj, Func<string, object, object> handler, bool allowDotNetObjects)
+		{
+			StringBuilder sb = new StringBuilder("{");
+
+			if (obj is ISyntaxTreeReturn)
+			{
+				if (obj is ObjectValue)
+				{
+					ObjectValue objVal = (ObjectValue)obj;
+					foreach (string key in objVal)
+					{
+						if (sb.Length > 1) sb.Append(',');
+
+						sb.Append(key);
+						sb.Append(':');
+
+						object value = objVal[key];
+
+						if (handler != null) value = handler(key, value);
+
+						if (value == null)
+						{
+							sb.Append("null");
+						}
+						else if (value is string || value is StringValue)
+						{
+							string valStr = "\"" + Convert.ToString(value) + "\"";
+							//valStr = valStr.Replace("\"", "\\\"");
+							sb.Append(valStr);
+						}
+						else if (value is double || value is int || value is char
+							|| value is byte || value is short || value is long
+							|| value is NumberObject)
+						{
+							sb.Append(Convert.ToString(value));
+						}
+						else
+						{
+							sb.Append(Convert.ToString(value));
+						}
+					}
+				}
+			} 
+			else if (allowDotNetObjects)
+			{
+				PropertyInfo[] pis = obj.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
+				foreach (PropertyInfo pi in pis)
+				{
+					if (sb.Length > 1) sb.Append(',');
+
+					object value = pi.GetValue(obj, null);
+					if (handler != null) value = handler(pi.Name, value);
+
+					sb.Append(pi.Name);
+					sb.Append(':');
+					sb.Append(value);
+				}
+			}
+
+			sb.Append('}');
+			return sb.ToString();
 		}
 		#endregion
 
@@ -5519,16 +6085,19 @@ namespace Unvell.ReoScript
 	{
 		internal ObjectConstructorFunction ObjectFunction;
 		internal StringConstructorFunction StringFunction;
+		internal ArrayConstructorFunction ArrayFunction;
 		internal TypedNativeFunctionObject FunctionFunction;
 		internal TypedNativeFunctionObject NumberFunction;
 		internal TypedNativeFunctionObject DateFunction;
-		internal ArrayConstructorFunction ArrayFunction;
+		internal NativeFunctionObject ErrorFunction;
+		internal NativeFunctionObject BooleanFunction;
 
 		public BuiltinConstructors()
 		{
 			ObjectFunction = new ObjectConstructorFunction();
 			StringFunction = new StringConstructorFunction();
 
+			#region Function
 			FunctionFunction = new TypedNativeFunctionObject
 				(typeof(FunctionObject), "Function", (ctx, owner, args) =>
 				{
@@ -5536,8 +6105,29 @@ namespace Unvell.ReoScript
 					//TOOD: create function from string
 					if (fun == null) fun = ctx.CreateNewObject(FunctionFunction, false) as FunctionObject;
 					return fun;
-				});
+				}, (proto) =>
+				{
+					proto["call"] = new NativeFunctionObject("call", (ctx, owner, args) =>
+					{
+						AbstractFunctionObject func = owner as AbstractFunctionObject;
+						if (func != null)
+						{
+							object[] callArgs = null;
 
+							if (args.Length > 1)
+							{
+								callArgs = new object[args.Length - 1];
+								Array.Copy(args, 1, callArgs, 0, args.Length - 1);
+							}
+
+							return ctx.Srm.InvokeFunction(ctx, args.Length > 0 ? args[0] : null, func, callArgs);
+						}
+						return null;
+					});
+				});
+			#endregion
+
+			#region Number
 			NumberFunction = new TypedNativeFunctionObject
 				(typeof(NumberObject), "Number", (ctx, owner, args) =>
 				{
@@ -5557,7 +6147,7 @@ namespace Unvell.ReoScript
 
 							try
 							{
-								return new StringObject(Convert.ToString(Convert.ToInt32(num), Convert.ToInt32(args[0])));
+								return new StringValue(Convert.ToString(Convert.ToInt32(num), Convert.ToInt32(args[0])));
 							}
 							catch { }
 						}
@@ -5565,7 +6155,9 @@ namespace Unvell.ReoScript
 						return ctx.CreateNewObject(StringFunction, new object[] { result });
 					});
 				});
+			#endregion
 
+			#region Date
 			DateFunction = new TypedNativeFunctionObject
 				(typeof(DateObject), "Date", (ctx, owner, args) =>
 				{
@@ -5586,10 +6178,64 @@ namespace Unvell.ReoScript
 						});
 					}
 				});
+			#endregion
 
+			#region Array
 			ArrayFunction = new ArrayConstructorFunction();
+			#endregion
+
+			#region Error
+			ErrorFunction = new NativeFunctionObject("Error", (ctx, owner, args) =>
+			{
+				if (owner is ObjectValue && args != null && args.Length > 0)
+				{
+					ObjectValue errorObj = (ObjectValue)owner;
+
+					if (args.Length == 1)
+					{
+						errorObj["message"] = args[0];
+					}
+				}
+				return owner;
+			});
+			#endregion
+
+			#region Boolean
+			BooleanFunction = new TypedNativeFunctionObject<BooleanObject>("Boolean", (ctx, owner, args) =>
+			{
+				if (args.Length == 0)
+				{
+					return false;
+				}
+				else
+				{
+					object obj = args[0];
+
+					return ((obj is bool) && ((bool)obj));
+				}
+			}, (protoObj) =>
+			{
+				if (protoObj is ObjectValue)
+				{
+					ObjectValue proto = (ObjectValue)protoObj;
+
+					proto["valueOf"] = new NativeFunctionObject("valueOf", (ctx, owner, args) =>
+					{
+						if (owner is BooleanObject)
+						{
+							return ((BooleanObject)owner).Boolean;
+						}
+						else
+						{
+							return false;
+						}
+					});
+				}
+			});
+			#endregion
 		}
 
+		#region Internal Global Functions
 		private static readonly NativeFunctionObject __setTimeout__ = new NativeFunctionObject("setTimeout", (ctx, owner, args) =>
 		{
 			if (args.Length < 2) return 0;
@@ -5648,20 +6294,23 @@ namespace Unvell.ReoScript
 		private static readonly NativeFunctionObject __eval__ = new NativeFunctionObject("eval", (ctx, owner, args) =>
 		{
 			if (args.Length == 0) return false;
-			return ctx.Srm.CalcExpression(Convert.ToString(args[0]));
+			return ctx.Srm.CalcExpression(Convert.ToString(args[0]), ctx);
 		});
+		#endregion
 
 		public void ApplyToScriptRunningMachine(ScriptRunningMachine srm)
 		{
 			if (srm != null && srm.GlobalObject != null)
 			{
 				// built-in object constructors
-				srm.SetGlobalVariable(ObjectFunction.Name, ObjectFunction);
-				srm.SetGlobalVariable(FunctionFunction.Name, FunctionFunction);
-				srm.SetGlobalVariable(StringFunction.Name, StringFunction);
-				srm.SetGlobalVariable(NumberFunction.Name, NumberFunction);
-				srm.SetGlobalVariable(DateFunction.Name, DateFunction);
-				srm.SetGlobalVariable(ArrayFunction.Name, ArrayFunction);
+				srm.SetGlobalVariable(ObjectFunction.FunName, ObjectFunction);
+				srm.SetGlobalVariable(FunctionFunction.FunName, FunctionFunction);
+				srm.SetGlobalVariable(ErrorFunction.FunName, ErrorFunction);
+				srm.SetGlobalVariable(StringFunction.FunName, StringFunction);
+				srm.SetGlobalVariable(NumberFunction.FunName, NumberFunction);
+				srm.SetGlobalVariable(DateFunction.FunName, DateFunction);
+				srm.SetGlobalVariable(ArrayFunction.FunName, ArrayFunction);
+				srm.SetGlobalVariable(BooleanFunction.FunName, BooleanFunction);
 
 				// built-in objects
 				srm.SetGlobalVariable("Math", new MathObject());
@@ -5670,24 +6319,80 @@ namespace Unvell.ReoScript
 					srm.GlobalObject["console"] = new ObjectValue();
 
 				if ((srm.CoreFeatures & CoreFeatures.Eval) == CoreFeatures.Eval)
-					srm.GlobalObject[__eval__.Name] = __eval__;
+					srm.GlobalObject[__eval__.FunName] = __eval__;
 
-				if ((srm.CoreFeatures & CoreFeatures.SetTimeout) == CoreFeatures.SetTimeout)
+				if ((srm.CoreFeatures & CoreFeatures.AsyncCalling) == CoreFeatures.AsyncCalling)
 				{
-					srm.GlobalObject[__setTimeout__.Name] = __setTimeout__;
-					srm.GlobalObject[__clearTimeout__.Name] = __clearTimeout__;
+					srm.GlobalObject[__setTimeout__.FunName] = __setTimeout__;
+					srm.GlobalObject[__clearTimeout__.FunName] = __clearTimeout__;
 				}
 
-				if ((srm.CoreFeatures & CoreFeatures.SetInterval) == CoreFeatures.SetInterval)
+				if ((srm.CoreFeatures & CoreFeatures.AsyncCalling) == CoreFeatures.AsyncCalling)
 				{
-					srm.GlobalObject[__setInterval__.Name] = __setInterval__;
+					srm.GlobalObject[__setInterval__.FunName] = __setInterval__;
 					srm.GlobalObject["clearInterval"] = __clearTimeout__;
 				}
 
 				if ((srm.CoreFeatures & CoreFeatures.Alert) == CoreFeatures.Alert)
 				{
-					srm.GlobalObject[__alert__.Name] = __alert__;
-					srm.GlobalObject[__confirm__.Name] = __confirm__;
+					srm.GlobalObject[__alert__.FunName] = __alert__;
+					srm.GlobalObject[__confirm__.FunName] = __confirm__;
+				}
+
+				if ((srm.CoreFeatures & CoreFeatures.JSON) == CoreFeatures.JSON)
+				{
+					ObjectValue json = new ObjectValue(){
+						Name = "JSON",
+					};
+
+					json["parse"] = new NativeFunctionObject("parse", (ctx, owner, args) =>
+					{
+						if (args.Length == 0) return null;
+
+						string lit = Convert.ToString(args[0]);
+						if (string.IsNullOrEmpty(lit)) return null;
+
+						ReoScriptLexer lex = new ReoScriptLexer(new ANTLRStringStream(lit.Trim()));
+						CommonTokenStream tokens = new CommonTokenStream(lex);
+						ReoScriptParser parser = new ReoScriptParser(tokens);
+
+						// read script and build ASTree
+						ObjectValue obj = ctx.CreateNewObject();
+
+						if (args.Length == 1 || args[1] == null || (!(args[1] is AbstractFunctionObject)))
+						{
+							parser.jsonParse(ctx, (key, value) => { obj[key] = value; });
+						}
+						else
+						{
+							AbstractFunctionObject func = ((args[1]) as AbstractFunctionObject);
+							parser.jsonParse(ctx, (key, value) =>
+							{
+								obj[key] = srm.InvokeAbstractFunction(ctx.ThisObject, func, new object[] { key, value });
+							});
+						}
+
+						return obj;
+					});
+
+					json["stringify"] = new NativeFunctionObject("stringify", (ctx, owner, args) =>
+					{
+						if (args.Length == 0 || args[0] == null)
+							return string.Empty; // FIXME: StringObject ?
+
+						AbstractFunctionObject func = null;
+						if (args.Length >= 2 && args[1] is AbstractFunctionObject)
+						{
+							func = ((args[1]) as AbstractFunctionObject);
+						}
+
+						return ScriptRunningMachine.ConvertToJSONString(args[0], (key, value) =>
+						{
+							return func == null ? value : srm.InvokeAbstractFunction(ctx.ThisObject, func, new object[] { key, value });
+						}, srm.EnableDirectAccess);
+					});
+
+					srm.SetGlobalVariable("JSON", json);
 				}
 			}
 		}
@@ -5737,18 +6442,18 @@ namespace Unvell.ReoScript
 	public enum CoreFeatures
 	{
 		/// <summary>
+		/// A set of full features will be supported, both StandardFeatures and ExtendedFeatures.
+		/// </summary>
+		FullFeatures = StandardFeatures | ExtendedFeatures,
+
+		/// <summary>
 		/// A set of standard features will be supported. (Compatible with ECMAScript)
 		/// Contains the alert, eval, setTimeout, setInterval functions and console object.
 		/// </summary>
-		StandardFeatures = Alert | Console | Eval | SetTimeout | SetInterval,
+		StandardFeatures = Alert | Console | Eval | AsyncCalling | JSON,
 
 		/// <summary>
-		/// Extended Feature supported by ReoScript (Non-compatible with ECMAScript)
-		/// </summary>
-		ExtendedFeatures = ArrayExtension,
-
-		/// <summary>
-		/// Only the built-in types will be supported
+		/// Only minimum features will be supported
 		/// </summary>
 		None = 0x0,
 
@@ -5763,24 +6468,29 @@ namespace Unvell.ReoScript
 		Eval = 0x2,
 
 		/// <summary>
-		/// setTimeout function support
+		/// setTimeout and setInterval function support
 		/// </summary>
-		SetTimeout = 0x4,
-
-		/// <summary>
-		/// setInterval function support
-		/// </summary>
-		SetInterval = 0x8,
+		AsyncCalling = 0x4,
 
 		/// <summary>
 		/// console object support
 		/// </summary>
-		Console = 0x10,
+		Console = 0x8,
+
+		/// <summary>
+		/// JSON object with 'parse' method to provide script can parse json literal
+		/// </summary>
+		JSON = 0x10,
+
+		/// <summary>
+		/// Extended Feature supported by ReoScript (Non-compatible with ECMAScript)
+		/// </summary>
+		ExtendedFeatures = ArrayExtension,
 
 		/// <summary>
 		/// Array extension feature support
 		/// </summary>
-		ArrayExtension = 0x20,
+		ArrayExtension = 0x10000,
 	}
 
 	#endregion
@@ -5805,28 +6515,105 @@ namespace Unvell.ReoScript
 
 	#region Standard I/O
 
-	public interface IStdOutputListener
+	/// <summary>
+	/// An interface to provide standard input data for script. 
+	/// The method of implementation of this interface will be invoked when data redirected 
+	/// by __stdout__ and __stdoutln__ built-in functions in script.
+	/// </summary>
+	public interface IStandardInputProvider
 	{
-		void Write(string text);
-		void WriteLine(string line);
-		void Write(byte[] buf);
+		/// <summary>
+		/// Read a byte from provider
+		/// </summary>
+		/// <returns>byte be read</returns>
+		byte Read();
+
+		/// <summary>
+		/// Read a whole line string from provider
+		/// </summary>
+		/// <returns>string line</returns>
+		string ReadLine();
 	}
 
-	public class ConsoleOutputListener : IStdOutputListener
+	/// <summary>
+	/// An interface to listen what data has been outputed by __stdout__ and __stdoutln__
+	/// built-in functions in script.
+	/// </summary>
+	public interface IStandardOutputListener
 	{
-		public void Write(byte[] buf)
+		/// <summary>
+		/// Write a byte array to listener
+		/// </summary>
+		/// <param name="buf">buffer to save byte array</param>
+		/// <param name="index">index in buffer read from</param>
+		/// <param name="count">count in buffer to read</param>
+		void Write(byte[] buf, int index, int count);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="line"></param>
+		void WriteLine(string line);
+
+		void Write(object obj);
+	}
+
+	/// <summary>
+	/// Default built-in console input provider for Standard I/O Interface
+	/// </summary>
+	public class BuiltinConsoleInputProvider : IStandardInputProvider
+	{
+		/// <summary>
+		/// Read a byte from console
+		/// </summary>
+		/// <returns></returns>
+		public byte Read()
 		{
-			Console.Write(Encoding.ASCII.GetString(buf));
+			return (byte)Console.ReadKey().KeyChar;
 		}
 
-		public void Write(string text)
+		/// <summary>
+		/// Read a string line from console
+		/// </summary>
+		/// <returns></returns>
+		public string ReadLine()
 		{
-			Console.Write(text);
+			return Console.ReadLine();
+		}
+	}
+
+	/// <summary>
+	/// Default built-in 
+	/// </summary>
+	public class BuiltinConsoleOutputListener : IStandardOutputListener
+	{
+		/// <summary>
+		/// Print byte array in console
+		/// </summary>
+		/// <param name="buf">buffer to save byte array</param>
+		/// <param name="index">byte index from array</param>
+		/// <param name="count">byte count in array</param>
+		public void Write(byte[] buf, int index, int count)
+		{
+			Console.Write(Encoding.ASCII.GetString(buf, index, count));
 		}
 
+		/// <summary>
+		/// Output string line in console
+		/// </summary>
+		/// <param name="line">string line</param>
 		public void WriteLine(string line)
 		{
 			Console.WriteLine(line);
+		}
+
+		/// <summary>
+		/// Output serialized string of an object in console
+		/// </summary>
+		/// <param name="obj">the object to output</param>
+		public void Write(object obj)
+		{
+			Console.Write(Convert.ToString(obj));
 		}
 	}
 	#endregion
@@ -5885,26 +6672,22 @@ namespace Unvell.ReoScript
 				{
 					if (args.Length == 0)
 					{
-						throw new ReoScriptAssertionException();
+						throw new ReoScriptAssertionException(ctx);
 					}
 					else if (args.Length == 1)
 					{
 						if (!ScriptRunningMachine.GetBoolValue(args[0]))
-							throw new ReoScriptAssertionException();
+							throw new ReoScriptAssertionException(ctx);
 					}
 					else if (args.Length == 2)
 					{
 						if (!comparer.Compare(args[0], args[1]))
-							throw new ReoScriptAssertionException(string.Format("expect '{0}' but '{1}'",
+							throw new ReoScriptAssertionException(ctx, string.Format("expect '{0}' but '{1}'",
 								ScriptRunningMachine.ConvertToString(args[1]),
 								ScriptRunningMachine.ConvertToString(args[0])));
 					}
 					return null;
 				});
-
-				//DebugObject["startStopwatch"] = new NativeFunctionObject("startStopwatch", (ctx, owner, args[])=>{
-
-				//});
 
 				DebugObject["total_created_objects"] = new ExternalProperty(
 					() => { return totalObjectCreated; }, null);
@@ -5938,6 +6721,22 @@ namespace Unvell.ReoScript
 			//  Srm.InvokeFunctionIfExisted(DebugObject, "onObjectCreated", e.Object);
 			//}
 		}
+
+		private List<Breakpoint> breakpoints = new List<Breakpoint>();
+
+		public void AddBreakpoint(Breakpoint breakpoint)
+		{
+			this.breakpoints.Add(breakpoint);
+		}
+	}
+
+	public class Breakpoint
+	{
+		public string FilePath { get; set; }
+		public int Line { get; set; }
+		public int Index { get; set; }
+		public int Length { get; set; }
+		public string TestCode { get; set; }
 	}
 
 	#endregion

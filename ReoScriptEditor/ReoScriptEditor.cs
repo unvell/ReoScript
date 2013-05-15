@@ -29,7 +29,7 @@ using Unvell.ReoScript.Editor.Properties;
 
 namespace Unvell.ReoScript.Editor
 {
-	public partial class ReoScriptEditor : Form, IStdOutputListener
+	public partial class ReoScriptEditor : Form, IStandardOutputListener
 	{
 		public ReoScriptEditor()
 		{
@@ -223,9 +223,9 @@ namespace Unvell.ReoScript.Editor
 
 		#region IStdOutputListener Members
 
-		public void Write(string text)
+		public void Write(object obj)
 		{
-			Log(text);
+			Log(Convert.ToString(obj));
 		}
 
 		public void WriteLine(string line)
@@ -233,9 +233,9 @@ namespace Unvell.ReoScript.Editor
 			Log(line);
 		}
 
-		public void Write(byte[] buf)
+		public void Write(byte[] buf, int index, int count)
 		{
-			Log(Encoding.ASCII.GetString(buf));
+			Log(Encoding.ASCII.GetString(buf, index, count));
 		}
 
 		#endregion

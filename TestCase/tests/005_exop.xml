@@ -19,7 +19,7 @@
       var e = a;
       e += d;
 
-      t( e.z == 3.14 );
+      t( e.z, 3.14 );
 
     </script>
   </test-case>
@@ -32,11 +32,11 @@
       var b = { b: 40, e: 50 };
 
       var c = a ^ b;
-      t( c.hasOwnProperty('a') == false );
-      t( c.hasOwnProperty('b') == true );
-      t( c.hasOwnProperty('c') == false );
+      t( c.hasOwnProperty('a'), false );
+      t( c.hasOwnProperty('b'), true );
+      t( c.hasOwnProperty('c'), false );
 
-      t( c.b == 20 );
+      t( c.b, 20 );
 
     </script>
   </test-case>

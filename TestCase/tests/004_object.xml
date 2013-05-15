@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <test-suite id="004" name="object">
-  
+
   <test-case id="001">
     <script>
       var t = debug.assert;
@@ -25,10 +25,10 @@
       var obj = { a : 10, b: 20, 'c': 30 };
 
       var s = '';
-      for(key in obj) {
-        if(key == 'a' || key =='b' || key=='c') {
-          if(s.length>0) s+=', ';
-          s+=key;
+      for (key in obj) {
+        if (key == 'a' || key =='b' || key=='c') {
+          if (s.length>0) s += ', ';
+          s += key;
         }
       }
       
@@ -37,8 +37,8 @@
     </script>
   </test-case>
 
-	<test-case id="003" name="index access">
-		<script>
+  <test-case id="003" name="index access">
+    <script>
       var t = debug.assert;
 
       var obj = { a : 10, b: 20, 'c': 30 };
@@ -58,20 +58,20 @@
     <script>
       var t = debug.assert;
 
-      function dump() {
+      function dump(obj) {
         var o = '';
-        for(key in obj){
-          if(o.length>0) o+=', ';
-          o+=key;
+        for (key in obj){
+          if (o.length>0) o += ', ';
+          o += key;
         }
         return o;
       }
       
       var obj = { a : 10, b: 20, 'c': 30 };
-      t(dump(o) == 'a, b, c');
+      t(dump(obj) == 'a, b, c');
       
       obj += { d: 40 };
-      t(dump(o) == 'a, b, c, d');
+      t(dump(obj) == 'a, b, c, d');
       
     </script>
   </test-case>
@@ -172,8 +172,8 @@
 
       var obj = { a:10, b:20, c:30, d:40 };
       
-      for(key in obj) {
-        if( key == 'b' )
+      for (key in obj) {
+        if (key == 'b')
           delete obj.c;
       }
       
@@ -204,18 +204,26 @@
     </script>
   </test-case>
 
-  <test-case id="031" name="self call">
+  <test-case id="100" name="enum">
     <script>
       var t = debug.assert;
+      
+      var ButtonState = {
+        Disabled: 0x1,
+        Hidden: 0x2,
+        Focus: 0x4,
+        Hover: 0x8,
+        Pressed: 0x10,
+      };
+      
+      var status = ButtonState.Focus | ButtonState.Hover | ButtonState.Pressed;
 
-      var a = function() { return a; }
-
-      t( a()()()()()()()()()()()() == a );
+      t( (status &amp; ButtonState.Hover), ButtonState.Hover );
 
     </script>
   </test-case>
 
-  <test-case id="100" name="namespace">
+  <test-case id="200" name="namespace">
     <script>
       var t = debug.assert;
 

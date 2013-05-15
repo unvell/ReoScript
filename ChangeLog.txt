@@ -1,4 +1,23 @@
-v1.1.5 4/11/2013
+v1.2  5/15/2013
+ - New: Error handling supported (Error object and try/catch/finally/throw)
+ - New: Add 'Boolean' internal function
+ - New: Add 'instanceof' keyword, check whether object is instance of a constructor function
+ - New: Add '===' and '!==' operators (strict compared by C# Runtime)
+ - New: Add Array constructor to support elements
+ - New: Add Array method 'indexOf' to prototype
+ - New: Add Array Extension Library (Linq-like operations available with CoreFeatures.FullFeatures)
+ - New: Add String 'split' and 'substr' method to prototype
+ - New: Add String 'toLowerCase' and 'toUpperCase' method to prototype
+ - New: Add Function 'call' method to prototype
+ - New: Add JSON object support (contains both 'parse' and 'stringify')
+ - New: __stdin__ and __stdinln__ supported (console.read and console.readline)
+ - New: run in console ReoScript.exe is available
+ - Changed: change 'typeof' keyword to return lowercase typename
+ - Changed: change String, Number and Boolean to construct primitive value wrap
+ - Changed: eval function using current runtime context
+ - Changed: split IStdOutputListener to IStandardInputProvider and IStandardOutputListener
+
+v1.1.5  4/11/2013
  - New: Add NaN keyword
  - New: Add import file default path (workpath)
  - New: Add toString method in root prototype object
@@ -8,21 +27,21 @@ v1.1.5 4/11/2013
  - Fixed: Convert to float failed in GetFloatValue of SRM
  - Changed: 'import' keyword using path of current file
 
-v1.1.4 3/24/2013
+v1.1.4  3/24/2013
  - New: setTimeout, setInterval supported to pass parameters
- - New: Multi-context to thread safety support
+ - New: Multi-context to thread safety improving
  - New: delete keyword to delete property is available
  - New: Add typeof keyword
- - New: removeOwnProperty method added into root prototype object
+ - New: Add removeOwnProperty method into root prototype object
  - New: Add performance test cases
- - New: Math.cos and Math.tan added
+ - New: Add Math.cos and Math.tan
  - Fixed: Priority to boolean operator(&& ||) 
  - Fixed: for...in statement support to declare local variables
  - Changed: Combine Reset and ResetContext method to SRM
  - Changed: Rename srm.DeleteGlobalVariable to srm.RemoveGlobalVariable
  - Changed: Replace SRM to ScriptContext in NativeFunctionObject invoking
 
-v1.1.2 3/21/2013
+v1.1.2  3/21/2013
  - New: Add setInterval, clearTimeout, clearInterval support
  - New: ^ operator is available to find properties existed in both A and B object
  - New: Add error position info in Runtime Exception
@@ -32,7 +51,7 @@ v1.1.2 3/21/2013
  - Fixed: Other bugs (and test-cases)
  - Changed: Make ArrayObject public
 
-v1.1.0 3/16/2013
+v1.1  3/16/2013
  - New: Improved performance for async-calling
  - New: Lambda Expression is available
  - New: Fully prototype mechanism supported
@@ -48,16 +67,16 @@ v1.1.0 3/16/2013
  - Fixed: Check and return the value from ReturnNode in Run method
  - Changed: Rename NativeFunctionValue to NativeFunctionObject
 
-v1.0.4 3/11/2013
+v1.0.4  3/11/2013
  - New: Enumeration supported (for ... in)
  - New: Precompiling supported
  - New: Plus(+) operator to combine two objects
  - Fixed: string can be used as identifier to an object literal
  - Fixed: return an incorrect string type after combining two strings
 
-v1.0.3 2/12/2013
+v1.0.3  2/12/2013
  - New: Event Binding supported
  
-v1.0.0 2/1/2013
+v1.0  2/1/2013
  - ReoScript released
  

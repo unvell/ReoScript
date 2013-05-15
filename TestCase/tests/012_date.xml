@@ -2,7 +2,7 @@
 
 <test-suite id="012" name="date">
   
-  <test-case id="001">
+  <test-case id="001" name="now">
     <script>
       var t = debug.assert;
 
@@ -18,10 +18,11 @@
     </script>
   </test-case>
 
-  <test-case id="002">
+  <test-case id="002" name="create">
     <script>
       var t = debug.assert;
 
+      
     </script>
   </test-case>
 </test-suite>

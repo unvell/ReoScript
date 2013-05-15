@@ -60,6 +60,13 @@ namespace Unvell.ReoScript.Properties {
             }
         }
         
+        internal static byte[] lib_array {
+            get {
+                object obj = ResourceManager.GetObject("lib_array", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] lib_core {
             get {
                 object obj = ResourceManager.GetObject("lib_core", resourceCulture);

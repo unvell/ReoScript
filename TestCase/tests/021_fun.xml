@@ -134,7 +134,7 @@
     </script>
   </test-case>
 
-  <test-case id="008" name="call after fun">
+  <test-case id="008" name="call before define">
     <script>
       var t = debug.assert;
 
@@ -143,6 +143,17 @@
       function a() { 
         return 10;
       }
+
+    </script>
+  </test-case>
+
+  <test-case id="009" name="self call">
+    <script>
+      var t = debug.assert;
+
+      var a = function() { return a; }
+
+      t( a()()()()()()()()()()()() == a );
 
     </script>
   </test-case>
@@ -183,5 +194,102 @@
     </script>
   </test-case>
 
+  <test-case id="014" name="call method">
+    <script>
+      var t = debug.assert;
+      
+      t( bracketMe.call != null );
+      
+      function bracketMe() {
+        return '[' + this + ']';
+      }
+      
+      t( bracketMe.call('a'), '[a]' );
+      
+    </script>
+  </test-case>
 
+  <test-case id="015" name="inherit using call">
+    <script>
+      var t = debug.assert;
+      
+      // example code from Mozilla
+      // https://developer.mozilla.org/en/docs/JavaScript/Reference/Global_Objects/Function/call
+      //
+      function Product(name, price) {
+        this.name = name;
+        this.price = price;
+       
+        this.growUp = function() { };
+       
+        if (price &lt; 0) {
+          //throw RangeError('Cannot create product "' + name + '" with a negative price');
+          t(false);
+        }
+        
+        return this;
+      }
+       
+      function Food(name, price) {
+        Product.call(this, name, price);
+        this.category = 'food';
+      }
+      
+      Food.prototype = new Product();
+
+      var cheese = new Food('feta', 5);
+      
+      t( cheese != null );
+      
+      t( cheese.name, 'feta' );
+      t( cheese.price, 5 );
+      t( cheese.category, 'food' );
+      t( cheese.growUp != null );
+      
+      t( cheese instanceof Food );
+      t( cheese instanceof Product );
+         
+    </script>
+  </test-case>
+
+  <test-case id="016" name="call from anonymous function">
+    <script>
+      var t = debug.assert;
+     
+      var add = function(b) {
+        return this + b;
+      };
+      
+      t( add.call(3, 4), 7 );
+      
+      t( function(b) {
+        return this + b;
+      }.call(2, 3), 5);
+         
+    </script>
+  </test-case>
+
+  <test-case id="017" name="each function using call">
+    <script>
+      var t = debug.assert;
+     
+      Array.prototype.each = function(iterator) {
+        for(element in this) {
+          iterator.call(element);
+        }
+      };
+      
+      var rs = [];
+      
+      [1,2,3].each( function() {
+        rs.push(this);
+      });
+      
+      t( rs.length == 3 );
+      t( rs[0], 1 );
+      t( rs[1], 2 );
+      t( rs[2], 3 );
+         
+    </script>
+  </test-case>
 </test-suite>

@@ -15,4 +15,76 @@
     </script>
   </test-case>
 
+  <test-case id="002" name="ambiguous">
+    <script>
+      var t = debug.assert;
+
+      function check(a) {
+        if (a &lt; 5) 
+          return 20;
+        else if (a &lt; 10)
+          return 30;
+        else 
+          return 40;
+      }
+        
+      t( check(3) , 20 );
+      t( check(8) , 30 );
+      t( check(13), 40 );
+        
+    </script>
+  </test-case>
+
+  <test-case id="003" name="ambiguous 2">
+    <script>
+      var t = debug.assert;
+
+      function check(a) {
+        if (a &lt; 5) 
+          if (a &lt; 3)
+            return 3;
+          else 
+            return 5;
+        else 
+          if (a &lt; 10)
+            return 10;
+          else if (a &lt; 20)
+            return 20;
+      }
+        
+      t( check(2) , 3 );
+      t( check(4) , 5 );
+      t( check(8) , 10 );
+      t( check(13), 20 );
+      t( check(23), null );
+        
+    </script>
+  </test-case>
+
+  <test-case id="004" name="ambiguous 3">
+    <script>
+      var t = debug.assert;
+
+      function check(a) {
+        if (a &lt; 5) 
+          if (a &lt; 3)
+            return 3;
+          else 
+            return 5;
+        else 
+          if (a &lt; 10)
+            return 10;
+          else if (a &lt; 20)
+            return 20;
+      }
+        
+      t( check(2) , 3 );
+      t( check(4) , 5 );
+      t( check(8) , 10 );
+      t( check(13), 20 );
+      t( check(23), null );
+        
+    </script>
+  </test-case>
+
 </test-suite>

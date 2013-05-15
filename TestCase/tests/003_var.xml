@@ -91,8 +91,8 @@
       t( o1.a == 1 );
       
       var arr = [0,1,2,3];
-      t( arr[1]++==1 );
-      t( arr[1]==2 );
+      t( arr[1]++ == 1 );
+      t( arr[1] == 2 );
     </script>
   </test-case>
 
@@ -111,7 +111,7 @@
       
       function () {
         var a = 30;       // access local variable in function
-                          // should not to modify global variable
+                          // should not modify global variable
       } ();
       
       t( a == 20 );

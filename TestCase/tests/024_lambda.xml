@@ -44,7 +44,7 @@
           return false;
         
         for(var i=0; i&lt;this.length; i++)
-          if( rs[i] != targetArray[i] )
+          if( this[i] != targetArray[i] )
             return false;
         
         return true;
@@ -109,7 +109,7 @@
     </script>
   </test-case>
 
-  <test-case id="011" name="object sum">
+  <test-case id="012" name="object sum">
     <script>
       var t = debug.assert;
 
@@ -139,7 +139,7 @@
         
         for(element in this) 
         {
-          var val = selector(element);
+          var val = (selector == null ? element : selector(element));
           if(min == null || min &gt; val) min = val;
         }
 

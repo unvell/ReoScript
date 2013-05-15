@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <test-suite id="007" name="string" disabled="true">
-  <test-case id="001">
+  <test-case id="001" name="literal">
     <script>
       var t = debug.assert;
 
@@ -12,7 +12,7 @@
     </script>
   </test-case>
 
-  <test-case id="002">
+  <test-case id="002" name="+op">
     <script>
       var t = debug.assert;
 
@@ -28,7 +28,7 @@
     </script>
   </test-case>
 
-  <test-case id="003">
+  <test-case id="003" name="startsWith endsWith">
     <script>
       var t = debug.assert;
 
@@ -44,7 +44,7 @@
     </script>
   </test-case>
 
-  <test-case id="004">
+  <test-case id="004" name="repeat">
     <script>
       var t = debug.assert;
 
@@ -55,7 +55,7 @@
     </script>
   </test-case>
 
-  <test-case id="005">
+  <test-case id="005" name="index access">
     <script>
       var t = debug.assert;
 
@@ -73,7 +73,7 @@
     </script>
   </test-case>
 
-  <test-case id="006">
+  <test-case id="006" name="indexOf">
     <script>
       var t = debug.assert;
 
@@ -119,8 +119,20 @@
       
     </script>
   </test-case>
+
+  <test-case id="009" name="equals">
+    <script>
+      var t = debug.assert;
+
+      t( 'hello' == 'hello' );
+      t( 'hello' == "hello" );
+      
+      t( 'hello' != 'Hello' );
+      
+    </script>
+  </test-case>
   
-  <test-case id="010" name="array modify">
+  <test-case id="010" name="index modify">
     <script>
       var t = debug.assert;
 
@@ -135,15 +147,102 @@
     </script>
   </test-case>
 
-  <test-case id="020" name="new">
+  <test-case id="011" name="split">
+    <script>
+      var t = debug.assert;
+
+      var str = 'How are you doing today?';
+      var n = str.split(' ');
+      
+      if( Array.prototype.equals == null ) {
+        Array.prototype.equals = targetArray => {
+          if( targetArray == null 
+            || this.length != targetArray.length) 
+            return false;
+          
+          for(var i=0; i&lt;this.length; i++)
+            if( this[i] != targetArray[i] )
+              return false;
+          
+          return true;
+        };
+      }
+      
+      t( n.equals( ['How', 'are', 'you', 'doing', 'today?'] ) );
+
+      n = str.split();
+      t( n.equals( ["How are you doing today?"] );
+
+      n = str.split(' ', 3);
+      t( n.equals( ['How', 'are', 'you'] ) );
+
+    </script>
+  </test-case>
+
+  <test-case id="012" name="substr">
+    <script>
+      var t = debug.assert;
+
+      var str = 'How are you doing today?';
+      var n = str.substr(4, 3);  // from 4 get 3 chars
+      
+      t( n, 'are' );
+      
+      // len is optional, return rest of the string
+      t( str.substr(12), 'doing today?' );
+      
+      // invalid args returns empty string
+      t( str.substr(-1), '' );
+      t( str.substr(99), '' );
+
+    </script>
+  </test-case>
+
+  <test-case id="013" name="upper lower">
+    <script>
+      var t = debug.assert;
+
+      var str = 'Hello World!';
+      t( str.toUpperCase(), 'HELLO WORLD!' );
+      t( str.toLowerCase(), 'hello world!' );
+
+    </script>
+  </test-case>
+  
+  <test-case id="020" name="constructor">
     <script>
       var t = debug.assert;
 
       t( String != null );
       
-      var str = new String();
+      var str = new String('hello');
       t( str != null );
+      
+      t( str.toUpperCase(), 'HELLO' );
 
     </script>
   </test-case>
+
+  <test-case id="021" name="constructor args">
+    <script>
+      var t = debug.assert;
+
+      t( String != null );
+      
+      var str = new String('hello');
+      
+      t( str != null );
+      t( str == 'hello' );
+      
+      str = new String(1);
+      
+      t( str == '1' );
+      
+      str = new String(function() {});    // toString should be invoked
+      t( str, 'function() {...}' );
+
+    </script>
+  </test-case>
+
+
 </test-suite>

@@ -4,14 +4,21 @@
   <test-case id="001">
     <script>
       
-      // check whether debugger currently supported
-      if( debug == null ) {
-        alert('No debugger supported. Try execute by test-case runner.');
+      // check whether debugger currently is supported
+      if(debug == null) {
+        alert('No debugger supported. Try start by test-case runner.');
         return;
       }
 
-      // dummy call debug.assert
+      // dummy call debug.assert, should not crash
       debug.assert(true);
+      
+      // debug.assert usage:
+      //
+      // assert( boolean_expression )   // false to raise assert runtime exception
+      //
+      // assert( result, expect )       // compare 'result' and 'expect', difference to 
+      //                                // raise assert runtime exception
       
     </script>
   </test-case>
@@ -23,6 +30,7 @@
 			var a = 4;
 			var b = new Number(a);
 			
+      // toString to binary
 			t( b.toString(2) == '100' );
 			
     </script>

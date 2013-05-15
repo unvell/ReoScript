@@ -1,0 +1,39 @@
+﻿
+// Demo Array
+var log = console.log;
+var write = console.write;
+
+var arr = null;
+
+write("Input a serial of number separated by ',': [1,2,3] ");
+
+while(true) {
+
+  var input = console.readline();
+  
+  if (input.length <= 0) {
+    input = '1,2,3';
+  }
+    
+  log('Inputed: ' + input);
+
+  try {
+    arr = eval('['+ input +']');
+    log();
+
+    break;
+  } catch(e) {
+    write("Input error: " + e.message + "]. try again: ");
+  }
+}
+
+log('Array      : ' + arr);
+log('Length     : ' + arr.length);
+
+var sortedArray = arr.slice(0); // clone array
+sortedArray.sort();
+
+log('Sorted     : ' + sortedArray);
+
+console.write('\nPress any key to continue... ');
+console.read();

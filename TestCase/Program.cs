@@ -1,18 +1,16 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 // 
 // ReoScript 
-// 
-// HP: http://www.unvell.com/ReoScript
+// http://www.unvell.com/ReoScript
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
 // PURPOSE.
 //
-// License: GNU Lesser General Public License (LGPLv3)
+// GNU Lesser General Public License (LGPLv3)
 //
-// Email: lujing@unvell.com
-//
+// lujing@unvell.com
 // Copyright (C) unvell, 2012-2013. All Rights Reserved
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -94,6 +92,7 @@ namespace Unvell.ReoScript.TestCase
 			ScriptDebugger debugMonitor = new ScriptDebugger(srm);
 
 			int testCases = 0, success = 0, failed = 0;
+			int createdObjs = 0;
 
 			foreach (string filename in Directory.GetFiles("tests"))
 			{
@@ -135,7 +134,8 @@ namespace Unvell.ReoScript.TestCase
 						long elapsed = (DateTime.Now - dt).Milliseconds;
 						
 						success++;
-						Console.WriteLine("{0,5} ms.", elapsed);
+						Console.WriteLine("{0,5} ms. {1,4} objs.", elapsed, debugMonitor.TotalObjectCreated - createdObjs);
+						createdObjs = debugMonitor.TotalObjectCreated;
 					}
 					catch (Exception ex)
 					{

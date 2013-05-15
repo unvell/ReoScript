@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="025" name="json">
+
+  <test-case id="001" name="parse">
+    <script>
+      var t = debug.assert;
+      
+      var src = "{name: 'apple', color: 'red', count: 10}";
+      
+      // JSON.parse usage:
+      // parse( JSON_Literal, converter )
+      //
+      // where converter is:
+      //   function(key, value) { return value; }
+      //
+      
+      var obj = JSON.parse(src, (key, value) => {
+        return value;
+      });
+      
+      testParsedObject(obj);
+      
+      obj = JSON.parse(src); // converter is null
+      
+      testParsedObject(obj);
+      
+      function testParsedObject(obj) {
+        t( obj != null );
+        t( typeof obj, 'object' );
+        t( obj instanceof Object );
+        
+        t( obj.hasOwnProperty('name'), true );
+        t( obj.hasOwnProperty('color'), true );
+        t( obj.hasOwnProperty('count'), true );
+        
+        t( obj.name, 'apple' );
+        t( obj.color, 'red' );
+        t( obj.count, 10 );
+      }
+      
+    </script>
+  </test-case>
+
+  <test-case id="002" name="parse with converter">
+    <script>
+      var t = debug.assert;
+      
+      var src = "{name: 'apple', color: 'red', count: 10}";
+      
+      var obj = JSON.parse(src, (key, value) => {
+        if (key == 'color') 
+          return null;
+        else
+          return value;
+      });
+
+      t( typeof obj, 'object' );
+      t( obj instanceof Object );
+        
+      t( obj.hasOwnProperty('name'), true );
+      t( obj.hasOwnProperty('color'), true );
+      t( obj.hasOwnProperty('count'), true );
+        
+      t( obj.name, 'apple' );
+      t( obj.color, null );
+      t( obj.count, 10 );
+      
+    </script>
+  </test-case>
+
+  <test-case id="003" name="eval">
+    <script>
+      var t = debug.assert;
+      
+      // JavaScript style
+      // eval('(' + json + ')');
+      
+      var obj = eval("( {name:'apple', color:'red', eat: function(){}} )");
+      
+      t( typeof obj, 'object' );
+      t( obj instanceof Object );
+      t( obj.name, 'apple' );
+      t( obj.color, 'red' );
+      
+      t( typeof obj.eat, 'function' );
+      t( obj.eat(), null );
+      
+    </script>
+  </test-case>
+
+  <test-case id="004" name="stringify">
+    <script>
+      var t = debug.assert;
+      
+      var obj = {name:'apple', color:'red', amount: 5};
+      
+      var str = JSON.stringify(obj);
+      t(str, '{name:"apple",color:"red",amount:5}');
+      
+    </script>
+  </test-case>
+
+  <test-case id="005" name="stringify handler">
+    <script>
+      var t = debug.assert;
+      
+      var obj = {name:'apple', color:'red', amount: 5};
+      
+      var str = JSON.stringify(obj, (key, value) => String(value));
+      t(str, '{name:"apple",color:"red",amount:"5"}');
+      
+    </script>
+  </test-case>
+</test-suite>

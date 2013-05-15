@@ -8,10 +8,9 @@
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
 // PURPOSE.
 //
-// License: GNU Lesser General Public License (LGPLv3)
+// GNU Lesser General Public License (LGPLv3)
 //
-// Email: lujing@unvell.com
-//
+// lujing@unvell.com
 // Copyright (C) unvell, 2012-2013. All Rights Reserved
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -26,7 +25,7 @@ namespace Unvell.ReoScript
 {
 	public class MachineConsole
 	{
-		ScriptRunningMachine srm = new ScriptRunningMachine();
+		ScriptRunningMachine srm = new ScriptRunningMachine(CoreFeatures.FullFeatures);
 
 		private List<string> fileList = new List<string>();
 
@@ -36,7 +35,7 @@ namespace Unvell.ReoScript
 
 		public MachineConsole(string[] args)
 		{
-			srm.AddStdOutputListener(new ConsoleOutputListener());
+			srm.AddStdOutputListener(new BuiltinConsoleOutputListener());
 
 			QueryPerformanceFrequency(out freq);
 
@@ -58,7 +57,7 @@ namespace Unvell.ReoScript
 						case "?":
 						case "h":
 						case "help":
-							OutLn("usage: rs.exe file0 file1 ... filen -[e|h]");
+							OutLn("usage: srm.exe file0 file1 ... filen -[e|h]");
 							break;
 							
 						default:

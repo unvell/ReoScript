@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<test-suite id="056" name="2">
+<test-suite id="999" name="template">
 
-  <test-case id="001">
+  <test-case id="001" name="test-case template">
     <script>
       var t = debug.assert;
       
+      // do test here
     </script>
   </test-case>
 

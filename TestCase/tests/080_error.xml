@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="080" name="error">
+
+  <test-case id="001" name="catch error">
+    <script>
+      var t = debug.assert;
+      
+      var catched = false;
+      
+      try {
+        undefinedfunc();
+      
+        // The error above should be catched,
+        // or we make an assert fail if here can be reached
+        t( false );
+        
+      } catch {
+      
+        // catch error
+        catched = true;
+      }
+      
+      t( catched );
+    </script>
+  </test-case>
+
+  <test-case id="002" name="throw error">
+    <script>
+      var t = debug.assert;
+     
+      try {
+        if (true) {
+          throw new Error('error anyway');
+        }
+        
+        t( false );
+      } catch(e) {
+        t( typeof e, 'object' );
+        t( e instanceof Error );
+        t( e.message, 'error anyway' );
+      }
+      
+    </script>
+  </test-case>
+
+  <test-case id="003" name="finally">
+    <script>
+      var t = debug.assert;
+     
+      var a = 1;
+      
+      try {
+        throw new Error('error anyway');
+     
+        t( false );
+      } catch(e) {
+        t( e.message, 'error anyway' );
+      } finally {
+        
+        t( a, 1 );
+        a = 0;
+      }
+      
+      t( a, 0 );
+      
+    </script>
+  </test-case>
+
+  <test-case id="004" name="throw objcect">
+    <script>
+      var t = debug.assert;
+     
+      try {
+        throw 10;
+     
+        t( false );
+      } catch(e) {
+        t( e, 10 );
+      }
+      
+    </script>
+  </test-case>
+
+  <test-case id="005" name="nested try catch">
+    <script>
+      var t = debug.assert;
+     
+      try {
+        try {
+          throw 'inner error';
+        } catch(e) {
+          t( e, 'inner error' );
+          
+          throw 'outer error';
+        }
+        
+        t( false );
+      } catch(e) {
+        t( e, 'outer error' );
+      }
+      
+    </script>
+  </test-case>
+  
+</test-suite>

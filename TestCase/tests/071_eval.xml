@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="071" name="eval">
+
+  <test-case id="001" name="normal">
+    <script>
+      var t = debug.assert;
+      
+      t( eval('1+1'), 2 );
+      t( typeof eval('[1,2,3]'), 'object' );
+      t( eval('[1,2,3]') instanceof Array );
+      t( eval('{name:"object"}') instanceof Object );
+      
+      // eval access variables
+      var a = 0;
+      t( eval('a = 10'), a );
+      
+      // eval more than one statement
+      eval('function() { a = 20; a = 30; }()');
+      t( a, 30 );
+      
+    </script>
+  </test-case>
+
+  <test-case id="002" name="local variable">
+    <script>
+      var t = debug.assert;
+      
+      function() {
+        // eval access local variables
+        var a = 0;
+        eval('a = 10');
+        
+        // local variable should be changed
+        t( a, 10 );
+      }();
+   
+      // global variable should not be changed
+      t( a, null );
+      
+    </script>
+  </test-case>
+
+  <test-case id="003" name="json">
+    <script>
+      var t = debug.assert;
+      
+      var obj = eval("{name:'apple', color:'red', eat: function(){}}");
+      
+      t( typeof obj, 'object' );
+      t( obj instanceof Object );
+      t( obj.name, 'apple' );
+      t( obj.color, 'red' );
+      
+      t( typeof obj.eat, 'function' );
+      t( obj.eat(), null );
+      
+    </script>
+  </test-case>
+  
+</test-suite>

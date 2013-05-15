@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="030" name="typeof">
+
+  <test-case id="001" name="unary">
+    <script>
+      var t = debug.assert;
+      
+      t( typeof 'a', 'string' );
+      t( typeof 10, 'number' );
+      
+      t( typeof {a:10}, 'object' );
+      
+      t( typeof [{}][0], 'object' );
+      t( typeof Function, 'function' );
+      t( typeof function(){}, 'function' );
+      
+      t( typeof null, 'object' );
+      t( typeof undefined, 'object' );
+      t( typeof null, 'object' );
+      t( typeof undefined, 'object' );
+      
+    </script>
+  </test-case>
+
+  <!--<test-case id="002" name="array and date">
+    <script>
+      var t = debug.assert;
+
+      // since v1.2 Array and Date also be 'object'
+      
+      //t( typeof [1,2,3], 'Array' );
+      //t( typeof (new Date()), 'Date' );
+    </script>
+  </test-case>-->
+
+  <test-case id="002" name="object wrap">
+    <script>
+      var t = debug.assert;
+
+      t( typeof (new String()), 'object' );
+      t( typeof (new Number()), 'object' );
+      t( typeof (new Object()), 'object' );
+   
+    </script>
+  </test-case>
+
+  <test-case id="003" name="var">
+    <script>
+      var t = debug.assert;
+      
+      var a = 'string';
+      t( typeof a, 'string' );
+      
+      a = function() {};
+      t( typeof a, 'function' );
+      
+      function hello() {}
+      t( typeof hello, 'function' );
+            
+    </script>
+  </test-case>
+
+  <test-case id="004" name="return">
+    <script>
+      var t = debug.assert;
+      
+      function fun1() { return 'a'; }
+      t( typeof fun1(), 'string' );
+      
+      var b = function() { return new Date(); } ();
+      t( typeof b, 'object' );
+      t( b instanceof Date );
+      
+    </script>
+  </test-case>
+
+  <test-case id="005" name="function">
+    <script>
+      var t = debug.assert;
+      
+      var a = function(){};
+      t( typeof a, 'function' );
+      
+      var lambda = (a,b) => a + b;
+      t( typeof lambda, 'function' );
+      
+    </script>
+  </test-case>
+
+  <test-case id="006" name="instance">
+    <script>
+      var t = debug.assert;
+      
+      function User() {}
+      var usr1 = new User();
+      
+      t( typeof usr1, 'object' );
+      
+      var Guest = User;
+      var usr2 = new Guest();
+      t( typeof usr2, 'object' );
+    </script>
+  </test-case>
+
+  <test-case id="007" name="anonymous constructor">
+    <script>
+      var t = debug.assert;
+      
+      var User = function() {};
+      var usr1 = new User();
+      
+      t( typeof usr1, 'object' );
+      
+    </script>
+  </test-case>
+
+  <test-case id="100" name="instanceof">
+    <script>
+      var t = debug.assert;
+      
+      var str = 'hello';
+      t( str instanceof String );
+      
+    </script>
+  </test-case>
+
+  <test-case id="101" name="instanceof anonymous function">
+    <script>
+      var t = debug.assert;
+      
+      var C = function() {};
+      var f = new C;
+      t( f instanceof C );
+      
+    </script>
+  </test-case>
+
+  <test-case id="102" name="instanceof prototype chain">
+    <script>
+      var t = debug.assert;
+      
+      var C = function() {};
+      var f = new C;
+      t( f instanceof C );
+      
+      t( C instanceof Object );
+      t( f instanceof Object );
+      
+    </script>
+  </test-case>
+</test-suite>
