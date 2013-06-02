@@ -16,7 +16,7 @@ namespace Unvell.ReoScript
 @"ReoScript(TM) Running Machine
 Copyright(c) 2012-2013 unvell, All Rights Reserved.
 
-Usage: ReoScript.exe <file>");
+Usage: ReoScript.exe <file> [-workpath|-debug|-exec]");
 				return;
 			}
 
@@ -93,7 +93,7 @@ Usage: ReoScript.exe <file>");
 			srm.WorkPath = workPath;
 			srm.AddStdOutputListener(new BuiltinConsoleOutputListener());
 
-			srm.SetGlobalVariable("File", new FileConstructor());
+			srm.SetGlobalVariable("File", new FileConstructorFunction());
 
 			try
 			{

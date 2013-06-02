@@ -5,14 +5,14 @@ var write = console.write;
 
 var arr = null;
 
-write("Input a serial of number separated by ',': [1,2,3] ");
+write("Input a serial of number separated by ',': [3,1,2] ");
 
 while(true) {
 
   var input = console.readline();
   
   if (input.length <= 0) {
-    input = '1,2,3';
+    input = '3,1,2';
   }
     
   log('Inputed: ' + input);
@@ -23,7 +23,7 @@ while(true) {
 
     break;
   } catch(e) {
-    write("Input error: " + e.message + "]. try again: ");
+    write("Input error: " + e.message + ". try again: ");
   }
 }
 

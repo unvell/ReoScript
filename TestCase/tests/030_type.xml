@@ -120,7 +120,13 @@
       var t = debug.assert;
       
       var str = 'hello';
+      
+      t( typeof str, 'string' );
       t( str instanceof String );
+      
+      var strobj = new String('hello');
+      t( typeof strobj, 'object' );
+      t( strobj instanceof String );
       
     </script>
   </test-case>

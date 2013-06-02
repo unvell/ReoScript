@@ -175,7 +175,47 @@
       t( a !== '10' );
       t( a !== 10 );
       
+      
     </script>
+  </test-case>
+
+  <test-case id="014" name="=== wrap">
+    <script>
+      var t = debug.assert;
+      
+      t( Number(10) === Number(10) );
+      t( String('a') === String('a') );
+      t( Boolean(true) === Boolean(true) );
+
+      t( new Number(10) !== new Number(10) );
+      t( new String('a') !== new String('a') );
+      t( new Boolean(true) !== new Boolean(true );
+      
+    </script>
+  </test-case>
+
+  <test-case id="015" name="==">
+    <script>
+      var t = debug.assert;
+      
+      t( Number(10) == Number(10) );
+      t( String('a') == String('a') );
+      t( Boolean(true) == Boolean(true) );
+
+      t( new Number(10) == new Number(10) );
+      t( new String('a') == new String('a') );
+      t( new Boolean(true) == new Boolean(true) );
+      
+      t( 1 == "1" );
+      t( 1 == 1.0 );
+      t( 1 === 1.0 );
+      t( 1 == new Number(1) );
+      t( 'a' == new String('a') );
+      
+      // not support yet
+      // t( 1 == "1.0" );    // false
+      
+    </script> 
   </test-case>
   
   <!-- Bit computing -->

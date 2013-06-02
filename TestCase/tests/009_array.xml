@@ -109,6 +109,22 @@
 
     </script>
   </test-case>
+
+  <test-case id="008" name="join">
+    <script>
+      var t = debug.assert;
+
+      var arr = ['apple', 'banana', 'orange'];
+      var str = arr.join();
+      
+      t(str, 'apple,banana,orange');
+      
+      arr = [1,2,3,4,5];
+      str = arr.join(':');
+      t(str, '1:2:3:4:5');
+
+    </script>
+  </test-case>
   
   <test-case id="010">
     <script>

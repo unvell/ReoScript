@@ -35,8 +35,8 @@
       var a = "hello", b = "world";
       var c = a + " " + b;
 
-      t(c == "hello world");
-      t(c.length == 11);
+      t(c, "hello world");
+      t(c.length, 11);
 
       t(c.endsWith('world'));
       t(c.startsWith('hello'));
@@ -132,6 +132,9 @@
     </script>
   </test-case>
   
+  <!--
+  since v1.2.2 - no longer supported 
+  
   <test-case id="010" name="index modify">
     <script>
       var t = debug.assert;
@@ -145,7 +148,7 @@
       t(a == "hello-world!");
       
     </script>
-  </test-case>
+  </test-case>-->
 
   <test-case id="011" name="split">
     <script>
@@ -208,8 +211,20 @@
 
     </script>
   </test-case>
+
+  <test-case id="013" name="mix primitive">
+    <script>
+      var t = debug.assert;
+
+      var s1 = new String(' Hello');
+      var s2 = ((s1.toUpperCase() + ' world ').trim());
+      
+      t( s2, 'HELLO world' );
+
+    </script>
+  </test-case>
   
-  <test-case id="020" name="constructor">
+  <test-case id="020" name="wrap">
     <script>
       var t = debug.assert;
 
@@ -219,11 +234,13 @@
       t( str != null );
       
       t( str.toUpperCase(), 'HELLO' );
+      
+      t( str.valueOf() === 'hello' );
 
     </script>
   </test-case>
 
-  <test-case id="021" name="constructor args">
+  <test-case id="021" name="wrap args">
     <script>
       var t = debug.assert;
 
@@ -244,5 +261,21 @@
     </script>
   </test-case>
 
+  <test-case id="022" name="wrap operations">
+    <script>
+      var t = debug.assert;
+
+      var str = new String('hello');
+      
+      t( str + ' world', 'hello world' );
+      t( 10 + str + ' world', '10hello world' );
+      
+      var c = str + ' alfred';
+      t( c, 'hello alfred' );
+      
+      t( new String('10') == 10 );
+
+    </script>
+  </test-case>
 
 </test-suite>

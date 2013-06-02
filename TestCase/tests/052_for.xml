@@ -125,4 +125,36 @@
         
     </script>
   </test-case>
+
+  <test-case id="008" name="return in for">
+    <script>
+      var t = debug.assert;
+
+      function func() {
+        for (var i=0;i&lt;10;i++) {
+          if(i==5) return i;
+        }
+        return 10;
+      }
+        
+      t( func(), 5 );
+        
+    </script>
+  </test-case>
+
+  <test-case id="009" name="continue in for">
+    <script>
+      var t = debug.assert;
+
+      var c = 0;
+      
+      for (var i=0;i&lt;10;i++) {
+        if(i%2==0) continue;
+        c++;
+      }
+        
+      t( c, 5 );
+        
+    </script>
+  </test-case>
 </test-suite>

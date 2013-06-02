@@ -269,7 +269,32 @@
     </script>
   </test-case>
 
-  <test-case id="017" name="each function using call">
+  <test-case id="017" name="override by apply" disabled="true">
+    <script>
+      var t = debug.assert;
+      
+      t( Function.prototype.hasOwnProperty('apply') );
+     
+      function fun1() {
+        return 10;
+      }
+      
+      fun1 = (function() {
+        var cached_function = fun1;
+
+        return function() {
+          // code before override goings here
+
+          cached_function.apply(this, __args__);      // use .apply() to call it
+
+          // code after override goings here
+        };
+      }());
+
+    </script>
+  </test-case>
+  
+  <test-case id="018" name="each function using call">
     <script>
       var t = debug.assert;
      
@@ -290,6 +315,53 @@
       t( rs[1], 2 );
       t( rs[2], 3 );
          
+    </script>
+  </test-case>
+
+  <test-case id="019" name="inner function">
+    <script>
+      var t = debug.assert;
+      
+      function outer() {
+        var inner = function() {
+          return 10;
+        };
+        
+        t(inner(), 10);            // OK
+      }
+
+      try {
+        inner();                   // error: Function is not defined: inner
+      } catch (e) {
+        t(e.message, "Function is not defined: inner");
+      }
+
+      // `inner` is not a property of `outer`
+
+      try {
+        outer.inner();            // error
+      } catch(e) {
+        t(e.message, "function outer() {...} has no method 'inner'");
+      }
+    </script>
+  </test-case>
+  
+  <test-case id="020" name="inner, call before define">
+    <script>
+      var t = debug.assert;
+      
+      function outer() {
+        
+        // FIXME: t(inner(), 10);
+        
+        function inner() {
+          return 10;
+        };
+        
+      };
+      
+      outer();
+      
     </script>
   </test-case>
 </test-suite>

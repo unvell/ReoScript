@@ -5,7 +5,7 @@
     <script>
       
       // check whether debugger currently is supported
-      if(debug == null) {
+      if (debug == null) {
         alert('No debugger supported. Try start by test-case runner.');
         return;
       }
@@ -17,7 +17,7 @@
       //
       // assert( boolean_expression )   // false to raise assert runtime exception
       //
-      // assert( result, expect )       // compare 'result' and 'expect', difference to 
+      // assert( result, expect )       // compare 'result' and 'expect', difference result to 
       //                                // raise assert runtime exception
       
     </script>

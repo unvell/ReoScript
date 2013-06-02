@@ -24,6 +24,12 @@ if (debug != null) {
     this.endTime = null;
   }
 
+  debug.Stopwatch.startNew = function() {
+    var sw = new debug.Stopwatch();
+    sw.start();
+    return sw;
+  };
+
   debug.Stopwatch.prototype.start = function() {
     if (this.startTime == null) {
       this.startTime = new Date();

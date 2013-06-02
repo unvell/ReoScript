@@ -11,11 +11,62 @@
       t( 1 != 1.1 );
       
       t( 1 == "1" );
+      t( "1" == 1 );
       
     </script>
   </test-case>
 
-  <test-case id="005" name="binary">
+  <test-case id="002" name="toString">
+    <script>
+      var t = debug.assert;
+      
+      t( Number(54892).toString() === '54892' );
+      
+      t( Number(54892).toString(16) === 'd66c' );
+      t( Number(98).toString(2) === '1100010' );
+      
+    </script>
+  </test-case>
+
+  <test-case id="010" name="instance">
+    <script>
+      var t = debug.assert;
+      
+      var a = new Number(10);
+      var b = 20;
+      
+      t( a, 10 );
+      t( b, 20 );
+      
+      t( typeof a, 'object' );
+      t( typeof b, 'number' );
+      
+      t( a instanceof Number );
+      t( b instanceof Number );
+      
+      t( typeof (a + b), 'number' );
+      t( (a + b) instanceof Number );
+      
+    </script>
+  </test-case>
+
+  <test-case id="011" name="instance compare">
+    <script>
+      var t = debug.assert;
+      
+      var a = new Number(10);
+      
+      t( a == 10 );
+      t( a &gt; 5 );
+      t( a &lt; 15 );
+      
+      t( a &gt;= 10 );
+      t( a &lt;= 10 );
+      
+    </script>
+  </test-case>
+
+  <test-case id="021" name="binary">
     <script>
       var t = debug.assert;
 			

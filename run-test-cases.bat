@@ -23,7 +23,7 @@ goto end
 
 :success
 
-echo All test cases passed expected.
+echo All test cases passed as expected.
 echo.
 
 :end

@@ -77,7 +77,7 @@
     </script>
   </test-case>
 
-  <test-case id="011">
+  <test-case id="011" name="args count">
     <script>
       var t = debug.assert;
       
@@ -88,4 +88,21 @@
     </script>
   </test-case>
 
+  <test-case id="012" name="__args__ join">
+    <script>
+      var t = debug.assert;
+      
+      function join() {
+        var output = '';
+        for (str in __args__) {
+            if (output.length > 0) output += '-';
+            output += str;
+        }
+        return output;
+      }
+
+      t( join('The', 'Earth', 'and', 'Sun'), 'The-Earth-and-Sun' );
+    </script>
+  </test-case>
+  
 </test-suite>

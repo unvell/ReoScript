@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<test-suite id="010" name="boolean">
+  
+  <test-case id="001" name="bool">
+    <script>
+      var t = debug.assert;
+      
+      t( true == true );
+      t( true != false );
+      
+      t( true === true );
+      t( true !== false );
+      
+    </script>
+  </test-case>
+
+  <test-case id="002" name="wrap 1">
+    <script>
+      var t = debug.assert;
+      
+      t( true == Boolean(true) );
+      t( true != Boolean(false) );
+      t( true != Boolean() );
+      
+      t( true === Boolean(true) );
+      t( true !== Boolean(false) );
+      t( true !== Boolean() );
+
+      t( true == new Boolean(true) );
+      t( true != new Boolean(false) );
+      t( true != new Boolean() );
+  
+    </script>
+  </test-case>
+
+  <test-case id="002" name="wrap 2">
+    <script>
+      var t = debug.assert;
+      
+      t( new Boolean(true) !== Boolean(true) );
+      t( new Boolean(false) !== Boolean(false) );
+
+      t( typeof true, 'boolean' );
+      t( typeof Boolean(true), 'boolean' );
+      t( typeof new Boolean(true), 'object' );
+      
+      t( true instanceof Boolean );
+      t( Boolean(true) instanceof Boolean );
+      t( new Boolean(true) instanceof Boolean );
+      
+    </script>
+  </test-case>
+
+</test-suite>

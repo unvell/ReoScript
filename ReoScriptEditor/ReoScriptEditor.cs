@@ -105,6 +105,8 @@ namespace Unvell.ReoScript.Editor
 
 			stopToolStripButton.Click += (s, e) => ForceStop();
 			stopToolStripMenuItem.Click += (s, e) => ForceStop();
+
+			Srm = new ScriptRunningMachine();
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
@@ -162,13 +164,18 @@ namespace Unvell.ReoScript.Editor
 			Close();
 		}
 
-		private ScriptRunningMachine srm = new ScriptRunningMachine();
+		private ScriptRunningMachine srm;
 
 		public ScriptRunningMachine Srm
 		{
 			get { return srm; }
-			set { srm = value;
-			SetMachineSwitches();
+			set {
+				if (srm != value)
+				{
+					srm = value;
+					new ScriptDebugger(srm);
+				}
+				SetMachineSwitches();
 			}
 		}
 

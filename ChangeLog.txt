@@ -1,3 +1,15 @@
+v1.2.2 
+ - New: Performance improving
+ - New: DirectAccess test cases added
+ - New: Add 'apply' method to prototype of Function
+ - New: Add 'join' method to prototype of Array
+ - New: Wrapper objects (String, Number and Boolean) is fully supported
+ - Fixed: 'return' in 'for' does not work
+ - Fixed: string.split method with length limit argument returns unexpected result
+ - Change: Using .Net primitive types of string instead of StringObject
+ - Change: Index of array to modify a string is no longer supported 
+ - Change: ScriptEditor enable debug-mode by default
+ 
 v1.2  5/15/2013
  - New: Error handling supported (Error object and try/catch/finally/throw)
  - New: Add 'Boolean' internal function
@@ -9,7 +21,7 @@ v1.2  5/15/2013
  - New: Add String 'split' and 'substr' method to prototype
  - New: Add String 'toLowerCase' and 'toUpperCase' method to prototype
  - New: Add Function 'call' method to prototype
- - New: Add JSON object support (contains both 'parse' and 'stringify')
+ - New: Add JSON object support ('parse' and 'stringify' methods)
  - New: __stdin__ and __stdinln__ supported (console.read and console.readline)
  - New: run in console ReoScript.exe is available
  - Changed: change 'typeof' keyword to return lowercase typename

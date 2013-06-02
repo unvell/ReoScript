@@ -24,6 +24,8 @@ using Unvell.ReoScript;
 using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace Unvell.ReoScript.TestCase
 {
@@ -35,8 +37,6 @@ namespace Unvell.ReoScript.TestCase
 		[STAThread]
 		static int Main(string[] args)
 		{
-			//Application.EnableVisualStyles();
-			//Application.SetCompatibleTextRenderingDefault(false);
 
 			List<string> ids = new List<string>();
 			List<string> enabledTags = new List<string>();
@@ -53,8 +53,11 @@ namespace Unvell.ReoScript.TestCase
 				}
 			}
 
-			bool hasErrors = new TestCaseRunner().Run(ids, enabledTags);
-			
+			TestCaseRunner runner = new TestCaseRunner();
+
+			bool hasErrors = runner.RunLanguageTests(ids, enabledTags);
+			hasErrors |= runner.RunCLRTests();
+
 			//using (ReoScriptEditor editor = new ReoScriptEditor())
 			//{
 			//  using (StreamReader sr = new StreamReader(new FileStream("scripts/winform.rs", FileMode.Open)))
@@ -67,25 +70,40 @@ namespace Unvell.ReoScript.TestCase
 
 			//  Application.Run(editor);
 			//}
+
+			Console.WriteLine("Total result: \n");
+			Console.WriteLine("    {0,3} test cases, {1,3} successed, {2,3} failed, {3,3} skipped",
+				runner.TotalCases, runner.TotalSuccesses, runner.TotalFailures,
+				(runner.TotalCases - runner.TotalSuccesses - runner.TotalFailures));
+			Console.WriteLine("  {0,5} objects created.\n", runner.TotalObjectCreates);
+
 			return hasErrors ? 1 : 0;
 		}
 	}
 
-	class TestCaseFailureException : Exception{
+	class TestCaseFailureException : Exception
+	{
 		public TestCaseFailureException(string msg) :
 			base(msg) { }
 	}
-	
+
 	class TestCaseRunner
 	{
 		public TestCaseRunner()
 		{
 		}
 
+		public int TotalCases { get; set; }
+		public int TotalSuccesses { get; set; }
+		public int TotalFailures { get; set; }
+		public int TotalObjectCreates { get; set; }
+
 		private static readonly XmlSerializer xmlSuiteSerializer = new XmlSerializer(typeof(XmlTestSuite));
 
-		public bool Run(List<string> ids, List<string> enabledTags)
+		public bool RunLanguageTests(List<string> ids, List<string> enabledTags)
 		{
+			Console.WriteLine("Run Core tests...\n");
+
 			bool hasErrors = false;
 
 			ScriptRunningMachine srm = new ScriptRunningMachine();
@@ -111,7 +129,7 @@ namespace Unvell.ReoScript.TestCase
 						continue;
 				}
 
-				DateTime dt;
+				Stopwatch sw = Stopwatch.StartNew();
 
 				suite.TestCases.ForEach(t =>
 				{
@@ -125,16 +143,20 @@ namespace Unvell.ReoScript.TestCase
 
 					Console.Write("[{0,6} {1,-10}] {2,-30} : ", caseId, suite.Name, t.Name);
 
-					dt = DateTime.Now;
-	
 					try
 					{
+						sw.Reset();
+						sw.Start();
+
 						srm.Run(t.Script);
 
-						long elapsed = (DateTime.Now - dt).Milliseconds;
-						
+						sw.Stop();
+
 						success++;
-						Console.WriteLine("{0,5} ms. {1,4} objs.", elapsed, debugMonitor.TotalObjectCreated - createdObjs);
+
+						Console.WriteLine("{0,5} ms. {1,4} objs.", sw.ElapsedMilliseconds,
+							debugMonitor.TotalObjectCreated - createdObjs);
+
 						createdObjs = debugMonitor.TotalObjectCreated;
 					}
 					catch (Exception ex)
@@ -142,16 +164,115 @@ namespace Unvell.ReoScript.TestCase
 						failed++;
 						Console.WriteLine(string.IsNullOrEmpty(ex.Message) ? "failed"
 							: "failed: " + ex.Message);
+
 						hasErrors = true;
+					}
+					finally
+					{
+						sw.Stop();
 					}
 				});
 
 				//Console.WriteLine();
 			}
 
-			Console.WriteLine("\n    {0,3} test cases, {1} successed, {2} failed, {3} skipped",
+			Console.WriteLine("\n    {0,3} test cases, {1,3} successed, {2,3} failed, {3,3} skipped",
 				testCases, success, failed, (testCases - success - failed));
 			Console.WriteLine("  {0,5} objects created.\n", debugMonitor.TotalObjectCreated);
+
+			TotalCases += testCases;
+			TotalFailures += failed;
+			TotalSuccesses += success;
+			TotalObjectCreates += debugMonitor.TotalObjectCreated;
+
+			return hasErrors;
+		}
+
+		public bool RunCLRTests()
+		{
+			Console.WriteLine("Run CLR tests...\n");
+
+			ScriptRunningMachine srm = new ScriptRunningMachine();
+			ScriptDebugger debugMonitor = new ScriptDebugger(srm);
+
+			int testCases = 0, success = 0, failed = 0;
+			int createdObjs = 0;
+
+			Stopwatch sw = Stopwatch.StartNew();
+
+			bool hasErrors = false;
+
+			foreach (Type type in this.GetType().Assembly.GetTypes())
+			{
+				TestSuiteAttribute[] attrs = type.GetCustomAttributes(typeof(TestSuiteAttribute), true) as
+					TestSuiteAttribute[];
+
+				if (attrs.Length > 0)
+				{
+					var testName = attrs[0].Name;
+					if (string.IsNullOrEmpty(testName)) testName = type.Name;
+
+					object testSuite = System.Activator.CreateInstance(type);
+
+					foreach (MethodInfo method in type.GetMethods())
+					{
+						TestCaseAttribute[] caseAttrs = method.GetCustomAttributes(typeof(TestCaseAttribute), false)
+							as TestCaseAttribute[];
+
+						if (caseAttrs.Length > 0)
+						{
+							testCases++;
+
+							var caseName = caseAttrs[0].Desc;
+							if (string.IsNullOrEmpty(caseName)) caseName = method.Name;
+
+							Console.Write("[{0,-18}] {1,-30} : ", testName, caseName);
+
+							if (testSuite is ReoScriptTestSuite)
+							{
+								srm.Reset();
+								((ReoScriptTestSuite)testSuite).SRM = srm;
+							}
+
+							try
+							{
+								sw.Reset();
+								sw.Start();
+
+								method.Invoke(testSuite, null);
+
+								sw.Stop();
+								success++;
+
+								Console.WriteLine("{0,5} ms. {1,4} objs.", sw.ElapsedMilliseconds,
+									debugMonitor.TotalObjectCreated - createdObjs);
+
+								createdObjs = debugMonitor.TotalObjectCreated;
+							}
+							catch (Exception ex)
+							{
+								failed++;
+								Console.WriteLine(string.IsNullOrEmpty(ex.Message) ? "failed" : "failed: " + ex.Message);
+
+								hasErrors = true;
+							}
+							finally
+							{
+								sw.Stop();
+							}
+						}
+					}
+				}
+			}
+
+			Console.WriteLine("\n    {0,3} test cases, {1,3} successed, {2,3} failed, {3,3} skipped",
+				testCases, success, failed, (testCases - success - failed));
+			Console.WriteLine("  {0,5} objects created.\n", debugMonitor.TotalObjectCreated);
+
+			TotalCases += testCases;
+			TotalFailures += failed;
+			TotalSuccesses += success;
+			TotalObjectCreates += debugMonitor.TotalObjectCreated;
 
 			return hasErrors;
 		}
@@ -186,6 +307,21 @@ namespace Unvell.ReoScript.TestCase
 
 		[XmlAttribute("disabled")]
 		public bool Disabled { get; set; }
+	}
 
+	public class TestSuiteAttribute : Attribute
+	{
+		public string Name { get; set; }
+
+		public TestSuiteAttribute() { }
+		public TestSuiteAttribute(string name) : base() { this.Name = name; }
+	}
+
+	public class TestCaseAttribute : Attribute
+	{
+		public string Desc { get; set; }
+
+		public TestCaseAttribute() { }
+		public TestCaseAttribute(string desc) : base() { this.Desc = desc; }
 	}
 }

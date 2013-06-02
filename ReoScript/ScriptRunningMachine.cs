@@ -171,7 +171,7 @@ namespace Unvell.ReoScript
 			if (Members.Count > 0)
 			{
 				StringBuilder sb = new StringBuilder();
-				if (this is ArrayObject || this is StringValue || this is NumberObject)
+				if (this is ArrayObject /*|| this is StringValue*/ || this is NumberObject)
 				{
 					sb.AppendLine(string.Format("[object {0}: {1}]", Name, this.ToString()));
 				}
@@ -206,7 +206,7 @@ namespace Unvell.ReoScript
 
 				if (key != ScriptRunningMachine.KEY___PROTO__
 						&& key != ScriptRunningMachine.KEY___ARGS__
-						&& key != ScriptRunningMachine.KEY_CONSTRUCTOR)
+						/*&& key != ScriptRunningMachine.KEY_CONSTRUCTOR*/)
 				{
 					yield return key;
 				}
@@ -228,9 +228,18 @@ namespace Unvell.ReoScript
 			// check whether property existed in owner object
 			rootPrototype["hasOwnProperty"] = new NativeFunctionObject("hasOwnProperty", (ctx, owner, args) =>
 			{
+				if (args.Length < 1)
+					return false;
+
+				if (owner is string)
+				{
+					if (Convert.ToString(args[0]) == "length")
+						return true;
+				}
+
 				ObjectValue ownerObject = owner as ObjectValue;
 
-				if (ownerObject == null || args.Length < 1)
+				if (ownerObject == null)
 					return false;
 
 				return ownerObject.HasOwnProperty(Convert.ToString(args[0]));
@@ -287,6 +296,10 @@ namespace Unvell.ReoScript
 		{
 			this.Number = num;
 		}
+		public override string ToString()
+		{
+			return Number.ToString();
+		}
 	}
 	#endregion
 	#region DateTimeValue
@@ -320,16 +333,16 @@ namespace Unvell.ReoScript
 	}
 	#endregion
 	#region StringValue
-	public class StringValue : ObjectValue
+	public class StringObject : ObjectValue
 	{
 		public string String { get; set; }
 
-		public StringValue()
+		public StringObject()
 			: this(string.Empty)
 		{
 			// this()
 		}
-		public StringValue(string text)
+		public StringObject(string text)
 		{
 			String = text;
 			this["length"] = new ExternalProperty(() => { return String.Length; }, (v) => { });
@@ -338,17 +351,17 @@ namespace Unvell.ReoScript
 		{
 			return (String == null && obj == null) ? false : String.Equals(Convert.ToString(obj));
 		}
-		public static bool operator==(StringValue str1, object str2)
+		public static bool operator ==(StringObject str1, object str2)
 		{
-			if (!(str2 is StringValue)) return false;
+			if (!(str2 is StringObject)) return false;
 
-			return str1.Equals((StringValue)str2);
+			return str1.Equals((StringObject)str2);
 		}
-		public static bool operator !=(StringValue str1, object str2)
+		public static bool operator !=(StringObject str1, object str2)
 		{
-			if (!(str2 is StringValue)) return false;
+			if (!(str2 is StringObject)) return false;
 
-			return !str1.Equals((StringValue)str2);
+			return !str1.Equals((StringObject)str2);
 		}
 		public override int GetHashCode()
 		{
@@ -370,15 +383,7 @@ namespace Unvell.ReoScript
 
 		#endregion
 	}
-	public class StringObject : StringValue
-	{
-		public StringValue Value { get; set; }
-
-		public StringObject(StringValue value)
-		{
-			this.Value = value;
-		}
-	}
+	
 	class StringConstructorFunction : TypedNativeFunctionObject
 	{
 		public StringConstructorFunction()
@@ -388,25 +393,12 @@ namespace Unvell.ReoScript
 
 		public override object Invoke(ScriptContext context, object owner, object[] args)
 		{
-			StringValue str = null;
-
-			if (owner is StringValue)
-			{
-				str = owner as StringValue;
-			}
-			else
-			{
-				str = new StringValue();
-			}
-
-			if (args != null && args.Length > 0) str.String = Convert.ToString(args[0]);
-
-			return str;
+			return args == null || args.Length <= 0 ? string.Empty : Convert.ToString(args[0]);
 		}
 
 		public override object CreateObject(ScriptContext context, object[] args)
 		{
-			return new StringObject(args == null || args.Length <= 0 ? new StringValue() : new StringValue(Convert.ToString(args[0])));
+			return new StringObject(args == null || args.Length <= 0 ? string.Empty : Convert.ToString(args[0]));
 		}
 
 		public override object CreatePrototype(ScriptContext context)
@@ -418,25 +410,25 @@ namespace Unvell.ReoScript
 			{
 				obj["trim"] = new NativeFunctionObject("trim", (ctx, owner, args) =>
 				{
-					if (!(owner is StringValue)) return null;
-					return new StringValue(((StringValue)owner).String = Convert.ToString(owner).Trim());
+					if (!(owner is string || owner is StringObject)) return null;
+					return ((string)owner).Trim();
 				});
 
 				obj["indexOf"] = new NativeFunctionObject("indexOf", (ctx, owner, args) =>
 				{
-					if (!(owner is StringValue)) return null;
+					if (!(owner is string || owner is StringObject)) return null;
 					return args.Length == 0 ? -1 : Convert.ToString(owner).IndexOf(Convert.ToString(args[0]));
 				});
 
 				obj["lastIndexOf"] = new NativeFunctionObject("lastIndexOf", (ctx, owner, args) =>
 				{
-					if (!(owner is StringValue)) return null;
+					if (!(owner is string || owner is StringObject)) return null;
 					return args.Length == 0 ? -1 : Convert.ToString(owner).LastIndexOf(Convert.ToString(args[0]));
 				});
 
 				obj["charAt"] = new NativeFunctionObject("charAt", (ctx, owner, args) =>
 				{
-					if (!(owner is StringValue)) return null;
+					if (!(owner is string || owner is StringObject)) return null;
 
 					string res = string.Empty;
 
@@ -449,12 +441,12 @@ namespace Unvell.ReoScript
 							res = Convert.ToString(str[index]);
 					}
 
-					return new StringValue(res);
+					return res;
 				});
 
 				obj["charCodeAt"] = new NativeFunctionObject("charCodeAt", (ctx, owner, args) =>
 				{
-					if (!(owner is StringValue)) return null;
+					if (!(owner is string || owner is StringObject)) return null;
 
 					if (args.Length > 0)
 					{
@@ -470,19 +462,19 @@ namespace Unvell.ReoScript
 
 				obj["startsWith"] = new NativeFunctionObject("startsWith", (ctx, owner, args) =>
 				{
-					if (!(owner is StringValue)) return null;
+					if (!(owner is string || owner is StringObject)) return null;
 					return args.Length == 0 ? false : Convert.ToString(owner).StartsWith(Convert.ToString(args[0]));
 				});
 
 				obj["endsWith"] = new NativeFunctionObject("endWith", (ctx, owner, args) =>
 				{
-					if (!(owner is StringValue)) return null;
+					if (!(owner is string || owner is StringObject)) return null;
 					return args.Length == 0 ? false : Convert.ToString(owner).EndsWith(Convert.ToString(args[0]));
 				});
 
 				obj["repeat"] = new NativeFunctionObject("repeat", (ctx, owner, args) =>
 				{
-					if (!(owner is StringValue)) return null;
+					if (!(owner is string || owner is StringObject)) return null;
 
 					int count = ScriptRunningMachine.GetIntParam(args, 0, 0);
 
@@ -490,25 +482,25 @@ namespace Unvell.ReoScript
 
 					if (count > 0)
 					{
-						string str = ((StringValue)owner).String;
+						string str = ((string)owner);
 						StringBuilder sb = new StringBuilder();
 						for (int i = 0; i < count; i++) sb.Append(str);
 						result = sb.ToString();
 					}
 
-					return new StringValue(result);
+					return result;
 				});
 
-				obj["join"] = new NativeFunctionObject("join", (ctx, owner, args) =>
-				{
-					if (!(owner is StringValue)) return null;
-					//TODO
-					return new StringValue();
-				});
+				//obj["join"] = new NativeFunctionObject("join", (ctx, owner, args) =>
+				//{
+				//  if (!(owner is string || owner is StringObject)) return null;
+				//  //TODO
+				//  return string.Empty;
+				//});
 
 				obj["split"] = new NativeFunctionObject("split", (ctx, owner, args) =>
 				{
-					if (!(owner is StringValue)) return null;
+					if (!(owner is string || owner is StringObject)) return null;
 
 					string str = Convert.ToString(owner);
 
@@ -524,12 +516,22 @@ namespace Unvell.ReoScript
 						{
 							if (args.Length == 1)
 							{
-								arr.List.AddRange(str.Split(separator[0]));
+								arr.List.AddRange(str.Split(new string[] { separator }, 
+									StringSplitOptions.RemoveEmptyEntries));
 							}
 							else
 							{
-								arr.List.AddRange(str.Split(new char[] { separator[0] },
-									ScriptRunningMachine.GetIntParam(args, 1, 0)));
+								int limits = ScriptRunningMachine.GetIntParam(args, 1, 0);
+
+								string[] splitted = str.Split(new string[] { separator }, limits + 1,
+									StringSplitOptions.RemoveEmptyEntries);
+
+								arr.List.Capacity = Math.Min(limits, splitted.Length);
+
+								for (int i = 0; i < arr.List.Capacity; i++)
+								{
+									arr.List.Add(splitted[i]);
+								}
 							}
 						}
 					}
@@ -539,10 +541,10 @@ namespace Unvell.ReoScript
 
 				obj["substr"] = new NativeFunctionObject("substr", (ctx, owner, args) =>
 				{
-					if (!(owner is StringValue)) return null;
+					if (!(owner is string || owner is StringObject)) return null;
 
 					string str = Convert.ToString(owner);
-					StringValue newstr = ctx.CreateString();
+					string newstr = string.Empty;
 
 					if (args.Length < 1)
 						return newstr;
@@ -556,7 +558,7 @@ namespace Unvell.ReoScript
 
 						int len = ScriptRunningMachine.GetIntParam(args, 1, str.Length - from);
 
-						newstr.String = str.Substring(from, len);
+						newstr = str.Substring(from, len);
 					}
 
 					return newstr;
@@ -564,22 +566,22 @@ namespace Unvell.ReoScript
 
 				obj["toLowerCase"] = new NativeFunctionObject("toLowerCase", (ctx, owner, args) =>
 				{
-					if (!(owner is StringValue)) return null;
+					if (!(owner is string || owner is StringObject)) return null;
 					return Convert.ToString(owner).ToLower();
 				});
 
 				obj["toUpperCase"] = new NativeFunctionObject("toUpperCase", (ctx, owner, args) =>
 				{
-					if (!(owner is StringValue)) return null;
+					if (!(owner is string || owner is StringObject)) return null;
 					return Convert.ToString(owner).ToUpper();
 				});
 
 				obj["valueOf"] = new NativeFunctionObject("valueOf", (ctx, owner, args) =>
 				{
-					if (owner is StringObject)
-						return ((StringObject)owner).Value;
-					else if (owner is StringValue)
+					if (owner is string)
 						return owner;
+					else if (owner is StringObject)
+						return ((StringObject)owner).String;
 					else
 						return null;
 				});
@@ -593,6 +595,7 @@ namespace Unvell.ReoScript
 	class BooleanObject : ObjectValue
 	{
 		public bool Boolean { get; set; }
+		public BooleanObject() : this(false) { }
 		public BooleanObject(bool boolean)
 		{
 			this.Boolean = boolean;
@@ -731,6 +734,8 @@ namespace Unvell.ReoScript
 	public abstract class AbstractFunctionObject : ObjectValue
 	{
 		public abstract string FunName { get; set; }
+		//public ObjectValue Prototype { get; set; }
+
 		public virtual object CreateObject(ScriptContext context, object[] args)
 		{
 			return new ObjectValue();
@@ -889,7 +894,7 @@ namespace Unvell.ReoScript
 
 		private static readonly NativeFunctionObject __stdinln__ = new NativeFunctionObject("__stdinln__", (ctx, owner, args) =>
 		{
-			return ctx.Srm.CreateNewString(ctx.Srm.StandardInputProvider.ReadLine());
+			return ctx.Srm.StandardInputProvider.ReadLine();
 		});
 
 		private static readonly NativeFunctionObject __stdout__ = new NativeFunctionObject("__stdout__", (ctx, owner, args) =>
@@ -1275,6 +1280,22 @@ namespace Unvell.ReoScript
 					((ArrayObject)owner).List.Sort();
 					return null;
 				});
+
+				objValue["join"] = new NativeFunctionObject("join", (ctx, owner, args) =>
+				{
+					if (!(owner is ArrayObject)) return null;
+
+					string separator = args == null || args.Length == 0 ? "," : Convert.ToString(args[0]);
+
+					StringBuilder sb = new StringBuilder();
+					foreach (object element in ((ArrayObject)owner).List)
+					{
+						if (sb.Length > 0) sb.Append(separator);
+						sb.Append(Convert.ToString(element));
+					}
+
+					return sb.ToString();
+				});
 			}
 
 			return obj;
@@ -1550,17 +1571,18 @@ namespace Unvell.ReoScript
 			{
 				((ArrayObject)array)[index] = value;
 			}
-			else if (array is StringValue)
+			else if (array is string)
 			{
-				string str = ((StringValue)array).String;
+				// FIXME: string can not be modified
+				string str = (string)array;
 				if (index < str.Length)
 				{
-					str = str.Substring(0, index) + Convert.ToString(value) + str.Substring(index + 1);
-					((StringValue)array).String = str;
+					array = str.Substring(0, index) + Convert.ToString(value) + str.Substring(index + 1);
 				}
 				else
 				{
-					((StringValue)array).String += value;
+					str += value;
+					array = str;
 				}
 			}
 			else if (Srm.EnableDirectAccess && Srm.IsDirectAccessObject(array))
@@ -1577,11 +1599,10 @@ namespace Unvell.ReoScript
 			{
 				return ((ArrayObject)array)[index];
 			}
-			else if (array is StringValue)
+			else if (array is string)
 			{
 				string str = Convert.ToString(array);
-				return index >= 0 && index < str.Length ? new StringValue(str[index].ToString()) :
-					new StringValue();
+				return index >= 0 && index < str.Length ? (str[index].ToString()) : string.Empty;
 			}
 			else if (Srm.EnableDirectAccess && Srm.IsDirectAccessObject(array))
 			{
@@ -1757,7 +1778,26 @@ namespace Unvell.ReoScript
 
 		internal static object GetProperty(ScriptRunningMachine srm, object target, string identifier)
 		{
-			if (target is ObjectValue)
+			if (target is string)
+			{
+				// FIXME: not very good to hard code to get property 'length'
+				if (identifier == "length")
+					return ((string)target).Length;
+				else
+					return PropertyAccessHelper.GetProperty(srm, srm.BuiltinConstructors.StringFunction[
+						ScriptRunningMachine.KEY_PROTOTYPE], identifier);
+			}
+			else if (ScriptRunningMachine.IsNumber(target))
+			{
+				return PropertyAccessHelper.GetProperty(srm, srm.BuiltinConstructors.NumberFunction[
+					ScriptRunningMachine.KEY_PROTOTYPE], identifier);
+			}
+			else if (target is bool)
+			{
+				return PropertyAccessHelper.GetProperty(srm, srm.BuiltinConstructors.BooleanFunction[
+					ScriptRunningMachine.KEY_PROTOTYPE], identifier);
+			}
+			else if (target is ObjectValue)
 			{
 				ObjectValue objValue = (ObjectValue)target;
 				object val = objValue[identifier];
@@ -1769,7 +1809,7 @@ namespace Unvell.ReoScript
 				{
 					object propertyValue = objValue[identifier];
 
-					// if there is no found, get property from its prototype
+					// if value is not found, get property from its prototype
 					if (propertyValue == null && objValue.HasOwnProperty(ScriptRunningMachine.KEY___PROTO__))
 					{
 						propertyValue = PropertyAccessHelper.GetProperty(srm,
@@ -2052,45 +2092,53 @@ namespace Unvell.ReoScript
 			if (left == null && right == null)
 				return null;
 
-			if ((left is double || left is int || left is long || left is float))
+			if (ScriptRunningMachine.IsNumber(left))
 			{
-				if (right == null) 
-					return left;
-				else if (right == NaNValue.Value) 
-					return NaNValue.Value;
-				else if (right is double || right is int || right is long || right is float)
+				if (right == null)
 				{
-					double val = Convert.ToDouble(left) + Convert.ToDouble(right);
-					return double.IsNaN(val) ? NaNValue.Value : (object)val;
-				} 
-			}
-			else if (right is double || right is int || right is long || right is float)
-			{
-				if (left == null)
-					return right;
-				else if (left == NaNValue.Value)
+					return left;
+				}
+				else if (right == NaNValue.Value)
+				{
 					return NaNValue.Value;
-				else if (left is double || left is int || left is long || left is float)
+				}
+				else if (ScriptRunningMachine.IsNumber(right))
 				{
 					double val = Convert.ToDouble(left) + Convert.ToDouble(right);
 					return double.IsNaN(val) ? NaNValue.Value : (object)val;
 				}
+				else if (right is NumberObject)
+				{
+					return Convert.ToDouble(left) + ((NumberObject)right).Number;
+				}
 			}
-
-
-			//if ((left is double || left is int || left is long || left is float)
-			//  && (right is double || right is int || right is long || right is float))
-			//{
-			//  double val = Convert.ToDouble(left) + Convert.ToDouble(right);
-			//  return double.IsNaN(val) ? NaNValue.Value : (object)val;
-			//}
-			if (left is string || right is string
-				|| left is StringValue || right is StringValue)
+			else if (ScriptRunningMachine.IsNumber(right))
 			{
-				return srm.CreateNewObject(context, srm.BuiltinConstructors.StringFunction,
-					new object[] { string.Empty + left + right });
+				if (left == null)
+				{
+					return right;
+				}
+				else if (left == NaNValue.Value)
+				{
+					return NaNValue.Value;
+				}
+				else if (ScriptRunningMachine.IsNumber(left))
+				{
+					double val = Convert.ToDouble(left) + Convert.ToDouble(right);
+					return double.IsNaN(val) ? NaNValue.Value : (object)val;
+				}
+				else if (left is NumberObject)
+				{
+					return ((NumberObject)left).Number + Convert.ToDouble(right);
+				}
 			}
-			else if (left.GetType() == typeof(ObjectValue) && right.GetType() == typeof(ObjectValue))
+
+			//if (left is string || right is string || left is StringObject || right is StringObject)
+			//{
+			//  return Convert.ToString(left) + Convert.ToString(right);
+			//}
+			//else 
+			if (left.GetType() == typeof(ObjectValue) && right.GetType() == typeof(ObjectValue))
 			{
 				ObjectValue obj = srm.CreateNewObject(context);
 				srm.CombineObject(context, obj, ((ObjectValue)left));
@@ -2099,14 +2147,16 @@ namespace Unvell.ReoScript
 			}
 			else
 			{
-				try
-				{
-					return Convert.ToDouble(left) + Convert.ToDouble(right);
-				}
-				catch (Exception)
-				{
-					return string.Empty + left + right;
-				}
+				return Convert.ToString(left) + Convert.ToString(right);
+
+				//try
+				//{
+				//  return Convert.ToDouble(left) + Convert.ToDouble(right);
+				//}
+				//catch (Exception)
+				//{
+				//  return string.Empty + left + right;
+				//}
 			}
 		}
 	}
@@ -2344,7 +2394,7 @@ namespace Unvell.ReoScript
 				oldValue = 0;
 			}
 
-			if (!(oldValue is double || oldValue is int || oldValue is long))
+			if (!ScriptRunningMachine.IsNumber(oldValue))
 			{
 				throw new ReoScriptRuntimeException(ctx, "only interger can be used as increment or decrement statement.");
 			}
@@ -2377,7 +2427,7 @@ namespace Unvell.ReoScript
 				oldValue = 0;
 			}
 
-			if (!(oldValue is double || oldValue is int || oldValue is long))
+			if (!ScriptRunningMachine.IsNumber(oldValue))
 			{
 				throw new ReoScriptRuntimeException(ctx, "only interger can be used as increment or decrement statement.");
 			}
@@ -2418,38 +2468,64 @@ namespace Unvell.ReoScript
 		#region INodeParser Members
 		public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
 		{
-			return Compare(left, right);
+			return Compare(left, right, srm);
 		}
 
-		public abstract bool Compare(object left, object right);
+		public abstract bool Compare(object left, object right, ScriptRunningMachine srm);
 		#endregion
 	}
+
 	#region Equals ==
 	class ExprEqualsNodeParser : RelationExpressionOperatorNodeParser
 	{
 		#region INodeParser Members
 
-		public override bool Compare(object left, object right)
+		public override bool Compare(object left, object right, ScriptRunningMachine srm)
 		{
 			if (left == null && right == null) return true;
 			if (left == null || right == null) return false;
 			if (left == NaNValue.Value && right == NaNValue.Value) return true;
 			if (left == NaNValue.Value || right == NaNValue.Value) return false;
 
-			if (left is StringValue)
+			if (left is string || left is StringObject)
 			{
-				return ((StringValue)left).Equals(right);
+				return Convert.ToString(left).Equals(Convert.ToString(right));
 			}
-			else if (right is StringValue)
+			else if (right is string || right is StringObject)
 			{
-				return ((StringValue)right).Equals(left);
+				return Convert.ToString(right).Equals(Convert.ToString(left));
 			}
 			else
 			{
-				if ((left is int || left is long || left is float || left is double)
-				&& (right is int || right is long || right is float || right is double))
+				if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
 				{
 					return Convert.ToDouble(left) == Convert.ToDouble(right);
+				}
+
+				else if (left is NumberObject && ScriptRunningMachine.IsNumber(right))
+				{
+					return ((NumberObject)left).Number == Convert.ToDouble(right);
+				}
+				else if (right is NumberObject && ScriptRunningMachine.IsNumber(left))
+				{
+					return Convert.ToDouble(left) == ((NumberObject)right).Number;
+				}
+				else if (left is NumberObject && right is NumberObject)
+				{
+					return ((NumberObject)left).Number == ((NumberObject)right).Number;
+				}
+
+				else if (left is BooleanObject && right is bool)
+				{
+					return ((BooleanObject)left).Boolean == (bool)right;
+				}
+				else if (right is BooleanObject && left is bool)
+				{
+					return ((BooleanObject)right).Boolean == (bool)left;
+				}
+				else if (left is BooleanObject && right is BooleanObject)
+				{
+					return ((BooleanObject)left).Boolean == ((BooleanObject)right).Boolean;
 				}
 				else
 				{
@@ -2467,40 +2543,68 @@ namespace Unvell.ReoScript
 		private static readonly ExprEqualsNodeParser equalsParser = new ExprEqualsNodeParser();
 		#region INodeParser Members
 
-		public override bool Compare(object left, object right)
+		public override bool Compare(object left, object right, ScriptRunningMachine srm)
 		{
-			return !equalsParser.Compare(left, right);
+			return !equalsParser.Compare(left, right, srm);
 		}
 
 		#endregion
 	}
 	#endregion
+	#region Strict Equals ===
 	class ExprStrictEqualsNodeParser : RelationExpressionOperatorNodeParser
 	{
-		public override bool Compare(object left, object right)
+		public override bool Compare(object left, object right, ScriptRunningMachine srm)
 		{
-			return left == right;
+			if (left == null && right == null) return true;
+			if (left == null || right == null) return false;
+
+			if ((ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+				|| (left is string && right is string) || (left is bool && right is bool))
+			{
+				return left.Equals(right);
+			}
+			else
+			{
+				return left == right;
+			}
 		}
 	}
+	#endregion
+	#region Strict Not Equals !==
 	class ExprStrictNotEqualsNodeParser : RelationExpressionOperatorNodeParser
 	{
-		public override bool Compare(object left, object right)
+		private ExprStrictEqualsNodeParser equalsParser = new ExprStrictEqualsNodeParser();
+
+		public override bool Compare(object left, object right, ScriptRunningMachine srm)
 		{
-			return left != right;
+			return !equalsParser.Compare(left, right, srm);
+			//return left != right;
 		}
 	}
+	#endregion
 
 	#region Greater Than >
 	class ExprGreaterThanNodeParser : RelationExpressionOperatorNodeParser
 	{
 		#region INodeParser Members
 
-		public override bool Compare(object left, object right)
+		public override bool Compare(object left, object right, ScriptRunningMachine srm)
 		{
 			if ((left is int || left is long || left is float || left is double)
 			&& (right is int || right is long || right is float || right is double))
 			{
 				return Convert.ToDouble(left) > Convert.ToDouble(right);
+			}
+			else if (left is NumberObject
+					 && ScriptRunningMachine.IsNumber(right))
+			{
+				return ((NumberObject)left).Number > Convert.ToDouble(right);
+			}
+			else if (right is NumberObject
+				 && ScriptRunningMachine.IsNumber(left))
+			{
+				return Convert.ToDouble(left) > ((NumberObject)right).Number;
 			}
 			else
 			{
@@ -2516,12 +2620,22 @@ namespace Unvell.ReoScript
 	{
 		#region INodeParser Members
 
-		public override bool Compare(object left, object right)
+		public override bool Compare(object left, object right, ScriptRunningMachine srm)
 		{
-			if ((left is int || left is long || left is float || left is double)
-			&& (right is int || right is long || right is float || right is double))
+			if (ScriptRunningMachine.IsNumber(left)
+			&& ScriptRunningMachine.IsNumber(right))
 			{
 				return Convert.ToDouble(left) >= Convert.ToDouble(right);
+			}
+			else if (left is NumberObject
+					 && ScriptRunningMachine.IsNumber(right))
+			{
+				return ((NumberObject)left).Number >= Convert.ToDouble(right);
+			}
+			else if (right is NumberObject
+					&& ScriptRunningMachine.IsNumber(left))
+			{
+				return Convert.ToDouble(left) >= ((NumberObject)right).Number;
 			}
 			else
 			{
@@ -2537,12 +2651,22 @@ namespace Unvell.ReoScript
 	{
 		#region INodeParser Members
 
-		public override bool Compare(object left, object right)
+		public override bool Compare(object left, object right, ScriptRunningMachine srm)
 		{
-			if ((left is int || left is long || left is float || left is double)
-				&& (right is int || right is long || right is float || right is double))
+			if (ScriptRunningMachine.IsNumber(left)
+				&& ScriptRunningMachine.IsNumber(right))
 			{
 				return Convert.ToDouble(left) < Convert.ToDouble(right);
+			}
+			else if (left is NumberObject
+					 && ScriptRunningMachine.IsNumber(right))
+			{
+				return ((NumberObject)left).Number < Convert.ToDouble(right);
+			}
+			else if (right is NumberObject
+					&& ScriptRunningMachine.IsNumber(left))
+			{
+				return Convert.ToDouble(left) < ((NumberObject)right).Number;
 			}
 			else
 			{
@@ -2558,12 +2682,22 @@ namespace Unvell.ReoScript
 	{
 		#region INodeParser Members
 
-		public override bool Compare(object left, object right)
+		public override bool Compare(object left, object right, ScriptRunningMachine srm)
 		{
-			if ((left is int || left is long || left is double || left is float)
-				&& (right is int || right is long || right is double || right is float))
+			if (ScriptRunningMachine.IsNumber(left)
+				&& ScriptRunningMachine.IsNumber(right))
 			{
 				return Convert.ToDouble(left) <= Convert.ToDouble(right);
+			}
+			else if (left is NumberObject
+					 && ScriptRunningMachine.IsNumber(right))
+			{
+				return ((NumberObject)left).Number <= Convert.ToDouble(right);
+			}
+			else if (right is NumberObject
+					&& ScriptRunningMachine.IsNumber(left))
+			{
+				return Convert.ToDouble(left) <= ((NumberObject)right).Number;
 			}
 			else
 			{
@@ -2767,6 +2901,10 @@ namespace Unvell.ReoScript
 				if (result is BreakNode)
 				{
 					return null;
+				}
+				else if (result is ReturnNode)
+				{
+					return result;
 				}
 
 				srm.ParseNode(forIterator, ctx);
@@ -3059,7 +3197,7 @@ namespace Unvell.ReoScript
 					ownerObj = ((PropertyAccess)funObj).Object;
 					string methodName = ((PropertyAccess)funObj).Identifier;
 
-					if (srm.IsDirectAccessObject(ownerObj))
+					if (!srm.IsPrimitiveTypes(ownerObj) && srm.IsDirectAccessObject(ownerObj))
 					{
 						if (!srm.EnableDirectAccess)
 						{
@@ -3250,7 +3388,7 @@ namespace Unvell.ReoScript
 	}
 	#endregion
 	#region ArrayAccess
-	class ArrayAccessNodeParser : INodeParser
+	class IndexAccessNodeParser : INodeParser
 	{
 		#region INodeParser Members
 
@@ -3268,10 +3406,10 @@ namespace Unvell.ReoScript
 			object indexValue = srm.ParseNode((CommonTree)t.Children[1], context);
 			if (indexValue is IAccess) indexValue = ((IAccess)indexValue).Get();
 
-			if (indexValue is StringValue || indexValue is string)
+			if (indexValue is string) // FIXME: StringObject
 			{
 				// index access for object
-				return new PropertyAccess(srm, context, value, Convert.ToString(indexValue));
+				return new PropertyAccess(srm, context, value, (string)indexValue);
 			}
 			else
 			{
@@ -3302,24 +3440,30 @@ namespace Unvell.ReoScript
 				? (": " + t.Children[0].ToString()) : "."),
 				new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
 
-			if (!(value is ObjectValue))
+			string identifier = t.Children[1].Text;
+
+			if (ScriptRunningMachine.IsNumber(value) || value is string || value is bool)
+			{
+				// no check
+			}
+			else if (!(value is ObjectValue))
 			{
 				if (value is ISyntaxTreeReturn)
 				{
 					throw new ReoScriptRuntimeException(ctx, 
-						string.Format("Attempt to access an object '{0}' that is not Object type.", value.ToString()),
+						string.Format("Attempt to access an object '{0}' that is not of Object type.", value.ToString()),
 						new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
 				}
 				else if (!srm.EnableDirectAccess)
 				{
 					throw new ReoScriptRuntimeException(ctx, string.Format(
-						"Attempt to access an object '{0}' that is not in Object type. If want to access a .Net object, set WorkMode to enable DirectAccess.",
+						"Attempt to access an object '{0}' that is not of Object type. To access .Net object, set WorkMode to enable DirectAccess.",
 						value.ToString()),
 						new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
 				}
 			}
 
-			return new PropertyAccess(srm, ctx, value, t.Children[1].ToString());
+			return new PropertyAccess(srm, ctx, value, identifier);
 		}
 
 		#endregion
@@ -3411,11 +3555,11 @@ namespace Unvell.ReoScript
 			{
 				return srm.BuiltinConstructors.NumberFunction.FunName.ToLower();
 			}
-			else if (obj is StringObject)
+			/*else if (obj is StringObject)
 			{
 				return srm.BuiltinConstructors.ObjectFunction.FunName.ToLower();
-			}
-			else if (obj is StringValue || obj is string)
+			}*/
+			else if (obj is string)
 			{
 				return srm.BuiltinConstructors.StringFunction.FunName.ToLower();
 			}
@@ -3443,8 +3587,6 @@ namespace Unvell.ReoScript
 	#region InstanceOf
 	class InstanceOfNodeParser : INodeParser
 	{
-		#region INodeParser Members
-
 		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
 		{
 			object obj = srm.ParseNode(t.Children[0] as CommonTree, ctx);
@@ -3453,8 +3595,24 @@ namespace Unvell.ReoScript
 			object constructor = srm.ParseNode(t.Children[1] as CommonTree, ctx);
 			if (constructor is IAccess) constructor = ((IAccess)constructor).Get();
 
-			if ( !(obj is ObjectValue)
-				|| !(constructor is AbstractFunctionObject)) return false;
+			if(!(constructor is AbstractFunctionObject)) return false;
+			
+			if (obj is string)
+			{
+				return constructor == srm.BuiltinConstructors.StringFunction;
+			}
+			else if (ScriptRunningMachine.IsNumber(obj))
+			{
+				return constructor == srm.BuiltinConstructors.NumberFunction;
+			}
+			else if (obj is bool)
+			{
+				return constructor == srm.BuiltinConstructors.BooleanFunction;
+			}
+			else if ( !(obj is ObjectValue))
+			{
+				return false;
+			}
 
 			ObjectValue objValue = ((ObjectValue)obj);
 
@@ -3468,8 +3626,6 @@ namespace Unvell.ReoScript
 
 			return false;
 		}
-
-		#endregion
 	}
 
 	#endregion
@@ -3564,7 +3720,7 @@ namespace Unvell.ReoScript
 
 						string propertyName = attr.Children[0].ToString();
 
-						// filter do not default setter if property setted from outside
+						// properties that not need to set if value be setted from user-side
 						if (!mergedPropertes.ContainsKey(propertyName))
 						{
 							mergedPropertes[propertyName] = val;
@@ -3769,7 +3925,7 @@ namespace Unvell.ReoScript
 			definedParser[ReoScriptLexer.CREATE] = new CreateObjectNodeParser();
 			definedParser[ReoScriptLexer.TRY_CATCH] = new TryCatchNodeParser();
 			definedParser[ReoScriptLexer.TRY_CATCH_TRHOW] = new ThrowNodeParser();
-			definedParser[ReoScriptLexer.ARRAY_ACCESS] = new ArrayAccessNodeParser();
+			definedParser[ReoScriptLexer.ARRAY_ACCESS] = new IndexAccessNodeParser();
 			definedParser[ReoScriptLexer.PROPERTY_ACCESS] = new PropertyAccessNodeParser();
 			definedParser[ReoScriptLexer.DELETE_PROP] = new DeletePropertyNodeParser();
 			definedParser[ReoScriptLexer.TYPEOF] = new TypeofNodeParser();
@@ -4021,30 +4177,30 @@ namespace Unvell.ReoScript
 		/// Create an empty string object
 		/// </summary>
 		/// <returns>created string object</returns>
-		public StringValue CreateString()
-		{
-			return CreateString(string.Empty);
-		}
+		//public StringValue CreateString()
+		//{
+		//  return CreateString(string.Empty);
+		//}
 
 		/// <summary>
 		/// Create a string object with initial text
 		/// </summary>
 		/// <param name="str">primitive string in .Net</param>
 		/// <returns>created string object</returns>
-		public StringValue CreateString(string str)
-		{
-			return Srm.CreateNewString(str);
-		}
+		//public StringValue CreateString(string str)
+		//{
+		//  return Srm.CreateNewString(str);
+		//}
 
 		/// <summary>
 		/// Create a wrapper object of string
 		/// </summary>
 		/// <param name="str">primitive string in .Net</param>
 		/// <returns>created wrapper string object</returns>
-		internal StringObject CreateStringWrapper(string str)
-		{
-			return Srm.CreateNewObject(this, Srm.BuiltinConstructors.StringFunction, new object[] { str }) as StringObject;
-		}
+		//internal StringObject CreateStringWrapper(string str)
+		//{
+		//  return Srm.CreateNewObject(this, Srm.BuiltinConstructors.StringFunction, new object[] { str }) as StringObject;
+		//}
 	}
 
 	internal class CallScope
@@ -4275,7 +4431,7 @@ namespace Unvell.ReoScript
 		/// <summary>
 		/// Set or get global variables
 		/// </summary>
-		/// <param name="identifier">identifier to variable name</param>
+		/// <param name="identifier">identifier to be used as variable name</param>
 		/// <returns>object in global object</returns>
 		public object this[string identifier]
 		{
@@ -4315,6 +4471,13 @@ namespace Unvell.ReoScript
 			return CreateNewObject(new ScriptContext(this, entryFunction), BuiltinConstructors.ObjectFunction) as ObjectValue;
 		}
 
+		public ObjectValue CreateNewObject(string name)
+		{
+			ObjectValue obj = CreateNewObject();
+			obj.Name = name;
+			return obj;
+		}
+
 		internal ObjectValue CreateNewObject(ScriptContext context)
 		{
 			return CreateNewObject(context, BuiltinConstructors.ObjectFunction) as ObjectValue;
@@ -4330,7 +4493,7 @@ namespace Unvell.ReoScript
 			return CreateNewObject(context, funObject, invokeConstructor, null);
 		}
 
-		internal object CreateNewObject(ScriptContext context, AbstractFunctionObject funObject, object[] constructArguments)
+		public object CreateNewObject(ScriptContext context, AbstractFunctionObject funObject, object[] constructArguments)
 		{
 			return CreateNewObject(context, funObject, true, constructArguments);
 		}
@@ -4354,7 +4517,7 @@ namespace Unvell.ReoScript
 					constructor.Name : constructor.FunName;
 
 				// point to constructor
-				objValue[ScriptRunningMachine.KEY_CONSTRUCTOR] = constructor;
+				//objValue[ScriptRunningMachine.KEY_CONSTRUCTOR] = constructor;
 				objValue.Constructor = constructor;
 
 				// get prototype from constructor
@@ -4377,25 +4540,25 @@ namespace Unvell.ReoScript
 			return obj;
 		}
 
-		internal StringValue CreateNewString(string str)
-		{
-			StringValue strObj = new StringValue(ConvertEscapeLiterals(str)) { Name = "String" };
+		//internal StringValue CreateNewString(string str)
+		//{
+		//  StringValue strObj = new StringValue(ConvertEscapeLiterals(str)) { Name = "String" };
 
-			strObj[ScriptRunningMachine.KEY___PROTO__]
-				= BuiltinConstructors.StringFunction[ScriptRunningMachine.KEY_PROTOTYPE];
+		//  strObj[ScriptRunningMachine.KEY___PROTO__]
+		//    = BuiltinConstructors.StringFunction[ScriptRunningMachine.KEY_PROTOTYPE];
 
-			strObj[ScriptRunningMachine.KEY_CONSTRUCTOR]
-				= BuiltinConstructors.StringFunction;
+		//  //strObj[ScriptRunningMachine.KEY_CONSTRUCTOR]
+		//  //  = BuiltinConstructors.StringFunction;
 
-			strObj.Constructor = BuiltinConstructors.StringFunction;
+		//  strObj.Constructor = BuiltinConstructors.StringFunction;
 
-			if (NewObjectCreated != null)
-			{
-				NewObjectCreated(this, new ReoScriptObjectEventArgs(strObj, BuiltinConstructors.StringFunction));
-			}
+		//  if (NewObjectCreated != null)
+		//  {
+		//    NewObjectCreated(this, new ReoScriptObjectEventArgs(strObj, BuiltinConstructors.StringFunction));
+		//  }
 
-			return strObj;
-		}
+		//  return strObj;
+		//}
 		#endregion
 
 		#region CLR Type Import
@@ -5175,7 +5338,16 @@ namespace Unvell.ReoScript
 			set { standardInputProvider = value; }
 		}
 
-		private List<IStandardOutputListener> outputListeners;
+		private List<IStandardOutputListener> outputListeners = new List<IStandardOutputListener>();
+
+		/// <summary>
+		/// List of Standard Output Listeners
+		/// </summary>
+		public List<IStandardOutputListener> OutputListeners
+		{
+			get { return outputListeners; }
+			set { outputListeners = value; }
+		}
 
 		/// <summary>
 		/// Add a lisenter to get standard output of console.
@@ -5397,7 +5569,7 @@ namespace Unvell.ReoScript
 			return Compile(script, new ScriptContext(this, entryFunction));
 		}
 
-		public CompiledScript Compile(string script, ScriptContext context)
+		internal CompiledScript Compile(string script, ScriptContext context)
 		{
 			ReoScriptLexer lex = new ReoScriptLexer(new ANTLRStringStream(script));
 			CommonTokenStream tokens = new CommonTokenStream(lex);
@@ -5498,15 +5670,15 @@ namespace Unvell.ReoScript
 						return Convert.ToDouble(t.Text);
 
 					case ReoScriptLexer.HEX_LITERATE:
-						return Convert.ToInt32(t.Text.Substring(2), 16);
+						return (double)Convert.ToInt32(t.Text.Substring(2), 16);
 
 					case ReoScriptLexer.BINARY_LITERATE:
-						return Convert.ToInt32(t.Text.Substring(2), 2);
+						return (double)Convert.ToInt32(t.Text.Substring(2), 2);
 
 					case ReoScriptLexer.STRING_LITERATE:
 						string str = t.ToString();
 						str = str.Substring(1, str.Length - 2);
-						return CreateNewString(str);
+						return ConvertEscapeLiterals(str);
 
 					case ReoScriptLexer.LIT_TRUE:
 						return true;
@@ -5520,7 +5692,7 @@ namespace Unvell.ReoScript
 
 					case ReoScriptLexer.OBJECT_LITERAL:
 						if (t.ChildCount % 2 != 0)
-							throw new ReoScriptRuntimeException(ctx, "object literal should be key/value pair.",
+							throw new ReoScriptRuntimeException(ctx, "object literal should be key/value paired.",
 								new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
 
 						ObjectValue val = CreateNewObject(ctx);
@@ -5642,9 +5814,9 @@ namespace Unvell.ReoScript
 			else if (obj is ISyntaxTreeReturn)
 			{
 				double v = def;
-				if (obj is StringValue)
+				if (obj is string)
 				{
-					double.TryParse(((StringValue)obj).String, out v);
+					double.TryParse((string)obj, out v);
 				}
 				else if (obj is NumberObject)
 				{
@@ -5678,9 +5850,9 @@ namespace Unvell.ReoScript
 			else if (obj is ISyntaxTreeReturn)
 			{
 				long v = def;
-				if (obj is StringValue)
+				if (obj is string)
 				{
-					long.TryParse(((StringValue)obj).String, out v);
+					long.TryParse((string)obj, out v);
 				}
 				else if (obj is NumberObject)
 				{
@@ -5710,9 +5882,9 @@ namespace Unvell.ReoScript
 			else if (obj is ISyntaxTreeReturn)
 			{
 				float v = def;
-				if (obj is StringValue)
+				if (obj is string)
 				{
-					float.TryParse(((StringValue)obj).String, out v);
+					float.TryParse((string)obj, out v);
 				}
 				else if (obj is NumberObject)
 				{
@@ -5729,6 +5901,12 @@ namespace Unvell.ReoScript
 			return GetDoubleValue(obj, 0);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="def"></param>
+		/// <returns></returns>
 		public static double GetDoubleValue(object obj, double def)
 		{
 			if (obj is double)
@@ -5744,9 +5922,9 @@ namespace Unvell.ReoScript
 			else if (obj is ISyntaxTreeReturn)
 			{
 				double v = def;
-				if (obj is StringValue)
+				if (obj is string)
 				{
-					double.TryParse(((StringValue)obj).String, out v);
+					double.TryParse((string)obj, out v);
 				}
 				return v;
 			}
@@ -5754,11 +5932,21 @@ namespace Unvell.ReoScript
 				return def;
 		}
 
+		/// <summary>
+		/// Retrieve a boolean value from specified object.
+		/// </summary>
+		/// <param name="obj">object will be converted</param>
+		/// <returns>converted boolean value. Return false if given object is not in boolean type.</returns>
 		public static bool GetBoolValue(object obj)
 		{
 			return (obj is bool) && ((bool)obj);
 		}
 
+		/// <summary>
+		/// Convert an object to string
+		/// </summary>
+		/// <param name="v">object will be converted</param>
+		/// <returns>convert result</returns>
 		public static string ConvertToString(object v)
 		{
 			if (v == null)
@@ -5844,7 +6032,7 @@ namespace Unvell.ReoScript
 					{
 						try
 						{
-							if (type.IsEnum && value is StringValue || value is NumberObject)
+							if (type.IsEnum && value is string || value is NumberObject)
 							{
 								obj = Enum.Parse(type, Convert.ToString(value));
 							}
@@ -5869,6 +6057,17 @@ namespace Unvell.ReoScript
 			{
 				return value;
 			}
+		}
+
+		public static bool IsNumber(object target)
+		{
+			return target is double || target is int || target is float || target is char || target is byte 
+				|| target is short || target is long;
+		}
+
+		internal bool IsPrimitiveTypes(object obj)
+		{
+			return obj is bool || obj is string || IsNumber(obj);
 		}
 
 		internal bool IsDirectAccessObject(object obj)
@@ -5898,7 +6097,7 @@ namespace Unvell.ReoScript
 		//  return value.GetNativeValue().ToString();
 		//}
 
-		public static MethodInfo FindCLRMethodAmbiguous(object obj, string methodName, object[] args)
+		internal static MethodInfo FindCLRMethodAmbiguous(object obj, string methodName, object[] args)
 		{
 			var q = obj.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Where(_q => _q.Name == methodName);
 
@@ -5930,12 +6129,18 @@ namespace Unvell.ReoScript
 			return q == null || q.Count() == 0 ? null : q.First();
 		}
 
+		/// <summary>
+		/// Convert an object to JSON string
+		/// </summary>
+		/// <param name="obj">object will be converted</param>
+		/// <param name="handler">key/value paired handler</param>
+		/// <returns>result to JSON string</returns>
 		public static string ConvertToJSONString(object obj, Func<string, object, object> handler)
 		{
 			return ConvertToJSONString(obj, handler, true);
 		}
 
-		public static string ConvertToJSONString(object obj, Func<string, object, object> handler, bool allowDotNetObjects)
+		internal static string ConvertToJSONString(object obj, Func<string, object, object> handler, bool allowDotNetObjects)
 		{
 			StringBuilder sb = new StringBuilder("{");
 
@@ -5959,7 +6164,7 @@ namespace Unvell.ReoScript
 						{
 							sb.Append("null");
 						}
-						else if (value is string || value is StringValue)
+						else if (value is string)
 						{
 							string valStr = "\"" + Convert.ToString(value) + "\"";
 							//valStr = valStr.Replace("\"", "\\\"");
@@ -6124,6 +6329,24 @@ namespace Unvell.ReoScript
 						}
 						return null;
 					});
+
+					proto["apply"] = new NativeFunctionObject("apply", (ctx, owner, args) =>
+					{
+						AbstractFunctionObject func = owner as AbstractFunctionObject;
+						if (func != null)
+						{
+							object[] callArgs = null;
+
+							if (args.Length > 1)
+							{
+								callArgs = new object[args.Length - 1];
+								Array.Copy(args, 1, callArgs, 0, args.Length - 1);
+							}
+
+							return ctx.Srm.InvokeFunction(ctx, args.Length > 0 ? args[0] : null, func, new object[] { callArgs });
+						}
+						return null;
+					});
 				});
 			#endregion
 
@@ -6131,28 +6354,50 @@ namespace Unvell.ReoScript
 			NumberFunction = new TypedNativeFunctionObject
 				(typeof(NumberObject), "Number", (ctx, owner, args) =>
 				{
-					NumberObject num = owner as NumberObject;
-					if (num == null) num = ctx.CreateNewObject(NumberFunction, false) as NumberObject;
-					if (args.Length > 0) num.Number = Convert.ToDouble(args[0]);
-					return num;
+					if (args == null || args.Length <= 0)
+					{
+						return 0;
+					}
+
+					double num = 0;
+					if (double.TryParse(Convert.ToString(args[0]), out num))
+					{
+						return num;
+					}
+					else
+					{
+						return NaNValue.Value;
+					}
 				}, (proto) =>
 				{
 					proto["toString"] = new NativeFunctionObject("toString", (ctx, owner, args) =>
 					{
-						string result = string.Empty;
-
-						if (owner != null && args.Length > 0)
+						int radix = 10;
+						
+						if (args != null && args.Length > 0)
 						{
-							double num = ((NumberObject)owner).Number;
-
-							try
-							{
-								return new StringValue(Convert.ToString(Convert.ToInt32(num), Convert.ToInt32(args[0])));
-							}
-							catch { }
+							radix = (int)Convert.ToDouble(args[0]);
 						}
 
-						return ctx.CreateNewObject(StringFunction, new object[] { result });
+						double num = 0;
+
+						if (ScriptRunningMachine.IsNumber(owner))
+						{
+							num = Convert.ToDouble(owner);
+						}
+						else if (owner is NumberObject)
+						{
+							num = ((NumberObject)owner).Number;
+						}
+
+						try
+						{
+							return Convert.ToString((int)num, radix);
+						}
+						catch
+						{
+							throw new ReoScriptRuntimeException(ctx, "Number.toString radix argument must be	2 and 36");
+						}
 					});
 				});
 			#endregion
@@ -6316,7 +6561,7 @@ namespace Unvell.ReoScript
 				srm.SetGlobalVariable("Math", new MathObject());
 
 				if ((srm.CoreFeatures & CoreFeatures.Console) == CoreFeatures.Console)
-					srm.GlobalObject["console"] = new ObjectValue();
+					srm.GlobalObject["console"] = srm.CreateNewObject("console");
 
 				if ((srm.CoreFeatures & CoreFeatures.Eval) == CoreFeatures.Eval)
 					srm.GlobalObject[__eval__.FunName] = __eval__;
@@ -6339,6 +6584,7 @@ namespace Unvell.ReoScript
 					srm.GlobalObject[__confirm__.FunName] = __confirm__;
 				}
 
+				#region JSON
 				if ((srm.CoreFeatures & CoreFeatures.JSON) == CoreFeatures.JSON)
 				{
 					ObjectValue json = new ObjectValue(){
@@ -6394,6 +6640,7 @@ namespace Unvell.ReoScript
 
 					srm.SetGlobalVariable("JSON", json);
 				}
+				#endregion
 			}
 		}
 	}
@@ -6636,18 +6883,32 @@ namespace Unvell.ReoScript
 	/// <summary>
 	/// Provides debug ability for ScriptRunningMachine 
 	/// </summary>
-	public class ScriptDebugger
+	public sealed class ScriptDebugger
 	{
-		public static readonly string DEBUG_OBJECT_NAME = "debug";
+		protected static readonly string DEBUG_OBJECT_NAME = "debug";
 
-		public ObjectValue DebugObject { get; set; }
+		private ObjectValue debugObject;
 
+		/// <summary>
+		/// Debug object named 'debug' will be added into script context
+		/// </summary>
+		public ObjectValue DebugObject { get { return debugObject; } }
+
+		/// <summary>
+		/// Current SRM instance to be monitored
+		/// </summary>
 		public ScriptRunningMachine Srm { get; set; }
 
+		/// <summary>
+		/// Current context used to script executing
+		/// </summary>
 		public ScriptContext Context { get; set; }
 
 		private int totalObjectCreated = 0;
 
+		/// <summary>
+		/// Total counter of object created in script
+		/// </summary>
 		public int TotalObjectCreated
 		{
 			get { return totalObjectCreated; }
@@ -6656,6 +6917,10 @@ namespace Unvell.ReoScript
 
 		ExprEqualsNodeParser comparer = new ExprEqualsNodeParser();
 
+		/// <summary>
+		/// Construct debugger to monitor specified SRM 
+		/// </summary>
+		/// <param name="srm">SRM instance</param>
 		public ScriptDebugger(ScriptRunningMachine srm)
 		{
 			this.Srm = srm;
@@ -6664,7 +6929,7 @@ namespace Unvell.ReoScript
 			srm.NewObjectCreated += new EventHandler<ReoScriptObjectEventArgs>(srm_NewObjectCreated);
 			srm.Resetted += (s, e) => RestoreDebugger();
 
-			DebugObject = srm.CreateNewObject(Context) as ObjectValue;
+			debugObject = srm.CreateNewObject(Context) as ObjectValue;
 
 			if (DebugObject != null)
 			{
@@ -6681,7 +6946,7 @@ namespace Unvell.ReoScript
 					}
 					else if (args.Length == 2)
 					{
-						if (!comparer.Compare(args[0], args[1]))
+						if (!comparer.Compare(args[0], args[1], srm))
 							throw new ReoScriptAssertionException(ctx, string.Format("expect '{0}' but '{1}'",
 								ScriptRunningMachine.ConvertToString(args[1]),
 								ScriptRunningMachine.ConvertToString(args[0])));
@@ -6691,12 +6956,14 @@ namespace Unvell.ReoScript
 
 				DebugObject["total_created_objects"] = new ExternalProperty(
 					() => { return totalObjectCreated; }, null);
-
 			}
 
 			RestoreDebugger();
 		}
 
+		/// <summary>
+		/// Restore a debugger if the monitered SRM instance to be resetted
+		/// </summary>
 		public void RestoreDebugger()
 		{
 			if (DebugObject != null)

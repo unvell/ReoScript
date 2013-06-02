@@ -69,6 +69,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="scripts\array.rs" />
+    <None Include="scripts\number.rs">
+    </None>
     <None Include="scripts\core.rs" />
     <None Include="scripts\debug.rs" />
   </ItemGroup>
