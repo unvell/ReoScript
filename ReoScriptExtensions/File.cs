@@ -17,7 +17,7 @@ namespace Unvell.ReoScript.Extensions
 		public DirectoryInfo DirInfo { get; set; }
 	}
 
-	public class FileConstructorFunction
+	public class FileConstructorFunction : TypedNativeFunctionObject<DirectoryObject>
 	{
 
 	}

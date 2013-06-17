@@ -74,7 +74,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="TestCases.cs" />
+    <Compile Include="CLRTestCases.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReoScriptEditor\ReoScriptEditor.csproj">

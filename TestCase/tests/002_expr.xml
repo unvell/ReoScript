@@ -189,7 +189,7 @@
 
       t( new Number(10) !== new Number(10) );
       t( new String('a') !== new String('a') );
-      t( new Boolean(true) !== new Boolean(true );
+      t( new Boolean(true) !== new Boolean(true) );
       
     </script>
   </test-case>

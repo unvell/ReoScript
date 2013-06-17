@@ -37,6 +37,6 @@ if (this.Math != null) {
 
 // Error
 if (this.Error == null) {
-  this.Error = function Error() {
+  this.Error = function() {
   };
 }

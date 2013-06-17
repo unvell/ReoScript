@@ -149,6 +149,15 @@
     </script>
   </test-case>
 
+  <test-case id="014" name="toString">
+    <script>
+      var t = debug.assert;
+
+      t( new Object(), "[object Object]" );
+
+    </script>
+  </test-case>
+
   <test-case id="020" name="delete property">
     <script>
       var t = debug.assert;

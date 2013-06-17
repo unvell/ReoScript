@@ -126,7 +126,7 @@
     </script>
   </test-case>
   
-  <test-case id="010">
+  <test-case id="010" name="call from array">
     <script>
       var t = debug.assert;
 
@@ -152,4 +152,18 @@
     </script>
   </test-case>
 
+  <test-case id="011" name="auto resize">
+    <script>
+      var t = debug.assert;
+
+      var arr = [ 1,2,3 ];
+      t(arr.length, 3);
+      
+      arr[9] = 10;
+      t(arr.length === 10);
+      
+    </script>
+  </test-case>
+  
+  
 </test-suite>

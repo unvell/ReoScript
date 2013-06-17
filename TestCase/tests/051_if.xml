@@ -87,4 +87,29 @@
     </script>
   </test-case>
 
+
+  <test-case id="005" name="if else branch">
+    <script>
+      var t = debug.assert;
+  
+      var a = 0;
+      
+      function check() {
+        return a++;
+      }
+      
+      if (check() == 0) {             // check invoked
+      
+      } else if (check() == 2) {      // check not be invoked
+      
+      } else if (check() == 3) {      // check not be invoked
+          
+      }
+      
+      // 'a' should be 1 since 'check' must be called only once
+      t( a, 1 );
+      
+        
+    </script>
+  </test-case>
 </test-suite>

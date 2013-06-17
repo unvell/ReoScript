@@ -129,4 +129,25 @@
       
     </script>
   </test-case>
+
+  <test-case id="008" name="property in prototype">
+    <script>
+      var t = debug.assert;
+     
+      Array.prototype.aa = 10;
+      
+      var a = [];
+      t(a.aa, 10);
+      
+      a.aa += 5;
+      t(Array.prototype.aa, 10);
+      t(a.aa, 15);
+      
+      Array.prototype.aa = 20;
+      t(a.aa, 15);
+      t(Array.prototype.aa, 20);
+      
+    </script>
+  </test-case>
+
 </test-suite>

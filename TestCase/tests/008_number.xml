@@ -28,6 +28,27 @@
     </script>
   </test-case>
 
+  <test-case id="003" name="times">
+    <script>
+      var t = debug.assert;
+      
+      Number.prototype.times = function (iterator) {
+        for (var i=0; i &lt; this; i++) {
+          iterator.call(i);
+        }
+      };
+      
+      var a = 0;
+      
+      Number(10).times(() => {
+        a += this;
+      });
+      
+      t(a, 45);
+      
+    </script>
+  </test-case>
+
   <test-case id="010" name="instance">
     <script>
       var t = debug.assert;

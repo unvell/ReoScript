@@ -19,13 +19,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Unvell.ReoScript.Editor;
-using Unvell.ReoScript;
 using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
 using System.Diagnostics;
 using System.Reflection;
+
+using Unvell.ReoScript;
+using Unvell.ReoScript.Editor;
+using Unvell.ReoScript.Diagnostics;
 
 namespace Unvell.ReoScript.TestCase
 {
@@ -163,7 +165,7 @@ namespace Unvell.ReoScript.TestCase
 					{
 						failed++;
 						Console.WriteLine(string.IsNullOrEmpty(ex.Message) ? "failed"
-							: "failed: " + ex.Message);
+							: ex.Message);
 
 						hasErrors = true;
 					}
@@ -193,6 +195,8 @@ namespace Unvell.ReoScript.TestCase
 			Console.WriteLine("Run CLR tests...\n");
 
 			ScriptRunningMachine srm = new ScriptRunningMachine();
+			srm.WorkMode |= MachineWorkMode.AllowDirectAccess;
+
 			ScriptDebugger debugMonitor = new ScriptDebugger(srm);
 
 			int testCases = 0, success = 0, failed = 0;
@@ -219,7 +223,7 @@ namespace Unvell.ReoScript.TestCase
 						TestCaseAttribute[] caseAttrs = method.GetCustomAttributes(typeof(TestCaseAttribute), false)
 							as TestCaseAttribute[];
 
-						if (caseAttrs.Length > 0)
+						if (caseAttrs.Length > 0 && !caseAttrs[0].Disabled)
 						{
 							testCases++;
 
@@ -230,6 +234,7 @@ namespace Unvell.ReoScript.TestCase
 
 							if (testSuite is ReoScriptTestSuite)
 							{
+								srm.WorkMode = caseAttrs[0].WorkMode;
 								srm.Reset();
 								((ReoScriptTestSuite)testSuite).SRM = srm;
 							}
@@ -252,7 +257,7 @@ namespace Unvell.ReoScript.TestCase
 							catch (Exception ex)
 							{
 								failed++;
-								Console.WriteLine(string.IsNullOrEmpty(ex.Message) ? "failed" : "failed: " + ex.Message);
+								Console.WriteLine(string.IsNullOrEmpty(ex.InnerException.Message) ? "failed" : ex.InnerException.Message);
 
 								hasErrors = true;
 							}
@@ -321,7 +326,17 @@ namespace Unvell.ReoScript.TestCase
 	{
 		public string Desc { get; set; }
 
-		public TestCaseAttribute() { }
+		public bool Disabled { get; set; }
+
+		public MachineWorkMode WorkMode { get; set; }
+
+		public TestCaseAttribute()
+		{
+			WorkMode = MachineWorkMode.Default | MachineWorkMode.AllowDirectAccess
+				| MachineWorkMode.AllowCLREventBind | MachineWorkMode.AllowImportTypeInScript | MachineWorkMode.AutoImportRelationType
+				| MachineWorkMode.AutoUppercaseWhenCLRCalling | MachineWorkMode.IgnoreCLRExceptions;
+		}
+
 		public TestCaseAttribute(string desc) : base() { this.Desc = desc; }
 	}
 }

@@ -5,8 +5,9 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
-using FastColoredTextBoxNS;
 using System.Threading;
+
+using FastColoredTextBoxNS;
 
 namespace Unvell.ReoScript.Editor
 {

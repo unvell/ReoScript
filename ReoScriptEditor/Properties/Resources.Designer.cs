@@ -60,6 +60,13 @@ namespace Unvell.ReoScript.Editor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap CheckGrammarHS {
+            get {
+                object obj = ResourceManager.GetObject("CheckGrammarHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap CopyHS {
             get {
                 object obj = ResourceManager.GetObject("CopyHS", resourceCulture);

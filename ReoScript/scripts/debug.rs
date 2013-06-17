@@ -22,7 +22,7 @@ if (debug != null) {
   debug.Stopwatch = function() {
     this.startTime = null;
     this.endTime = null;
-  }
+  };
 
   debug.Stopwatch.startNew = function() {
     var sw = new debug.Stopwatch();
@@ -39,7 +39,7 @@ if (debug != null) {
 
   debug.Stopwatch.prototype.stop = function() {
     this.endTime = new Date();
-    this.elapsed = this.endTime.subtract(this.startTime);
+    this.elapsed = this.endTime - this.startTime;
   };
 
   debug.Stopwatch.prototype.restart = function() {

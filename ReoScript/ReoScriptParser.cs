@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.4 C:\\work\\ReoScript\\ReoScript.g 2013-05-28 00:05:01
+// $ANTLR 3.4 C:\\work\\ReoScript\\ReoScript.g 2013-06-17 23:10:14
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -28,17 +28,16 @@ using Antlr.Runtime.Misc;
 using Antlr.Runtime.Tree;
 using RewriteRuleITokenStream = Antlr.Runtime.Tree.RewriteRuleTokenStream;
 
-namespace  Unvell.ReoScript 
+namespace Unvell.ReoScript
 {
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "3.4")]
 [System.CLSCompliant(false)]
-public partial class ReoScriptParser : Antlr.Runtime.Parser
+sealed internal partial class ReoScriptParser : Antlr.Runtime.Parser
 {
 	internal static readonly string[] tokenNames = new string[] {
-		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "AND", "ANONYMOUS_FUNCTION", "ARGUMENT_LIST", "ARRAY_ACCESS", "ARRAY_LITERAL", "ASSIGNMENT", "ASSIGN_AND", "ASSIGN_DIV", "ASSIGN_LSHIFT", "ASSIGN_MINUS", "ASSIGN_MUL", "ASSIGN_OR", "ASSIGN_PLUS", "ASSIGN_REM", "ASSIGN_REV", "ASSIGN_RSHIFT", "BINARY_LITERATE", "BLOCK", "BREAK", "CLASS", "COLON", "COMBINE_OBJECT", "COMMA", "COMMENT", "CONDITION", "CONTINUE", "CREATE", "DECLARATION", "DECREMENT", "DELETE_PROP", "DIV", "DOT", "ELSE", "EQUALS", "ESCAPE_SEQUENCE", "FOREACH_STATEMENT", "FOR_BODY", "FOR_CONDITION", "FOR_INIT", "FOR_ITERATOR", "FOR_STATEMENT", "FUNCTION_CALL", "FUNCTION_DEFINE", "GREAT_EQUALS", "GREAT_THAN", "HEX_LITERATE", "IDENTIFIER", "IF_STATEMENT", "IMPORT", "INCREMENT", "INSTANCEOF", "LAMBDA_FUNCTION", "LBRACE", "LCURLY", "LESS_EQUALS", "LESS_THAN", "LINE_COMMENT", "LIT_FALSE", "LIT_NULL", "LIT_TRUE", "LOCAL_DECLARE_ASSIGNMENT", "LOGICAL_AND", "LOGICAL_OR", "LPAREN", "LSHIFT", "MEMBER_DECLARATION", "MEMBER_MODIFIER", "MINUS", "MOD", "MUL", "NAN", "NEWLINE", "NOT", "NOT_EQUALS", "NUMBER_LITERATE", "OBJECT_LITERAL", "OR", "PARAMETER_DEFINES", "PARAMETER_DEFINE_WITH_DEFAULT_VALUE", "PARAMETER_DEFINE_WITH_DEFAULT_VALUE_LIST", "PLUS", "POST_UNARY_STEP", "PRE_UNARY", "PRE_UNARY_STEP", "PRIVATE", "PROPERTY_ACCESS", "PROTECTED", "PUBLIC", "RBRACE", "RCURLY", "RETURN", "RPAREN", "RSHIFT", "SEMI", "STRICT_EQUALS", "STRICT_NOT_EQUALS", "STRING_LITERATE", "SWITCH", "SWITCH_CASE", "SWITCH_CASE_ELSE", "TAG", "TAG_ATTR", "TAG_ATTR_LIST", "TAG_NAME", "TEMPLATE_DEFINE", "TEMPLATE_TAG", "THIS", "TRY_CATCH", "TRY_CATCH_CASE", "TRY_CATCH_FINAL", "TRY_CATCH_TRHOW", "TYPE", "TYPEOF", "UNDEFINED", "WHILE_STATEMENT", "WS", "XOR", "'/>'", "'</'", "'=>'", "'break'", "'case'", "'catch'", "'class'", "'continue'", "'default'", "'delete'", "'finally'", "'for'", "'function'", "'if'", "'import'", "'in'", "'new'", "'return'", "'switch'", "'template'", "'throw'", "'try'", "'typeof'", "'while'", "'~'"
+		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "AND", "ANONYMOUS_FUNCTION", "ARGUMENT_LIST", "ARRAY_ACCESS", "ARRAY_LITERAL", "ASSIGNMENT", "ASSIGN_AND", "ASSIGN_DIV", "ASSIGN_LSHIFT", "ASSIGN_MINUS", "ASSIGN_MUL", "ASSIGN_OR", "ASSIGN_PLUS", "ASSIGN_REM", "ASSIGN_REV", "ASSIGN_RSHIFT", "BINARY_LITERATE", "BLOCK", "BREAK", "CLASS", "COLON", "COMBINE_OBJECT", "COMMA", "COMMENT", "CONDITION", "CONST_VALUE", "CONTINUE", "CREATE", "DECLARATION", "DECREMENT", "DELETE_PROP", "DIV", "DOT", "ELSE", "EQUALS", "ESCAPE_SEQUENCE", "FOREACH_STATEMENT", "FOR_BODY", "FOR_CONDITION", "FOR_INIT", "FOR_ITERATOR", "FOR_STATEMENT", "FUNCTION_CALL", "FUNCTION_DEFINE", "FUN_BODY", "GREAT_EQUALS", "GREAT_THAN", "HEX_LITERATE", "IDENTIFIER", "IF_STATEMENT", "IMPORT", "INCREMENT", "INSTANCEOF", "INTERNAL", "LAMBDA_FUNCTION", "LBRACE", "LCURLY", "LESS_EQUALS", "LESS_THAN", "LINE_COMMENT", "LIT_FALSE", "LIT_NULL", "LIT_TRUE", "LOCAL_DECLARE_ASSIGNMENT", "LOGICAL_AND", "LOGICAL_OR", "LPAREN", "LSHIFT", "MEMBER_DECLARATION", "MEMBER_MODIFIER", "MINUS", "MOD", "MUL", "NAN", "NEWLINE", "NOT", "NOT_EQUALS", "NUMBER_LITERATE", "OBJECT_LITERAL", "OR", "PARAMETER_DEFINES", "PLUS", "POST_UNARY_STEP", "PRE_UNARY", "PRE_UNARY_STEP", "PRIVATE", "PROPERTY_ACCESS", "PROTECTED", "PUBLIC", "RBRACE", "RCURLY", "RETURN", "RPAREN", "RSHIFT", "SEMI", "STRICT_EQUALS", "STRICT_NOT_EQUALS", "STRING_LITERATE", "SWITCH", "SWITCH_CASE", "SWITCH_CASE_ELSE", "TAG", "TAG_ATTR", "TAG_ATTR_LIST", "TAG_NAME", "TEMPLATE_DEFINE", "TEMPLATE_TAG", "THIS", "TRY_CATCH", "TRY_CATCH_CASE", "TRY_CATCH_FINAL", "TRY_CATCH_TRHOW", "TYPE", "TYPEOF", "UNDEFINED", "WHILE_STATEMENT", "WS", "XOR", "'/>'", "'</'", "'=>'", "'break'", "'case'", "'catch'", "'continue'", "'default'", "'delete'", "'finally'", "'for'", "'function'", "'if'", "'import'", "'in'", "'new'", "'return'", "'switch'", "'template'", "'throw'", "'try'", "'typeof'", "'while'", "'~'"
 	};
 	public const int EOF=-1;
-	public const int T__121=121;
 	public const int T__122=122;
 	public const int T__123=123;
 	public const int T__124=124;
@@ -88,98 +87,99 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	public const int COMMA=26;
 	public const int COMMENT=27;
 	public const int CONDITION=28;
-	public const int CONTINUE=29;
-	public const int CREATE=30;
-	public const int DECLARATION=31;
-	public const int DECREMENT=32;
-	public const int DELETE_PROP=33;
-	public const int DIV=34;
-	public const int DOT=35;
-	public const int ELSE=36;
-	public const int EQUALS=37;
-	public const int ESCAPE_SEQUENCE=38;
-	public const int FOREACH_STATEMENT=39;
-	public const int FOR_BODY=40;
-	public const int FOR_CONDITION=41;
-	public const int FOR_INIT=42;
-	public const int FOR_ITERATOR=43;
-	public const int FOR_STATEMENT=44;
-	public const int FUNCTION_CALL=45;
-	public const int FUNCTION_DEFINE=46;
-	public const int GREAT_EQUALS=47;
-	public const int GREAT_THAN=48;
-	public const int HEX_LITERATE=49;
-	public const int IDENTIFIER=50;
-	public const int IF_STATEMENT=51;
-	public const int IMPORT=52;
-	public const int INCREMENT=53;
-	public const int INSTANCEOF=54;
-	public const int LAMBDA_FUNCTION=55;
-	public const int LBRACE=56;
-	public const int LCURLY=57;
-	public const int LESS_EQUALS=58;
-	public const int LESS_THAN=59;
-	public const int LINE_COMMENT=60;
-	public const int LIT_FALSE=61;
-	public const int LIT_NULL=62;
-	public const int LIT_TRUE=63;
-	public const int LOCAL_DECLARE_ASSIGNMENT=64;
-	public const int LOGICAL_AND=65;
-	public const int LOGICAL_OR=66;
-	public const int LPAREN=67;
-	public const int LSHIFT=68;
-	public const int MEMBER_DECLARATION=69;
-	public const int MEMBER_MODIFIER=70;
-	public const int MINUS=71;
-	public const int MOD=72;
-	public const int MUL=73;
-	public const int NAN=74;
-	public const int NEWLINE=75;
-	public const int NOT=76;
-	public const int NOT_EQUALS=77;
-	public const int NUMBER_LITERATE=78;
-	public const int OBJECT_LITERAL=79;
-	public const int OR=80;
-	public const int PARAMETER_DEFINES=81;
-	public const int PARAMETER_DEFINE_WITH_DEFAULT_VALUE=82;
-	public const int PARAMETER_DEFINE_WITH_DEFAULT_VALUE_LIST=83;
-	public const int PLUS=84;
-	public const int POST_UNARY_STEP=85;
-	public const int PRE_UNARY=86;
-	public const int PRE_UNARY_STEP=87;
-	public const int PRIVATE=88;
-	public const int PROPERTY_ACCESS=89;
-	public const int PROTECTED=90;
-	public const int PUBLIC=91;
-	public const int RBRACE=92;
-	public const int RCURLY=93;
-	public const int RETURN=94;
-	public const int RPAREN=95;
-	public const int RSHIFT=96;
-	public const int SEMI=97;
-	public const int STRICT_EQUALS=98;
-	public const int STRICT_NOT_EQUALS=99;
-	public const int STRING_LITERATE=100;
-	public const int SWITCH=101;
-	public const int SWITCH_CASE=102;
-	public const int SWITCH_CASE_ELSE=103;
-	public const int TAG=104;
-	public const int TAG_ATTR=105;
-	public const int TAG_ATTR_LIST=106;
-	public const int TAG_NAME=107;
-	public const int TEMPLATE_DEFINE=108;
-	public const int TEMPLATE_TAG=109;
-	public const int THIS=110;
-	public const int TRY_CATCH=111;
-	public const int TRY_CATCH_CASE=112;
-	public const int TRY_CATCH_FINAL=113;
-	public const int TRY_CATCH_TRHOW=114;
-	public const int TYPE=115;
-	public const int TYPEOF=116;
-	public const int UNDEFINED=117;
-	public const int WHILE_STATEMENT=118;
-	public const int WS=119;
-	public const int XOR=120;
+	public const int CONST_VALUE=29;
+	public const int CONTINUE=30;
+	public const int CREATE=31;
+	public const int DECLARATION=32;
+	public const int DECREMENT=33;
+	public const int DELETE_PROP=34;
+	public const int DIV=35;
+	public const int DOT=36;
+	public const int ELSE=37;
+	public const int EQUALS=38;
+	public const int ESCAPE_SEQUENCE=39;
+	public const int FOREACH_STATEMENT=40;
+	public const int FOR_BODY=41;
+	public const int FOR_CONDITION=42;
+	public const int FOR_INIT=43;
+	public const int FOR_ITERATOR=44;
+	public const int FOR_STATEMENT=45;
+	public const int FUNCTION_CALL=46;
+	public const int FUNCTION_DEFINE=47;
+	public const int FUN_BODY=48;
+	public const int GREAT_EQUALS=49;
+	public const int GREAT_THAN=50;
+	public const int HEX_LITERATE=51;
+	public const int IDENTIFIER=52;
+	public const int IF_STATEMENT=53;
+	public const int IMPORT=54;
+	public const int INCREMENT=55;
+	public const int INSTANCEOF=56;
+	public const int INTERNAL=57;
+	public const int LAMBDA_FUNCTION=58;
+	public const int LBRACE=59;
+	public const int LCURLY=60;
+	public const int LESS_EQUALS=61;
+	public const int LESS_THAN=62;
+	public const int LINE_COMMENT=63;
+	public const int LIT_FALSE=64;
+	public const int LIT_NULL=65;
+	public const int LIT_TRUE=66;
+	public const int LOCAL_DECLARE_ASSIGNMENT=67;
+	public const int LOGICAL_AND=68;
+	public const int LOGICAL_OR=69;
+	public const int LPAREN=70;
+	public const int LSHIFT=71;
+	public const int MEMBER_DECLARATION=72;
+	public const int MEMBER_MODIFIER=73;
+	public const int MINUS=74;
+	public const int MOD=75;
+	public const int MUL=76;
+	public const int NAN=77;
+	public const int NEWLINE=78;
+	public const int NOT=79;
+	public const int NOT_EQUALS=80;
+	public const int NUMBER_LITERATE=81;
+	public const int OBJECT_LITERAL=82;
+	public const int OR=83;
+	public const int PARAMETER_DEFINES=84;
+	public const int PLUS=85;
+	public const int POST_UNARY_STEP=86;
+	public const int PRE_UNARY=87;
+	public const int PRE_UNARY_STEP=88;
+	public const int PRIVATE=89;
+	public const int PROPERTY_ACCESS=90;
+	public const int PROTECTED=91;
+	public const int PUBLIC=92;
+	public const int RBRACE=93;
+	public const int RCURLY=94;
+	public const int RETURN=95;
+	public const int RPAREN=96;
+	public const int RSHIFT=97;
+	public const int SEMI=98;
+	public const int STRICT_EQUALS=99;
+	public const int STRICT_NOT_EQUALS=100;
+	public const int STRING_LITERATE=101;
+	public const int SWITCH=102;
+	public const int SWITCH_CASE=103;
+	public const int SWITCH_CASE_ELSE=104;
+	public const int TAG=105;
+	public const int TAG_ATTR=106;
+	public const int TAG_ATTR_LIST=107;
+	public const int TAG_NAME=108;
+	public const int TEMPLATE_DEFINE=109;
+	public const int TEMPLATE_TAG=110;
+	public const int THIS=111;
+	public const int TRY_CATCH=112;
+	public const int TRY_CATCH_CASE=113;
+	public const int TRY_CATCH_FINAL=114;
+	public const int TRY_CATCH_TRHOW=115;
+	public const int TYPE=116;
+	public const int TYPEOF=117;
+	public const int UNDEFINED=118;
+	public const int WHILE_STATEMENT=119;
+	public const int WS=120;
+	public const int XOR=121;
 
 	public ReoScriptParser(ITokenStream input)
 		: this(input, new RecognizerSharedState())
@@ -224,7 +224,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_script();
 
 	// $ANTLR start "script"
-	// C:\\work\\ReoScript\\ReoScript.g:67:1: public script : ( statement )* ;
+	// C:\\work\\ReoScript\\ReoScript.g:72:1: public script : ( statement )* ;
 	[GrammarRule("script")]
 	public AstParserRuleReturnScope<CommonTree, IToken> script()
 	{
@@ -239,17 +239,19 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		AstParserRuleReturnScope<CommonTree, IToken> statement1 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
 		try { DebugEnterRule(GrammarFileName, "script");
-		DebugLocation(67, 1);
+		DebugLocation(72, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:68:2: ( ( statement )* )
+			// C:\\work\\ReoScript\\ReoScript.g:73:2: ( ( statement )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:69:2: ( statement )*
+			// C:\\work\\ReoScript\\ReoScript.g:74:2: ( statement )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(69, 2);
-			// C:\\work\\ReoScript\\ReoScript.g:69:2: ( statement )*
+			DebugLocation(74, 2);
+			PushLocalStack();
+			DebugLocation(75, 2);
+			// C:\\work\\ReoScript\\ReoScript.g:75:2: ( statement )*
 			try { DebugEnterSubRule(1);
 			while (true)
 			{
@@ -257,7 +259,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				try { DebugEnterDecision(1, false);
 				int LA1_0 = input.LA(1);
 
-				if ((LA1_0==BINARY_LITERATE||LA1_0==DECREMENT||(LA1_0>=HEX_LITERATE && LA1_0<=IDENTIFIER)||LA1_0==INCREMENT||(LA1_0>=LBRACE && LA1_0<=LCURLY)||(LA1_0>=LIT_FALSE && LA1_0<=LIT_TRUE)||LA1_0==LPAREN||LA1_0==NAN||LA1_0==NUMBER_LITERATE||LA1_0==PRIVATE||(LA1_0>=PROTECTED && LA1_0<=PUBLIC)||LA1_0==STRING_LITERATE||LA1_0==THIS||LA1_0==TYPE||LA1_0==UNDEFINED||LA1_0==124||(LA1_0>=127 && LA1_0<=128)||LA1_0==130||(LA1_0>=132 && LA1_0<=135)||(LA1_0>=137 && LA1_0<=142)||LA1_0==144))
+				if ((LA1_0==BINARY_LITERATE||LA1_0==DECREMENT||(LA1_0>=HEX_LITERATE && LA1_0<=IDENTIFIER)||LA1_0==INCREMENT||LA1_0==INTERNAL||(LA1_0>=LBRACE && LA1_0<=LCURLY)||(LA1_0>=LIT_FALSE && LA1_0<=LIT_TRUE)||LA1_0==LPAREN||LA1_0==NAN||LA1_0==NUMBER_LITERATE||LA1_0==PRIVATE||(LA1_0>=PROTECTED && LA1_0<=PUBLIC)||LA1_0==STRING_LITERATE||LA1_0==THIS||LA1_0==TYPE||LA1_0==UNDEFINED||LA1_0==125||LA1_0==128||LA1_0==130||(LA1_0>=132 && LA1_0<=135)||(LA1_0>=137 && LA1_0<=142)||LA1_0==144))
 				{
 					alt1 = 1;
 				}
@@ -268,10 +270,10 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:69:2: statement
+					// C:\\work\\ReoScript\\ReoScript.g:75:2: statement
 					{
-					DebugLocation(69, 2);
-					PushFollow(Follow._statement_in_script521);
+					DebugLocation(75, 2);
+					PushFollow(Follow._statement_in_script544);
 					statement1=statement();
 					PopFollow();
 
@@ -290,6 +292,8 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(1); }
 
+			DebugLocation(76, 2);
+			PopLocalStack();
 
 			}
 
@@ -312,7 +316,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			LeaveRule("script", 1);
 			LeaveRule_script();
 		}
-		DebugLocation(70, 1);
+		DebugLocation(77, 1);
 		} finally { DebugExitRule(GrammarFileName, "script"); }
 		return retval;
 
@@ -323,7 +327,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_function_defines();
 
 	// $ANTLR start "function_defines"
-	// C:\\work\\ReoScript\\ReoScript.g:72:1: function_defines : ( function_define )* ;
+	// C:\\work\\ReoScript\\ReoScript.g:79:1: function_defines : ( function_define )* ;
 	[GrammarRule("function_defines")]
 	private AstParserRuleReturnScope<CommonTree, IToken> function_defines()
 	{
@@ -338,17 +342,17 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		AstParserRuleReturnScope<CommonTree, IToken> function_define2 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
 		try { DebugEnterRule(GrammarFileName, "function_defines");
-		DebugLocation(72, 1);
+		DebugLocation(79, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:73:2: ( ( function_define )* )
+			// C:\\work\\ReoScript\\ReoScript.g:80:2: ( ( function_define )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:73:4: ( function_define )*
+			// C:\\work\\ReoScript\\ReoScript.g:80:4: ( function_define )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(73, 4);
-			// C:\\work\\ReoScript\\ReoScript.g:73:4: ( function_define )*
+			DebugLocation(80, 4);
+			// C:\\work\\ReoScript\\ReoScript.g:80:4: ( function_define )*
 			try { DebugEnterSubRule(2);
 			while (true)
 			{
@@ -356,7 +360,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				try { DebugEnterDecision(2, false);
 				int LA2_0 = input.LA(1);
 
-				if ((LA2_0==PRIVATE||(LA2_0>=PROTECTED && LA2_0<=PUBLIC)||LA2_0==133))
+				if ((LA2_0==INTERNAL||LA2_0==PRIVATE||(LA2_0>=PROTECTED && LA2_0<=PUBLIC)||LA2_0==133))
 				{
 					alt2 = 1;
 				}
@@ -367,10 +371,10 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:73:4: function_define
+					// C:\\work\\ReoScript\\ReoScript.g:80:4: function_define
 					{
-					DebugLocation(73, 4);
-					PushFollow(Follow._function_define_in_function_defines534);
+					DebugLocation(80, 4);
+					PushFollow(Follow._function_define_in_function_defines560);
 					function_define2=function_define();
 					PopFollow();
 
@@ -411,7 +415,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			LeaveRule("function_defines", 2);
 			LeaveRule_function_defines();
 		}
-		DebugLocation(74, 1);
+		DebugLocation(81, 1);
 		} finally { DebugExitRule(GrammarFileName, "function_defines"); }
 		return retval;
 
@@ -422,7 +426,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_function_define();
 
 	// $ANTLR start "function_define"
-	// C:\\work\\ReoScript\\ReoScript.g:76:1: function_define : ( memberModifier )? 'function' id= IDENTIFIER '(' ( parameterDeclarationList )? ')' block -> ^( FUNCTION_DEFINE $id ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) block ^( MEMBER_MODIFIER ( memberModifier )? ) ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:83:1: function_define : (mod= memberModifier )? 'function' id= IDENTIFIER '(' (pl= parameterDeclarationList )? ')' body= functionBody ->;
 	[GrammarRule("function_define")]
 	private AstParserRuleReturnScope<CommonTree, IToken> function_define()
 	{
@@ -435,40 +439,40 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		CommonTree root_0 = default(CommonTree);
 
 		IToken id = default(IToken);
-		IToken string_literal4 = default(IToken);
+		IToken string_literal3 = default(IToken);
+		IToken char_literal4 = default(IToken);
 		IToken char_literal5 = default(IToken);
-		IToken char_literal7 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> memberModifier3 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> parameterDeclarationList6 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> block8 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> mod = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> pl = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> body = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
 		CommonTree id_tree = default(CommonTree);
-		CommonTree string_literal4_tree = default(CommonTree);
+		CommonTree string_literal3_tree = default(CommonTree);
+		CommonTree char_literal4_tree = default(CommonTree);
 		CommonTree char_literal5_tree = default(CommonTree);
-		CommonTree char_literal7_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_RPAREN=new RewriteRuleITokenStream(adaptor,"token RPAREN");
 		RewriteRuleITokenStream stream_133=new RewriteRuleITokenStream(adaptor,"token 133");
 		RewriteRuleITokenStream stream_IDENTIFIER=new RewriteRuleITokenStream(adaptor,"token IDENTIFIER");
 		RewriteRuleITokenStream stream_LPAREN=new RewriteRuleITokenStream(adaptor,"token LPAREN");
 		RewriteRuleSubtreeStream stream_memberModifier=new RewriteRuleSubtreeStream(adaptor,"rule memberModifier");
-		RewriteRuleSubtreeStream stream_block=new RewriteRuleSubtreeStream(adaptor,"rule block");
+		RewriteRuleSubtreeStream stream_functionBody=new RewriteRuleSubtreeStream(adaptor,"rule functionBody");
 		RewriteRuleSubtreeStream stream_parameterDeclarationList=new RewriteRuleSubtreeStream(adaptor,"rule parameterDeclarationList");
 		try { DebugEnterRule(GrammarFileName, "function_define");
-		DebugLocation(76, 1);
+		DebugLocation(83, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:77:2: ( ( memberModifier )? 'function' id= IDENTIFIER '(' ( parameterDeclarationList )? ')' block -> ^( FUNCTION_DEFINE $id ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) block ^( MEMBER_MODIFIER ( memberModifier )? ) ) )
+			// C:\\work\\ReoScript\\ReoScript.g:84:2: ( (mod= memberModifier )? 'function' id= IDENTIFIER '(' (pl= parameterDeclarationList )? ')' body= functionBody ->)
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:77:4: ( memberModifier )? 'function' id= IDENTIFIER '(' ( parameterDeclarationList )? ')' block
+			// C:\\work\\ReoScript\\ReoScript.g:85:2: (mod= memberModifier )? 'function' id= IDENTIFIER '(' (pl= parameterDeclarationList )? ')' body= functionBody
 			{
-			DebugLocation(77, 4);
-			// C:\\work\\ReoScript\\ReoScript.g:77:4: ( memberModifier )?
+			DebugLocation(85, 5);
+			// C:\\work\\ReoScript\\ReoScript.g:85:5: (mod= memberModifier )?
 			int alt3=2;
 			try { DebugEnterSubRule(3);
 			try { DebugEnterDecision(3, false);
 			int LA3_0 = input.LA(1);
 
-			if ((LA3_0==PRIVATE||(LA3_0>=PROTECTED && LA3_0<=PUBLIC)))
+			if ((LA3_0==INTERNAL||LA3_0==PRIVATE||(LA3_0>=PROTECTED && LA3_0<=PUBLIC)))
 			{
 				alt3 = 1;
 			}
@@ -477,14 +481,14 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:77:4: memberModifier
+				// C:\\work\\ReoScript\\ReoScript.g:85:5: mod= memberModifier
 				{
-				DebugLocation(77, 4);
-				PushFollow(Follow._memberModifier_in_function_define546);
-				memberModifier3=memberModifier();
+				DebugLocation(85, 5);
+				PushFollow(Follow._memberModifier_in_function_define576);
+				mod=memberModifier();
 				PopFollow();
 
-				stream_memberModifier.Add(memberModifier3.Tree);
+				stream_memberModifier.Add(mod.Tree);
 
 				}
 				break;
@@ -492,20 +496,20 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(3); }
 
-			DebugLocation(77, 20);
-			string_literal4=(IToken)Match(input,133,Follow._133_in_function_define549);  
-			stream_133.Add(string_literal4);
+			DebugLocation(85, 22);
+			string_literal3=(IToken)Match(input,133,Follow._133_in_function_define579);  
+			stream_133.Add(string_literal3);
 
-			DebugLocation(77, 33);
-			id=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_function_define553);  
+			DebugLocation(85, 35);
+			id=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_function_define583);  
 			stream_IDENTIFIER.Add(id);
 
-			DebugLocation(77, 45);
-			char_literal5=(IToken)Match(input,LPAREN,Follow._LPAREN_in_function_define555);  
-			stream_LPAREN.Add(char_literal5);
+			DebugLocation(85, 47);
+			char_literal4=(IToken)Match(input,LPAREN,Follow._LPAREN_in_function_define585);  
+			stream_LPAREN.Add(char_literal4);
 
-			DebugLocation(77, 49);
-			// C:\\work\\ReoScript\\ReoScript.g:77:49: ( parameterDeclarationList )?
+			DebugLocation(85, 53);
+			// C:\\work\\ReoScript\\ReoScript.g:85:53: (pl= parameterDeclarationList )?
 			int alt4=2;
 			try { DebugEnterSubRule(4);
 			try { DebugEnterDecision(4, false);
@@ -520,14 +524,14 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:77:49: parameterDeclarationList
+				// C:\\work\\ReoScript\\ReoScript.g:85:53: pl= parameterDeclarationList
 				{
-				DebugLocation(77, 49);
-				PushFollow(Follow._parameterDeclarationList_in_function_define557);
-				parameterDeclarationList6=parameterDeclarationList();
+				DebugLocation(85, 53);
+				PushFollow(Follow._parameterDeclarationList_in_function_define589);
+				pl=parameterDeclarationList();
 				PopFollow();
 
-				stream_parameterDeclarationList.Add(parameterDeclarationList6.Tree);
+				stream_parameterDeclarationList.Add(pl.Tree);
 
 				}
 				break;
@@ -535,85 +539,35 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(4); }
 
-			DebugLocation(77, 75);
-			char_literal7=(IToken)Match(input,RPAREN,Follow._RPAREN_in_function_define560);  
-			stream_RPAREN.Add(char_literal7);
+			DebugLocation(85, 80);
+			char_literal5=(IToken)Match(input,RPAREN,Follow._RPAREN_in_function_define592);  
+			stream_RPAREN.Add(char_literal5);
 
-			DebugLocation(77, 80);
-			PushFollow(Follow._block_in_function_define563);
-			block8=block();
+			DebugLocation(85, 88);
+			PushFollow(Follow._functionBody_in_function_define596);
+			body=functionBody();
 			PopFollow();
 
-			stream_block.Add(block8.Tree);
+			stream_functionBody.Add(body.Tree);
 
 
 			{
 			// AST REWRITE
-			// elements: block, id, memberModifier, parameterDeclarationList
-			// token labels: id
+			// elements: 
+			// token labels: 
 			// rule labels: retval
 			// token list labels: 
 			// rule list labels: 
 			// wildcard labels: 
 			retval.Tree = root_0;
-			RewriteRuleITokenStream stream_id=new RewriteRuleITokenStream(adaptor,"token id",id);
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 78:3: -> ^( FUNCTION_DEFINE $id ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) block ^( MEMBER_MODIFIER ( memberModifier )? ) )
+			// 89:3: ->
 			{
-				DebugLocation(78, 6);
-				// C:\\work\\ReoScript\\ReoScript.g:78:6: ^( FUNCTION_DEFINE $id ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) block ^( MEMBER_MODIFIER ( memberModifier )? ) )
-				{
-				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(78, 8);
-				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(FUNCTION_DEFINE, "FUNCTION_DEFINE"), root_1);
-
-				DebugLocation(78, 25);
-				adaptor.AddChild(root_1, stream_id.NextNode());
-				DebugLocation(78, 28);
-				// C:\\work\\ReoScript\\ReoScript.g:78:28: ^( PARAMETER_DEFINES ( parameterDeclarationList )? )
-				{
-				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(78, 30);
-				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PARAMETER_DEFINES, "PARAMETER_DEFINES"), root_2);
-
-				DebugLocation(78, 48);
-				// C:\\work\\ReoScript\\ReoScript.g:78:48: ( parameterDeclarationList )?
-				if (stream_parameterDeclarationList.HasNext)
-				{
-					DebugLocation(78, 48);
-					adaptor.AddChild(root_2, stream_parameterDeclarationList.NextTree());
-
-				}
-				stream_parameterDeclarationList.Reset();
-
-				adaptor.AddChild(root_1, root_2);
-				}
-				DebugLocation(78, 75);
-				adaptor.AddChild(root_1, stream_block.NextTree());
-				DebugLocation(79, 4);
-				// C:\\work\\ReoScript\\ReoScript.g:79:4: ^( MEMBER_MODIFIER ( memberModifier )? )
-				{
-				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(79, 6);
-				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(MEMBER_MODIFIER, "MEMBER_MODIFIER"), root_2);
-
-				DebugLocation(79, 22);
-				// C:\\work\\ReoScript\\ReoScript.g:79:22: ( memberModifier )?
-				if (stream_memberModifier.HasNext)
-				{
-					DebugLocation(79, 22);
-					adaptor.AddChild(root_2, stream_memberModifier.NextTree());
-
-				}
-				stream_memberModifier.Reset();
-
-				adaptor.AddChild(root_1, root_2);
-				}
-
-				adaptor.AddChild(root_0, root_1);
-				}
+				DebugLocation(89, 6);
+				adaptor.AddChild(root_0, DefineLocalFunction(id.Text, pl == null ? null : pl.Tree, body.Tree, 
+						mod == null ? 0 : mod.Tree.Type, retval.Start.Line, retval.Start.CharPositionInLine));
 
 			}
 
@@ -641,7 +595,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			LeaveRule("function_define", 3);
 			LeaveRule_function_define();
 		}
-		DebugLocation(80, 1);
+		DebugLocation(94, 1);
 		} finally { DebugExitRule(GrammarFileName, "function_define"); }
 		return retval;
 
@@ -652,7 +606,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_anonymous_function_define();
 
 	// $ANTLR start "anonymous_function_define"
-	// C:\\work\\ReoScript\\ReoScript.g:82:1: anonymous_function_define : ( 'function' '(' ( parameterDeclarationList )? ')' block -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) block ) | '(' ( parameterDeclarationList )? ')' '=>' ( block -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) block ) | assignmentExpression -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) ^( RETURN assignmentExpression ) ) ) | IDENTIFIER '=>' ( block -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES IDENTIFIER ) block ) | assignmentExpression -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES IDENTIFIER ) ^( RETURN assignmentExpression ) ) ) );
+	// C:\\work\\ReoScript\\ReoScript.g:96:1: anonymous_function_define : ( 'function' '(' (pl= parameterDeclarationList )? ')' b= functionBody ->| '(' (pl= parameterDeclarationList )? ')' '=>' (b= functionBody ->|exp= assignmentExpression ->) |id= IDENTIFIER '=>' (b= functionBody ->|exp= assignmentExpression ->) );
 	[GrammarRule("anonymous_function_define")]
 	private AstParserRuleReturnScope<CommonTree, IToken> anonymous_function_define()
 	{
@@ -664,43 +618,39 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken string_literal9 = default(IToken);
+		IToken id = default(IToken);
+		IToken string_literal6 = default(IToken);
+		IToken char_literal7 = default(IToken);
+		IToken char_literal8 = default(IToken);
+		IToken char_literal9 = default(IToken);
 		IToken char_literal10 = default(IToken);
-		IToken char_literal12 = default(IToken);
-		IToken char_literal14 = default(IToken);
-		IToken char_literal16 = default(IToken);
-		IToken string_literal17 = default(IToken);
-		IToken IDENTIFIER20 = default(IToken);
-		IToken string_literal21 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> parameterDeclarationList11 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> block13 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> parameterDeclarationList15 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> block18 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> assignmentExpression19 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> block22 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> assignmentExpression23 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken string_literal11 = default(IToken);
+		IToken string_literal12 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> pl = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> b = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> exp = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree string_literal9_tree = default(CommonTree);
+		CommonTree id_tree = default(CommonTree);
+		CommonTree string_literal6_tree = default(CommonTree);
+		CommonTree char_literal7_tree = default(CommonTree);
+		CommonTree char_literal8_tree = default(CommonTree);
+		CommonTree char_literal9_tree = default(CommonTree);
 		CommonTree char_literal10_tree = default(CommonTree);
-		CommonTree char_literal12_tree = default(CommonTree);
-		CommonTree char_literal14_tree = default(CommonTree);
-		CommonTree char_literal16_tree = default(CommonTree);
-		CommonTree string_literal17_tree = default(CommonTree);
-		CommonTree IDENTIFIER20_tree = default(CommonTree);
-		CommonTree string_literal21_tree = default(CommonTree);
+		CommonTree string_literal11_tree = default(CommonTree);
+		CommonTree string_literal12_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_RPAREN=new RewriteRuleITokenStream(adaptor,"token RPAREN");
 		RewriteRuleITokenStream stream_133=new RewriteRuleITokenStream(adaptor,"token 133");
-		RewriteRuleITokenStream stream_123=new RewriteRuleITokenStream(adaptor,"token 123");
+		RewriteRuleITokenStream stream_124=new RewriteRuleITokenStream(adaptor,"token 124");
 		RewriteRuleITokenStream stream_IDENTIFIER=new RewriteRuleITokenStream(adaptor,"token IDENTIFIER");
 		RewriteRuleITokenStream stream_LPAREN=new RewriteRuleITokenStream(adaptor,"token LPAREN");
 		RewriteRuleSubtreeStream stream_assignmentExpression=new RewriteRuleSubtreeStream(adaptor,"rule assignmentExpression");
-		RewriteRuleSubtreeStream stream_block=new RewriteRuleSubtreeStream(adaptor,"rule block");
+		RewriteRuleSubtreeStream stream_functionBody=new RewriteRuleSubtreeStream(adaptor,"rule functionBody");
 		RewriteRuleSubtreeStream stream_parameterDeclarationList=new RewriteRuleSubtreeStream(adaptor,"rule parameterDeclarationList");
 		try { DebugEnterRule(GrammarFileName, "anonymous_function_define");
-		DebugLocation(82, 1);
+		DebugLocation(96, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:83:2: ( 'function' '(' ( parameterDeclarationList )? ')' block -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) block ) | '(' ( parameterDeclarationList )? ')' '=>' ( block -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) block ) | assignmentExpression -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) ^( RETURN assignmentExpression ) ) ) | IDENTIFIER '=>' ( block -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES IDENTIFIER ) block ) | assignmentExpression -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES IDENTIFIER ) ^( RETURN assignmentExpression ) ) ) )
+			// C:\\work\\ReoScript\\ReoScript.g:97:2: ( 'function' '(' (pl= parameterDeclarationList )? ')' b= functionBody ->| '(' (pl= parameterDeclarationList )? ')' '=>' (b= functionBody ->|exp= assignmentExpression ->) |id= IDENTIFIER '=>' (b= functionBody ->|exp= assignmentExpression ->) )
 			int alt9=3;
 			try { DebugEnterDecision(9, false);
 			switch (input.LA(1))
@@ -733,18 +683,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:83:4: 'function' '(' ( parameterDeclarationList )? ')' block
+				// C:\\work\\ReoScript\\ReoScript.g:97:4: 'function' '(' (pl= parameterDeclarationList )? ')' b= functionBody
 				{
-				DebugLocation(83, 4);
-				string_literal9=(IToken)Match(input,133,Follow._133_in_anonymous_function_define605);  
-				stream_133.Add(string_literal9);
+				DebugLocation(97, 4);
+				string_literal6=(IToken)Match(input,133,Follow._133_in_anonymous_function_define627);  
+				stream_133.Add(string_literal6);
 
-				DebugLocation(83, 15);
-				char_literal10=(IToken)Match(input,LPAREN,Follow._LPAREN_in_anonymous_function_define607);  
-				stream_LPAREN.Add(char_literal10);
+				DebugLocation(97, 15);
+				char_literal7=(IToken)Match(input,LPAREN,Follow._LPAREN_in_anonymous_function_define629);  
+				stream_LPAREN.Add(char_literal7);
 
-				DebugLocation(83, 19);
-				// C:\\work\\ReoScript\\ReoScript.g:83:19: ( parameterDeclarationList )?
+				DebugLocation(97, 21);
+				// C:\\work\\ReoScript\\ReoScript.g:97:21: (pl= parameterDeclarationList )?
 				int alt5=2;
 				try { DebugEnterSubRule(5);
 				try { DebugEnterDecision(5, false);
@@ -759,14 +709,14 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:83:19: parameterDeclarationList
+					// C:\\work\\ReoScript\\ReoScript.g:97:21: pl= parameterDeclarationList
 					{
-					DebugLocation(83, 19);
-					PushFollow(Follow._parameterDeclarationList_in_anonymous_function_define609);
-					parameterDeclarationList11=parameterDeclarationList();
+					DebugLocation(97, 21);
+					PushFollow(Follow._parameterDeclarationList_in_anonymous_function_define633);
+					pl=parameterDeclarationList();
 					PopFollow();
 
-					stream_parameterDeclarationList.Add(parameterDeclarationList11.Tree);
+					stream_parameterDeclarationList.Add(pl.Tree);
 
 					}
 					break;
@@ -774,21 +724,21 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(5); }
 
-				DebugLocation(83, 45);
-				char_literal12=(IToken)Match(input,RPAREN,Follow._RPAREN_in_anonymous_function_define612);  
-				stream_RPAREN.Add(char_literal12);
+				DebugLocation(97, 48);
+				char_literal8=(IToken)Match(input,RPAREN,Follow._RPAREN_in_anonymous_function_define636);  
+				stream_RPAREN.Add(char_literal8);
 
-				DebugLocation(83, 49);
-				PushFollow(Follow._block_in_anonymous_function_define614);
-				block13=block();
+				DebugLocation(97, 53);
+				PushFollow(Follow._functionBody_in_anonymous_function_define640);
+				b=functionBody();
 				PopFollow();
 
-				stream_block.Add(block13.Tree);
+				stream_functionBody.Add(b.Tree);
 
 
 				{
 				// AST REWRITE
-				// elements: parameterDeclarationList, block
+				// elements: 
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -798,39 +748,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 84:3: -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) block )
+				// 98:3: ->
 				{
-					DebugLocation(84, 6);
-					// C:\\work\\ReoScript\\ReoScript.g:84:6: ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) block )
-					{
-					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(84, 8);
-					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ANONYMOUS_FUNCTION, "ANONYMOUS_FUNCTION"), root_1);
-
-					DebugLocation(84, 27);
-					// C:\\work\\ReoScript\\ReoScript.g:84:27: ^( PARAMETER_DEFINES ( parameterDeclarationList )? )
-					{
-					CommonTree root_2 = (CommonTree)adaptor.Nil();
-					DebugLocation(84, 29);
-					root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PARAMETER_DEFINES, "PARAMETER_DEFINES"), root_2);
-
-					DebugLocation(84, 47);
-					// C:\\work\\ReoScript\\ReoScript.g:84:47: ( parameterDeclarationList )?
-					if (stream_parameterDeclarationList.HasNext)
-					{
-						DebugLocation(84, 47);
-						adaptor.AddChild(root_2, stream_parameterDeclarationList.NextTree());
-
-					}
-					stream_parameterDeclarationList.Reset();
-
-					adaptor.AddChild(root_1, root_2);
-					}
-					DebugLocation(84, 74);
-					adaptor.AddChild(root_1, stream_block.NextTree());
-
-					adaptor.AddChild(root_0, root_1);
-					}
+					DebugLocation(98, 6);
+					adaptor.AddChild(root_0, DefineAnonymousFunction(null, pl == null ? null : pl.Tree, b.Tree, 
+							0, retval.Start.Line, retval.Start.CharPositionInLine));
 
 				}
 
@@ -841,14 +763,14 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:85:4: '(' ( parameterDeclarationList )? ')' '=>' ( block -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) block ) | assignmentExpression -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) ^( RETURN assignmentExpression ) ) )
+				// C:\\work\\ReoScript\\ReoScript.g:101:4: '(' (pl= parameterDeclarationList )? ')' '=>' (b= functionBody ->|exp= assignmentExpression ->)
 				{
-				DebugLocation(85, 4);
-				char_literal14=(IToken)Match(input,LPAREN,Follow._LPAREN_in_anonymous_function_define636);  
-				stream_LPAREN.Add(char_literal14);
+				DebugLocation(101, 4);
+				char_literal9=(IToken)Match(input,LPAREN,Follow._LPAREN_in_anonymous_function_define652);  
+				stream_LPAREN.Add(char_literal9);
 
-				DebugLocation(85, 8);
-				// C:\\work\\ReoScript\\ReoScript.g:85:8: ( parameterDeclarationList )?
+				DebugLocation(101, 10);
+				// C:\\work\\ReoScript\\ReoScript.g:101:10: (pl= parameterDeclarationList )?
 				int alt6=2;
 				try { DebugEnterSubRule(6);
 				try { DebugEnterDecision(6, false);
@@ -863,14 +785,14 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:85:8: parameterDeclarationList
+					// C:\\work\\ReoScript\\ReoScript.g:101:10: pl= parameterDeclarationList
 					{
-					DebugLocation(85, 8);
-					PushFollow(Follow._parameterDeclarationList_in_anonymous_function_define638);
-					parameterDeclarationList15=parameterDeclarationList();
+					DebugLocation(101, 10);
+					PushFollow(Follow._parameterDeclarationList_in_anonymous_function_define656);
+					pl=parameterDeclarationList();
 					PopFollow();
 
-					stream_parameterDeclarationList.Add(parameterDeclarationList15.Tree);
+					stream_parameterDeclarationList.Add(pl.Tree);
 
 					}
 					break;
@@ -878,16 +800,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				}
 				} finally { DebugExitSubRule(6); }
 
-				DebugLocation(85, 34);
-				char_literal16=(IToken)Match(input,RPAREN,Follow._RPAREN_in_anonymous_function_define641);  
-				stream_RPAREN.Add(char_literal16);
+				DebugLocation(101, 37);
+				char_literal10=(IToken)Match(input,RPAREN,Follow._RPAREN_in_anonymous_function_define659);  
+				stream_RPAREN.Add(char_literal10);
 
-				DebugLocation(85, 38);
-				string_literal17=(IToken)Match(input,123,Follow._123_in_anonymous_function_define643);  
-				stream_123.Add(string_literal17);
+				DebugLocation(101, 41);
+				string_literal11=(IToken)Match(input,124,Follow._124_in_anonymous_function_define661);  
+				stream_124.Add(string_literal11);
 
-				DebugLocation(85, 43);
-				// C:\\work\\ReoScript\\ReoScript.g:85:43: ( block -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) block ) | assignmentExpression -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) ^( RETURN assignmentExpression ) ) )
+				DebugLocation(101, 46);
+				// C:\\work\\ReoScript\\ReoScript.g:101:46: (b= functionBody ->|exp= assignmentExpression ->)
 				int alt7=2;
 				try { DebugEnterSubRule(7);
 				try { DebugEnterDecision(7, false);
@@ -899,15 +821,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					{
 					case DECREMENT:
 					case INCREMENT:
+					case INTERNAL:
 					case LBRACE:
 					case LCURLY:
 					case LPAREN:
 					case PRIVATE:
 					case PROTECTED:
 					case PUBLIC:
+					case THIS:
 					case TYPE:
-					case 124:
-					case 127:
+					case 125:
 					case 128:
 					case 130:
 					case 132:
@@ -929,7 +852,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 						{
 						int LA7_4 = input.LA(3);
 
-						if (((LA7_4>=ASSIGNMENT && LA7_4<=ASSIGN_RSHIFT)||LA7_4==DECREMENT||LA7_4==DOT||LA7_4==INCREMENT||(LA7_4>=LBRACE && LA7_4<=LCURLY)||LA7_4==LPAREN||LA7_4==SEMI||LA7_4==123))
+						if (((LA7_4>=ASSIGNMENT && LA7_4<=ASSIGN_RSHIFT)||LA7_4==DECREMENT||LA7_4==DOT||LA7_4==INCREMENT||(LA7_4>=LBRACE && LA7_4<=LCURLY)||LA7_4==LPAREN||LA7_4==SEMI||LA7_4==124))
 						{
 							alt7 = 1;
 						}
@@ -973,7 +896,6 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					case NAN:
 					case NUMBER_LITERATE:
 					case RCURLY:
-					case THIS:
 					case UNDEFINED:
 						{
 						alt7 = 1;
@@ -1008,19 +930,19 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:86:5: block
+					// C:\\work\\ReoScript\\ReoScript.g:102:5: b= functionBody
 					{
-					DebugLocation(86, 5);
-					PushFollow(Follow._block_in_anonymous_function_define651);
-					block18=block();
+					DebugLocation(102, 6);
+					PushFollow(Follow._functionBody_in_anonymous_function_define671);
+					b=functionBody();
 					PopFollow();
 
-					stream_block.Add(block18.Tree);
+					stream_functionBody.Add(b.Tree);
 
 
 					{
 					// AST REWRITE
-					// elements: parameterDeclarationList, block
+					// elements: 
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1030,39 +952,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 					root_0 = (CommonTree)adaptor.Nil();
-					// 87:4: -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) block )
+					// 103:6: ->
 					{
-						DebugLocation(87, 7);
-						// C:\\work\\ReoScript\\ReoScript.g:87:7: ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) block )
-						{
-						CommonTree root_1 = (CommonTree)adaptor.Nil();
-						DebugLocation(87, 9);
-						root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ANONYMOUS_FUNCTION, "ANONYMOUS_FUNCTION"), root_1);
-
-						DebugLocation(87, 28);
-						// C:\\work\\ReoScript\\ReoScript.g:87:28: ^( PARAMETER_DEFINES ( parameterDeclarationList )? )
-						{
-						CommonTree root_2 = (CommonTree)adaptor.Nil();
-						DebugLocation(87, 30);
-						root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PARAMETER_DEFINES, "PARAMETER_DEFINES"), root_2);
-
-						DebugLocation(87, 48);
-						// C:\\work\\ReoScript\\ReoScript.g:87:48: ( parameterDeclarationList )?
-						if (stream_parameterDeclarationList.HasNext)
-						{
-							DebugLocation(87, 48);
-							adaptor.AddChild(root_2, stream_parameterDeclarationList.NextTree());
-
-						}
-						stream_parameterDeclarationList.Reset();
-
-						adaptor.AddChild(root_1, root_2);
-						}
-						DebugLocation(87, 75);
-						adaptor.AddChild(root_1, stream_block.NextTree());
-
-						adaptor.AddChild(root_0, root_1);
-						}
+						DebugLocation(103, 9);
+						adaptor.AddChild(root_0, DefineAnonymousFunction(null, pl == null ? null : pl.Tree, b.Tree,
+								  	0, retval.Start.Line, retval.Start.CharPositionInLine));
 
 					}
 
@@ -1073,19 +967,19 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// C:\\work\\ReoScript\\ReoScript.g:88:5: assignmentExpression
+					// C:\\work\\ReoScript\\ReoScript.g:106:5: exp= assignmentExpression
 					{
-					DebugLocation(88, 5);
-					PushFollow(Follow._assignmentExpression_in_anonymous_function_define675);
-					assignmentExpression19=assignmentExpression();
+					DebugLocation(106, 8);
+					PushFollow(Follow._assignmentExpression_in_anonymous_function_define689);
+					exp=assignmentExpression();
 					PopFollow();
 
-					stream_assignmentExpression.Add(assignmentExpression19.Tree);
+					stream_assignmentExpression.Add(exp.Tree);
 
 
 					{
 					// AST REWRITE
-					// elements: assignmentExpression, parameterDeclarationList
+					// elements: 
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1095,49 +989,12 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 					root_0 = (CommonTree)adaptor.Nil();
-					// 89:4: -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) ^( RETURN assignmentExpression ) )
+					// 107:4: ->
 					{
-						DebugLocation(89, 7);
-						// C:\\work\\ReoScript\\ReoScript.g:89:7: ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES ( parameterDeclarationList )? ) ^( RETURN assignmentExpression ) )
-						{
-						CommonTree root_1 = (CommonTree)adaptor.Nil();
-						DebugLocation(89, 9);
-						root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ANONYMOUS_FUNCTION, "ANONYMOUS_FUNCTION"), root_1);
-
-						DebugLocation(89, 28);
-						// C:\\work\\ReoScript\\ReoScript.g:89:28: ^( PARAMETER_DEFINES ( parameterDeclarationList )? )
-						{
-						CommonTree root_2 = (CommonTree)adaptor.Nil();
-						DebugLocation(89, 30);
-						root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PARAMETER_DEFINES, "PARAMETER_DEFINES"), root_2);
-
-						DebugLocation(89, 48);
-						// C:\\work\\ReoScript\\ReoScript.g:89:48: ( parameterDeclarationList )?
-						if (stream_parameterDeclarationList.HasNext)
-						{
-							DebugLocation(89, 48);
-							adaptor.AddChild(root_2, stream_parameterDeclarationList.NextTree());
-
-						}
-						stream_parameterDeclarationList.Reset();
-
-						adaptor.AddChild(root_1, root_2);
-						}
-						DebugLocation(89, 75);
-						// C:\\work\\ReoScript\\ReoScript.g:89:75: ^( RETURN assignmentExpression )
-						{
-						CommonTree root_2 = (CommonTree)adaptor.Nil();
-						DebugLocation(89, 77);
-						root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(RETURN, "RETURN"), root_2);
-
-						DebugLocation(89, 84);
-						adaptor.AddChild(root_2, stream_assignmentExpression.NextTree());
-
-						adaptor.AddChild(root_1, root_2);
-						}
-
-						adaptor.AddChild(root_0, root_1);
-						}
+						DebugLocation(107, 7);
+						adaptor.AddChild(root_0, DefineAnonymousFunction(null, pl == null ? null : pl.Tree, 
+						   				(CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(RETURN, "RETURN"), exp.Tree),
+						   				0, retval.Start.Line, retval.Start.CharPositionInLine));
 
 					}
 
@@ -1155,18 +1012,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// C:\\work\\ReoScript\\ReoScript.g:91:4: IDENTIFIER '=>' ( block -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES IDENTIFIER ) block ) | assignmentExpression -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES IDENTIFIER ) ^( RETURN assignmentExpression ) ) )
+				// C:\\work\\ReoScript\\ReoScript.g:112:4: id= IDENTIFIER '=>' (b= functionBody ->|exp= assignmentExpression ->)
 				{
-				DebugLocation(91, 4);
-				IDENTIFIER20=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_anonymous_function_define706);  
-				stream_IDENTIFIER.Add(IDENTIFIER20);
+				DebugLocation(112, 6);
+				id=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_anonymous_function_define708);  
+				stream_IDENTIFIER.Add(id);
 
-				DebugLocation(91, 15);
-				string_literal21=(IToken)Match(input,123,Follow._123_in_anonymous_function_define708);  
-				stream_123.Add(string_literal21);
+				DebugLocation(112, 18);
+				string_literal12=(IToken)Match(input,124,Follow._124_in_anonymous_function_define710);  
+				stream_124.Add(string_literal12);
 
-				DebugLocation(91, 20);
-				// C:\\work\\ReoScript\\ReoScript.g:91:20: ( block -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES IDENTIFIER ) block ) | assignmentExpression -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES IDENTIFIER ) ^( RETURN assignmentExpression ) ) )
+				DebugLocation(112, 23);
+				// C:\\work\\ReoScript\\ReoScript.g:112:23: (b= functionBody ->|exp= assignmentExpression ->)
 				int alt8=2;
 				try { DebugEnterSubRule(8);
 				try { DebugEnterDecision(8, false);
@@ -1178,15 +1035,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					{
 					case DECREMENT:
 					case INCREMENT:
+					case INTERNAL:
 					case LBRACE:
 					case LCURLY:
 					case LPAREN:
 					case PRIVATE:
 					case PROTECTED:
 					case PUBLIC:
+					case THIS:
 					case TYPE:
-					case 124:
-					case 127:
+					case 125:
 					case 128:
 					case 130:
 					case 132:
@@ -1208,7 +1066,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 						{
 						int LA8_4 = input.LA(3);
 
-						if (((LA8_4>=ASSIGNMENT && LA8_4<=ASSIGN_RSHIFT)||LA8_4==DECREMENT||LA8_4==DOT||LA8_4==INCREMENT||(LA8_4>=LBRACE && LA8_4<=LCURLY)||LA8_4==LPAREN||LA8_4==SEMI||LA8_4==123))
+						if (((LA8_4>=ASSIGNMENT && LA8_4<=ASSIGN_RSHIFT)||LA8_4==DECREMENT||LA8_4==DOT||LA8_4==INCREMENT||(LA8_4>=LBRACE && LA8_4<=LCURLY)||LA8_4==LPAREN||LA8_4==SEMI||LA8_4==124))
 						{
 							alt8 = 1;
 						}
@@ -1252,7 +1110,6 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					case NAN:
 					case NUMBER_LITERATE:
 					case RCURLY:
-					case THIS:
 					case UNDEFINED:
 						{
 						alt8 = 1;
@@ -1287,19 +1144,19 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:92:5: block
+					// C:\\work\\ReoScript\\ReoScript.g:113:5: b= functionBody
 					{
-					DebugLocation(92, 5);
-					PushFollow(Follow._block_in_anonymous_function_define716);
-					block22=block();
+					DebugLocation(113, 6);
+					PushFollow(Follow._functionBody_in_anonymous_function_define720);
+					b=functionBody();
 					PopFollow();
 
-					stream_block.Add(block22.Tree);
+					stream_functionBody.Add(b.Tree);
 
 
 					{
 					// AST REWRITE
-					// elements: IDENTIFIER, block
+					// elements: 
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1309,32 +1166,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 					root_0 = (CommonTree)adaptor.Nil();
-					// 93:4: -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES IDENTIFIER ) block )
+					// 114:6: ->
 					{
-						DebugLocation(93, 7);
-						// C:\\work\\ReoScript\\ReoScript.g:93:7: ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES IDENTIFIER ) block )
-						{
-						CommonTree root_1 = (CommonTree)adaptor.Nil();
-						DebugLocation(93, 9);
-						root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ANONYMOUS_FUNCTION, "ANONYMOUS_FUNCTION"), root_1);
-
-						DebugLocation(93, 28);
-						// C:\\work\\ReoScript\\ReoScript.g:93:28: ^( PARAMETER_DEFINES IDENTIFIER )
-						{
-						CommonTree root_2 = (CommonTree)adaptor.Nil();
-						DebugLocation(93, 30);
-						root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PARAMETER_DEFINES, "PARAMETER_DEFINES"), root_2);
-
-						DebugLocation(93, 48);
-						adaptor.AddChild(root_2, stream_IDENTIFIER.NextNode());
-
-						adaptor.AddChild(root_1, root_2);
-						}
-						DebugLocation(93, 60);
-						adaptor.AddChild(root_1, stream_block.NextTree());
-
-						adaptor.AddChild(root_0, root_1);
-						}
+						DebugLocation(114, 9);
+						adaptor.AddChild(root_0, DefineAnonymousFunction(id.Text, null, b.Tree,
+								  	0, retval.Start.Line, retval.Start.CharPositionInLine));
 
 					}
 
@@ -1345,19 +1181,19 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// C:\\work\\ReoScript\\ReoScript.g:94:5: assignmentExpression
+					// C:\\work\\ReoScript\\ReoScript.g:117:5: exp= assignmentExpression
 					{
-					DebugLocation(94, 5);
-					PushFollow(Follow._assignmentExpression_in_anonymous_function_define739);
-					assignmentExpression23=assignmentExpression();
+					DebugLocation(117, 8);
+					PushFollow(Follow._assignmentExpression_in_anonymous_function_define738);
+					exp=assignmentExpression();
 					PopFollow();
 
-					stream_assignmentExpression.Add(assignmentExpression23.Tree);
+					stream_assignmentExpression.Add(exp.Tree);
 
 
 					{
 					// AST REWRITE
-					// elements: assignmentExpression, IDENTIFIER
+					// elements: 
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1367,42 +1203,12 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 					root_0 = (CommonTree)adaptor.Nil();
-					// 95:4: -> ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES IDENTIFIER ) ^( RETURN assignmentExpression ) )
+					// 118:4: ->
 					{
-						DebugLocation(95, 7);
-						// C:\\work\\ReoScript\\ReoScript.g:95:7: ^( ANONYMOUS_FUNCTION ^( PARAMETER_DEFINES IDENTIFIER ) ^( RETURN assignmentExpression ) )
-						{
-						CommonTree root_1 = (CommonTree)adaptor.Nil();
-						DebugLocation(95, 9);
-						root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ANONYMOUS_FUNCTION, "ANONYMOUS_FUNCTION"), root_1);
-
-						DebugLocation(95, 28);
-						// C:\\work\\ReoScript\\ReoScript.g:95:28: ^( PARAMETER_DEFINES IDENTIFIER )
-						{
-						CommonTree root_2 = (CommonTree)adaptor.Nil();
-						DebugLocation(95, 30);
-						root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PARAMETER_DEFINES, "PARAMETER_DEFINES"), root_2);
-
-						DebugLocation(95, 48);
-						adaptor.AddChild(root_2, stream_IDENTIFIER.NextNode());
-
-						adaptor.AddChild(root_1, root_2);
-						}
-						DebugLocation(95, 60);
-						// C:\\work\\ReoScript\\ReoScript.g:95:60: ^( RETURN assignmentExpression )
-						{
-						CommonTree root_2 = (CommonTree)adaptor.Nil();
-						DebugLocation(95, 62);
-						root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(RETURN, "RETURN"), root_2);
-
-						DebugLocation(95, 69);
-						adaptor.AddChild(root_2, stream_assignmentExpression.NextTree());
-
-						adaptor.AddChild(root_1, root_2);
-						}
-
-						adaptor.AddChild(root_0, root_1);
-						}
+						DebugLocation(118, 7);
+						adaptor.AddChild(root_0, DefineAnonymousFunction(id.Text, null, 
+						   				(CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(RETURN, "RETURN"), exp.Tree),
+						   				0, retval.Start.Line, retval.Start.CharPositionInLine));
 
 					}
 
@@ -1439,7 +1245,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			LeaveRule("anonymous_function_define", 4);
 			LeaveRule_anonymous_function_define();
 		}
-		DebugLocation(97, 1);
+		DebugLocation(123, 1);
 		} finally { DebugExitRule(GrammarFileName, "anonymous_function_define"); }
 		return retval;
 
@@ -1450,7 +1256,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_parameterDeclarationList();
 
 	// $ANTLR start "parameterDeclarationList"
-	// C:\\work\\ReoScript\\ReoScript.g:99:1: parameterDeclarationList : IDENTIFIER ( COMMA ! IDENTIFIER )* ;
+	// C:\\work\\ReoScript\\ReoScript.g:125:1: parameterDeclarationList : IDENTIFIER ( COMMA ! IDENTIFIER )* ;
 	[GrammarRule("parameterDeclarationList")]
 	private AstParserRuleReturnScope<CommonTree, IToken> parameterDeclarationList()
 	{
@@ -1462,29 +1268,29 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken IDENTIFIER24 = default(IToken);
-		IToken COMMA25 = default(IToken);
-		IToken IDENTIFIER26 = default(IToken);
+		IToken IDENTIFIER13 = default(IToken);
+		IToken COMMA14 = default(IToken);
+		IToken IDENTIFIER15 = default(IToken);
 
-		CommonTree IDENTIFIER24_tree = default(CommonTree);
-		CommonTree COMMA25_tree = default(CommonTree);
-		CommonTree IDENTIFIER26_tree = default(CommonTree);
+		CommonTree IDENTIFIER13_tree = default(CommonTree);
+		CommonTree COMMA14_tree = default(CommonTree);
+		CommonTree IDENTIFIER15_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "parameterDeclarationList");
-		DebugLocation(99, 1);
+		DebugLocation(125, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:100:2: ( IDENTIFIER ( COMMA ! IDENTIFIER )* )
+			// C:\\work\\ReoScript\\ReoScript.g:126:2: ( IDENTIFIER ( COMMA ! IDENTIFIER )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:100:4: IDENTIFIER ( COMMA ! IDENTIFIER )*
+			// C:\\work\\ReoScript\\ReoScript.g:126:4: IDENTIFIER ( COMMA ! IDENTIFIER )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(100, 4);
-			IDENTIFIER24=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_parameterDeclarationList775); 
-			IDENTIFIER24_tree = (CommonTree)adaptor.Create(IDENTIFIER24);
-			adaptor.AddChild(root_0, IDENTIFIER24_tree);
-			DebugLocation(100, 15);
-			// C:\\work\\ReoScript\\ReoScript.g:100:15: ( COMMA ! IDENTIFIER )*
+			DebugLocation(126, 4);
+			IDENTIFIER13=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_parameterDeclarationList761); 
+			IDENTIFIER13_tree = (CommonTree)adaptor.Create(IDENTIFIER13);
+			adaptor.AddChild(root_0, IDENTIFIER13_tree);
+			DebugLocation(126, 15);
+			// C:\\work\\ReoScript\\ReoScript.g:126:15: ( COMMA ! IDENTIFIER )*
 			try { DebugEnterSubRule(10);
 			while (true)
 			{
@@ -1503,14 +1309,14 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:100:16: COMMA ! IDENTIFIER
+					// C:\\work\\ReoScript\\ReoScript.g:126:16: COMMA ! IDENTIFIER
 					{
-					DebugLocation(100, 21);
-					COMMA25=(IToken)Match(input,COMMA,Follow._COMMA_in_parameterDeclarationList778); 
-					DebugLocation(100, 23);
-					IDENTIFIER26=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_parameterDeclarationList781); 
-					IDENTIFIER26_tree = (CommonTree)adaptor.Create(IDENTIFIER26);
-					adaptor.AddChild(root_0, IDENTIFIER26_tree);
+					DebugLocation(126, 21);
+					COMMA14=(IToken)Match(input,COMMA,Follow._COMMA_in_parameterDeclarationList764); 
+					DebugLocation(126, 23);
+					IDENTIFIER15=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_parameterDeclarationList767); 
+					IDENTIFIER15_tree = (CommonTree)adaptor.Create(IDENTIFIER15);
+					adaptor.AddChild(root_0, IDENTIFIER15_tree);
 
 					}
 					break;
@@ -1547,52 +1353,52 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			LeaveRule("parameterDeclarationList", 5);
 			LeaveRule_parameterDeclarationList();
 		}
-		DebugLocation(101, 1);
+		DebugLocation(127, 1);
 		} finally { DebugExitRule(GrammarFileName, "parameterDeclarationList"); }
 		return retval;
 
 	}
 	// $ANTLR end "parameterDeclarationList"
 
-	partial void EnterRule_parameterDeclarationWithDefaultValueList();
-	partial void LeaveRule_parameterDeclarationWithDefaultValueList();
+	partial void EnterRule_block();
+	partial void LeaveRule_block();
 
-	// $ANTLR start "parameterDeclarationWithDefaultValueList"
-	// C:\\work\\ReoScript\\ReoScript.g:103:1: parameterDeclarationWithDefaultValueList : parameterDeclarationWithDefaultValue ( COMMA ! parameterDeclarationWithDefaultValue )* ;
-	[GrammarRule("parameterDeclarationWithDefaultValueList")]
-	private AstParserRuleReturnScope<CommonTree, IToken> parameterDeclarationWithDefaultValueList()
+	// $ANTLR start "block"
+	// C:\\work\\ReoScript\\ReoScript.g:129:1: block : '{' ( statement )* '}' -> ^( BLOCK ( statement )* ) ;
+	[GrammarRule("block")]
+	private AstParserRuleReturnScope<CommonTree, IToken> block()
 	{
-		EnterRule_parameterDeclarationWithDefaultValueList();
-		EnterRule("parameterDeclarationWithDefaultValueList", 6);
-		TraceIn("parameterDeclarationWithDefaultValueList", 6);
+		EnterRule_block();
+		EnterRule("block", 6);
+		TraceIn("block", 6);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken COMMA28 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> parameterDeclarationWithDefaultValue27 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> parameterDeclarationWithDefaultValue29 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken char_literal16 = default(IToken);
+		IToken char_literal18 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> statement17 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree COMMA28_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "parameterDeclarationWithDefaultValueList");
-		DebugLocation(103, 1);
+		CommonTree char_literal16_tree = default(CommonTree);
+		CommonTree char_literal18_tree = default(CommonTree);
+		RewriteRuleITokenStream stream_LCURLY=new RewriteRuleITokenStream(adaptor,"token LCURLY");
+		RewriteRuleITokenStream stream_RCURLY=new RewriteRuleITokenStream(adaptor,"token RCURLY");
+		RewriteRuleSubtreeStream stream_statement=new RewriteRuleSubtreeStream(adaptor,"rule statement");
+		try { DebugEnterRule(GrammarFileName, "block");
+		DebugLocation(129, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:104:2: ( parameterDeclarationWithDefaultValue ( COMMA ! parameterDeclarationWithDefaultValue )* )
+			// C:\\work\\ReoScript\\ReoScript.g:130:2: ( '{' ( statement )* '}' -> ^( BLOCK ( statement )* ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:104:4: parameterDeclarationWithDefaultValue ( COMMA ! parameterDeclarationWithDefaultValue )*
+			// C:\\work\\ReoScript\\ReoScript.g:130:4: '{' ( statement )* '}'
 			{
-			root_0 = (CommonTree)adaptor.Nil();
+			DebugLocation(130, 4);
+			char_literal16=(IToken)Match(input,LCURLY,Follow._LCURLY_in_block781);  
+			stream_LCURLY.Add(char_literal16);
 
-			DebugLocation(104, 4);
-			PushFollow(Follow._parameterDeclarationWithDefaultValue_in_parameterDeclarationWithDefaultValueList795);
-			parameterDeclarationWithDefaultValue27=parameterDeclarationWithDefaultValue();
-			PopFollow();
-
-			adaptor.AddChild(root_0, parameterDeclarationWithDefaultValue27.Tree);
-			DebugLocation(104, 41);
-			// C:\\work\\ReoScript\\ReoScript.g:104:41: ( COMMA ! parameterDeclarationWithDefaultValue )*
+			DebugLocation(130, 8);
+			// C:\\work\\ReoScript\\ReoScript.g:130:8: ( statement )*
 			try { DebugEnterSubRule(11);
 			while (true)
 			{
@@ -1600,7 +1406,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				try { DebugEnterDecision(11, false);
 				int LA11_0 = input.LA(1);
 
-				if ((LA11_0==COMMA))
+				if ((LA11_0==BINARY_LITERATE||LA11_0==DECREMENT||(LA11_0>=HEX_LITERATE && LA11_0<=IDENTIFIER)||LA11_0==INCREMENT||LA11_0==INTERNAL||(LA11_0>=LBRACE && LA11_0<=LCURLY)||(LA11_0>=LIT_FALSE && LA11_0<=LIT_TRUE)||LA11_0==LPAREN||LA11_0==NAN||LA11_0==NUMBER_LITERATE||LA11_0==PRIVATE||(LA11_0>=PROTECTED && LA11_0<=PUBLIC)||LA11_0==STRING_LITERATE||LA11_0==THIS||LA11_0==TYPE||LA11_0==UNDEFINED||LA11_0==125||LA11_0==128||LA11_0==130||(LA11_0>=132 && LA11_0<=135)||(LA11_0>=137 && LA11_0<=142)||LA11_0==144))
 				{
 					alt11 = 1;
 				}
@@ -1611,16 +1417,14 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:104:42: COMMA ! parameterDeclarationWithDefaultValue
+					// C:\\work\\ReoScript\\ReoScript.g:130:8: statement
 					{
-					DebugLocation(104, 47);
-					COMMA28=(IToken)Match(input,COMMA,Follow._COMMA_in_parameterDeclarationWithDefaultValueList798); 
-					DebugLocation(104, 49);
-					PushFollow(Follow._parameterDeclarationWithDefaultValue_in_parameterDeclarationWithDefaultValueList801);
-					parameterDeclarationWithDefaultValue29=parameterDeclarationWithDefaultValue();
+					DebugLocation(130, 8);
+					PushFollow(Follow._statement_in_block783);
+					statement17=statement();
 					PopFollow();
 
-					adaptor.AddChild(root_0, parameterDeclarationWithDefaultValue29.Tree);
+					stream_statement.Add(statement17.Tree);
 
 					}
 					break;
@@ -1635,260 +1439,9 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 			} finally { DebugExitSubRule(11); }
 
-
-			}
-
-			retval.Stop = (IToken)input.LT(-1);
-
-			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
-			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
-
-		}
-		catch (RecognitionException re)
-		{
-			ReportError(re);
-			Recover(input,re);
-		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
-
-		}
-		finally
-		{
-			TraceOut("parameterDeclarationWithDefaultValueList", 6);
-			LeaveRule("parameterDeclarationWithDefaultValueList", 6);
-			LeaveRule_parameterDeclarationWithDefaultValueList();
-		}
-		DebugLocation(105, 1);
-		} finally { DebugExitRule(GrammarFileName, "parameterDeclarationWithDefaultValueList"); }
-		return retval;
-
-	}
-	// $ANTLR end "parameterDeclarationWithDefaultValueList"
-
-	partial void EnterRule_parameterDeclarationWithDefaultValue();
-	partial void LeaveRule_parameterDeclarationWithDefaultValue();
-
-	// $ANTLR start "parameterDeclarationWithDefaultValue"
-	// C:\\work\\ReoScript\\ReoScript.g:107:1: parameterDeclarationWithDefaultValue : IDENTIFIER ( '=' primaryExpression )? -> ^( PARAMETER_DEFINE_WITH_DEFAULT_VALUE IDENTIFIER ( primaryExpression )? ) ;
-	[GrammarRule("parameterDeclarationWithDefaultValue")]
-	private AstParserRuleReturnScope<CommonTree, IToken> parameterDeclarationWithDefaultValue()
-	{
-		EnterRule_parameterDeclarationWithDefaultValue();
-		EnterRule("parameterDeclarationWithDefaultValue", 7);
-		TraceIn("parameterDeclarationWithDefaultValue", 7);
-		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
-		retval.Start = (IToken)input.LT(1);
-
-		CommonTree root_0 = default(CommonTree);
-
-		IToken IDENTIFIER30 = default(IToken);
-		IToken char_literal31 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression32 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-
-		CommonTree IDENTIFIER30_tree = default(CommonTree);
-		CommonTree char_literal31_tree = default(CommonTree);
-		RewriteRuleITokenStream stream_ASSIGNMENT=new RewriteRuleITokenStream(adaptor,"token ASSIGNMENT");
-		RewriteRuleITokenStream stream_IDENTIFIER=new RewriteRuleITokenStream(adaptor,"token IDENTIFIER");
-		RewriteRuleSubtreeStream stream_primaryExpression=new RewriteRuleSubtreeStream(adaptor,"rule primaryExpression");
-		try { DebugEnterRule(GrammarFileName, "parameterDeclarationWithDefaultValue");
-		DebugLocation(107, 1);
-		try
-		{
-			// C:\\work\\ReoScript\\ReoScript.g:108:2: ( IDENTIFIER ( '=' primaryExpression )? -> ^( PARAMETER_DEFINE_WITH_DEFAULT_VALUE IDENTIFIER ( primaryExpression )? ) )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:108:4: IDENTIFIER ( '=' primaryExpression )?
-			{
-			DebugLocation(108, 4);
-			IDENTIFIER30=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_parameterDeclarationWithDefaultValue814);  
-			stream_IDENTIFIER.Add(IDENTIFIER30);
-
-			DebugLocation(108, 15);
-			// C:\\work\\ReoScript\\ReoScript.g:108:15: ( '=' primaryExpression )?
-			int alt12=2;
-			try { DebugEnterSubRule(12);
-			try { DebugEnterDecision(12, false);
-			int LA12_0 = input.LA(1);
-
-			if ((LA12_0==ASSIGNMENT))
-			{
-				alt12 = 1;
-			}
-			} finally { DebugExitDecision(12); }
-			switch (alt12)
-			{
-			case 1:
-				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:108:16: '=' primaryExpression
-				{
-				DebugLocation(108, 16);
-				char_literal31=(IToken)Match(input,ASSIGNMENT,Follow._ASSIGNMENT_in_parameterDeclarationWithDefaultValue817);  
-				stream_ASSIGNMENT.Add(char_literal31);
-
-				DebugLocation(108, 20);
-				PushFollow(Follow._primaryExpression_in_parameterDeclarationWithDefaultValue819);
-				primaryExpression32=primaryExpression();
-				PopFollow();
-
-				stream_primaryExpression.Add(primaryExpression32.Tree);
-
-				}
-				break;
-
-			}
-			} finally { DebugExitSubRule(12); }
-
-
-
-			{
-			// AST REWRITE
-			// elements: primaryExpression, IDENTIFIER
-			// token labels: 
-			// rule labels: retval
-			// token list labels: 
-			// rule list labels: 
-			// wildcard labels: 
-			retval.Tree = root_0;
-			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
-
-			root_0 = (CommonTree)adaptor.Nil();
-			// 109:3: -> ^( PARAMETER_DEFINE_WITH_DEFAULT_VALUE IDENTIFIER ( primaryExpression )? )
-			{
-				DebugLocation(109, 6);
-				// C:\\work\\ReoScript\\ReoScript.g:109:6: ^( PARAMETER_DEFINE_WITH_DEFAULT_VALUE IDENTIFIER ( primaryExpression )? )
-				{
-				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(109, 8);
-				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PARAMETER_DEFINE_WITH_DEFAULT_VALUE, "PARAMETER_DEFINE_WITH_DEFAULT_VALUE"), root_1);
-
-				DebugLocation(109, 44);
-				adaptor.AddChild(root_1, stream_IDENTIFIER.NextNode());
-				DebugLocation(109, 55);
-				// C:\\work\\ReoScript\\ReoScript.g:109:55: ( primaryExpression )?
-				if (stream_primaryExpression.HasNext)
-				{
-					DebugLocation(109, 55);
-					adaptor.AddChild(root_1, stream_primaryExpression.NextTree());
-
-				}
-				stream_primaryExpression.Reset();
-
-				adaptor.AddChild(root_0, root_1);
-				}
-
-			}
-
-			retval.Tree = root_0;
-			}
-
-			}
-
-			retval.Stop = (IToken)input.LT(-1);
-
-			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
-			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
-
-		}
-		catch (RecognitionException re)
-		{
-			ReportError(re);
-			Recover(input,re);
-		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
-
-		}
-		finally
-		{
-			TraceOut("parameterDeclarationWithDefaultValue", 7);
-			LeaveRule("parameterDeclarationWithDefaultValue", 7);
-			LeaveRule_parameterDeclarationWithDefaultValue();
-		}
-		DebugLocation(110, 1);
-		} finally { DebugExitRule(GrammarFileName, "parameterDeclarationWithDefaultValue"); }
-		return retval;
-
-	}
-	// $ANTLR end "parameterDeclarationWithDefaultValue"
-
-	partial void EnterRule_block();
-	partial void LeaveRule_block();
-
-	// $ANTLR start "block"
-	// C:\\work\\ReoScript\\ReoScript.g:112:1: block : '{' ( statement )* '}' -> ^( BLOCK ( statement )* ) ;
-	[GrammarRule("block")]
-	private AstParserRuleReturnScope<CommonTree, IToken> block()
-	{
-		EnterRule_block();
-		EnterRule("block", 8);
-		TraceIn("block", 8);
-		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
-		retval.Start = (IToken)input.LT(1);
-
-		CommonTree root_0 = default(CommonTree);
-
-		IToken char_literal33 = default(IToken);
-		IToken char_literal35 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> statement34 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-
-		CommonTree char_literal33_tree = default(CommonTree);
-		CommonTree char_literal35_tree = default(CommonTree);
-		RewriteRuleITokenStream stream_LCURLY=new RewriteRuleITokenStream(adaptor,"token LCURLY");
-		RewriteRuleITokenStream stream_RCURLY=new RewriteRuleITokenStream(adaptor,"token RCURLY");
-		RewriteRuleSubtreeStream stream_statement=new RewriteRuleSubtreeStream(adaptor,"rule statement");
-		try { DebugEnterRule(GrammarFileName, "block");
-		DebugLocation(112, 1);
-		try
-		{
-			// C:\\work\\ReoScript\\ReoScript.g:113:2: ( '{' ( statement )* '}' -> ^( BLOCK ( statement )* ) )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:113:4: '{' ( statement )* '}'
-			{
-			DebugLocation(113, 4);
-			char_literal33=(IToken)Match(input,LCURLY,Follow._LCURLY_in_block845);  
-			stream_LCURLY.Add(char_literal33);
-
-			DebugLocation(113, 8);
-			// C:\\work\\ReoScript\\ReoScript.g:113:8: ( statement )*
-			try { DebugEnterSubRule(13);
-			while (true)
-			{
-				int alt13=2;
-				try { DebugEnterDecision(13, false);
-				int LA13_0 = input.LA(1);
-
-				if ((LA13_0==BINARY_LITERATE||LA13_0==DECREMENT||(LA13_0>=HEX_LITERATE && LA13_0<=IDENTIFIER)||LA13_0==INCREMENT||(LA13_0>=LBRACE && LA13_0<=LCURLY)||(LA13_0>=LIT_FALSE && LA13_0<=LIT_TRUE)||LA13_0==LPAREN||LA13_0==NAN||LA13_0==NUMBER_LITERATE||LA13_0==PRIVATE||(LA13_0>=PROTECTED && LA13_0<=PUBLIC)||LA13_0==STRING_LITERATE||LA13_0==THIS||LA13_0==TYPE||LA13_0==UNDEFINED||LA13_0==124||(LA13_0>=127 && LA13_0<=128)||LA13_0==130||(LA13_0>=132 && LA13_0<=135)||(LA13_0>=137 && LA13_0<=142)||LA13_0==144))
-				{
-					alt13 = 1;
-				}
-
-
-				} finally { DebugExitDecision(13); }
-				switch ( alt13 )
-				{
-				case 1:
-					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:113:8: statement
-					{
-					DebugLocation(113, 8);
-					PushFollow(Follow._statement_in_block847);
-					statement34=statement();
-					PopFollow();
-
-					stream_statement.Add(statement34.Tree);
-
-					}
-					break;
-
-				default:
-					goto loop13;
-				}
-			}
-
-			loop13:
-				;
-
-			} finally { DebugExitSubRule(13); }
-
-			DebugLocation(113, 19);
-			char_literal35=(IToken)Match(input,RCURLY,Follow._RCURLY_in_block850);  
-			stream_RCURLY.Add(char_literal35);
+			DebugLocation(130, 19);
+			char_literal18=(IToken)Match(input,RCURLY,Follow._RCURLY_in_block786);  
+			stream_RCURLY.Add(char_literal18);
 
 
 
@@ -1904,20 +1457,20 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 114:3: -> ^( BLOCK ( statement )* )
+			// 131:3: -> ^( BLOCK ( statement )* )
 			{
-				DebugLocation(114, 6);
-				// C:\\work\\ReoScript\\ReoScript.g:114:6: ^( BLOCK ( statement )* )
+				DebugLocation(131, 6);
+				// C:\\work\\ReoScript\\ReoScript.g:131:6: ^( BLOCK ( statement )* )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(114, 8);
+				DebugLocation(131, 8);
 				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(BLOCK, "BLOCK"), root_1);
 
-				DebugLocation(114, 14);
-				// C:\\work\\ReoScript\\ReoScript.g:114:14: ( statement )*
+				DebugLocation(131, 14);
+				// C:\\work\\ReoScript\\ReoScript.g:131:14: ( statement )*
 				while ( stream_statement.HasNext )
 				{
-					DebugLocation(114, 14);
+					DebugLocation(131, 14);
 					adaptor.AddChild(root_1, stream_statement.NextTree());
 
 				}
@@ -1948,261 +1501,144 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("block", 8);
-			LeaveRule("block", 8);
+			TraceOut("block", 6);
+			LeaveRule("block", 6);
 			LeaveRule_block();
 		}
-		DebugLocation(115, 1);
+		DebugLocation(132, 1);
 		} finally { DebugExitRule(GrammarFileName, "block"); }
 		return retval;
 
 	}
 	// $ANTLR end "block"
 
-	partial void EnterRule_class_define();
-	partial void LeaveRule_class_define();
+	partial void EnterRule_functionBody();
+	partial void LeaveRule_functionBody();
 
-	// $ANTLR start "class_define"
-	// C:\\work\\ReoScript\\ReoScript.g:117:1: class_define : 'class' IDENTIFIER ( ':' ( IDENTIFIER ':' )? IDENTIFIER )? '{' ( localMemberVariableDeclaration SEMI !| function_define ( SEMI !)? )* '}' ;
-	[GrammarRule("class_define")]
-	private AstParserRuleReturnScope<CommonTree, IToken> class_define()
+	// $ANTLR start "functionBody"
+	// C:\\work\\ReoScript\\ReoScript.g:134:1: functionBody : '{' ( statement )* '}' -> ^( BLOCK ( statement )* ) ;
+	[GrammarRule("functionBody")]
+	private AstParserRuleReturnScope<CommonTree, IToken> functionBody()
 	{
-		EnterRule_class_define();
-		EnterRule("class_define", 9);
-		TraceIn("class_define", 9);
+		EnterRule_functionBody();
+		EnterRule("functionBody", 7);
+		TraceIn("functionBody", 7);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken string_literal36 = default(IToken);
-		IToken IDENTIFIER37 = default(IToken);
-		IToken char_literal38 = default(IToken);
-		IToken IDENTIFIER39 = default(IToken);
-		IToken char_literal40 = default(IToken);
-		IToken IDENTIFIER41 = default(IToken);
-		IToken char_literal42 = default(IToken);
-		IToken SEMI44 = default(IToken);
-		IToken SEMI46 = default(IToken);
-		IToken char_literal47 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> localMemberVariableDeclaration43 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> function_define45 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken char_literal19 = default(IToken);
+		IToken char_literal21 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> statement20 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree string_literal36_tree = default(CommonTree);
-		CommonTree IDENTIFIER37_tree = default(CommonTree);
-		CommonTree char_literal38_tree = default(CommonTree);
-		CommonTree IDENTIFIER39_tree = default(CommonTree);
-		CommonTree char_literal40_tree = default(CommonTree);
-		CommonTree IDENTIFIER41_tree = default(CommonTree);
-		CommonTree char_literal42_tree = default(CommonTree);
-		CommonTree SEMI44_tree = default(CommonTree);
-		CommonTree SEMI46_tree = default(CommonTree);
-		CommonTree char_literal47_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "class_define");
-		DebugLocation(117, 1);
+		CommonTree char_literal19_tree = default(CommonTree);
+		CommonTree char_literal21_tree = default(CommonTree);
+		RewriteRuleITokenStream stream_LCURLY=new RewriteRuleITokenStream(adaptor,"token LCURLY");
+		RewriteRuleITokenStream stream_RCURLY=new RewriteRuleITokenStream(adaptor,"token RCURLY");
+		RewriteRuleSubtreeStream stream_statement=new RewriteRuleSubtreeStream(adaptor,"rule statement");
+		try { DebugEnterRule(GrammarFileName, "functionBody");
+		DebugLocation(134, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:118:2: ( 'class' IDENTIFIER ( ':' ( IDENTIFIER ':' )? IDENTIFIER )? '{' ( localMemberVariableDeclaration SEMI !| function_define ( SEMI !)? )* '}' )
+			// C:\\work\\ReoScript\\ReoScript.g:135:2: ( '{' ( statement )* '}' -> ^( BLOCK ( statement )* ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:118:4: 'class' IDENTIFIER ( ':' ( IDENTIFIER ':' )? IDENTIFIER )? '{' ( localMemberVariableDeclaration SEMI !| function_define ( SEMI !)? )* '}'
+			// C:\\work\\ReoScript\\ReoScript.g:136:2: '{' ( statement )* '}'
 			{
-			root_0 = (CommonTree)adaptor.Nil();
+			DebugLocation(136, 2);
+			char_literal19=(IToken)Match(input,LCURLY,Follow._LCURLY_in_functionBody810);  
+			stream_LCURLY.Add(char_literal19);
 
-			DebugLocation(118, 4);
-			string_literal36=(IToken)Match(input,127,Follow._127_in_class_define873); 
-			string_literal36_tree = (CommonTree)adaptor.Create(string_literal36);
-			adaptor.AddChild(root_0, string_literal36_tree);
-			DebugLocation(118, 12);
-			IDENTIFIER37=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_class_define875); 
-			IDENTIFIER37_tree = (CommonTree)adaptor.Create(IDENTIFIER37);
-			adaptor.AddChild(root_0, IDENTIFIER37_tree);
-			DebugLocation(118, 23);
-			// C:\\work\\ReoScript\\ReoScript.g:118:23: ( ':' ( IDENTIFIER ':' )? IDENTIFIER )?
-			int alt15=2;
-			try { DebugEnterSubRule(15);
-			try { DebugEnterDecision(15, false);
-			int LA15_0 = input.LA(1);
-
-			if ((LA15_0==COLON))
-			{
-				alt15 = 1;
-			}
-			} finally { DebugExitDecision(15); }
-			switch (alt15)
-			{
-			case 1:
-				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:118:24: ':' ( IDENTIFIER ':' )? IDENTIFIER
-				{
-				DebugLocation(118, 24);
-				char_literal38=(IToken)Match(input,COLON,Follow._COLON_in_class_define878); 
-				char_literal38_tree = (CommonTree)adaptor.Create(char_literal38);
-				adaptor.AddChild(root_0, char_literal38_tree);
-				DebugLocation(118, 28);
-				// C:\\work\\ReoScript\\ReoScript.g:118:28: ( IDENTIFIER ':' )?
-				int alt14=2;
-				try { DebugEnterSubRule(14);
-				try { DebugEnterDecision(14, false);
-				int LA14_0 = input.LA(1);
-
-				if ((LA14_0==IDENTIFIER))
-				{
-					int LA14_1 = input.LA(2);
-
-					if ((LA14_1==COLON))
-					{
-						alt14 = 1;
-					}
-				}
-				} finally { DebugExitDecision(14); }
-				switch (alt14)
-				{
-				case 1:
-					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:118:29: IDENTIFIER ':'
-					{
-					DebugLocation(118, 29);
-					IDENTIFIER39=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_class_define881); 
-					IDENTIFIER39_tree = (CommonTree)adaptor.Create(IDENTIFIER39);
-					adaptor.AddChild(root_0, IDENTIFIER39_tree);
-					DebugLocation(118, 40);
-					char_literal40=(IToken)Match(input,COLON,Follow._COLON_in_class_define883); 
-					char_literal40_tree = (CommonTree)adaptor.Create(char_literal40);
-					adaptor.AddChild(root_0, char_literal40_tree);
-
-					}
-					break;
-
-				}
-				} finally { DebugExitSubRule(14); }
-
-				DebugLocation(118, 46);
-				IDENTIFIER41=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_class_define887); 
-				IDENTIFIER41_tree = (CommonTree)adaptor.Create(IDENTIFIER41);
-				adaptor.AddChild(root_0, IDENTIFIER41_tree);
-
-				}
-				break;
-
-			}
-			} finally { DebugExitSubRule(15); }
-
-			DebugLocation(119, 3);
-			char_literal42=(IToken)Match(input,LCURLY,Follow._LCURLY_in_class_define893); 
-			char_literal42_tree = (CommonTree)adaptor.Create(char_literal42);
-			adaptor.AddChild(root_0, char_literal42_tree);
-			DebugLocation(120, 4);
-			// C:\\work\\ReoScript\\ReoScript.g:120:4: ( localMemberVariableDeclaration SEMI !| function_define ( SEMI !)? )*
-			try { DebugEnterSubRule(17);
+			DebugLocation(137, 2);
+			PushLocalStack();
+			DebugLocation(138, 3);
+			// C:\\work\\ReoScript\\ReoScript.g:138:3: ( statement )*
+			try { DebugEnterSubRule(12);
 			while (true)
 			{
-				int alt17=3;
-				try { DebugEnterDecision(17, false);
-				switch (input.LA(1))
+				int alt12=2;
+				try { DebugEnterDecision(12, false);
+				int LA12_0 = input.LA(1);
+
+				if ((LA12_0==BINARY_LITERATE||LA12_0==DECREMENT||(LA12_0>=HEX_LITERATE && LA12_0<=IDENTIFIER)||LA12_0==INCREMENT||LA12_0==INTERNAL||(LA12_0>=LBRACE && LA12_0<=LCURLY)||(LA12_0>=LIT_FALSE && LA12_0<=LIT_TRUE)||LA12_0==LPAREN||LA12_0==NAN||LA12_0==NUMBER_LITERATE||LA12_0==PRIVATE||(LA12_0>=PROTECTED && LA12_0<=PUBLIC)||LA12_0==STRING_LITERATE||LA12_0==THIS||LA12_0==TYPE||LA12_0==UNDEFINED||LA12_0==125||LA12_0==128||LA12_0==130||(LA12_0>=132 && LA12_0<=135)||(LA12_0>=137 && LA12_0<=142)||LA12_0==144))
 				{
-				case PRIVATE:
-				case PROTECTED:
-				case PUBLIC:
-					{
-					int LA17_2 = input.LA(2);
-
-					if ((LA17_2==TYPE))
-					{
-						alt17 = 1;
-					}
-					else if ((LA17_2==133))
-					{
-						alt17 = 2;
-					}
-
-
-					}
-					break;
-				case TYPE:
-					{
-					alt17 = 1;
-					}
-					break;
-				case 133:
-					{
-					alt17 = 2;
-					}
-					break;
+					alt12 = 1;
 				}
 
-				} finally { DebugExitDecision(17); }
-				switch ( alt17 )
+
+				} finally { DebugExitDecision(12); }
+				switch ( alt12 )
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:121:6: localMemberVariableDeclaration SEMI !
+					// C:\\work\\ReoScript\\ReoScript.g:138:3: statement
 					{
-					DebugLocation(121, 6);
-					PushFollow(Follow._localMemberVariableDeclaration_in_class_define905);
-					localMemberVariableDeclaration43=localMemberVariableDeclaration();
+					DebugLocation(138, 3);
+					PushFollow(Follow._statement_in_functionBody817);
+					statement20=statement();
 					PopFollow();
 
-					adaptor.AddChild(root_0, localMemberVariableDeclaration43.Tree);
-					DebugLocation(121, 41);
-					SEMI44=(IToken)Match(input,SEMI,Follow._SEMI_in_class_define907); 
-
-					}
-					break;
-				case 2:
-					DebugEnterAlt(2);
-					// C:\\work\\ReoScript\\ReoScript.g:122:6: function_define ( SEMI !)?
-					{
-					DebugLocation(122, 6);
-					PushFollow(Follow._function_define_in_class_define915);
-					function_define45=function_define();
-					PopFollow();
-
-					adaptor.AddChild(root_0, function_define45.Tree);
-					DebugLocation(122, 26);
-					// C:\\work\\ReoScript\\ReoScript.g:122:26: ( SEMI !)?
-					int alt16=2;
-					try { DebugEnterSubRule(16);
-					try { DebugEnterDecision(16, false);
-					int LA16_0 = input.LA(1);
-
-					if ((LA16_0==SEMI))
-					{
-						alt16 = 1;
-					}
-					} finally { DebugExitDecision(16); }
-					switch (alt16)
-					{
-					case 1:
-						DebugEnterAlt(1);
-						// C:\\work\\ReoScript\\ReoScript.g:122:26: SEMI !
-						{
-						DebugLocation(122, 26);
-						SEMI46=(IToken)Match(input,SEMI,Follow._SEMI_in_class_define917); 
-
-						}
-						break;
-
-					}
-					} finally { DebugExitSubRule(16); }
-
+					stream_statement.Add(statement20.Tree);
 
 					}
 					break;
 
 				default:
-					goto loop17;
+					goto loop12;
 				}
 			}
 
-			loop17:
+			loop12:
 				;
 
-			} finally { DebugExitSubRule(17); }
+			} finally { DebugExitSubRule(12); }
 
-			DebugLocation(124, 3);
-			char_literal47=(IToken)Match(input,RCURLY,Follow._RCURLY_in_class_define929); 
-			char_literal47_tree = (CommonTree)adaptor.Create(char_literal47);
-			adaptor.AddChild(root_0, char_literal47_tree);
+			DebugLocation(139, 2);
+			PopLocalStack();
+			DebugLocation(140, 2);
+			char_literal21=(IToken)Match(input,RCURLY,Follow._RCURLY_in_functionBody824);  
+			stream_RCURLY.Add(char_literal21);
+
+
+
+			{
+			// AST REWRITE
+			// elements: statement
+			// token labels: 
+			// rule labels: retval
+			// token list labels: 
+			// rule list labels: 
+			// wildcard labels: 
+			retval.Tree = root_0;
+			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
+
+			root_0 = (CommonTree)adaptor.Nil();
+			// 141:2: -> ^( BLOCK ( statement )* )
+			{
+				DebugLocation(141, 5);
+				// C:\\work\\ReoScript\\ReoScript.g:141:5: ^( BLOCK ( statement )* )
+				{
+				CommonTree root_1 = (CommonTree)adaptor.Nil();
+				DebugLocation(141, 7);
+				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(BLOCK, "BLOCK"), root_1);
+
+				DebugLocation(141, 13);
+				// C:\\work\\ReoScript\\ReoScript.g:141:13: ( statement )*
+				while ( stream_statement.HasNext )
+				{
+					DebugLocation(141, 13);
+					adaptor.AddChild(root_1, stream_statement.NextTree());
+
+				}
+				stream_statement.Reset();
+
+				adaptor.AddChild(root_0, root_1);
+				}
+
+			}
+
+			retval.Tree = root_0;
+			}
 
 			}
 
@@ -2221,86 +1657,84 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("class_define", 9);
-			LeaveRule("class_define", 9);
-			LeaveRule_class_define();
+			TraceOut("functionBody", 7);
+			LeaveRule("functionBody", 7);
+			LeaveRule_functionBody();
 		}
-		DebugLocation(125, 1);
-		} finally { DebugExitRule(GrammarFileName, "class_define"); }
+		DebugLocation(142, 1);
+		} finally { DebugExitRule(GrammarFileName, "functionBody"); }
 		return retval;
 
 	}
-	// $ANTLR end "class_define"
+	// $ANTLR end "functionBody"
 
 	partial void EnterRule_statement();
 	partial void LeaveRule_statement();
 
 	// $ANTLR start "statement"
-	// C:\\work\\ReoScript\\ReoScript.g:128:1: public statement : ( importStatement SEMI !| localVariableDeclaration SEMI !| function_define ( SEMI !)? | class_define ( SEMI !)? | tagTemplateDefine ( SEMI !)? | embeddedStatement );
+	// C:\\work\\ReoScript\\ReoScript.g:156:1: statement : ( importStatement SEMI !| localVariableDeclaration SEMI !| function_define ( SEMI !)? | tagTemplateDefine ( SEMI !)? | embeddedStatement );
 	[GrammarRule("statement")]
-	public AstParserRuleReturnScope<CommonTree, IToken> statement()
+	private AstParserRuleReturnScope<CommonTree, IToken> statement()
 	{
 		EnterRule_statement();
-		EnterRule("statement", 10);
-		TraceIn("statement", 10);
+		EnterRule("statement", 8);
+		TraceIn("statement", 8);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken SEMI49 = default(IToken);
-		IToken SEMI51 = default(IToken);
-		IToken SEMI53 = default(IToken);
-		IToken SEMI55 = default(IToken);
-		IToken SEMI57 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> importStatement48 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> localVariableDeclaration50 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> function_define52 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> class_define54 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> tagTemplateDefine56 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> embeddedStatement58 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken SEMI23 = default(IToken);
+		IToken SEMI25 = default(IToken);
+		IToken SEMI27 = default(IToken);
+		IToken SEMI29 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> importStatement22 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> localVariableDeclaration24 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> function_define26 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> tagTemplateDefine28 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> embeddedStatement30 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree SEMI49_tree = default(CommonTree);
-		CommonTree SEMI51_tree = default(CommonTree);
-		CommonTree SEMI53_tree = default(CommonTree);
-		CommonTree SEMI55_tree = default(CommonTree);
-		CommonTree SEMI57_tree = default(CommonTree);
+		CommonTree SEMI23_tree = default(CommonTree);
+		CommonTree SEMI25_tree = default(CommonTree);
+		CommonTree SEMI27_tree = default(CommonTree);
+		CommonTree SEMI29_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "statement");
-		DebugLocation(128, 1);
+		DebugLocation(156, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:129:2: ( importStatement SEMI !| localVariableDeclaration SEMI !| function_define ( SEMI !)? | class_define ( SEMI !)? | tagTemplateDefine ( SEMI !)? | embeddedStatement )
-			int alt21=6;
-			try { DebugEnterDecision(21, false);
+			// C:\\work\\ReoScript\\ReoScript.g:157:2: ( importStatement SEMI !| localVariableDeclaration SEMI !| function_define ( SEMI !)? | tagTemplateDefine ( SEMI !)? | embeddedStatement )
+			int alt15=5;
+			try { DebugEnterDecision(15, false);
 			switch (input.LA(1))
 			{
 			case 135:
 				{
-				alt21 = 1;
+				alt15 = 1;
 				}
 				break;
 			case TYPE:
 				{
-				alt21 = 2;
+				alt15 = 2;
 				}
 				break;
+			case INTERNAL:
 			case PRIVATE:
 			case PROTECTED:
 			case PUBLIC:
 				{
-				int LA21_3 = input.LA(2);
+				int LA15_3 = input.LA(2);
 
-				if ((LA21_3==133))
+				if ((LA15_3==133))
 				{
-					alt21 = 3;
+					alt15 = 3;
 				}
-				else if ((LA21_3==140))
+				else if ((LA15_3==140))
 				{
-					alt21 = 5;
+					alt15 = 4;
 				}
 				else
 				{
-					NoViableAltException nvae = new NoViableAltException("", 21, 3, input);
+					NoViableAltException nvae = new NoViableAltException("", 15, 3, input);
 					DebugRecognitionException(nvae);
 					throw nvae;
 				}
@@ -2308,32 +1742,27 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 133:
 				{
-				int LA21_4 = input.LA(2);
+				int LA15_4 = input.LA(2);
 
-				if ((LA21_4==IDENTIFIER))
+				if ((LA15_4==IDENTIFIER))
 				{
-					alt21 = 3;
+					alt15 = 3;
 				}
-				else if ((LA21_4==LPAREN))
+				else if ((LA15_4==LPAREN))
 				{
-					alt21 = 6;
+					alt15 = 5;
 				}
 				else
 				{
-					NoViableAltException nvae = new NoViableAltException("", 21, 4, input);
+					NoViableAltException nvae = new NoViableAltException("", 15, 4, input);
 					DebugRecognitionException(nvae);
 					throw nvae;
 				}
 				}
 				break;
-			case 127:
-				{
-				alt21 = 4;
-				}
-				break;
 			case 140:
 				{
-				alt21 = 5;
+				alt15 = 4;
 				}
 				break;
 			case BINARY_LITERATE:
@@ -2352,7 +1781,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			case STRING_LITERATE:
 			case THIS:
 			case UNDEFINED:
-			case 124:
+			case 125:
 			case 128:
 			case 130:
 			case 132:
@@ -2364,192 +1793,150 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			case 142:
 			case 144:
 				{
-				alt21 = 6;
+				alt15 = 5;
 				}
 				break;
 			default:
 				{
-					NoViableAltException nvae = new NoViableAltException("", 21, 0, input);
+					NoViableAltException nvae = new NoViableAltException("", 15, 0, input);
 					DebugRecognitionException(nvae);
 					throw nvae;
 				}
 			}
 
-			} finally { DebugExitDecision(21); }
-			switch (alt21)
+			} finally { DebugExitDecision(15); }
+			switch (alt15)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:130:4: importStatement SEMI !
+				// C:\\work\\ReoScript\\ReoScript.g:158:4: importStatement SEMI !
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(130, 4);
-				PushFollow(Follow._importStatement_in_statement947);
-				importStatement48=importStatement();
+				DebugLocation(158, 4);
+				PushFollow(Follow._importStatement_in_statement854);
+				importStatement22=importStatement();
 				PopFollow();
 
-				adaptor.AddChild(root_0, importStatement48.Tree);
-				DebugLocation(130, 24);
-				SEMI49=(IToken)Match(input,SEMI,Follow._SEMI_in_statement949); 
+				adaptor.AddChild(root_0, importStatement22.Tree);
+				DebugLocation(158, 24);
+				SEMI23=(IToken)Match(input,SEMI,Follow._SEMI_in_statement856); 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:131:4: localVariableDeclaration SEMI !
+				// C:\\work\\ReoScript\\ReoScript.g:159:4: localVariableDeclaration SEMI !
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(131, 4);
-				PushFollow(Follow._localVariableDeclaration_in_statement955);
-				localVariableDeclaration50=localVariableDeclaration();
+				DebugLocation(159, 4);
+				PushFollow(Follow._localVariableDeclaration_in_statement862);
+				localVariableDeclaration24=localVariableDeclaration();
 				PopFollow();
 
-				adaptor.AddChild(root_0, localVariableDeclaration50.Tree);
-				DebugLocation(131, 33);
-				SEMI51=(IToken)Match(input,SEMI,Follow._SEMI_in_statement957); 
+				adaptor.AddChild(root_0, localVariableDeclaration24.Tree);
+				DebugLocation(159, 33);
+				SEMI25=(IToken)Match(input,SEMI,Follow._SEMI_in_statement864); 
 
 				}
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// C:\\work\\ReoScript\\ReoScript.g:132:4: function_define ( SEMI !)?
+				// C:\\work\\ReoScript\\ReoScript.g:160:4: function_define ( SEMI !)?
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(132, 4);
-				PushFollow(Follow._function_define_in_statement963);
-				function_define52=function_define();
+				DebugLocation(160, 4);
+				PushFollow(Follow._function_define_in_statement870);
+				function_define26=function_define();
 				PopFollow();
 
-				adaptor.AddChild(root_0, function_define52.Tree);
-				DebugLocation(132, 24);
-				// C:\\work\\ReoScript\\ReoScript.g:132:24: ( SEMI !)?
-				int alt18=2;
-				try { DebugEnterSubRule(18);
-				try { DebugEnterDecision(18, false);
-				int LA18_0 = input.LA(1);
+				adaptor.AddChild(root_0, function_define26.Tree);
+				DebugLocation(160, 24);
+				// C:\\work\\ReoScript\\ReoScript.g:160:24: ( SEMI !)?
+				int alt13=2;
+				try { DebugEnterSubRule(13);
+				try { DebugEnterDecision(13, false);
+				int LA13_0 = input.LA(1);
 
-				if ((LA18_0==SEMI))
+				if ((LA13_0==SEMI))
 				{
-					alt18 = 1;
+					alt13 = 1;
 				}
-				} finally { DebugExitDecision(18); }
-				switch (alt18)
+				} finally { DebugExitDecision(13); }
+				switch (alt13)
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:132:24: SEMI !
+					// C:\\work\\ReoScript\\ReoScript.g:160:24: SEMI !
 					{
-					DebugLocation(132, 24);
-					SEMI53=(IToken)Match(input,SEMI,Follow._SEMI_in_statement965); 
+					DebugLocation(160, 24);
+					SEMI27=(IToken)Match(input,SEMI,Follow._SEMI_in_statement872); 
 
 					}
 					break;
 
 				}
-				} finally { DebugExitSubRule(18); }
+				} finally { DebugExitSubRule(13); }
 
 
 				}
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// C:\\work\\ReoScript\\ReoScript.g:133:4: class_define ( SEMI !)?
+				// C:\\work\\ReoScript\\ReoScript.g:162:4: tagTemplateDefine ( SEMI !)?
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(133, 4);
-				PushFollow(Follow._class_define_in_statement972);
-				class_define54=class_define();
+				DebugLocation(162, 4);
+				PushFollow(Follow._tagTemplateDefine_in_statement880);
+				tagTemplateDefine28=tagTemplateDefine();
 				PopFollow();
 
-				adaptor.AddChild(root_0, class_define54.Tree);
-				DebugLocation(133, 21);
-				// C:\\work\\ReoScript\\ReoScript.g:133:21: ( SEMI !)?
-				int alt19=2;
-				try { DebugEnterSubRule(19);
-				try { DebugEnterDecision(19, false);
-				int LA19_0 = input.LA(1);
+				adaptor.AddChild(root_0, tagTemplateDefine28.Tree);
+				DebugLocation(162, 26);
+				// C:\\work\\ReoScript\\ReoScript.g:162:26: ( SEMI !)?
+				int alt14=2;
+				try { DebugEnterSubRule(14);
+				try { DebugEnterDecision(14, false);
+				int LA14_0 = input.LA(1);
 
-				if ((LA19_0==SEMI))
+				if ((LA14_0==SEMI))
 				{
-					alt19 = 1;
+					alt14 = 1;
 				}
-				} finally { DebugExitDecision(19); }
-				switch (alt19)
+				} finally { DebugExitDecision(14); }
+				switch (alt14)
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:133:21: SEMI !
+					// C:\\work\\ReoScript\\ReoScript.g:162:26: SEMI !
 					{
-					DebugLocation(133, 21);
-					SEMI55=(IToken)Match(input,SEMI,Follow._SEMI_in_statement974); 
+					DebugLocation(162, 26);
+					SEMI29=(IToken)Match(input,SEMI,Follow._SEMI_in_statement882); 
 
 					}
 					break;
 
 				}
-				} finally { DebugExitSubRule(19); }
+				} finally { DebugExitSubRule(14); }
 
 
 				}
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// C:\\work\\ReoScript\\ReoScript.g:134:4: tagTemplateDefine ( SEMI !)?
+				// C:\\work\\ReoScript\\ReoScript.g:163:4: embeddedStatement
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(134, 4);
-				PushFollow(Follow._tagTemplateDefine_in_statement981);
-				tagTemplateDefine56=tagTemplateDefine();
+				DebugLocation(163, 4);
+				PushFollow(Follow._embeddedStatement_in_statement889);
+				embeddedStatement30=embeddedStatement();
 				PopFollow();
 
-				adaptor.AddChild(root_0, tagTemplateDefine56.Tree);
-				DebugLocation(134, 26);
-				// C:\\work\\ReoScript\\ReoScript.g:134:26: ( SEMI !)?
-				int alt20=2;
-				try { DebugEnterSubRule(20);
-				try { DebugEnterDecision(20, false);
-				int LA20_0 = input.LA(1);
-
-				if ((LA20_0==SEMI))
-				{
-					alt20 = 1;
-				}
-				} finally { DebugExitDecision(20); }
-				switch (alt20)
-				{
-				case 1:
-					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:134:26: SEMI !
-					{
-					DebugLocation(134, 26);
-					SEMI57=(IToken)Match(input,SEMI,Follow._SEMI_in_statement983); 
-
-					}
-					break;
-
-				}
-				} finally { DebugExitSubRule(20); }
-
-
-				}
-				break;
-			case 6:
-				DebugEnterAlt(6);
-				// C:\\work\\ReoScript\\ReoScript.g:135:4: embeddedStatement
-				{
-				root_0 = (CommonTree)adaptor.Nil();
-
-				DebugLocation(135, 4);
-				PushFollow(Follow._embeddedStatement_in_statement990);
-				embeddedStatement58=embeddedStatement();
-				PopFollow();
-
-				adaptor.AddChild(root_0, embeddedStatement58.Tree);
+				adaptor.AddChild(root_0, embeddedStatement30.Tree);
 
 				}
 				break;
@@ -2570,11 +1957,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("statement", 10);
-			LeaveRule("statement", 10);
+			TraceOut("statement", 8);
+			LeaveRule("statement", 8);
 			LeaveRule_statement();
 		}
-		DebugLocation(136, 1);
+		DebugLocation(164, 1);
 		} finally { DebugExitRule(GrammarFileName, "statement"); }
 		return retval;
 
@@ -2585,73 +1972,73 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_importStatement();
 
 	// $ANTLR start "importStatement"
-	// C:\\work\\ReoScript\\ReoScript.g:138:1: importStatement : 'import' ( namespaceDeclare -> ^( IMPORT namespaceDeclare ) | STRING_LITERATE -> ^( IMPORT STRING_LITERATE ) ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:166:1: importStatement : 'import' ( namespaceDeclare -> ^( IMPORT namespaceDeclare ) | STRING_LITERATE -> ^( IMPORT STRING_LITERATE ) ) ;
 	[GrammarRule("importStatement")]
 	private AstParserRuleReturnScope<CommonTree, IToken> importStatement()
 	{
 		EnterRule_importStatement();
-		EnterRule("importStatement", 11);
-		TraceIn("importStatement", 11);
+		EnterRule("importStatement", 9);
+		TraceIn("importStatement", 9);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken string_literal59 = default(IToken);
-		IToken STRING_LITERATE61 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> namespaceDeclare60 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken string_literal31 = default(IToken);
+		IToken STRING_LITERATE33 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> namespaceDeclare32 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree string_literal59_tree = default(CommonTree);
-		CommonTree STRING_LITERATE61_tree = default(CommonTree);
+		CommonTree string_literal31_tree = default(CommonTree);
+		CommonTree STRING_LITERATE33_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_135=new RewriteRuleITokenStream(adaptor,"token 135");
 		RewriteRuleITokenStream stream_STRING_LITERATE=new RewriteRuleITokenStream(adaptor,"token STRING_LITERATE");
 		RewriteRuleSubtreeStream stream_namespaceDeclare=new RewriteRuleSubtreeStream(adaptor,"rule namespaceDeclare");
 		try { DebugEnterRule(GrammarFileName, "importStatement");
-		DebugLocation(138, 1);
+		DebugLocation(166, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:139:2: ( 'import' ( namespaceDeclare -> ^( IMPORT namespaceDeclare ) | STRING_LITERATE -> ^( IMPORT STRING_LITERATE ) ) )
+			// C:\\work\\ReoScript\\ReoScript.g:167:2: ( 'import' ( namespaceDeclare -> ^( IMPORT namespaceDeclare ) | STRING_LITERATE -> ^( IMPORT STRING_LITERATE ) ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:139:4: 'import' ( namespaceDeclare -> ^( IMPORT namespaceDeclare ) | STRING_LITERATE -> ^( IMPORT STRING_LITERATE ) )
+			// C:\\work\\ReoScript\\ReoScript.g:167:4: 'import' ( namespaceDeclare -> ^( IMPORT namespaceDeclare ) | STRING_LITERATE -> ^( IMPORT STRING_LITERATE ) )
 			{
-			DebugLocation(139, 4);
-			string_literal59=(IToken)Match(input,135,Follow._135_in_importStatement1001);  
-			stream_135.Add(string_literal59);
+			DebugLocation(167, 4);
+			string_literal31=(IToken)Match(input,135,Follow._135_in_importStatement900);  
+			stream_135.Add(string_literal31);
 
-			DebugLocation(140, 3);
-			// C:\\work\\ReoScript\\ReoScript.g:140:3: ( namespaceDeclare -> ^( IMPORT namespaceDeclare ) | STRING_LITERATE -> ^( IMPORT STRING_LITERATE ) )
-			int alt22=2;
-			try { DebugEnterSubRule(22);
-			try { DebugEnterDecision(22, false);
-			int LA22_0 = input.LA(1);
+			DebugLocation(168, 3);
+			// C:\\work\\ReoScript\\ReoScript.g:168:3: ( namespaceDeclare -> ^( IMPORT namespaceDeclare ) | STRING_LITERATE -> ^( IMPORT STRING_LITERATE ) )
+			int alt16=2;
+			try { DebugEnterSubRule(16);
+			try { DebugEnterDecision(16, false);
+			int LA16_0 = input.LA(1);
 
-			if ((LA22_0==IDENTIFIER))
+			if ((LA16_0==IDENTIFIER))
 			{
-				alt22 = 1;
+				alt16 = 1;
 			}
-			else if ((LA22_0==STRING_LITERATE))
+			else if ((LA16_0==STRING_LITERATE))
 			{
-				alt22 = 2;
+				alt16 = 2;
 			}
 			else
 			{
-				NoViableAltException nvae = new NoViableAltException("", 22, 0, input);
+				NoViableAltException nvae = new NoViableAltException("", 16, 0, input);
 				DebugRecognitionException(nvae);
 				throw nvae;
 			}
-			} finally { DebugExitDecision(22); }
-			switch (alt22)
+			} finally { DebugExitDecision(16); }
+			switch (alt16)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:141:5: namespaceDeclare
+				// C:\\work\\ReoScript\\ReoScript.g:169:5: namespaceDeclare
 				{
-				DebugLocation(141, 5);
-				PushFollow(Follow._namespaceDeclare_in_importStatement1012);
-				namespaceDeclare60=namespaceDeclare();
+				DebugLocation(169, 5);
+				PushFollow(Follow._namespaceDeclare_in_importStatement911);
+				namespaceDeclare32=namespaceDeclare();
 				PopFollow();
 
-				stream_namespaceDeclare.Add(namespaceDeclare60.Tree);
+				stream_namespaceDeclare.Add(namespaceDeclare32.Tree);
 
 
 				{
@@ -2666,16 +2053,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 141:23: -> ^( IMPORT namespaceDeclare )
+				// 169:23: -> ^( IMPORT namespaceDeclare )
 				{
-					DebugLocation(141, 26);
-					// C:\\work\\ReoScript\\ReoScript.g:141:26: ^( IMPORT namespaceDeclare )
+					DebugLocation(169, 26);
+					// C:\\work\\ReoScript\\ReoScript.g:169:26: ^( IMPORT namespaceDeclare )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(141, 28);
+					DebugLocation(169, 28);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(IMPORT, "IMPORT"), root_1);
 
-					DebugLocation(141, 35);
+					DebugLocation(169, 35);
 					adaptor.AddChild(root_1, stream_namespaceDeclare.NextTree());
 
 					adaptor.AddChild(root_0, root_1);
@@ -2690,11 +2077,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:142:5: STRING_LITERATE
+				// C:\\work\\ReoScript\\ReoScript.g:170:5: STRING_LITERATE
 				{
-				DebugLocation(142, 5);
-				STRING_LITERATE61=(IToken)Match(input,STRING_LITERATE,Follow._STRING_LITERATE_in_importStatement1027);  
-				stream_STRING_LITERATE.Add(STRING_LITERATE61);
+				DebugLocation(170, 5);
+				STRING_LITERATE33=(IToken)Match(input,STRING_LITERATE,Follow._STRING_LITERATE_in_importStatement926);  
+				stream_STRING_LITERATE.Add(STRING_LITERATE33);
 
 
 
@@ -2710,16 +2097,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 142:23: -> ^( IMPORT STRING_LITERATE )
+				// 170:23: -> ^( IMPORT STRING_LITERATE )
 				{
-					DebugLocation(142, 26);
-					// C:\\work\\ReoScript\\ReoScript.g:142:26: ^( IMPORT STRING_LITERATE )
+					DebugLocation(170, 26);
+					// C:\\work\\ReoScript\\ReoScript.g:170:26: ^( IMPORT STRING_LITERATE )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(142, 28);
+					DebugLocation(170, 28);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(IMPORT, "IMPORT"), root_1);
 
-					DebugLocation(142, 35);
+					DebugLocation(170, 35);
 					adaptor.AddChild(root_1, stream_STRING_LITERATE.NextNode());
 
 					adaptor.AddChild(root_0, root_1);
@@ -2734,7 +2121,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 
 			}
-			} finally { DebugExitSubRule(22); }
+			} finally { DebugExitSubRule(16); }
 
 
 			}
@@ -2754,11 +2141,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("importStatement", 11);
-			LeaveRule("importStatement", 11);
+			TraceOut("importStatement", 9);
+			LeaveRule("importStatement", 9);
 			LeaveRule_importStatement();
 		}
-		DebugLocation(144, 1);
+		DebugLocation(172, 1);
 		} finally { DebugExitRule(GrammarFileName, "importStatement"); }
 		return retval;
 
@@ -2769,72 +2156,72 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_namespaceDeclare();
 
 	// $ANTLR start "namespaceDeclare"
-	// C:\\work\\ReoScript\\ReoScript.g:146:1: namespaceDeclare : IDENTIFIER ( '.' ( IDENTIFIER | '*' ) )* ;
+	// C:\\work\\ReoScript\\ReoScript.g:174:1: namespaceDeclare : IDENTIFIER ( '.' ( IDENTIFIER | '*' ) )* ;
 	[GrammarRule("namespaceDeclare")]
 	private AstParserRuleReturnScope<CommonTree, IToken> namespaceDeclare()
 	{
 		EnterRule_namespaceDeclare();
-		EnterRule("namespaceDeclare", 12);
-		TraceIn("namespaceDeclare", 12);
+		EnterRule("namespaceDeclare", 10);
+		TraceIn("namespaceDeclare", 10);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken IDENTIFIER62 = default(IToken);
-		IToken char_literal63 = default(IToken);
-		IToken set64 = default(IToken);
+		IToken IDENTIFIER34 = default(IToken);
+		IToken char_literal35 = default(IToken);
+		IToken set36 = default(IToken);
 
-		CommonTree IDENTIFIER62_tree = default(CommonTree);
-		CommonTree char_literal63_tree = default(CommonTree);
-		CommonTree set64_tree = default(CommonTree);
+		CommonTree IDENTIFIER34_tree = default(CommonTree);
+		CommonTree char_literal35_tree = default(CommonTree);
+		CommonTree set36_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "namespaceDeclare");
-		DebugLocation(146, 1);
+		DebugLocation(174, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:147:2: ( IDENTIFIER ( '.' ( IDENTIFIER | '*' ) )* )
+			// C:\\work\\ReoScript\\ReoScript.g:175:2: ( IDENTIFIER ( '.' ( IDENTIFIER | '*' ) )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:147:4: IDENTIFIER ( '.' ( IDENTIFIER | '*' ) )*
+			// C:\\work\\ReoScript\\ReoScript.g:175:4: IDENTIFIER ( '.' ( IDENTIFIER | '*' ) )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(147, 4);
-			IDENTIFIER62=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_namespaceDeclare1052); 
-			IDENTIFIER62_tree = (CommonTree)adaptor.Create(IDENTIFIER62);
-			adaptor.AddChild(root_0, IDENTIFIER62_tree);
-			DebugLocation(147, 15);
-			// C:\\work\\ReoScript\\ReoScript.g:147:15: ( '.' ( IDENTIFIER | '*' ) )*
-			try { DebugEnterSubRule(23);
+			DebugLocation(175, 4);
+			IDENTIFIER34=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_namespaceDeclare951); 
+			IDENTIFIER34_tree = (CommonTree)adaptor.Create(IDENTIFIER34);
+			adaptor.AddChild(root_0, IDENTIFIER34_tree);
+			DebugLocation(175, 15);
+			// C:\\work\\ReoScript\\ReoScript.g:175:15: ( '.' ( IDENTIFIER | '*' ) )*
+			try { DebugEnterSubRule(17);
 			while (true)
 			{
-				int alt23=2;
-				try { DebugEnterDecision(23, false);
-				int LA23_0 = input.LA(1);
+				int alt17=2;
+				try { DebugEnterDecision(17, false);
+				int LA17_0 = input.LA(1);
 
-				if ((LA23_0==DOT))
+				if ((LA17_0==DOT))
 				{
-					alt23 = 1;
+					alt17 = 1;
 				}
 
 
-				} finally { DebugExitDecision(23); }
-				switch ( alt23 )
+				} finally { DebugExitDecision(17); }
+				switch ( alt17 )
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:147:16: '.' ( IDENTIFIER | '*' )
+					// C:\\work\\ReoScript\\ReoScript.g:175:16: '.' ( IDENTIFIER | '*' )
 					{
-					DebugLocation(147, 16);
-					char_literal63=(IToken)Match(input,DOT,Follow._DOT_in_namespaceDeclare1055); 
-					char_literal63_tree = (CommonTree)adaptor.Create(char_literal63);
-					adaptor.AddChild(root_0, char_literal63_tree);
-					DebugLocation(147, 20);
+					DebugLocation(175, 16);
+					char_literal35=(IToken)Match(input,DOT,Follow._DOT_in_namespaceDeclare954); 
+					char_literal35_tree = (CommonTree)adaptor.Create(char_literal35);
+					adaptor.AddChild(root_0, char_literal35_tree);
+					DebugLocation(175, 20);
 
-					set64=(IToken)input.LT(1);
+					set36=(IToken)input.LT(1);
 					if (input.LA(1)==IDENTIFIER||input.LA(1)==MUL)
 					{
 						input.Consume();
-						adaptor.AddChild(root_0, (CommonTree)adaptor.Create(set64));
+						adaptor.AddChild(root_0, (CommonTree)adaptor.Create(set36));
 						state.errorRecovery=false;
 					}
 					else
@@ -2849,14 +2236,14 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 
 				default:
-					goto loop23;
+					goto loop17;
 				}
 			}
 
-			loop23:
+			loop17:
 				;
 
-			} finally { DebugExitSubRule(23); }
+			} finally { DebugExitSubRule(17); }
 
 
 			}
@@ -2876,11 +2263,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("namespaceDeclare", 12);
-			LeaveRule("namespaceDeclare", 12);
+			TraceOut("namespaceDeclare", 10);
+			LeaveRule("namespaceDeclare", 10);
 			LeaveRule_namespaceDeclare();
 		}
-		DebugLocation(148, 1);
+		DebugLocation(176, 1);
 		} finally { DebugExitRule(GrammarFileName, "namespaceDeclare"); }
 		return retval;
 
@@ -2891,37 +2278,37 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_embeddedStatement();
 
 	// $ANTLR start "embeddedStatement"
-	// C:\\work\\ReoScript\\ReoScript.g:150:1: embeddedStatement : ( block | statementExpression SEMI !| ifelse | forStatement | foreachStatement | whileStatement | switchStatement | terminalStatement | tryCatchStatement );
+	// C:\\work\\ReoScript\\ReoScript.g:178:1: embeddedStatement : ( block | statementExpression SEMI !| ifelse | forStatement | foreachStatement | whileStatement | switchStatement | terminalStatement | tryCatchStatement );
 	[GrammarRule("embeddedStatement")]
 	private AstParserRuleReturnScope<CommonTree, IToken> embeddedStatement()
 	{
 		EnterRule_embeddedStatement();
-		EnterRule("embeddedStatement", 13);
-		TraceIn("embeddedStatement", 13);
+		EnterRule("embeddedStatement", 11);
+		TraceIn("embeddedStatement", 11);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken SEMI67 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> block65 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> statementExpression66 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> ifelse68 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> forStatement69 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> foreachStatement70 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> whileStatement71 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> switchStatement72 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> terminalStatement73 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> tryCatchStatement74 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken SEMI39 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> block37 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> statementExpression38 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> ifelse40 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> forStatement41 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> foreachStatement42 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> whileStatement43 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> switchStatement44 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> terminalStatement45 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> tryCatchStatement46 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree SEMI67_tree = default(CommonTree);
+		CommonTree SEMI39_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "embeddedStatement");
-		DebugLocation(150, 1);
+		DebugLocation(178, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:151:2: ( block | statementExpression SEMI !| ifelse | forStatement | foreachStatement | whileStatement | switchStatement | terminalStatement | tryCatchStatement )
-			int alt24=9;
-			try { DebugEnterDecision(24, false);
+			// C:\\work\\ReoScript\\ReoScript.g:179:2: ( block | statementExpression SEMI !| ifelse | forStatement | foreachStatement | whileStatement | switchStatement | terminalStatement | tryCatchStatement )
+			int alt18=9;
+			try { DebugEnterDecision(18, false);
 			switch (input.LA(1))
 			{
 			case LCURLY:
@@ -2932,6 +2319,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				case DECREMENT:
 				case HEX_LITERATE:
 				case INCREMENT:
+				case INTERNAL:
 				case LBRACE:
 				case LCURLY:
 				case LIT_FALSE:
@@ -2946,8 +2334,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				case THIS:
 				case TYPE:
 				case UNDEFINED:
-				case 124:
-				case 127:
+				case 125:
 				case 128:
 				case 130:
 				case 132:
@@ -2962,24 +2349,24 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				case 142:
 				case 144:
 					{
-					alt24 = 1;
+					alt18 = 1;
 					}
 					break;
 				case IDENTIFIER:
 					{
-					int LA24_10 = input.LA(3);
+					int LA18_10 = input.LA(3);
 
-					if (((LA24_10>=ASSIGNMENT && LA24_10<=ASSIGN_RSHIFT)||LA24_10==DECREMENT||LA24_10==DOT||LA24_10==INCREMENT||(LA24_10>=LBRACE && LA24_10<=LCURLY)||LA24_10==LPAREN||LA24_10==SEMI||LA24_10==123))
+					if (((LA18_10>=ASSIGNMENT && LA18_10<=ASSIGN_RSHIFT)||LA18_10==DECREMENT||LA18_10==DOT||LA18_10==INCREMENT||(LA18_10>=LBRACE && LA18_10<=LCURLY)||LA18_10==LPAREN||LA18_10==SEMI||LA18_10==124))
 					{
-						alt24 = 1;
+						alt18 = 1;
 					}
-					else if ((LA24_10==COLON))
+					else if ((LA18_10==COLON))
 					{
-						alt24 = 2;
+						alt18 = 2;
 					}
 					else
 					{
-						NoViableAltException nvae = new NoViableAltException("", 24, 10, input);
+						NoViableAltException nvae = new NoViableAltException("", 18, 10, input);
 						DebugRecognitionException(nvae);
 						throw nvae;
 					}
@@ -2987,19 +2374,19 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 				case STRING_LITERATE:
 					{
-					int LA24_11 = input.LA(3);
+					int LA18_11 = input.LA(3);
 
-					if (((LA24_11>=ASSIGNMENT && LA24_11<=ASSIGN_RSHIFT)||LA24_11==DECREMENT||LA24_11==DOT||LA24_11==INCREMENT||(LA24_11>=LBRACE && LA24_11<=LCURLY)||LA24_11==LPAREN||LA24_11==SEMI))
+					if (((LA18_11>=ASSIGNMENT && LA18_11<=ASSIGN_RSHIFT)||LA18_11==DECREMENT||LA18_11==DOT||LA18_11==INCREMENT||(LA18_11>=LBRACE && LA18_11<=LCURLY)||LA18_11==LPAREN||LA18_11==SEMI))
 					{
-						alt24 = 1;
+						alt18 = 1;
 					}
-					else if ((LA24_11==COLON))
+					else if ((LA18_11==COLON))
 					{
-						alt24 = 2;
+						alt18 = 2;
 					}
 					else
 					{
-						NoViableAltException nvae = new NoViableAltException("", 24, 11, input);
+						NoViableAltException nvae = new NoViableAltException("", 18, 11, input);
 						DebugRecognitionException(nvae);
 						throw nvae;
 					}
@@ -3014,6 +2401,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					case ELSE:
 					case HEX_LITERATE:
 					case IDENTIFIER:
+					case INTERNAL:
 					case LBRACE:
 					case LCURLY:
 					case LESS_THAN:
@@ -3031,10 +2419,9 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					case THIS:
 					case TYPE:
 					case UNDEFINED:
-					case 122:
-					case 124:
+					case 123:
 					case 125:
-					case 127:
+					case 126:
 					case 128:
 					case 129:
 					case 130:
@@ -3050,24 +2437,24 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					case 142:
 					case 144:
 						{
-						alt24 = 1;
+						alt18 = 1;
 						}
 						break;
 					case INCREMENT:
 						{
-						int LA24_14 = input.LA(4);
+						int LA18_14 = input.LA(4);
 
-						if ((LA24_14==BINARY_LITERATE||(LA24_14>=HEX_LITERATE && LA24_14<=IDENTIFIER)||(LA24_14>=LBRACE && LA24_14<=LCURLY)||(LA24_14>=LIT_FALSE && LA24_14<=LIT_TRUE)||LA24_14==LPAREN||LA24_14==NAN||LA24_14==NUMBER_LITERATE||LA24_14==STRING_LITERATE||LA24_14==THIS||LA24_14==UNDEFINED||LA24_14==133))
+						if ((LA18_14==BINARY_LITERATE||(LA18_14>=HEX_LITERATE && LA18_14<=IDENTIFIER)||(LA18_14>=LBRACE && LA18_14<=LCURLY)||(LA18_14>=LIT_FALSE && LA18_14<=LIT_TRUE)||LA18_14==LPAREN||LA18_14==NAN||LA18_14==NUMBER_LITERATE||LA18_14==STRING_LITERATE||LA18_14==THIS||LA18_14==UNDEFINED||LA18_14==133))
 						{
-							alt24 = 1;
+							alt18 = 1;
 						}
-						else if ((LA24_14==SEMI))
+						else if ((LA18_14==SEMI))
 						{
-							alt24 = 2;
+							alt18 = 2;
 						}
 						else
 						{
-							NoViableAltException nvae = new NoViableAltException("", 24, 14, input);
+							NoViableAltException nvae = new NoViableAltException("", 18, 14, input);
 							DebugRecognitionException(nvae);
 							throw nvae;
 						}
@@ -3075,19 +2462,19 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 						break;
 					case DECREMENT:
 						{
-						int LA24_15 = input.LA(4);
+						int LA18_15 = input.LA(4);
 
-						if ((LA24_15==BINARY_LITERATE||(LA24_15>=HEX_LITERATE && LA24_15<=IDENTIFIER)||(LA24_15>=LBRACE && LA24_15<=LCURLY)||(LA24_15>=LIT_FALSE && LA24_15<=LIT_TRUE)||LA24_15==LPAREN||LA24_15==NAN||LA24_15==NUMBER_LITERATE||LA24_15==STRING_LITERATE||LA24_15==THIS||LA24_15==UNDEFINED||LA24_15==133))
+						if ((LA18_15==BINARY_LITERATE||(LA18_15>=HEX_LITERATE && LA18_15<=IDENTIFIER)||(LA18_15>=LBRACE && LA18_15<=LCURLY)||(LA18_15>=LIT_FALSE && LA18_15<=LIT_TRUE)||LA18_15==LPAREN||LA18_15==NAN||LA18_15==NUMBER_LITERATE||LA18_15==STRING_LITERATE||LA18_15==THIS||LA18_15==UNDEFINED||LA18_15==133))
 						{
-							alt24 = 1;
+							alt18 = 1;
 						}
-						else if ((LA24_15==SEMI))
+						else if ((LA18_15==SEMI))
 						{
-							alt24 = 2;
+							alt18 = 2;
 						}
 						else
 						{
-							NoViableAltException nvae = new NoViableAltException("", 24, 15, input);
+							NoViableAltException nvae = new NoViableAltException("", 18, 15, input);
 							DebugRecognitionException(nvae);
 							throw nvae;
 						}
@@ -3107,12 +2494,12 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					case DOT:
 					case SEMI:
 						{
-						alt24 = 2;
+						alt18 = 2;
 						}
 						break;
 					default:
 						{
-							NoViableAltException nvae = new NoViableAltException("", 24, 12, input);
+							NoViableAltException nvae = new NoViableAltException("", 18, 12, input);
 							DebugRecognitionException(nvae);
 							throw nvae;
 						}
@@ -3122,12 +2509,12 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 				case COMMA:
 					{
-					alt24 = 2;
+					alt18 = 2;
 					}
 					break;
 				default:
 					{
-						NoViableAltException nvae = new NoViableAltException("", 24, 1, input);
+						NoViableAltException nvae = new NoViableAltException("", 18, 1, input);
 						DebugRecognitionException(nvae);
 						throw nvae;
 					}
@@ -3154,48 +2541,48 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			case 133:
 			case 137:
 				{
-				alt24 = 2;
+				alt18 = 2;
 				}
 				break;
 			case 134:
 				{
-				alt24 = 3;
+				alt18 = 3;
 				}
 				break;
 			case 132:
 				{
-				int LA24_4 = input.LA(2);
+				int LA18_4 = input.LA(2);
 
-				if ((LA24_4==LPAREN))
+				if ((LA18_4==LPAREN))
 				{
 					switch (input.LA(3))
 					{
 					case TYPE:
 						{
-						int LA24_16 = input.LA(4);
+						int LA18_16 = input.LA(4);
 
-						if ((LA24_16==IDENTIFIER))
+						if ((LA18_16==IDENTIFIER))
 						{
-							int LA24_19 = input.LA(5);
+							int LA18_19 = input.LA(5);
 
-							if ((LA24_19==136))
+							if ((LA18_19==136))
 							{
-								alt24 = 5;
+								alt18 = 5;
 							}
-							else if ((LA24_19==ASSIGNMENT||LA24_19==COMMA||LA24_19==SEMI))
+							else if ((LA18_19==ASSIGNMENT||LA18_19==COMMA||LA18_19==SEMI))
 							{
-								alt24 = 4;
+								alt18 = 4;
 							}
 							else
 							{
-								NoViableAltException nvae = new NoViableAltException("", 24, 19, input);
+								NoViableAltException nvae = new NoViableAltException("", 18, 19, input);
 								DebugRecognitionException(nvae);
 								throw nvae;
 							}
 						}
 						else
 						{
-							NoViableAltException nvae = new NoViableAltException("", 24, 16, input);
+							NoViableAltException nvae = new NoViableAltException("", 18, 16, input);
 							DebugRecognitionException(nvae);
 							throw nvae;
 						}
@@ -3203,19 +2590,19 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 						break;
 					case IDENTIFIER:
 						{
-						int LA24_17 = input.LA(4);
+						int LA18_17 = input.LA(4);
 
-						if (((LA24_17>=ASSIGNMENT && LA24_17<=ASSIGN_RSHIFT)||LA24_17==COMMA||LA24_17==DECREMENT||LA24_17==DOT||LA24_17==INCREMENT||(LA24_17>=LBRACE && LA24_17<=LCURLY)||LA24_17==LPAREN||LA24_17==SEMI||LA24_17==123))
+						if (((LA18_17>=ASSIGNMENT && LA18_17<=ASSIGN_RSHIFT)||LA18_17==COMMA||LA18_17==DECREMENT||LA18_17==DOT||LA18_17==INCREMENT||(LA18_17>=LBRACE && LA18_17<=LCURLY)||LA18_17==LPAREN||LA18_17==SEMI||LA18_17==124))
 						{
-							alt24 = 4;
+							alt18 = 4;
 						}
-						else if ((LA24_17==136))
+						else if ((LA18_17==136))
 						{
-							alt24 = 5;
+							alt18 = 5;
 						}
 						else
 						{
-							NoViableAltException nvae = new NoViableAltException("", 24, 17, input);
+							NoViableAltException nvae = new NoViableAltException("", 18, 17, input);
 							DebugRecognitionException(nvae);
 							throw nvae;
 						}
@@ -3241,12 +2628,12 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					case 133:
 					case 137:
 						{
-						alt24 = 4;
+						alt18 = 4;
 						}
 						break;
 					default:
 						{
-							NoViableAltException nvae = new NoViableAltException("", 24, 13, input);
+							NoViableAltException nvae = new NoViableAltException("", 18, 13, input);
 							DebugRecognitionException(nvae);
 							throw nvae;
 						}
@@ -3255,7 +2642,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				}
 				else
 				{
-					NoViableAltException nvae = new NoViableAltException("", 24, 4, input);
+					NoViableAltException nvae = new NoViableAltException("", 18, 4, input);
 					DebugRecognitionException(nvae);
 					throw nvae;
 				}
@@ -3263,172 +2650,172 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 144:
 				{
-				alt24 = 6;
+				alt18 = 6;
 				}
 				break;
 			case 139:
 				{
-				alt24 = 7;
+				alt18 = 7;
 				}
 				break;
-			case 124:
+			case 125:
 			case 128:
 			case 138:
 				{
-				alt24 = 8;
+				alt18 = 8;
 				}
 				break;
 			case 141:
 			case 142:
 				{
-				alt24 = 9;
+				alt18 = 9;
 				}
 				break;
 			default:
 				{
-					NoViableAltException nvae = new NoViableAltException("", 24, 0, input);
+					NoViableAltException nvae = new NoViableAltException("", 18, 0, input);
 					DebugRecognitionException(nvae);
 					throw nvae;
 				}
 			}
 
-			} finally { DebugExitDecision(24); }
-			switch (alt24)
+			} finally { DebugExitDecision(18); }
+			switch (alt18)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:152:4: block
+				// C:\\work\\ReoScript\\ReoScript.g:180:4: block
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(152, 4);
-				PushFollow(Follow._block_in_embeddedStatement1078);
-				block65=block();
+				DebugLocation(180, 4);
+				PushFollow(Follow._block_in_embeddedStatement977);
+				block37=block();
 				PopFollow();
 
-				adaptor.AddChild(root_0, block65.Tree);
+				adaptor.AddChild(root_0, block37.Tree);
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:153:4: statementExpression SEMI !
+				// C:\\work\\ReoScript\\ReoScript.g:181:4: statementExpression SEMI !
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(153, 4);
-				PushFollow(Follow._statementExpression_in_embeddedStatement1083);
-				statementExpression66=statementExpression();
+				DebugLocation(181, 4);
+				PushFollow(Follow._statementExpression_in_embeddedStatement982);
+				statementExpression38=statementExpression();
 				PopFollow();
 
-				adaptor.AddChild(root_0, statementExpression66.Tree);
-				DebugLocation(153, 28);
-				SEMI67=(IToken)Match(input,SEMI,Follow._SEMI_in_embeddedStatement1085); 
+				adaptor.AddChild(root_0, statementExpression38.Tree);
+				DebugLocation(181, 28);
+				SEMI39=(IToken)Match(input,SEMI,Follow._SEMI_in_embeddedStatement984); 
 
 				}
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// C:\\work\\ReoScript\\ReoScript.g:154:4: ifelse
+				// C:\\work\\ReoScript\\ReoScript.g:182:4: ifelse
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(154, 4);
-				PushFollow(Follow._ifelse_in_embeddedStatement1091);
-				ifelse68=ifelse();
+				DebugLocation(182, 4);
+				PushFollow(Follow._ifelse_in_embeddedStatement990);
+				ifelse40=ifelse();
 				PopFollow();
 
-				adaptor.AddChild(root_0, ifelse68.Tree);
+				adaptor.AddChild(root_0, ifelse40.Tree);
 
 				}
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// C:\\work\\ReoScript\\ReoScript.g:155:4: forStatement
+				// C:\\work\\ReoScript\\ReoScript.g:183:4: forStatement
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(155, 4);
-				PushFollow(Follow._forStatement_in_embeddedStatement1096);
-				forStatement69=forStatement();
+				DebugLocation(183, 4);
+				PushFollow(Follow._forStatement_in_embeddedStatement995);
+				forStatement41=forStatement();
 				PopFollow();
 
-				adaptor.AddChild(root_0, forStatement69.Tree);
+				adaptor.AddChild(root_0, forStatement41.Tree);
 
 				}
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// C:\\work\\ReoScript\\ReoScript.g:156:4: foreachStatement
+				// C:\\work\\ReoScript\\ReoScript.g:184:4: foreachStatement
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(156, 4);
-				PushFollow(Follow._foreachStatement_in_embeddedStatement1101);
-				foreachStatement70=foreachStatement();
+				DebugLocation(184, 4);
+				PushFollow(Follow._foreachStatement_in_embeddedStatement1000);
+				foreachStatement42=foreachStatement();
 				PopFollow();
 
-				adaptor.AddChild(root_0, foreachStatement70.Tree);
+				adaptor.AddChild(root_0, foreachStatement42.Tree);
 
 				}
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// C:\\work\\ReoScript\\ReoScript.g:157:4: whileStatement
+				// C:\\work\\ReoScript\\ReoScript.g:185:4: whileStatement
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(157, 4);
-				PushFollow(Follow._whileStatement_in_embeddedStatement1106);
-				whileStatement71=whileStatement();
+				DebugLocation(185, 4);
+				PushFollow(Follow._whileStatement_in_embeddedStatement1005);
+				whileStatement43=whileStatement();
 				PopFollow();
 
-				adaptor.AddChild(root_0, whileStatement71.Tree);
+				adaptor.AddChild(root_0, whileStatement43.Tree);
 
 				}
 				break;
 			case 7:
 				DebugEnterAlt(7);
-				// C:\\work\\ReoScript\\ReoScript.g:158:4: switchStatement
+				// C:\\work\\ReoScript\\ReoScript.g:186:4: switchStatement
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(158, 4);
-				PushFollow(Follow._switchStatement_in_embeddedStatement1111);
-				switchStatement72=switchStatement();
+				DebugLocation(186, 4);
+				PushFollow(Follow._switchStatement_in_embeddedStatement1010);
+				switchStatement44=switchStatement();
 				PopFollow();
 
-				adaptor.AddChild(root_0, switchStatement72.Tree);
+				adaptor.AddChild(root_0, switchStatement44.Tree);
 
 				}
 				break;
 			case 8:
 				DebugEnterAlt(8);
-				// C:\\work\\ReoScript\\ReoScript.g:159:4: terminalStatement
+				// C:\\work\\ReoScript\\ReoScript.g:187:4: terminalStatement
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(159, 4);
-				PushFollow(Follow._terminalStatement_in_embeddedStatement1116);
-				terminalStatement73=terminalStatement();
+				DebugLocation(187, 4);
+				PushFollow(Follow._terminalStatement_in_embeddedStatement1015);
+				terminalStatement45=terminalStatement();
 				PopFollow();
 
-				adaptor.AddChild(root_0, terminalStatement73.Tree);
+				adaptor.AddChild(root_0, terminalStatement45.Tree);
 
 				}
 				break;
 			case 9:
 				DebugEnterAlt(9);
-				// C:\\work\\ReoScript\\ReoScript.g:160:4: tryCatchStatement
+				// C:\\work\\ReoScript\\ReoScript.g:188:4: tryCatchStatement
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(160, 4);
-				PushFollow(Follow._tryCatchStatement_in_embeddedStatement1121);
-				tryCatchStatement74=tryCatchStatement();
+				DebugLocation(188, 4);
+				PushFollow(Follow._tryCatchStatement_in_embeddedStatement1020);
+				tryCatchStatement46=tryCatchStatement();
 				PopFollow();
 
-				adaptor.AddChild(root_0, tryCatchStatement74.Tree);
+				adaptor.AddChild(root_0, tryCatchStatement46.Tree);
 
 				}
 				break;
@@ -3449,11 +2836,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("embeddedStatement", 13);
-			LeaveRule("embeddedStatement", 13);
+			TraceOut("embeddedStatement", 11);
+			LeaveRule("embeddedStatement", 11);
 			LeaveRule_embeddedStatement();
 		}
-		DebugLocation(161, 1);
+		DebugLocation(189, 1);
 		} finally { DebugExitRule(GrammarFileName, "embeddedStatement"); }
 		return retval;
 
@@ -3464,44 +2851,44 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_statementExpression();
 
 	// $ANTLR start "statementExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:163:1: statementExpression : ( invocationExpression | 'new' primaryExpression -> ^( CREATE primaryExpression ) | 'delete' primaryExpression -> ^( DELETE_PROP primaryExpression ) | '++' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '++' ) | '--' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '--' ) );
+	// C:\\work\\ReoScript\\ReoScript.g:191:1: statementExpression : ( invocationExpression | 'new' primaryExpression -> ^( CREATE primaryExpression ) | 'delete' primaryExpression -> ^( DELETE_PROP primaryExpression ) | '++' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '++' ) | '--' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '--' ) );
 	[GrammarRule("statementExpression")]
 	private AstParserRuleReturnScope<CommonTree, IToken> statementExpression()
 	{
 		EnterRule_statementExpression();
-		EnterRule("statementExpression", 14);
-		TraceIn("statementExpression", 14);
+		EnterRule("statementExpression", 12);
+		TraceIn("statementExpression", 12);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken string_literal76 = default(IToken);
-		IToken string_literal78 = default(IToken);
-		IToken string_literal80 = default(IToken);
-		IToken string_literal82 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> invocationExpression75 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression77 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression79 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression81 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression83 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken string_literal48 = default(IToken);
+		IToken string_literal50 = default(IToken);
+		IToken string_literal52 = default(IToken);
+		IToken string_literal54 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> invocationExpression47 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression49 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression51 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression53 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression55 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree string_literal76_tree = default(CommonTree);
-		CommonTree string_literal78_tree = default(CommonTree);
-		CommonTree string_literal80_tree = default(CommonTree);
-		CommonTree string_literal82_tree = default(CommonTree);
+		CommonTree string_literal48_tree = default(CommonTree);
+		CommonTree string_literal50_tree = default(CommonTree);
+		CommonTree string_literal52_tree = default(CommonTree);
+		CommonTree string_literal54_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_INCREMENT=new RewriteRuleITokenStream(adaptor,"token INCREMENT");
 		RewriteRuleITokenStream stream_137=new RewriteRuleITokenStream(adaptor,"token 137");
 		RewriteRuleITokenStream stream_DECREMENT=new RewriteRuleITokenStream(adaptor,"token DECREMENT");
 		RewriteRuleITokenStream stream_130=new RewriteRuleITokenStream(adaptor,"token 130");
 		RewriteRuleSubtreeStream stream_primaryExpression=new RewriteRuleSubtreeStream(adaptor,"rule primaryExpression");
 		try { DebugEnterRule(GrammarFileName, "statementExpression");
-		DebugLocation(163, 1);
+		DebugLocation(191, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:164:2: ( invocationExpression | 'new' primaryExpression -> ^( CREATE primaryExpression ) | 'delete' primaryExpression -> ^( DELETE_PROP primaryExpression ) | '++' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '++' ) | '--' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '--' ) )
-			int alt25=5;
-			try { DebugEnterDecision(25, false);
+			// C:\\work\\ReoScript\\ReoScript.g:192:2: ( invocationExpression | 'new' primaryExpression -> ^( CREATE primaryExpression ) | 'delete' primaryExpression -> ^( DELETE_PROP primaryExpression ) | '++' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '++' ) | '--' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '--' ) )
+			int alt19=5;
+			try { DebugEnterDecision(19, false);
 			switch (input.LA(1))
 			{
 			case BINARY_LITERATE:
@@ -3520,69 +2907,69 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			case UNDEFINED:
 			case 133:
 				{
-				alt25 = 1;
+				alt19 = 1;
 				}
 				break;
 			case 137:
 				{
-				alt25 = 2;
+				alt19 = 2;
 				}
 				break;
 			case 130:
 				{
-				alt25 = 3;
+				alt19 = 3;
 				}
 				break;
 			case INCREMENT:
 				{
-				alt25 = 4;
+				alt19 = 4;
 				}
 				break;
 			case DECREMENT:
 				{
-				alt25 = 5;
+				alt19 = 5;
 				}
 				break;
 			default:
 				{
-					NoViableAltException nvae = new NoViableAltException("", 25, 0, input);
+					NoViableAltException nvae = new NoViableAltException("", 19, 0, input);
 					DebugRecognitionException(nvae);
 					throw nvae;
 				}
 			}
 
-			} finally { DebugExitDecision(25); }
-			switch (alt25)
+			} finally { DebugExitDecision(19); }
+			switch (alt19)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:166:2: invocationExpression
+				// C:\\work\\ReoScript\\ReoScript.g:194:2: invocationExpression
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(166, 2);
-				PushFollow(Follow._invocationExpression_in_statementExpression1136);
-				invocationExpression75=invocationExpression();
+				DebugLocation(194, 2);
+				PushFollow(Follow._invocationExpression_in_statementExpression1035);
+				invocationExpression47=invocationExpression();
 				PopFollow();
 
-				adaptor.AddChild(root_0, invocationExpression75.Tree);
+				adaptor.AddChild(root_0, invocationExpression47.Tree);
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:167:4: 'new' primaryExpression
+				// C:\\work\\ReoScript\\ReoScript.g:195:4: 'new' primaryExpression
 				{
-				DebugLocation(167, 4);
-				string_literal76=(IToken)Match(input,137,Follow._137_in_statementExpression1141);  
-				stream_137.Add(string_literal76);
+				DebugLocation(195, 4);
+				string_literal48=(IToken)Match(input,137,Follow._137_in_statementExpression1040);  
+				stream_137.Add(string_literal48);
 
-				DebugLocation(167, 10);
-				PushFollow(Follow._primaryExpression_in_statementExpression1143);
-				primaryExpression77=primaryExpression();
+				DebugLocation(195, 10);
+				PushFollow(Follow._primaryExpression_in_statementExpression1042);
+				primaryExpression49=primaryExpression();
 				PopFollow();
 
-				stream_primaryExpression.Add(primaryExpression77.Tree);
+				stream_primaryExpression.Add(primaryExpression49.Tree);
 
 
 				{
@@ -3597,16 +2984,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 168:3: -> ^( CREATE primaryExpression )
+				// 196:3: -> ^( CREATE primaryExpression )
 				{
-					DebugLocation(168, 6);
-					// C:\\work\\ReoScript\\ReoScript.g:168:6: ^( CREATE primaryExpression )
+					DebugLocation(196, 6);
+					// C:\\work\\ReoScript\\ReoScript.g:196:6: ^( CREATE primaryExpression )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(168, 8);
+					DebugLocation(196, 8);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(CREATE, "CREATE"), root_1);
 
-					DebugLocation(168, 15);
+					DebugLocation(196, 15);
 					adaptor.AddChild(root_1, stream_primaryExpression.NextTree());
 
 					adaptor.AddChild(root_0, root_1);
@@ -3621,18 +3008,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// C:\\work\\ReoScript\\ReoScript.g:169:4: 'delete' primaryExpression
+				// C:\\work\\ReoScript\\ReoScript.g:197:4: 'delete' primaryExpression
 				{
-				DebugLocation(169, 4);
-				string_literal78=(IToken)Match(input,130,Follow._130_in_statementExpression1158);  
-				stream_130.Add(string_literal78);
+				DebugLocation(197, 4);
+				string_literal50=(IToken)Match(input,130,Follow._130_in_statementExpression1057);  
+				stream_130.Add(string_literal50);
 
-				DebugLocation(169, 13);
-				PushFollow(Follow._primaryExpression_in_statementExpression1160);
-				primaryExpression79=primaryExpression();
+				DebugLocation(197, 13);
+				PushFollow(Follow._primaryExpression_in_statementExpression1059);
+				primaryExpression51=primaryExpression();
 				PopFollow();
 
-				stream_primaryExpression.Add(primaryExpression79.Tree);
+				stream_primaryExpression.Add(primaryExpression51.Tree);
 
 
 				{
@@ -3647,16 +3034,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 170:3: -> ^( DELETE_PROP primaryExpression )
+				// 198:3: -> ^( DELETE_PROP primaryExpression )
 				{
-					DebugLocation(170, 6);
-					// C:\\work\\ReoScript\\ReoScript.g:170:6: ^( DELETE_PROP primaryExpression )
+					DebugLocation(198, 6);
+					// C:\\work\\ReoScript\\ReoScript.g:198:6: ^( DELETE_PROP primaryExpression )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(170, 8);
+					DebugLocation(198, 8);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(DELETE_PROP, "DELETE_PROP"), root_1);
 
-					DebugLocation(170, 20);
+					DebugLocation(198, 20);
 					adaptor.AddChild(root_1, stream_primaryExpression.NextTree());
 
 					adaptor.AddChild(root_0, root_1);
@@ -3671,23 +3058,23 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// C:\\work\\ReoScript\\ReoScript.g:171:4: '++' primaryExpression
+				// C:\\work\\ReoScript\\ReoScript.g:199:4: '++' primaryExpression
 				{
-				DebugLocation(171, 4);
-				string_literal80=(IToken)Match(input,INCREMENT,Follow._INCREMENT_in_statementExpression1176);  
-				stream_INCREMENT.Add(string_literal80);
+				DebugLocation(199, 4);
+				string_literal52=(IToken)Match(input,INCREMENT,Follow._INCREMENT_in_statementExpression1075);  
+				stream_INCREMENT.Add(string_literal52);
 
-				DebugLocation(171, 9);
-				PushFollow(Follow._primaryExpression_in_statementExpression1178);
-				primaryExpression81=primaryExpression();
+				DebugLocation(199, 9);
+				PushFollow(Follow._primaryExpression_in_statementExpression1077);
+				primaryExpression53=primaryExpression();
 				PopFollow();
 
-				stream_primaryExpression.Add(primaryExpression81.Tree);
+				stream_primaryExpression.Add(primaryExpression53.Tree);
 
 
 				{
 				// AST REWRITE
-				// elements: primaryExpression, INCREMENT
+				// elements: INCREMENT, primaryExpression
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -3697,18 +3084,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 172:3: -> ^( PRE_UNARY_STEP primaryExpression '++' )
+				// 200:3: -> ^( PRE_UNARY_STEP primaryExpression '++' )
 				{
-					DebugLocation(172, 6);
-					// C:\\work\\ReoScript\\ReoScript.g:172:6: ^( PRE_UNARY_STEP primaryExpression '++' )
+					DebugLocation(200, 6);
+					// C:\\work\\ReoScript\\ReoScript.g:200:6: ^( PRE_UNARY_STEP primaryExpression '++' )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(172, 8);
+					DebugLocation(200, 8);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PRE_UNARY_STEP, "PRE_UNARY_STEP"), root_1);
 
-					DebugLocation(172, 23);
+					DebugLocation(200, 23);
 					adaptor.AddChild(root_1, stream_primaryExpression.NextTree());
-					DebugLocation(172, 41);
+					DebugLocation(200, 41);
 					adaptor.AddChild(root_1, stream_INCREMENT.NextNode());
 
 					adaptor.AddChild(root_0, root_1);
@@ -3723,23 +3110,23 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// C:\\work\\ReoScript\\ReoScript.g:173:4: '--' primaryExpression
+				// C:\\work\\ReoScript\\ReoScript.g:201:4: '--' primaryExpression
 				{
-				DebugLocation(173, 4);
-				string_literal82=(IToken)Match(input,DECREMENT,Follow._DECREMENT_in_statementExpression1195);  
-				stream_DECREMENT.Add(string_literal82);
+				DebugLocation(201, 4);
+				string_literal54=(IToken)Match(input,DECREMENT,Follow._DECREMENT_in_statementExpression1094);  
+				stream_DECREMENT.Add(string_literal54);
 
-				DebugLocation(173, 9);
-				PushFollow(Follow._primaryExpression_in_statementExpression1197);
-				primaryExpression83=primaryExpression();
+				DebugLocation(201, 9);
+				PushFollow(Follow._primaryExpression_in_statementExpression1096);
+				primaryExpression55=primaryExpression();
 				PopFollow();
 
-				stream_primaryExpression.Add(primaryExpression83.Tree);
+				stream_primaryExpression.Add(primaryExpression55.Tree);
 
 
 				{
 				// AST REWRITE
-				// elements: DECREMENT, primaryExpression
+				// elements: primaryExpression, DECREMENT
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -3749,18 +3136,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 174:3: -> ^( PRE_UNARY_STEP primaryExpression '--' )
+				// 202:3: -> ^( PRE_UNARY_STEP primaryExpression '--' )
 				{
-					DebugLocation(174, 6);
-					// C:\\work\\ReoScript\\ReoScript.g:174:6: ^( PRE_UNARY_STEP primaryExpression '--' )
+					DebugLocation(202, 6);
+					// C:\\work\\ReoScript\\ReoScript.g:202:6: ^( PRE_UNARY_STEP primaryExpression '--' )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(174, 8);
+					DebugLocation(202, 8);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PRE_UNARY_STEP, "PRE_UNARY_STEP"), root_1);
 
-					DebugLocation(174, 23);
+					DebugLocation(202, 23);
 					adaptor.AddChild(root_1, stream_primaryExpression.NextTree());
-					DebugLocation(174, 41);
+					DebugLocation(202, 41);
 					adaptor.AddChild(root_1, stream_DECREMENT.NextNode());
 
 					adaptor.AddChild(root_0, root_1);
@@ -3790,11 +3177,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("statementExpression", 14);
-			LeaveRule("statementExpression", 14);
+			TraceOut("statementExpression", 12);
+			LeaveRule("statementExpression", 12);
 			LeaveRule_statementExpression();
 		}
-		DebugLocation(175, 1);
+		DebugLocation(203, 1);
 		} finally { DebugExitRule(GrammarFileName, "statementExpression"); }
 		return retval;
 
@@ -3805,130 +3192,130 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_localMemberVariableDeclaration();
 
 	// $ANTLR start "localMemberVariableDeclaration"
-	// C:\\work\\ReoScript\\ReoScript.g:177:1: localMemberVariableDeclaration : ( memberModifier )? TYPE localVariableDeclarationAssignment ( ',' localVariableDeclarationAssignment )* -> ^( MEMBER_DECLARATION ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ ) ^( MEMBER_MODIFIER ( memberModifier )? ) ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:205:1: localMemberVariableDeclaration : ( memberModifier )? TYPE localVariableDeclarationAssignment ( ',' localVariableDeclarationAssignment )* -> ^( MEMBER_DECLARATION ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ ) ^( MEMBER_MODIFIER ( memberModifier )? ) ) ;
 	[GrammarRule("localMemberVariableDeclaration")]
 	private AstParserRuleReturnScope<CommonTree, IToken> localMemberVariableDeclaration()
 	{
 		EnterRule_localMemberVariableDeclaration();
-		EnterRule("localMemberVariableDeclaration", 15);
-		TraceIn("localMemberVariableDeclaration", 15);
+		EnterRule("localMemberVariableDeclaration", 13);
+		TraceIn("localMemberVariableDeclaration", 13);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken TYPE85 = default(IToken);
-		IToken char_literal87 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> memberModifier84 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> localVariableDeclarationAssignment86 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> localVariableDeclarationAssignment88 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken TYPE57 = default(IToken);
+		IToken char_literal59 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> memberModifier56 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> localVariableDeclarationAssignment58 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> localVariableDeclarationAssignment60 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree TYPE85_tree = default(CommonTree);
-		CommonTree char_literal87_tree = default(CommonTree);
+		CommonTree TYPE57_tree = default(CommonTree);
+		CommonTree char_literal59_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_COMMA=new RewriteRuleITokenStream(adaptor,"token COMMA");
 		RewriteRuleITokenStream stream_TYPE=new RewriteRuleITokenStream(adaptor,"token TYPE");
 		RewriteRuleSubtreeStream stream_memberModifier=new RewriteRuleSubtreeStream(adaptor,"rule memberModifier");
 		RewriteRuleSubtreeStream stream_localVariableDeclarationAssignment=new RewriteRuleSubtreeStream(adaptor,"rule localVariableDeclarationAssignment");
 		try { DebugEnterRule(GrammarFileName, "localMemberVariableDeclaration");
-		DebugLocation(177, 1);
+		DebugLocation(205, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:178:2: ( ( memberModifier )? TYPE localVariableDeclarationAssignment ( ',' localVariableDeclarationAssignment )* -> ^( MEMBER_DECLARATION ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ ) ^( MEMBER_MODIFIER ( memberModifier )? ) ) )
+			// C:\\work\\ReoScript\\ReoScript.g:206:2: ( ( memberModifier )? TYPE localVariableDeclarationAssignment ( ',' localVariableDeclarationAssignment )* -> ^( MEMBER_DECLARATION ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ ) ^( MEMBER_MODIFIER ( memberModifier )? ) ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:178:4: ( memberModifier )? TYPE localVariableDeclarationAssignment ( ',' localVariableDeclarationAssignment )*
+			// C:\\work\\ReoScript\\ReoScript.g:206:4: ( memberModifier )? TYPE localVariableDeclarationAssignment ( ',' localVariableDeclarationAssignment )*
 			{
-			DebugLocation(178, 4);
-			// C:\\work\\ReoScript\\ReoScript.g:178:4: ( memberModifier )?
-			int alt26=2;
-			try { DebugEnterSubRule(26);
-			try { DebugEnterDecision(26, false);
-			int LA26_0 = input.LA(1);
+			DebugLocation(206, 4);
+			// C:\\work\\ReoScript\\ReoScript.g:206:4: ( memberModifier )?
+			int alt20=2;
+			try { DebugEnterSubRule(20);
+			try { DebugEnterDecision(20, false);
+			int LA20_0 = input.LA(1);
 
-			if ((LA26_0==PRIVATE||(LA26_0>=PROTECTED && LA26_0<=PUBLIC)))
+			if ((LA20_0==INTERNAL||LA20_0==PRIVATE||(LA20_0>=PROTECTED && LA20_0<=PUBLIC)))
 			{
-				alt26 = 1;
+				alt20 = 1;
 			}
-			} finally { DebugExitDecision(26); }
-			switch (alt26)
+			} finally { DebugExitDecision(20); }
+			switch (alt20)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:178:4: memberModifier
+				// C:\\work\\ReoScript\\ReoScript.g:206:4: memberModifier
 				{
-				DebugLocation(178, 4);
-				PushFollow(Follow._memberModifier_in_localMemberVariableDeclaration1220);
-				memberModifier84=memberModifier();
+				DebugLocation(206, 4);
+				PushFollow(Follow._memberModifier_in_localMemberVariableDeclaration1119);
+				memberModifier56=memberModifier();
 				PopFollow();
 
-				stream_memberModifier.Add(memberModifier84.Tree);
+				stream_memberModifier.Add(memberModifier56.Tree);
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(26); }
+			} finally { DebugExitSubRule(20); }
 
-			DebugLocation(178, 20);
-			TYPE85=(IToken)Match(input,TYPE,Follow._TYPE_in_localMemberVariableDeclaration1223);  
-			stream_TYPE.Add(TYPE85);
+			DebugLocation(206, 20);
+			TYPE57=(IToken)Match(input,TYPE,Follow._TYPE_in_localMemberVariableDeclaration1122);  
+			stream_TYPE.Add(TYPE57);
 
-			DebugLocation(178, 25);
-			PushFollow(Follow._localVariableDeclarationAssignment_in_localMemberVariableDeclaration1225);
-			localVariableDeclarationAssignment86=localVariableDeclarationAssignment();
+			DebugLocation(206, 25);
+			PushFollow(Follow._localVariableDeclarationAssignment_in_localMemberVariableDeclaration1124);
+			localVariableDeclarationAssignment58=localVariableDeclarationAssignment();
 			PopFollow();
 
-			stream_localVariableDeclarationAssignment.Add(localVariableDeclarationAssignment86.Tree);
-			DebugLocation(178, 60);
-			// C:\\work\\ReoScript\\ReoScript.g:178:60: ( ',' localVariableDeclarationAssignment )*
-			try { DebugEnterSubRule(27);
+			stream_localVariableDeclarationAssignment.Add(localVariableDeclarationAssignment58.Tree);
+			DebugLocation(206, 60);
+			// C:\\work\\ReoScript\\ReoScript.g:206:60: ( ',' localVariableDeclarationAssignment )*
+			try { DebugEnterSubRule(21);
 			while (true)
 			{
-				int alt27=2;
-				try { DebugEnterDecision(27, false);
-				int LA27_0 = input.LA(1);
+				int alt21=2;
+				try { DebugEnterDecision(21, false);
+				int LA21_0 = input.LA(1);
 
-				if ((LA27_0==COMMA))
+				if ((LA21_0==COMMA))
 				{
-					alt27 = 1;
+					alt21 = 1;
 				}
 
 
-				} finally { DebugExitDecision(27); }
-				switch ( alt27 )
+				} finally { DebugExitDecision(21); }
+				switch ( alt21 )
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:178:61: ',' localVariableDeclarationAssignment
+					// C:\\work\\ReoScript\\ReoScript.g:206:61: ',' localVariableDeclarationAssignment
 					{
-					DebugLocation(178, 61);
-					char_literal87=(IToken)Match(input,COMMA,Follow._COMMA_in_localMemberVariableDeclaration1228);  
-					stream_COMMA.Add(char_literal87);
+					DebugLocation(206, 61);
+					char_literal59=(IToken)Match(input,COMMA,Follow._COMMA_in_localMemberVariableDeclaration1127);  
+					stream_COMMA.Add(char_literal59);
 
-					DebugLocation(178, 65);
-					PushFollow(Follow._localVariableDeclarationAssignment_in_localMemberVariableDeclaration1230);
-					localVariableDeclarationAssignment88=localVariableDeclarationAssignment();
+					DebugLocation(206, 65);
+					PushFollow(Follow._localVariableDeclarationAssignment_in_localMemberVariableDeclaration1129);
+					localVariableDeclarationAssignment60=localVariableDeclarationAssignment();
 					PopFollow();
 
-					stream_localVariableDeclarationAssignment.Add(localVariableDeclarationAssignment88.Tree);
+					stream_localVariableDeclarationAssignment.Add(localVariableDeclarationAssignment60.Tree);
 
 					}
 					break;
 
 				default:
-					goto loop27;
+					goto loop21;
 				}
 			}
 
-			loop27:
+			loop21:
 				;
 
-			} finally { DebugExitSubRule(27); }
+			} finally { DebugExitSubRule(21); }
 
 
 
 			{
 			// AST REWRITE
-			// elements: TYPE, localVariableDeclarationAssignment, memberModifier
+			// elements: localVariableDeclarationAssignment, memberModifier, TYPE
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -3938,32 +3325,32 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 179:3: -> ^( MEMBER_DECLARATION ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ ) ^( MEMBER_MODIFIER ( memberModifier )? ) )
+			// 207:3: -> ^( MEMBER_DECLARATION ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ ) ^( MEMBER_MODIFIER ( memberModifier )? ) )
 			{
-				DebugLocation(179, 6);
-				// C:\\work\\ReoScript\\ReoScript.g:179:6: ^( MEMBER_DECLARATION ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ ) ^( MEMBER_MODIFIER ( memberModifier )? ) )
+				DebugLocation(207, 6);
+				// C:\\work\\ReoScript\\ReoScript.g:207:6: ^( MEMBER_DECLARATION ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ ) ^( MEMBER_MODIFIER ( memberModifier )? ) )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(179, 8);
+				DebugLocation(207, 8);
 				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(MEMBER_DECLARATION, "MEMBER_DECLARATION"), root_1);
 
-				DebugLocation(179, 27);
-				// C:\\work\\ReoScript\\ReoScript.g:179:27: ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ )
+				DebugLocation(207, 27);
+				// C:\\work\\ReoScript\\ReoScript.g:207:27: ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(179, 29);
+				DebugLocation(207, 29);
 				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(DECLARATION, "DECLARATION"), root_2);
 
-				DebugLocation(179, 41);
+				DebugLocation(207, 41);
 				adaptor.AddChild(root_2, stream_TYPE.NextNode());
-				DebugLocation(179, 46);
+				DebugLocation(207, 46);
 				if (!(stream_localVariableDeclarationAssignment.HasNext))
 				{
 					throw new RewriteEarlyExitException();
 				}
 				while ( stream_localVariableDeclarationAssignment.HasNext )
 				{
-					DebugLocation(179, 46);
+					DebugLocation(207, 46);
 					adaptor.AddChild(root_2, stream_localVariableDeclarationAssignment.NextTree());
 
 				}
@@ -3971,18 +3358,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 				adaptor.AddChild(root_1, root_2);
 				}
-				DebugLocation(179, 83);
-				// C:\\work\\ReoScript\\ReoScript.g:179:83: ^( MEMBER_MODIFIER ( memberModifier )? )
+				DebugLocation(207, 83);
+				// C:\\work\\ReoScript\\ReoScript.g:207:83: ^( MEMBER_MODIFIER ( memberModifier )? )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(179, 85);
+				DebugLocation(207, 85);
 				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(MEMBER_MODIFIER, "MEMBER_MODIFIER"), root_2);
 
-				DebugLocation(179, 101);
-				// C:\\work\\ReoScript\\ReoScript.g:179:101: ( memberModifier )?
+				DebugLocation(207, 101);
+				// C:\\work\\ReoScript\\ReoScript.g:207:101: ( memberModifier )?
 				if (stream_memberModifier.HasNext)
 				{
-					DebugLocation(179, 101);
+					DebugLocation(207, 101);
 					adaptor.AddChild(root_2, stream_memberModifier.NextTree());
 
 				}
@@ -4016,11 +3403,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("localMemberVariableDeclaration", 15);
-			LeaveRule("localMemberVariableDeclaration", 15);
+			TraceOut("localMemberVariableDeclaration", 13);
+			LeaveRule("localMemberVariableDeclaration", 13);
 			LeaveRule_localMemberVariableDeclaration();
 		}
-		DebugLocation(180, 1);
+		DebugLocation(208, 1);
 		} finally { DebugExitRule(GrammarFileName, "localMemberVariableDeclaration"); }
 		return retval;
 
@@ -4031,97 +3418,97 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_localVariableDeclaration();
 
 	// $ANTLR start "localVariableDeclaration"
-	// C:\\work\\ReoScript\\ReoScript.g:182:1: localVariableDeclaration : TYPE localVariableDeclarationAssignment ( ',' localVariableDeclarationAssignment )* -> ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:210:1: localVariableDeclaration : TYPE localVariableDeclarationAssignment ( ',' localVariableDeclarationAssignment )* -> ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ ) ;
 	[GrammarRule("localVariableDeclaration")]
 	private AstParserRuleReturnScope<CommonTree, IToken> localVariableDeclaration()
 	{
 		EnterRule_localVariableDeclaration();
-		EnterRule("localVariableDeclaration", 16);
-		TraceIn("localVariableDeclaration", 16);
+		EnterRule("localVariableDeclaration", 14);
+		TraceIn("localVariableDeclaration", 14);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken TYPE89 = default(IToken);
-		IToken char_literal91 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> localVariableDeclarationAssignment90 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> localVariableDeclarationAssignment92 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken TYPE61 = default(IToken);
+		IToken char_literal63 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> localVariableDeclarationAssignment62 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> localVariableDeclarationAssignment64 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree TYPE89_tree = default(CommonTree);
-		CommonTree char_literal91_tree = default(CommonTree);
+		CommonTree TYPE61_tree = default(CommonTree);
+		CommonTree char_literal63_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_COMMA=new RewriteRuleITokenStream(adaptor,"token COMMA");
 		RewriteRuleITokenStream stream_TYPE=new RewriteRuleITokenStream(adaptor,"token TYPE");
 		RewriteRuleSubtreeStream stream_localVariableDeclarationAssignment=new RewriteRuleSubtreeStream(adaptor,"rule localVariableDeclarationAssignment");
 		try { DebugEnterRule(GrammarFileName, "localVariableDeclaration");
-		DebugLocation(182, 1);
+		DebugLocation(210, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:183:2: ( TYPE localVariableDeclarationAssignment ( ',' localVariableDeclarationAssignment )* -> ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ ) )
+			// C:\\work\\ReoScript\\ReoScript.g:211:2: ( TYPE localVariableDeclarationAssignment ( ',' localVariableDeclarationAssignment )* -> ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:183:4: TYPE localVariableDeclarationAssignment ( ',' localVariableDeclarationAssignment )*
+			// C:\\work\\ReoScript\\ReoScript.g:211:4: TYPE localVariableDeclarationAssignment ( ',' localVariableDeclarationAssignment )*
 			{
-			DebugLocation(183, 4);
-			TYPE89=(IToken)Match(input,TYPE,Follow._TYPE_in_localVariableDeclaration1268);  
-			stream_TYPE.Add(TYPE89);
+			DebugLocation(211, 4);
+			TYPE61=(IToken)Match(input,TYPE,Follow._TYPE_in_localVariableDeclaration1166);  
+			stream_TYPE.Add(TYPE61);
 
-			DebugLocation(183, 9);
-			PushFollow(Follow._localVariableDeclarationAssignment_in_localVariableDeclaration1270);
-			localVariableDeclarationAssignment90=localVariableDeclarationAssignment();
+			DebugLocation(211, 9);
+			PushFollow(Follow._localVariableDeclarationAssignment_in_localVariableDeclaration1168);
+			localVariableDeclarationAssignment62=localVariableDeclarationAssignment();
 			PopFollow();
 
-			stream_localVariableDeclarationAssignment.Add(localVariableDeclarationAssignment90.Tree);
-			DebugLocation(183, 44);
-			// C:\\work\\ReoScript\\ReoScript.g:183:44: ( ',' localVariableDeclarationAssignment )*
-			try { DebugEnterSubRule(28);
+			stream_localVariableDeclarationAssignment.Add(localVariableDeclarationAssignment62.Tree);
+			DebugLocation(211, 44);
+			// C:\\work\\ReoScript\\ReoScript.g:211:44: ( ',' localVariableDeclarationAssignment )*
+			try { DebugEnterSubRule(22);
 			while (true)
 			{
-				int alt28=2;
-				try { DebugEnterDecision(28, false);
-				int LA28_0 = input.LA(1);
+				int alt22=2;
+				try { DebugEnterDecision(22, false);
+				int LA22_0 = input.LA(1);
 
-				if ((LA28_0==COMMA))
+				if ((LA22_0==COMMA))
 				{
-					alt28 = 1;
+					alt22 = 1;
 				}
 
 
-				} finally { DebugExitDecision(28); }
-				switch ( alt28 )
+				} finally { DebugExitDecision(22); }
+				switch ( alt22 )
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:183:45: ',' localVariableDeclarationAssignment
+					// C:\\work\\ReoScript\\ReoScript.g:211:45: ',' localVariableDeclarationAssignment
 					{
-					DebugLocation(183, 45);
-					char_literal91=(IToken)Match(input,COMMA,Follow._COMMA_in_localVariableDeclaration1273);  
-					stream_COMMA.Add(char_literal91);
+					DebugLocation(211, 45);
+					char_literal63=(IToken)Match(input,COMMA,Follow._COMMA_in_localVariableDeclaration1171);  
+					stream_COMMA.Add(char_literal63);
 
-					DebugLocation(183, 49);
-					PushFollow(Follow._localVariableDeclarationAssignment_in_localVariableDeclaration1275);
-					localVariableDeclarationAssignment92=localVariableDeclarationAssignment();
+					DebugLocation(211, 49);
+					PushFollow(Follow._localVariableDeclarationAssignment_in_localVariableDeclaration1173);
+					localVariableDeclarationAssignment64=localVariableDeclarationAssignment();
 					PopFollow();
 
-					stream_localVariableDeclarationAssignment.Add(localVariableDeclarationAssignment92.Tree);
+					stream_localVariableDeclarationAssignment.Add(localVariableDeclarationAssignment64.Tree);
 
 					}
 					break;
 
 				default:
-					goto loop28;
+					goto loop22;
 				}
 			}
 
-			loop28:
+			loop22:
 				;
 
-			} finally { DebugExitSubRule(28); }
+			} finally { DebugExitSubRule(22); }
 
 
 
 			{
 			// AST REWRITE
-			// elements: TYPE, localVariableDeclarationAssignment
+			// elements: localVariableDeclarationAssignment, TYPE
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -4131,25 +3518,25 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 184:3: -> ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ )
+			// 212:3: -> ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ )
 			{
-				DebugLocation(184, 6);
-				// C:\\work\\ReoScript\\ReoScript.g:184:6: ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ )
+				DebugLocation(212, 6);
+				// C:\\work\\ReoScript\\ReoScript.g:212:6: ^( DECLARATION TYPE ( localVariableDeclarationAssignment )+ )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(184, 8);
+				DebugLocation(212, 8);
 				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(DECLARATION, "DECLARATION"), root_1);
 
-				DebugLocation(184, 20);
+				DebugLocation(212, 20);
 				adaptor.AddChild(root_1, stream_TYPE.NextNode());
-				DebugLocation(184, 25);
+				DebugLocation(212, 25);
 				if (!(stream_localVariableDeclarationAssignment.HasNext))
 				{
 					throw new RewriteEarlyExitException();
 				}
 				while ( stream_localVariableDeclarationAssignment.HasNext )
 				{
-					DebugLocation(184, 25);
+					DebugLocation(212, 25);
 					adaptor.AddChild(root_1, stream_localVariableDeclarationAssignment.NextTree());
 
 				}
@@ -4180,11 +3567,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("localVariableDeclaration", 16);
-			LeaveRule("localVariableDeclaration", 16);
+			TraceOut("localVariableDeclaration", 14);
+			LeaveRule("localVariableDeclaration", 14);
 			LeaveRule_localVariableDeclaration();
 		}
-		DebugLocation(185, 1);
+		DebugLocation(213, 1);
 		} finally { DebugExitRule(GrammarFileName, "localVariableDeclaration"); }
 		return retval;
 
@@ -4195,79 +3582,79 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_localVariableDeclarationAssignment();
 
 	// $ANTLR start "localVariableDeclarationAssignment"
-	// C:\\work\\ReoScript\\ReoScript.g:187:1: localVariableDeclarationAssignment : IDENTIFIER ( '=' expression )? -> ^( LOCAL_DECLARE_ASSIGNMENT IDENTIFIER ( expression )? ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:215:1: localVariableDeclarationAssignment : id= IDENTIFIER ( '=' exp= expression )? ->;
 	[GrammarRule("localVariableDeclarationAssignment")]
 	private AstParserRuleReturnScope<CommonTree, IToken> localVariableDeclarationAssignment()
 	{
 		EnterRule_localVariableDeclarationAssignment();
-		EnterRule("localVariableDeclarationAssignment", 17);
-		TraceIn("localVariableDeclarationAssignment", 17);
+		EnterRule("localVariableDeclarationAssignment", 15);
+		TraceIn("localVariableDeclarationAssignment", 15);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken IDENTIFIER93 = default(IToken);
-		IToken char_literal94 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> expression95 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken id = default(IToken);
+		IToken char_literal65 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> exp = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree IDENTIFIER93_tree = default(CommonTree);
-		CommonTree char_literal94_tree = default(CommonTree);
+		CommonTree id_tree = default(CommonTree);
+		CommonTree char_literal65_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_ASSIGNMENT=new RewriteRuleITokenStream(adaptor,"token ASSIGNMENT");
 		RewriteRuleITokenStream stream_IDENTIFIER=new RewriteRuleITokenStream(adaptor,"token IDENTIFIER");
 		RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
 		try { DebugEnterRule(GrammarFileName, "localVariableDeclarationAssignment");
-		DebugLocation(187, 1);
+		DebugLocation(215, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:188:2: ( IDENTIFIER ( '=' expression )? -> ^( LOCAL_DECLARE_ASSIGNMENT IDENTIFIER ( expression )? ) )
+			// C:\\work\\ReoScript\\ReoScript.g:216:2: (id= IDENTIFIER ( '=' exp= expression )? ->)
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:188:4: IDENTIFIER ( '=' expression )?
+			// C:\\work\\ReoScript\\ReoScript.g:216:4: id= IDENTIFIER ( '=' exp= expression )?
 			{
-			DebugLocation(188, 4);
-			IDENTIFIER93=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_localVariableDeclarationAssignment1301);  
-			stream_IDENTIFIER.Add(IDENTIFIER93);
+			DebugLocation(216, 6);
+			id=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_localVariableDeclarationAssignment1201);  
+			stream_IDENTIFIER.Add(id);
 
-			DebugLocation(188, 15);
-			// C:\\work\\ReoScript\\ReoScript.g:188:15: ( '=' expression )?
-			int alt29=2;
-			try { DebugEnterSubRule(29);
-			try { DebugEnterDecision(29, false);
-			int LA29_0 = input.LA(1);
+			DebugLocation(216, 18);
+			// C:\\work\\ReoScript\\ReoScript.g:216:18: ( '=' exp= expression )?
+			int alt23=2;
+			try { DebugEnterSubRule(23);
+			try { DebugEnterDecision(23, false);
+			int LA23_0 = input.LA(1);
 
-			if ((LA29_0==ASSIGNMENT))
+			if ((LA23_0==ASSIGNMENT))
 			{
-				alt29 = 1;
+				alt23 = 1;
 			}
-			} finally { DebugExitDecision(29); }
-			switch (alt29)
+			} finally { DebugExitDecision(23); }
+			switch (alt23)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:188:16: '=' expression
+				// C:\\work\\ReoScript\\ReoScript.g:216:19: '=' exp= expression
 				{
-				DebugLocation(188, 16);
-				char_literal94=(IToken)Match(input,ASSIGNMENT,Follow._ASSIGNMENT_in_localVariableDeclarationAssignment1304);  
-				stream_ASSIGNMENT.Add(char_literal94);
+				DebugLocation(216, 19);
+				char_literal65=(IToken)Match(input,ASSIGNMENT,Follow._ASSIGNMENT_in_localVariableDeclarationAssignment1204);  
+				stream_ASSIGNMENT.Add(char_literal65);
 
-				DebugLocation(188, 20);
-				PushFollow(Follow._expression_in_localVariableDeclarationAssignment1306);
-				expression95=expression();
+				DebugLocation(216, 26);
+				PushFollow(Follow._expression_in_localVariableDeclarationAssignment1208);
+				exp=expression();
 				PopFollow();
 
-				stream_expression.Add(expression95.Tree);
+				stream_expression.Add(exp.Tree);
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(29); }
+			} finally { DebugExitSubRule(23); }
 
 
 
 			{
 			// AST REWRITE
-			// elements: expression, IDENTIFIER
+			// elements: 
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -4277,29 +3664,10 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 189:3: -> ^( LOCAL_DECLARE_ASSIGNMENT IDENTIFIER ( expression )? )
+			// 217:3: ->
 			{
-				DebugLocation(189, 6);
-				// C:\\work\\ReoScript\\ReoScript.g:189:6: ^( LOCAL_DECLARE_ASSIGNMENT IDENTIFIER ( expression )? )
-				{
-				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(189, 8);
-				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(LOCAL_DECLARE_ASSIGNMENT, "LOCAL_DECLARE_ASSIGNMENT"), root_1);
-
-				DebugLocation(189, 33);
-				adaptor.AddChild(root_1, stream_IDENTIFIER.NextNode());
-				DebugLocation(189, 44);
-				// C:\\work\\ReoScript\\ReoScript.g:189:44: ( expression )?
-				if (stream_expression.HasNext)
-				{
-					DebugLocation(189, 44);
-					adaptor.AddChild(root_1, stream_expression.NextTree());
-
-				}
-				stream_expression.Reset();
-
-				adaptor.AddChild(root_0, root_1);
-				}
+				DebugLocation(217, 6);
+				adaptor.AddChild(root_0,  DefineLocalVariable(id.Text, exp == null ? null : exp.Tree, retval.Start.Line, retval.Start.CharPositionInLine));
 
 			}
 
@@ -4323,11 +3691,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("localVariableDeclarationAssignment", 17);
-			LeaveRule("localVariableDeclarationAssignment", 17);
+			TraceOut("localVariableDeclarationAssignment", 15);
+			LeaveRule("localVariableDeclarationAssignment", 15);
 			LeaveRule_localVariableDeclarationAssignment();
 		}
-		DebugLocation(190, 1);
+		DebugLocation(219, 1);
 		} finally { DebugExitRule(GrammarFileName, "localVariableDeclarationAssignment"); }
 		return retval;
 
@@ -4338,38 +3706,38 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_memberModifier();
 
 	// $ANTLR start "memberModifier"
-	// C:\\work\\ReoScript\\ReoScript.g:192:1: memberModifier : ( 'private' | 'protected' | 'public' );
+	// C:\\work\\ReoScript\\ReoScript.g:221:1: memberModifier : ( PRIVATE | INTERNAL | PROTECTED | PUBLIC );
 	[GrammarRule("memberModifier")]
 	private AstParserRuleReturnScope<CommonTree, IToken> memberModifier()
 	{
 		EnterRule_memberModifier();
-		EnterRule("memberModifier", 18);
-		TraceIn("memberModifier", 18);
+		EnterRule("memberModifier", 16);
+		TraceIn("memberModifier", 16);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken set96 = default(IToken);
+		IToken set66 = default(IToken);
 
-		CommonTree set96_tree = default(CommonTree);
+		CommonTree set66_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "memberModifier");
-		DebugLocation(192, 1);
+		DebugLocation(221, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:192:15: ( 'private' | 'protected' | 'public' )
+			// C:\\work\\ReoScript\\ReoScript.g:221:15: ( PRIVATE | INTERNAL | PROTECTED | PUBLIC )
 			DebugEnterAlt(1);
 			// C:\\work\\ReoScript\\ReoScript.g:
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(192, 15);
+			DebugLocation(221, 15);
 
-			set96=(IToken)input.LT(1);
-			if (input.LA(1)==PRIVATE||(input.LA(1)>=PROTECTED && input.LA(1)<=PUBLIC))
+			set66=(IToken)input.LT(1);
+			if (input.LA(1)==INTERNAL||input.LA(1)==PRIVATE||(input.LA(1)>=PROTECTED && input.LA(1)<=PUBLIC))
 			{
 				input.Consume();
-				adaptor.AddChild(root_0, (CommonTree)adaptor.Create(set96));
+				adaptor.AddChild(root_0, (CommonTree)adaptor.Create(set66));
 				state.errorRecovery=false;
 			}
 			else
@@ -4397,11 +3765,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("memberModifier", 18);
-			LeaveRule("memberModifier", 18);
+			TraceOut("memberModifier", 16);
+			LeaveRule("memberModifier", 16);
 			LeaveRule_memberModifier();
 		}
-		DebugLocation(194, 1);
+		DebugLocation(223, 1);
 		} finally { DebugExitRule(GrammarFileName, "memberModifier"); }
 		return retval;
 
@@ -4412,57 +3780,57 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_invocationExpression();
 
 	// $ANTLR start "invocationExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:196:1: invocationExpression : id= primaryExpression ( '=' expression -> ^( ASSIGNMENT $id expression ) | '+=' expression -> ^( ASSIGNMENT $id ^( PLUS $id expression ) ) | '-=' expression -> ^( ASSIGNMENT $id ^( MINUS $id expression ) ) | '*=' expression -> ^( ASSIGNMENT $id ^( MUL $id expression ) ) | '/=' expression -> ^( ASSIGNMENT $id ^( DIV $id expression ) ) | '%=' expression -> ^( ASSIGNMENT $id ^( MOD $id expression ) ) | '&=' expression -> ^( ASSIGNMENT $id ^( AND $id expression ) ) | '|=' expression -> ^( ASSIGNMENT $id ^( OR $id expression ) ) | '^=' expression -> ^( ASSIGNMENT $id ^( XOR $id expression ) ) | '<<=' expression -> ^( ASSIGNMENT $id ^( LSHIFT $id expression ) ) | '>>=' expression -> ^( ASSIGNMENT $id ^( RSHIFT $id expression ) ) | '++' -> ^( POST_UNARY_STEP $id '++' ) | '--' -> ^( POST_UNARY_STEP $id '--' ) | -> primaryExpression ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:225:1: invocationExpression : id= primaryExpression ( '=' expression -> ^( ASSIGNMENT $id expression ) | '+=' expression -> ^( ASSIGNMENT $id ^( PLUS $id expression ) ) | '-=' expression -> ^( ASSIGNMENT $id ^( MINUS $id expression ) ) | '*=' expression -> ^( ASSIGNMENT $id ^( MUL $id expression ) ) | '/=' expression -> ^( ASSIGNMENT $id ^( DIV $id expression ) ) | '%=' expression -> ^( ASSIGNMENT $id ^( MOD $id expression ) ) | '&=' expression -> ^( ASSIGNMENT $id ^( AND $id expression ) ) | '|=' expression -> ^( ASSIGNMENT $id ^( OR $id expression ) ) | '^=' expression -> ^( ASSIGNMENT $id ^( XOR $id expression ) ) | '<<=' expression -> ^( ASSIGNMENT $id ^( LSHIFT $id expression ) ) | '>>=' expression -> ^( ASSIGNMENT $id ^( RSHIFT $id expression ) ) | '++' -> ^( POST_UNARY_STEP $id '++' ) | '--' -> ^( POST_UNARY_STEP $id '--' ) | -> primaryExpression ) ;
 	[GrammarRule("invocationExpression")]
 	private AstParserRuleReturnScope<CommonTree, IToken> invocationExpression()
 	{
 		EnterRule_invocationExpression();
-		EnterRule("invocationExpression", 19);
-		TraceIn("invocationExpression", 19);
+		EnterRule("invocationExpression", 17);
+		TraceIn("invocationExpression", 17);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken char_literal97 = default(IToken);
-		IToken string_literal99 = default(IToken);
-		IToken string_literal101 = default(IToken);
-		IToken string_literal103 = default(IToken);
-		IToken string_literal105 = default(IToken);
-		IToken string_literal107 = default(IToken);
-		IToken string_literal109 = default(IToken);
-		IToken string_literal111 = default(IToken);
-		IToken string_literal113 = default(IToken);
-		IToken string_literal115 = default(IToken);
-		IToken string_literal117 = default(IToken);
-		IToken string_literal119 = default(IToken);
-		IToken string_literal120 = default(IToken);
+		IToken char_literal67 = default(IToken);
+		IToken string_literal69 = default(IToken);
+		IToken string_literal71 = default(IToken);
+		IToken string_literal73 = default(IToken);
+		IToken string_literal75 = default(IToken);
+		IToken string_literal77 = default(IToken);
+		IToken string_literal79 = default(IToken);
+		IToken string_literal81 = default(IToken);
+		IToken string_literal83 = default(IToken);
+		IToken string_literal85 = default(IToken);
+		IToken string_literal87 = default(IToken);
+		IToken string_literal89 = default(IToken);
+		IToken string_literal90 = default(IToken);
 		AstParserRuleReturnScope<CommonTree, IToken> id = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression98 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression100 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression102 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression104 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression106 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression108 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression110 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression112 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression114 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression116 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression118 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression68 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression70 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression72 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression74 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression76 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression78 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression80 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression82 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression84 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression86 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression88 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree char_literal97_tree = default(CommonTree);
-		CommonTree string_literal99_tree = default(CommonTree);
-		CommonTree string_literal101_tree = default(CommonTree);
-		CommonTree string_literal103_tree = default(CommonTree);
-		CommonTree string_literal105_tree = default(CommonTree);
-		CommonTree string_literal107_tree = default(CommonTree);
-		CommonTree string_literal109_tree = default(CommonTree);
-		CommonTree string_literal111_tree = default(CommonTree);
-		CommonTree string_literal113_tree = default(CommonTree);
-		CommonTree string_literal115_tree = default(CommonTree);
-		CommonTree string_literal117_tree = default(CommonTree);
-		CommonTree string_literal119_tree = default(CommonTree);
-		CommonTree string_literal120_tree = default(CommonTree);
+		CommonTree char_literal67_tree = default(CommonTree);
+		CommonTree string_literal69_tree = default(CommonTree);
+		CommonTree string_literal71_tree = default(CommonTree);
+		CommonTree string_literal73_tree = default(CommonTree);
+		CommonTree string_literal75_tree = default(CommonTree);
+		CommonTree string_literal77_tree = default(CommonTree);
+		CommonTree string_literal79_tree = default(CommonTree);
+		CommonTree string_literal81_tree = default(CommonTree);
+		CommonTree string_literal83_tree = default(CommonTree);
+		CommonTree string_literal85_tree = default(CommonTree);
+		CommonTree string_literal87_tree = default(CommonTree);
+		CommonTree string_literal89_tree = default(CommonTree);
+		CommonTree string_literal90_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_INCREMENT=new RewriteRuleITokenStream(adaptor,"token INCREMENT");
 		RewriteRuleITokenStream stream_ASSIGN_OR=new RewriteRuleITokenStream(adaptor,"token ASSIGN_OR");
 		RewriteRuleITokenStream stream_ASSIGN_MUL=new RewriteRuleITokenStream(adaptor,"token ASSIGN_MUL");
@@ -4479,128 +3847,128 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
 		RewriteRuleSubtreeStream stream_primaryExpression=new RewriteRuleSubtreeStream(adaptor,"rule primaryExpression");
 		try { DebugEnterRule(GrammarFileName, "invocationExpression");
-		DebugLocation(196, 1);
+		DebugLocation(225, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:197:2: (id= primaryExpression ( '=' expression -> ^( ASSIGNMENT $id expression ) | '+=' expression -> ^( ASSIGNMENT $id ^( PLUS $id expression ) ) | '-=' expression -> ^( ASSIGNMENT $id ^( MINUS $id expression ) ) | '*=' expression -> ^( ASSIGNMENT $id ^( MUL $id expression ) ) | '/=' expression -> ^( ASSIGNMENT $id ^( DIV $id expression ) ) | '%=' expression -> ^( ASSIGNMENT $id ^( MOD $id expression ) ) | '&=' expression -> ^( ASSIGNMENT $id ^( AND $id expression ) ) | '|=' expression -> ^( ASSIGNMENT $id ^( OR $id expression ) ) | '^=' expression -> ^( ASSIGNMENT $id ^( XOR $id expression ) ) | '<<=' expression -> ^( ASSIGNMENT $id ^( LSHIFT $id expression ) ) | '>>=' expression -> ^( ASSIGNMENT $id ^( RSHIFT $id expression ) ) | '++' -> ^( POST_UNARY_STEP $id '++' ) | '--' -> ^( POST_UNARY_STEP $id '--' ) | -> primaryExpression ) )
+			// C:\\work\\ReoScript\\ReoScript.g:226:2: (id= primaryExpression ( '=' expression -> ^( ASSIGNMENT $id expression ) | '+=' expression -> ^( ASSIGNMENT $id ^( PLUS $id expression ) ) | '-=' expression -> ^( ASSIGNMENT $id ^( MINUS $id expression ) ) | '*=' expression -> ^( ASSIGNMENT $id ^( MUL $id expression ) ) | '/=' expression -> ^( ASSIGNMENT $id ^( DIV $id expression ) ) | '%=' expression -> ^( ASSIGNMENT $id ^( MOD $id expression ) ) | '&=' expression -> ^( ASSIGNMENT $id ^( AND $id expression ) ) | '|=' expression -> ^( ASSIGNMENT $id ^( OR $id expression ) ) | '^=' expression -> ^( ASSIGNMENT $id ^( XOR $id expression ) ) | '<<=' expression -> ^( ASSIGNMENT $id ^( LSHIFT $id expression ) ) | '>>=' expression -> ^( ASSIGNMENT $id ^( RSHIFT $id expression ) ) | '++' -> ^( POST_UNARY_STEP $id '++' ) | '--' -> ^( POST_UNARY_STEP $id '--' ) | -> primaryExpression ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:198:4: id= primaryExpression ( '=' expression -> ^( ASSIGNMENT $id expression ) | '+=' expression -> ^( ASSIGNMENT $id ^( PLUS $id expression ) ) | '-=' expression -> ^( ASSIGNMENT $id ^( MINUS $id expression ) ) | '*=' expression -> ^( ASSIGNMENT $id ^( MUL $id expression ) ) | '/=' expression -> ^( ASSIGNMENT $id ^( DIV $id expression ) ) | '%=' expression -> ^( ASSIGNMENT $id ^( MOD $id expression ) ) | '&=' expression -> ^( ASSIGNMENT $id ^( AND $id expression ) ) | '|=' expression -> ^( ASSIGNMENT $id ^( OR $id expression ) ) | '^=' expression -> ^( ASSIGNMENT $id ^( XOR $id expression ) ) | '<<=' expression -> ^( ASSIGNMENT $id ^( LSHIFT $id expression ) ) | '>>=' expression -> ^( ASSIGNMENT $id ^( RSHIFT $id expression ) ) | '++' -> ^( POST_UNARY_STEP $id '++' ) | '--' -> ^( POST_UNARY_STEP $id '--' ) | -> primaryExpression )
+			// C:\\work\\ReoScript\\ReoScript.g:227:4: id= primaryExpression ( '=' expression -> ^( ASSIGNMENT $id expression ) | '+=' expression -> ^( ASSIGNMENT $id ^( PLUS $id expression ) ) | '-=' expression -> ^( ASSIGNMENT $id ^( MINUS $id expression ) ) | '*=' expression -> ^( ASSIGNMENT $id ^( MUL $id expression ) ) | '/=' expression -> ^( ASSIGNMENT $id ^( DIV $id expression ) ) | '%=' expression -> ^( ASSIGNMENT $id ^( MOD $id expression ) ) | '&=' expression -> ^( ASSIGNMENT $id ^( AND $id expression ) ) | '|=' expression -> ^( ASSIGNMENT $id ^( OR $id expression ) ) | '^=' expression -> ^( ASSIGNMENT $id ^( XOR $id expression ) ) | '<<=' expression -> ^( ASSIGNMENT $id ^( LSHIFT $id expression ) ) | '>>=' expression -> ^( ASSIGNMENT $id ^( RSHIFT $id expression ) ) | '++' -> ^( POST_UNARY_STEP $id '++' ) | '--' -> ^( POST_UNARY_STEP $id '--' ) | -> primaryExpression )
 			{
-			DebugLocation(198, 6);
-			PushFollow(Follow._primaryExpression_in_invocationExpression1357);
+			DebugLocation(227, 6);
+			PushFollow(Follow._primaryExpression_in_invocationExpression1257);
 			id=primaryExpression();
 			PopFollow();
 
 			stream_primaryExpression.Add(id.Tree);
-			DebugLocation(199, 4);
-			// C:\\work\\ReoScript\\ReoScript.g:199:4: ( '=' expression -> ^( ASSIGNMENT $id expression ) | '+=' expression -> ^( ASSIGNMENT $id ^( PLUS $id expression ) ) | '-=' expression -> ^( ASSIGNMENT $id ^( MINUS $id expression ) ) | '*=' expression -> ^( ASSIGNMENT $id ^( MUL $id expression ) ) | '/=' expression -> ^( ASSIGNMENT $id ^( DIV $id expression ) ) | '%=' expression -> ^( ASSIGNMENT $id ^( MOD $id expression ) ) | '&=' expression -> ^( ASSIGNMENT $id ^( AND $id expression ) ) | '|=' expression -> ^( ASSIGNMENT $id ^( OR $id expression ) ) | '^=' expression -> ^( ASSIGNMENT $id ^( XOR $id expression ) ) | '<<=' expression -> ^( ASSIGNMENT $id ^( LSHIFT $id expression ) ) | '>>=' expression -> ^( ASSIGNMENT $id ^( RSHIFT $id expression ) ) | '++' -> ^( POST_UNARY_STEP $id '++' ) | '--' -> ^( POST_UNARY_STEP $id '--' ) | -> primaryExpression )
-			int alt30=14;
-			try { DebugEnterSubRule(30);
-			try { DebugEnterDecision(30, false);
+			DebugLocation(228, 4);
+			// C:\\work\\ReoScript\\ReoScript.g:228:4: ( '=' expression -> ^( ASSIGNMENT $id expression ) | '+=' expression -> ^( ASSIGNMENT $id ^( PLUS $id expression ) ) | '-=' expression -> ^( ASSIGNMENT $id ^( MINUS $id expression ) ) | '*=' expression -> ^( ASSIGNMENT $id ^( MUL $id expression ) ) | '/=' expression -> ^( ASSIGNMENT $id ^( DIV $id expression ) ) | '%=' expression -> ^( ASSIGNMENT $id ^( MOD $id expression ) ) | '&=' expression -> ^( ASSIGNMENT $id ^( AND $id expression ) ) | '|=' expression -> ^( ASSIGNMENT $id ^( OR $id expression ) ) | '^=' expression -> ^( ASSIGNMENT $id ^( XOR $id expression ) ) | '<<=' expression -> ^( ASSIGNMENT $id ^( LSHIFT $id expression ) ) | '>>=' expression -> ^( ASSIGNMENT $id ^( RSHIFT $id expression ) ) | '++' -> ^( POST_UNARY_STEP $id '++' ) | '--' -> ^( POST_UNARY_STEP $id '--' ) | -> primaryExpression )
+			int alt24=14;
+			try { DebugEnterSubRule(24);
+			try { DebugEnterDecision(24, false);
 			switch (input.LA(1))
 			{
 			case ASSIGNMENT:
 				{
-				alt30 = 1;
+				alt24 = 1;
 				}
 				break;
 			case ASSIGN_PLUS:
 				{
-				alt30 = 2;
+				alt24 = 2;
 				}
 				break;
 			case ASSIGN_MINUS:
 				{
-				alt30 = 3;
+				alt24 = 3;
 				}
 				break;
 			case ASSIGN_MUL:
 				{
-				alt30 = 4;
+				alt24 = 4;
 				}
 				break;
 			case ASSIGN_DIV:
 				{
-				alt30 = 5;
+				alt24 = 5;
 				}
 				break;
 			case ASSIGN_REM:
 				{
-				alt30 = 6;
+				alt24 = 6;
 				}
 				break;
 			case ASSIGN_AND:
 				{
-				alt30 = 7;
+				alt24 = 7;
 				}
 				break;
 			case ASSIGN_OR:
 				{
-				alt30 = 8;
+				alt24 = 8;
 				}
 				break;
 			case ASSIGN_REV:
 				{
-				alt30 = 9;
+				alt24 = 9;
 				}
 				break;
 			case ASSIGN_LSHIFT:
 				{
-				alt30 = 10;
+				alt24 = 10;
 				}
 				break;
 			case ASSIGN_RSHIFT:
 				{
-				alt30 = 11;
+				alt24 = 11;
 				}
 				break;
 			case INCREMENT:
 				{
-				alt30 = 12;
+				alt24 = 12;
 				}
 				break;
 			case DECREMENT:
 				{
-				alt30 = 13;
+				alt24 = 13;
 				}
 				break;
 			case COMMA:
 			case RPAREN:
 			case SEMI:
 				{
-				alt30 = 14;
+				alt24 = 14;
 				}
 				break;
 			default:
 				{
-					NoViableAltException nvae = new NoViableAltException("", 30, 0, input);
+					NoViableAltException nvae = new NoViableAltException("", 24, 0, input);
 					DebugRecognitionException(nvae);
 					throw nvae;
 				}
 			}
 
-			} finally { DebugExitDecision(30); }
-			switch (alt30)
+			} finally { DebugExitDecision(24); }
+			switch (alt24)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:200:5: '=' expression
+				// C:\\work\\ReoScript\\ReoScript.g:229:5: '=' expression
 				{
-				DebugLocation(200, 5);
-				char_literal97=(IToken)Match(input,ASSIGNMENT,Follow._ASSIGNMENT_in_invocationExpression1368);  
-				stream_ASSIGNMENT.Add(char_literal97);
+				DebugLocation(229, 5);
+				char_literal67=(IToken)Match(input,ASSIGNMENT,Follow._ASSIGNMENT_in_invocationExpression1268);  
+				stream_ASSIGNMENT.Add(char_literal67);
 
-				DebugLocation(200, 9);
-				PushFollow(Follow._expression_in_invocationExpression1370);
-				expression98=expression();
+				DebugLocation(229, 9);
+				PushFollow(Follow._expression_in_invocationExpression1270);
+				expression68=expression();
 				PopFollow();
 
-				stream_expression.Add(expression98.Tree);
+				stream_expression.Add(expression68.Tree);
 
 
 				{
 				// AST REWRITE
-				// elements: id, expression
+				// elements: expression, id
 				// token labels: 
 				// rule labels: id, retval
 				// token list labels: 
@@ -4611,18 +3979,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 200:21: -> ^( ASSIGNMENT $id expression )
+				// 229:21: -> ^( ASSIGNMENT $id expression )
 				{
-					DebugLocation(200, 24);
-					// C:\\work\\ReoScript\\ReoScript.g:200:24: ^( ASSIGNMENT $id expression )
+					DebugLocation(229, 24);
+					// C:\\work\\ReoScript\\ReoScript.g:229:24: ^( ASSIGNMENT $id expression )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(200, 26);
+					DebugLocation(229, 26);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ASSIGNMENT, "ASSIGNMENT"), root_1);
 
-					DebugLocation(200, 38);
+					DebugLocation(229, 38);
 					adaptor.AddChild(root_1, stream_id.NextTree());
-					DebugLocation(200, 41);
+					DebugLocation(229, 41);
 					adaptor.AddChild(root_1, stream_expression.NextTree());
 
 					adaptor.AddChild(root_0, root_1);
@@ -4637,18 +4005,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:201:6: '+=' expression
+				// C:\\work\\ReoScript\\ReoScript.g:230:6: '+=' expression
 				{
-				DebugLocation(201, 6);
-				string_literal99=(IToken)Match(input,ASSIGN_PLUS,Follow._ASSIGN_PLUS_in_invocationExpression1389);  
-				stream_ASSIGN_PLUS.Add(string_literal99);
+				DebugLocation(230, 6);
+				string_literal69=(IToken)Match(input,ASSIGN_PLUS,Follow._ASSIGN_PLUS_in_invocationExpression1289);  
+				stream_ASSIGN_PLUS.Add(string_literal69);
 
-				DebugLocation(201, 11);
-				PushFollow(Follow._expression_in_invocationExpression1391);
-				expression100=expression();
+				DebugLocation(230, 11);
+				PushFollow(Follow._expression_in_invocationExpression1291);
+				expression70=expression();
 				PopFollow();
 
-				stream_expression.Add(expression100.Tree);
+				stream_expression.Add(expression70.Tree);
 
 
 				{
@@ -4664,27 +4032,27 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 201:23: -> ^( ASSIGNMENT $id ^( PLUS $id expression ) )
+				// 230:23: -> ^( ASSIGNMENT $id ^( PLUS $id expression ) )
 				{
-					DebugLocation(201, 26);
-					// C:\\work\\ReoScript\\ReoScript.g:201:26: ^( ASSIGNMENT $id ^( PLUS $id expression ) )
+					DebugLocation(230, 26);
+					// C:\\work\\ReoScript\\ReoScript.g:230:26: ^( ASSIGNMENT $id ^( PLUS $id expression ) )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(201, 28);
+					DebugLocation(230, 28);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ASSIGNMENT, "ASSIGNMENT"), root_1);
 
-					DebugLocation(201, 40);
+					DebugLocation(230, 40);
 					adaptor.AddChild(root_1, stream_id.NextTree());
-					DebugLocation(201, 43);
-					// C:\\work\\ReoScript\\ReoScript.g:201:43: ^( PLUS $id expression )
+					DebugLocation(230, 43);
+					// C:\\work\\ReoScript\\ReoScript.g:230:43: ^( PLUS $id expression )
 					{
 					CommonTree root_2 = (CommonTree)adaptor.Nil();
-					DebugLocation(201, 45);
+					DebugLocation(230, 45);
 					root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PLUS, "PLUS"), root_2);
 
-					DebugLocation(201, 51);
+					DebugLocation(230, 51);
 					adaptor.AddChild(root_2, stream_id.NextTree());
-					DebugLocation(201, 54);
+					DebugLocation(230, 54);
 					adaptor.AddChild(root_2, stream_expression.NextTree());
 
 					adaptor.AddChild(root_1, root_2);
@@ -4702,23 +4070,23 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// C:\\work\\ReoScript\\ReoScript.g:202:6: '-=' expression
+				// C:\\work\\ReoScript\\ReoScript.g:231:6: '-=' expression
 				{
-				DebugLocation(202, 6);
-				string_literal101=(IToken)Match(input,ASSIGN_MINUS,Follow._ASSIGN_MINUS_in_invocationExpression1417);  
-				stream_ASSIGN_MINUS.Add(string_literal101);
+				DebugLocation(231, 6);
+				string_literal71=(IToken)Match(input,ASSIGN_MINUS,Follow._ASSIGN_MINUS_in_invocationExpression1317);  
+				stream_ASSIGN_MINUS.Add(string_literal71);
 
-				DebugLocation(202, 11);
-				PushFollow(Follow._expression_in_invocationExpression1419);
-				expression102=expression();
+				DebugLocation(231, 11);
+				PushFollow(Follow._expression_in_invocationExpression1319);
+				expression72=expression();
 				PopFollow();
 
-				stream_expression.Add(expression102.Tree);
+				stream_expression.Add(expression72.Tree);
 
 
 				{
 				// AST REWRITE
-				// elements: id, id, expression
+				// elements: id, expression, id
 				// token labels: 
 				// rule labels: id, retval
 				// token list labels: 
@@ -4729,27 +4097,27 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 202:23: -> ^( ASSIGNMENT $id ^( MINUS $id expression ) )
+				// 231:23: -> ^( ASSIGNMENT $id ^( MINUS $id expression ) )
 				{
-					DebugLocation(202, 26);
-					// C:\\work\\ReoScript\\ReoScript.g:202:26: ^( ASSIGNMENT $id ^( MINUS $id expression ) )
+					DebugLocation(231, 26);
+					// C:\\work\\ReoScript\\ReoScript.g:231:26: ^( ASSIGNMENT $id ^( MINUS $id expression ) )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(202, 28);
+					DebugLocation(231, 28);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ASSIGNMENT, "ASSIGNMENT"), root_1);
 
-					DebugLocation(202, 40);
+					DebugLocation(231, 40);
 					adaptor.AddChild(root_1, stream_id.NextTree());
-					DebugLocation(202, 43);
-					// C:\\work\\ReoScript\\ReoScript.g:202:43: ^( MINUS $id expression )
+					DebugLocation(231, 43);
+					// C:\\work\\ReoScript\\ReoScript.g:231:43: ^( MINUS $id expression )
 					{
 					CommonTree root_2 = (CommonTree)adaptor.Nil();
-					DebugLocation(202, 45);
+					DebugLocation(231, 45);
 					root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(MINUS, "MINUS"), root_2);
 
-					DebugLocation(202, 52);
+					DebugLocation(231, 52);
 					adaptor.AddChild(root_2, stream_id.NextTree());
-					DebugLocation(202, 55);
+					DebugLocation(231, 55);
 					adaptor.AddChild(root_2, stream_expression.NextTree());
 
 					adaptor.AddChild(root_1, root_2);
@@ -4767,23 +4135,23 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// C:\\work\\ReoScript\\ReoScript.g:203:6: '*=' expression
+				// C:\\work\\ReoScript\\ReoScript.g:232:6: '*=' expression
 				{
-				DebugLocation(203, 6);
-				string_literal103=(IToken)Match(input,ASSIGN_MUL,Follow._ASSIGN_MUL_in_invocationExpression1445);  
-				stream_ASSIGN_MUL.Add(string_literal103);
+				DebugLocation(232, 6);
+				string_literal73=(IToken)Match(input,ASSIGN_MUL,Follow._ASSIGN_MUL_in_invocationExpression1345);  
+				stream_ASSIGN_MUL.Add(string_literal73);
 
-				DebugLocation(203, 11);
-				PushFollow(Follow._expression_in_invocationExpression1447);
-				expression104=expression();
+				DebugLocation(232, 11);
+				PushFollow(Follow._expression_in_invocationExpression1347);
+				expression74=expression();
 				PopFollow();
 
-				stream_expression.Add(expression104.Tree);
+				stream_expression.Add(expression74.Tree);
 
 
 				{
 				// AST REWRITE
-				// elements: id, id, expression
+				// elements: expression, id, id
 				// token labels: 
 				// rule labels: id, retval
 				// token list labels: 
@@ -4794,27 +4162,27 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 203:23: -> ^( ASSIGNMENT $id ^( MUL $id expression ) )
+				// 232:23: -> ^( ASSIGNMENT $id ^( MUL $id expression ) )
 				{
-					DebugLocation(203, 26);
-					// C:\\work\\ReoScript\\ReoScript.g:203:26: ^( ASSIGNMENT $id ^( MUL $id expression ) )
+					DebugLocation(232, 26);
+					// C:\\work\\ReoScript\\ReoScript.g:232:26: ^( ASSIGNMENT $id ^( MUL $id expression ) )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(203, 28);
+					DebugLocation(232, 28);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ASSIGNMENT, "ASSIGNMENT"), root_1);
 
-					DebugLocation(203, 40);
+					DebugLocation(232, 40);
 					adaptor.AddChild(root_1, stream_id.NextTree());
-					DebugLocation(203, 43);
-					// C:\\work\\ReoScript\\ReoScript.g:203:43: ^( MUL $id expression )
+					DebugLocation(232, 43);
+					// C:\\work\\ReoScript\\ReoScript.g:232:43: ^( MUL $id expression )
 					{
 					CommonTree root_2 = (CommonTree)adaptor.Nil();
-					DebugLocation(203, 45);
+					DebugLocation(232, 45);
 					root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(MUL, "MUL"), root_2);
 
-					DebugLocation(203, 50);
+					DebugLocation(232, 50);
 					adaptor.AddChild(root_2, stream_id.NextTree());
-					DebugLocation(203, 53);
+					DebugLocation(232, 53);
 					adaptor.AddChild(root_2, stream_expression.NextTree());
 
 					adaptor.AddChild(root_1, root_2);
@@ -4832,23 +4200,23 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// C:\\work\\ReoScript\\ReoScript.g:204:6: '/=' expression
+				// C:\\work\\ReoScript\\ReoScript.g:233:6: '/=' expression
 				{
-				DebugLocation(204, 6);
-				string_literal105=(IToken)Match(input,ASSIGN_DIV,Follow._ASSIGN_DIV_in_invocationExpression1473);  
-				stream_ASSIGN_DIV.Add(string_literal105);
+				DebugLocation(233, 6);
+				string_literal75=(IToken)Match(input,ASSIGN_DIV,Follow._ASSIGN_DIV_in_invocationExpression1373);  
+				stream_ASSIGN_DIV.Add(string_literal75);
 
-				DebugLocation(204, 11);
-				PushFollow(Follow._expression_in_invocationExpression1475);
-				expression106=expression();
+				DebugLocation(233, 11);
+				PushFollow(Follow._expression_in_invocationExpression1375);
+				expression76=expression();
 				PopFollow();
 
-				stream_expression.Add(expression106.Tree);
+				stream_expression.Add(expression76.Tree);
 
 
 				{
 				// AST REWRITE
-				// elements: id, expression, id
+				// elements: id, id, expression
 				// token labels: 
 				// rule labels: id, retval
 				// token list labels: 
@@ -4859,27 +4227,27 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 204:23: -> ^( ASSIGNMENT $id ^( DIV $id expression ) )
+				// 233:23: -> ^( ASSIGNMENT $id ^( DIV $id expression ) )
 				{
-					DebugLocation(204, 26);
-					// C:\\work\\ReoScript\\ReoScript.g:204:26: ^( ASSIGNMENT $id ^( DIV $id expression ) )
+					DebugLocation(233, 26);
+					// C:\\work\\ReoScript\\ReoScript.g:233:26: ^( ASSIGNMENT $id ^( DIV $id expression ) )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(204, 28);
+					DebugLocation(233, 28);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ASSIGNMENT, "ASSIGNMENT"), root_1);
 
-					DebugLocation(204, 40);
+					DebugLocation(233, 40);
 					adaptor.AddChild(root_1, stream_id.NextTree());
-					DebugLocation(204, 43);
-					// C:\\work\\ReoScript\\ReoScript.g:204:43: ^( DIV $id expression )
+					DebugLocation(233, 43);
+					// C:\\work\\ReoScript\\ReoScript.g:233:43: ^( DIV $id expression )
 					{
 					CommonTree root_2 = (CommonTree)adaptor.Nil();
-					DebugLocation(204, 45);
+					DebugLocation(233, 45);
 					root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(DIV, "DIV"), root_2);
 
-					DebugLocation(204, 50);
+					DebugLocation(233, 50);
 					adaptor.AddChild(root_2, stream_id.NextTree());
-					DebugLocation(204, 53);
+					DebugLocation(233, 53);
 					adaptor.AddChild(root_2, stream_expression.NextTree());
 
 					adaptor.AddChild(root_1, root_2);
@@ -4897,23 +4265,23 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// C:\\work\\ReoScript\\ReoScript.g:205:6: '%=' expression
+				// C:\\work\\ReoScript\\ReoScript.g:234:6: '%=' expression
 				{
-				DebugLocation(205, 6);
-				string_literal107=(IToken)Match(input,ASSIGN_REM,Follow._ASSIGN_REM_in_invocationExpression1501);  
-				stream_ASSIGN_REM.Add(string_literal107);
+				DebugLocation(234, 6);
+				string_literal77=(IToken)Match(input,ASSIGN_REM,Follow._ASSIGN_REM_in_invocationExpression1401);  
+				stream_ASSIGN_REM.Add(string_literal77);
 
-				DebugLocation(205, 11);
-				PushFollow(Follow._expression_in_invocationExpression1503);
-				expression108=expression();
+				DebugLocation(234, 11);
+				PushFollow(Follow._expression_in_invocationExpression1403);
+				expression78=expression();
 				PopFollow();
 
-				stream_expression.Add(expression108.Tree);
+				stream_expression.Add(expression78.Tree);
 
 
 				{
 				// AST REWRITE
-				// elements: id, expression, id
+				// elements: expression, id, id
 				// token labels: 
 				// rule labels: id, retval
 				// token list labels: 
@@ -4924,27 +4292,27 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 205:23: -> ^( ASSIGNMENT $id ^( MOD $id expression ) )
+				// 234:23: -> ^( ASSIGNMENT $id ^( MOD $id expression ) )
 				{
-					DebugLocation(205, 26);
-					// C:\\work\\ReoScript\\ReoScript.g:205:26: ^( ASSIGNMENT $id ^( MOD $id expression ) )
+					DebugLocation(234, 26);
+					// C:\\work\\ReoScript\\ReoScript.g:234:26: ^( ASSIGNMENT $id ^( MOD $id expression ) )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(205, 28);
+					DebugLocation(234, 28);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ASSIGNMENT, "ASSIGNMENT"), root_1);
 
-					DebugLocation(205, 40);
+					DebugLocation(234, 40);
 					adaptor.AddChild(root_1, stream_id.NextTree());
-					DebugLocation(205, 43);
-					// C:\\work\\ReoScript\\ReoScript.g:205:43: ^( MOD $id expression )
+					DebugLocation(234, 43);
+					// C:\\work\\ReoScript\\ReoScript.g:234:43: ^( MOD $id expression )
 					{
 					CommonTree root_2 = (CommonTree)adaptor.Nil();
-					DebugLocation(205, 45);
+					DebugLocation(234, 45);
 					root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(MOD, "MOD"), root_2);
 
-					DebugLocation(205, 50);
+					DebugLocation(234, 50);
 					adaptor.AddChild(root_2, stream_id.NextTree());
-					DebugLocation(205, 53);
+					DebugLocation(234, 53);
 					adaptor.AddChild(root_2, stream_expression.NextTree());
 
 					adaptor.AddChild(root_1, root_2);
@@ -4962,23 +4330,23 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 7:
 				DebugEnterAlt(7);
-				// C:\\work\\ReoScript\\ReoScript.g:206:6: '&=' expression
+				// C:\\work\\ReoScript\\ReoScript.g:235:6: '&=' expression
 				{
-				DebugLocation(206, 6);
-				string_literal109=(IToken)Match(input,ASSIGN_AND,Follow._ASSIGN_AND_in_invocationExpression1529);  
-				stream_ASSIGN_AND.Add(string_literal109);
+				DebugLocation(235, 6);
+				string_literal79=(IToken)Match(input,ASSIGN_AND,Follow._ASSIGN_AND_in_invocationExpression1429);  
+				stream_ASSIGN_AND.Add(string_literal79);
 
-				DebugLocation(206, 11);
-				PushFollow(Follow._expression_in_invocationExpression1531);
-				expression110=expression();
+				DebugLocation(235, 11);
+				PushFollow(Follow._expression_in_invocationExpression1431);
+				expression80=expression();
 				PopFollow();
 
-				stream_expression.Add(expression110.Tree);
+				stream_expression.Add(expression80.Tree);
 
 
 				{
 				// AST REWRITE
-				// elements: expression, id, id
+				// elements: id, id, expression
 				// token labels: 
 				// rule labels: id, retval
 				// token list labels: 
@@ -4989,27 +4357,27 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 206:23: -> ^( ASSIGNMENT $id ^( AND $id expression ) )
+				// 235:23: -> ^( ASSIGNMENT $id ^( AND $id expression ) )
 				{
-					DebugLocation(206, 26);
-					// C:\\work\\ReoScript\\ReoScript.g:206:26: ^( ASSIGNMENT $id ^( AND $id expression ) )
+					DebugLocation(235, 26);
+					// C:\\work\\ReoScript\\ReoScript.g:235:26: ^( ASSIGNMENT $id ^( AND $id expression ) )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(206, 28);
+					DebugLocation(235, 28);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ASSIGNMENT, "ASSIGNMENT"), root_1);
 
-					DebugLocation(206, 40);
+					DebugLocation(235, 40);
 					adaptor.AddChild(root_1, stream_id.NextTree());
-					DebugLocation(206, 43);
-					// C:\\work\\ReoScript\\ReoScript.g:206:43: ^( AND $id expression )
+					DebugLocation(235, 43);
+					// C:\\work\\ReoScript\\ReoScript.g:235:43: ^( AND $id expression )
 					{
 					CommonTree root_2 = (CommonTree)adaptor.Nil();
-					DebugLocation(206, 45);
+					DebugLocation(235, 45);
 					root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(AND, "AND"), root_2);
 
-					DebugLocation(206, 50);
+					DebugLocation(235, 50);
 					adaptor.AddChild(root_2, stream_id.NextTree());
-					DebugLocation(206, 53);
+					DebugLocation(235, 53);
 					adaptor.AddChild(root_2, stream_expression.NextTree());
 
 					adaptor.AddChild(root_1, root_2);
@@ -5027,23 +4395,23 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 8:
 				DebugEnterAlt(8);
-				// C:\\work\\ReoScript\\ReoScript.g:207:6: '|=' expression
+				// C:\\work\\ReoScript\\ReoScript.g:236:6: '|=' expression
 				{
-				DebugLocation(207, 6);
-				string_literal111=(IToken)Match(input,ASSIGN_OR,Follow._ASSIGN_OR_in_invocationExpression1557);  
-				stream_ASSIGN_OR.Add(string_literal111);
+				DebugLocation(236, 6);
+				string_literal81=(IToken)Match(input,ASSIGN_OR,Follow._ASSIGN_OR_in_invocationExpression1457);  
+				stream_ASSIGN_OR.Add(string_literal81);
 
-				DebugLocation(207, 11);
-				PushFollow(Follow._expression_in_invocationExpression1559);
-				expression112=expression();
+				DebugLocation(236, 11);
+				PushFollow(Follow._expression_in_invocationExpression1459);
+				expression82=expression();
 				PopFollow();
 
-				stream_expression.Add(expression112.Tree);
+				stream_expression.Add(expression82.Tree);
 
 
 				{
 				// AST REWRITE
-				// elements: id, expression, id
+				// elements: expression, id, id
 				// token labels: 
 				// rule labels: id, retval
 				// token list labels: 
@@ -5054,27 +4422,27 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 207:23: -> ^( ASSIGNMENT $id ^( OR $id expression ) )
+				// 236:23: -> ^( ASSIGNMENT $id ^( OR $id expression ) )
 				{
-					DebugLocation(207, 26);
-					// C:\\work\\ReoScript\\ReoScript.g:207:26: ^( ASSIGNMENT $id ^( OR $id expression ) )
+					DebugLocation(236, 26);
+					// C:\\work\\ReoScript\\ReoScript.g:236:26: ^( ASSIGNMENT $id ^( OR $id expression ) )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(207, 28);
+					DebugLocation(236, 28);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ASSIGNMENT, "ASSIGNMENT"), root_1);
 
-					DebugLocation(207, 40);
+					DebugLocation(236, 40);
 					adaptor.AddChild(root_1, stream_id.NextTree());
-					DebugLocation(207, 43);
-					// C:\\work\\ReoScript\\ReoScript.g:207:43: ^( OR $id expression )
+					DebugLocation(236, 43);
+					// C:\\work\\ReoScript\\ReoScript.g:236:43: ^( OR $id expression )
 					{
 					CommonTree root_2 = (CommonTree)adaptor.Nil();
-					DebugLocation(207, 45);
+					DebugLocation(236, 45);
 					root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(OR, "OR"), root_2);
 
-					DebugLocation(207, 49);
+					DebugLocation(236, 49);
 					adaptor.AddChild(root_2, stream_id.NextTree());
-					DebugLocation(207, 52);
+					DebugLocation(236, 52);
 					adaptor.AddChild(root_2, stream_expression.NextTree());
 
 					adaptor.AddChild(root_1, root_2);
@@ -5092,23 +4460,23 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 9:
 				DebugEnterAlt(9);
-				// C:\\work\\ReoScript\\ReoScript.g:208:6: '^=' expression
+				// C:\\work\\ReoScript\\ReoScript.g:237:6: '^=' expression
 				{
-				DebugLocation(208, 6);
-				string_literal113=(IToken)Match(input,ASSIGN_REV,Follow._ASSIGN_REV_in_invocationExpression1585);  
-				stream_ASSIGN_REV.Add(string_literal113);
+				DebugLocation(237, 6);
+				string_literal83=(IToken)Match(input,ASSIGN_REV,Follow._ASSIGN_REV_in_invocationExpression1485);  
+				stream_ASSIGN_REV.Add(string_literal83);
 
-				DebugLocation(208, 11);
-				PushFollow(Follow._expression_in_invocationExpression1587);
-				expression114=expression();
+				DebugLocation(237, 11);
+				PushFollow(Follow._expression_in_invocationExpression1487);
+				expression84=expression();
 				PopFollow();
 
-				stream_expression.Add(expression114.Tree);
+				stream_expression.Add(expression84.Tree);
 
 
 				{
 				// AST REWRITE
-				// elements: id, expression, id
+				// elements: id, id, expression
 				// token labels: 
 				// rule labels: id, retval
 				// token list labels: 
@@ -5119,27 +4487,27 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 208:23: -> ^( ASSIGNMENT $id ^( XOR $id expression ) )
+				// 237:23: -> ^( ASSIGNMENT $id ^( XOR $id expression ) )
 				{
-					DebugLocation(208, 26);
-					// C:\\work\\ReoScript\\ReoScript.g:208:26: ^( ASSIGNMENT $id ^( XOR $id expression ) )
+					DebugLocation(237, 26);
+					// C:\\work\\ReoScript\\ReoScript.g:237:26: ^( ASSIGNMENT $id ^( XOR $id expression ) )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(208, 28);
+					DebugLocation(237, 28);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ASSIGNMENT, "ASSIGNMENT"), root_1);
 
-					DebugLocation(208, 40);
+					DebugLocation(237, 40);
 					adaptor.AddChild(root_1, stream_id.NextTree());
-					DebugLocation(208, 43);
-					// C:\\work\\ReoScript\\ReoScript.g:208:43: ^( XOR $id expression )
+					DebugLocation(237, 43);
+					// C:\\work\\ReoScript\\ReoScript.g:237:43: ^( XOR $id expression )
 					{
 					CommonTree root_2 = (CommonTree)adaptor.Nil();
-					DebugLocation(208, 45);
+					DebugLocation(237, 45);
 					root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(XOR, "XOR"), root_2);
 
-					DebugLocation(208, 50);
+					DebugLocation(237, 50);
 					adaptor.AddChild(root_2, stream_id.NextTree());
-					DebugLocation(208, 53);
+					DebugLocation(237, 53);
 					adaptor.AddChild(root_2, stream_expression.NextTree());
 
 					adaptor.AddChild(root_1, root_2);
@@ -5157,23 +4525,23 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 10:
 				DebugEnterAlt(10);
-				// C:\\work\\ReoScript\\ReoScript.g:209:6: '<<=' expression
+				// C:\\work\\ReoScript\\ReoScript.g:238:6: '<<=' expression
 				{
-				DebugLocation(209, 6);
-				string_literal115=(IToken)Match(input,ASSIGN_LSHIFT,Follow._ASSIGN_LSHIFT_in_invocationExpression1613);  
-				stream_ASSIGN_LSHIFT.Add(string_literal115);
+				DebugLocation(238, 6);
+				string_literal85=(IToken)Match(input,ASSIGN_LSHIFT,Follow._ASSIGN_LSHIFT_in_invocationExpression1513);  
+				stream_ASSIGN_LSHIFT.Add(string_literal85);
 
-				DebugLocation(209, 12);
-				PushFollow(Follow._expression_in_invocationExpression1615);
-				expression116=expression();
+				DebugLocation(238, 12);
+				PushFollow(Follow._expression_in_invocationExpression1515);
+				expression86=expression();
 				PopFollow();
 
-				stream_expression.Add(expression116.Tree);
+				stream_expression.Add(expression86.Tree);
 
 
 				{
 				// AST REWRITE
-				// elements: expression, id, id
+				// elements: id, expression, id
 				// token labels: 
 				// rule labels: id, retval
 				// token list labels: 
@@ -5184,27 +4552,27 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 209:23: -> ^( ASSIGNMENT $id ^( LSHIFT $id expression ) )
+				// 238:23: -> ^( ASSIGNMENT $id ^( LSHIFT $id expression ) )
 				{
-					DebugLocation(209, 26);
-					// C:\\work\\ReoScript\\ReoScript.g:209:26: ^( ASSIGNMENT $id ^( LSHIFT $id expression ) )
+					DebugLocation(238, 26);
+					// C:\\work\\ReoScript\\ReoScript.g:238:26: ^( ASSIGNMENT $id ^( LSHIFT $id expression ) )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(209, 28);
+					DebugLocation(238, 28);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ASSIGNMENT, "ASSIGNMENT"), root_1);
 
-					DebugLocation(209, 40);
+					DebugLocation(238, 40);
 					adaptor.AddChild(root_1, stream_id.NextTree());
-					DebugLocation(209, 43);
-					// C:\\work\\ReoScript\\ReoScript.g:209:43: ^( LSHIFT $id expression )
+					DebugLocation(238, 43);
+					// C:\\work\\ReoScript\\ReoScript.g:238:43: ^( LSHIFT $id expression )
 					{
 					CommonTree root_2 = (CommonTree)adaptor.Nil();
-					DebugLocation(209, 45);
+					DebugLocation(238, 45);
 					root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(LSHIFT, "LSHIFT"), root_2);
 
-					DebugLocation(209, 53);
+					DebugLocation(238, 53);
 					adaptor.AddChild(root_2, stream_id.NextTree());
-					DebugLocation(209, 56);
+					DebugLocation(238, 56);
 					adaptor.AddChild(root_2, stream_expression.NextTree());
 
 					adaptor.AddChild(root_1, root_2);
@@ -5222,23 +4590,23 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 11:
 				DebugEnterAlt(11);
-				// C:\\work\\ReoScript\\ReoScript.g:210:6: '>>=' expression
+				// C:\\work\\ReoScript\\ReoScript.g:239:6: '>>=' expression
 				{
-				DebugLocation(210, 6);
-				string_literal117=(IToken)Match(input,ASSIGN_RSHIFT,Follow._ASSIGN_RSHIFT_in_invocationExpression1640);  
-				stream_ASSIGN_RSHIFT.Add(string_literal117);
+				DebugLocation(239, 6);
+				string_literal87=(IToken)Match(input,ASSIGN_RSHIFT,Follow._ASSIGN_RSHIFT_in_invocationExpression1540);  
+				stream_ASSIGN_RSHIFT.Add(string_literal87);
 
-				DebugLocation(210, 12);
-				PushFollow(Follow._expression_in_invocationExpression1642);
-				expression118=expression();
+				DebugLocation(239, 12);
+				PushFollow(Follow._expression_in_invocationExpression1542);
+				expression88=expression();
 				PopFollow();
 
-				stream_expression.Add(expression118.Tree);
+				stream_expression.Add(expression88.Tree);
 
 
 				{
 				// AST REWRITE
-				// elements: id, expression, id
+				// elements: id, id, expression
 				// token labels: 
 				// rule labels: id, retval
 				// token list labels: 
@@ -5249,27 +4617,27 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 210:23: -> ^( ASSIGNMENT $id ^( RSHIFT $id expression ) )
+				// 239:23: -> ^( ASSIGNMENT $id ^( RSHIFT $id expression ) )
 				{
-					DebugLocation(210, 26);
-					// C:\\work\\ReoScript\\ReoScript.g:210:26: ^( ASSIGNMENT $id ^( RSHIFT $id expression ) )
+					DebugLocation(239, 26);
+					// C:\\work\\ReoScript\\ReoScript.g:239:26: ^( ASSIGNMENT $id ^( RSHIFT $id expression ) )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(210, 28);
+					DebugLocation(239, 28);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ASSIGNMENT, "ASSIGNMENT"), root_1);
 
-					DebugLocation(210, 40);
+					DebugLocation(239, 40);
 					adaptor.AddChild(root_1, stream_id.NextTree());
-					DebugLocation(210, 43);
-					// C:\\work\\ReoScript\\ReoScript.g:210:43: ^( RSHIFT $id expression )
+					DebugLocation(239, 43);
+					// C:\\work\\ReoScript\\ReoScript.g:239:43: ^( RSHIFT $id expression )
 					{
 					CommonTree root_2 = (CommonTree)adaptor.Nil();
-					DebugLocation(210, 45);
+					DebugLocation(239, 45);
 					root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(RSHIFT, "RSHIFT"), root_2);
 
-					DebugLocation(210, 53);
+					DebugLocation(239, 53);
 					adaptor.AddChild(root_2, stream_id.NextTree());
-					DebugLocation(210, 56);
+					DebugLocation(239, 56);
 					adaptor.AddChild(root_2, stream_expression.NextTree());
 
 					adaptor.AddChild(root_1, root_2);
@@ -5287,17 +4655,17 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 12:
 				DebugEnterAlt(12);
-				// C:\\work\\ReoScript\\ReoScript.g:211:6: '++'
+				// C:\\work\\ReoScript\\ReoScript.g:240:6: '++'
 				{
-				DebugLocation(211, 6);
-				string_literal119=(IToken)Match(input,INCREMENT,Follow._INCREMENT_in_invocationExpression1667);  
-				stream_INCREMENT.Add(string_literal119);
+				DebugLocation(240, 6);
+				string_literal89=(IToken)Match(input,INCREMENT,Follow._INCREMENT_in_invocationExpression1567);  
+				stream_INCREMENT.Add(string_literal89);
 
 
 
 				{
 				// AST REWRITE
-				// elements: INCREMENT, id
+				// elements: id, INCREMENT
 				// token labels: 
 				// rule labels: id, retval
 				// token list labels: 
@@ -5308,18 +4676,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 211:14: -> ^( POST_UNARY_STEP $id '++' )
+				// 240:14: -> ^( POST_UNARY_STEP $id '++' )
 				{
-					DebugLocation(211, 17);
-					// C:\\work\\ReoScript\\ReoScript.g:211:17: ^( POST_UNARY_STEP $id '++' )
+					DebugLocation(240, 17);
+					// C:\\work\\ReoScript\\ReoScript.g:240:17: ^( POST_UNARY_STEP $id '++' )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(211, 19);
+					DebugLocation(240, 19);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(POST_UNARY_STEP, "POST_UNARY_STEP"), root_1);
 
-					DebugLocation(211, 36);
+					DebugLocation(240, 36);
 					adaptor.AddChild(root_1, stream_id.NextTree());
-					DebugLocation(211, 39);
+					DebugLocation(240, 39);
 					adaptor.AddChild(root_1, stream_INCREMENT.NextNode());
 
 					adaptor.AddChild(root_0, root_1);
@@ -5334,17 +4702,17 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 13:
 				DebugEnterAlt(13);
-				// C:\\work\\ReoScript\\ReoScript.g:212:6: '--'
+				// C:\\work\\ReoScript\\ReoScript.g:241:6: '--'
 				{
-				DebugLocation(212, 6);
-				string_literal120=(IToken)Match(input,DECREMENT,Follow._DECREMENT_in_invocationExpression1688);  
-				stream_DECREMENT.Add(string_literal120);
+				DebugLocation(241, 6);
+				string_literal90=(IToken)Match(input,DECREMENT,Follow._DECREMENT_in_invocationExpression1588);  
+				stream_DECREMENT.Add(string_literal90);
 
 
 
 				{
 				// AST REWRITE
-				// elements: id, DECREMENT
+				// elements: DECREMENT, id
 				// token labels: 
 				// rule labels: id, retval
 				// token list labels: 
@@ -5355,18 +4723,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 212:14: -> ^( POST_UNARY_STEP $id '--' )
+				// 241:14: -> ^( POST_UNARY_STEP $id '--' )
 				{
-					DebugLocation(212, 17);
-					// C:\\work\\ReoScript\\ReoScript.g:212:17: ^( POST_UNARY_STEP $id '--' )
+					DebugLocation(241, 17);
+					// C:\\work\\ReoScript\\ReoScript.g:241:17: ^( POST_UNARY_STEP $id '--' )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(212, 19);
+					DebugLocation(241, 19);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(POST_UNARY_STEP, "POST_UNARY_STEP"), root_1);
 
-					DebugLocation(212, 36);
+					DebugLocation(241, 36);
 					adaptor.AddChild(root_1, stream_id.NextTree());
-					DebugLocation(212, 39);
+					DebugLocation(241, 39);
 					adaptor.AddChild(root_1, stream_DECREMENT.NextNode());
 
 					adaptor.AddChild(root_0, root_1);
@@ -5381,7 +4749,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 14:
 				DebugEnterAlt(14);
-				// C:\\work\\ReoScript\\ReoScript.g:213:11: 
+				// C:\\work\\ReoScript\\ReoScript.g:242:11: 
 				{
 
 				{
@@ -5396,15 +4764,587 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 213:11: -> primaryExpression
+				// 242:11: -> primaryExpression
 				{
-					DebugLocation(213, 14);
+					DebugLocation(242, 14);
 					adaptor.AddChild(root_0, stream_primaryExpression.NextTree());
 
 				}
 
 				retval.Tree = root_0;
 				}
+
+				}
+				break;
+
+			}
+			} finally { DebugExitSubRule(24); }
+
+
+			}
+
+			retval.Stop = (IToken)input.LT(-1);
+
+			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
+			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
+
+		}
+		catch (RecognitionException re)
+		{
+			ReportError(re);
+			Recover(input,re);
+		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
+
+		}
+		finally
+		{
+			TraceOut("invocationExpression", 17);
+			LeaveRule("invocationExpression", 17);
+			LeaveRule_invocationExpression();
+		}
+		DebugLocation(244, 1);
+		} finally { DebugExitRule(GrammarFileName, "invocationExpression"); }
+		return retval;
+
+	}
+	// $ANTLR end "invocationExpression"
+
+	partial void EnterRule_statementExpressionList();
+	partial void LeaveRule_statementExpressionList();
+
+	// $ANTLR start "statementExpressionList"
+	// C:\\work\\ReoScript\\ReoScript.g:246:1: statementExpressionList : statementExpression ( COMMA ! statementExpression )* ;
+	[GrammarRule("statementExpressionList")]
+	private AstParserRuleReturnScope<CommonTree, IToken> statementExpressionList()
+	{
+		EnterRule_statementExpressionList();
+		EnterRule("statementExpressionList", 18);
+		TraceIn("statementExpressionList", 18);
+		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
+		retval.Start = (IToken)input.LT(1);
+
+		CommonTree root_0 = default(CommonTree);
+
+		IToken COMMA92 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> statementExpression91 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> statementExpression93 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+
+		CommonTree COMMA92_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "statementExpressionList");
+		DebugLocation(246, 1);
+		try
+		{
+			// C:\\work\\ReoScript\\ReoScript.g:247:2: ( statementExpression ( COMMA ! statementExpression )* )
+			DebugEnterAlt(1);
+			// C:\\work\\ReoScript\\ReoScript.g:247:4: statementExpression ( COMMA ! statementExpression )*
+			{
+			root_0 = (CommonTree)adaptor.Nil();
+
+			DebugLocation(247, 4);
+			PushFollow(Follow._statementExpression_in_statementExpressionList1632);
+			statementExpression91=statementExpression();
+			PopFollow();
+
+			adaptor.AddChild(root_0, statementExpression91.Tree);
+			DebugLocation(247, 24);
+			// C:\\work\\ReoScript\\ReoScript.g:247:24: ( COMMA ! statementExpression )*
+			try { DebugEnterSubRule(25);
+			while (true)
+			{
+				int alt25=2;
+				try { DebugEnterDecision(25, false);
+				int LA25_0 = input.LA(1);
+
+				if ((LA25_0==COMMA))
+				{
+					alt25 = 1;
+				}
+
+
+				} finally { DebugExitDecision(25); }
+				switch ( alt25 )
+				{
+				case 1:
+					DebugEnterAlt(1);
+					// C:\\work\\ReoScript\\ReoScript.g:247:25: COMMA ! statementExpression
+					{
+					DebugLocation(247, 30);
+					COMMA92=(IToken)Match(input,COMMA,Follow._COMMA_in_statementExpressionList1635); 
+					DebugLocation(247, 32);
+					PushFollow(Follow._statementExpression_in_statementExpressionList1638);
+					statementExpression93=statementExpression();
+					PopFollow();
+
+					adaptor.AddChild(root_0, statementExpression93.Tree);
+
+					}
+					break;
+
+				default:
+					goto loop25;
+				}
+			}
+
+			loop25:
+				;
+
+			} finally { DebugExitSubRule(25); }
+
+
+			}
+
+			retval.Stop = (IToken)input.LT(-1);
+
+			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
+			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
+
+		}
+		catch (RecognitionException re)
+		{
+			ReportError(re);
+			Recover(input,re);
+		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
+
+		}
+		finally
+		{
+			TraceOut("statementExpressionList", 18);
+			LeaveRule("statementExpressionList", 18);
+			LeaveRule_statementExpressionList();
+		}
+		DebugLocation(248, 1);
+		} finally { DebugExitRule(GrammarFileName, "statementExpressionList"); }
+		return retval;
+
+	}
+	// $ANTLR end "statementExpressionList"
+
+	partial void EnterRule_expression();
+	partial void LeaveRule_expression();
+
+	// $ANTLR start "expression"
+	// C:\\work\\ReoScript\\ReoScript.g:251:1: public expression : ( tag | assignmentExpression ( EOF !)? );
+	[GrammarRule("expression")]
+	public AstParserRuleReturnScope<CommonTree, IToken> expression()
+	{
+		EnterRule_expression();
+		EnterRule("expression", 19);
+		TraceIn("expression", 19);
+		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
+		retval.Start = (IToken)input.LT(1);
+
+		CommonTree root_0 = default(CommonTree);
+
+		IToken EOF96 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> tag94 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> assignmentExpression95 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+
+		CommonTree EOF96_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "expression");
+		DebugLocation(251, 1);
+		try
+		{
+			// C:\\work\\ReoScript\\ReoScript.g:252:2: ( tag | assignmentExpression ( EOF !)? )
+			int alt27=2;
+			try { DebugEnterDecision(27, false);
+			int LA27_0 = input.LA(1);
+
+			if ((LA27_0==LESS_THAN))
+			{
+				alt27 = 1;
+			}
+			else if ((LA27_0==BINARY_LITERATE||LA27_0==DECREMENT||(LA27_0>=HEX_LITERATE && LA27_0<=IDENTIFIER)||LA27_0==INCREMENT||(LA27_0>=LBRACE && LA27_0<=LCURLY)||(LA27_0>=LIT_FALSE && LA27_0<=LIT_TRUE)||LA27_0==LPAREN||LA27_0==MINUS||LA27_0==NAN||LA27_0==NOT||LA27_0==NUMBER_LITERATE||LA27_0==PLUS||LA27_0==STRING_LITERATE||LA27_0==THIS||LA27_0==UNDEFINED||LA27_0==133||LA27_0==137||LA27_0==143||LA27_0==145))
+			{
+				alt27 = 2;
+			}
+			else
+			{
+				NoViableAltException nvae = new NoViableAltException("", 27, 0, input);
+				DebugRecognitionException(nvae);
+				throw nvae;
+			}
+			} finally { DebugExitDecision(27); }
+			switch (alt27)
+			{
+			case 1:
+				DebugEnterAlt(1);
+				// C:\\work\\ReoScript\\ReoScript.g:256:4: tag
+				{
+				root_0 = (CommonTree)adaptor.Nil();
+
+				DebugLocation(256, 4);
+				PushFollow(Follow._tag_in_expression1663);
+				tag94=tag();
+				PopFollow();
+
+				adaptor.AddChild(root_0, tag94.Tree);
+
+				}
+				break;
+			case 2:
+				DebugEnterAlt(2);
+				// C:\\work\\ReoScript\\ReoScript.g:257:4: assignmentExpression ( EOF !)?
+				{
+				root_0 = (CommonTree)adaptor.Nil();
+
+				DebugLocation(257, 4);
+				PushFollow(Follow._assignmentExpression_in_expression1669);
+				assignmentExpression95=assignmentExpression();
+				PopFollow();
+
+				adaptor.AddChild(root_0, assignmentExpression95.Tree);
+				DebugLocation(257, 28);
+				// C:\\work\\ReoScript\\ReoScript.g:257:28: ( EOF !)?
+				int alt26=2;
+				try { DebugEnterSubRule(26);
+				try { DebugEnterDecision(26, false);
+				int LA26_0 = input.LA(1);
+
+				if ((LA26_0==EOF))
+				{
+					alt26 = 1;
+				}
+				} finally { DebugExitDecision(26); }
+				switch (alt26)
+				{
+				case 1:
+					DebugEnterAlt(1);
+					// C:\\work\\ReoScript\\ReoScript.g:257:28: EOF !
+					{
+					DebugLocation(257, 28);
+					EOF96=(IToken)Match(input,EOF,Follow._EOF_in_expression1671); 
+
+					}
+					break;
+
+				}
+				} finally { DebugExitSubRule(26); }
+
+
+				}
+				break;
+
+			}
+			retval.Stop = (IToken)input.LT(-1);
+
+			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
+			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
+
+		}
+		catch (RecognitionException re)
+		{
+			ReportError(re);
+			Recover(input,re);
+		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
+
+		}
+		finally
+		{
+			TraceOut("expression", 19);
+			LeaveRule("expression", 19);
+			LeaveRule_expression();
+		}
+		DebugLocation(258, 1);
+		} finally { DebugExitRule(GrammarFileName, "expression"); }
+		return retval;
+
+	}
+	// $ANTLR end "expression"
+
+	partial void EnterRule_expressionList();
+	partial void LeaveRule_expressionList();
+
+	// $ANTLR start "expressionList"
+	// C:\\work\\ReoScript\\ReoScript.g:260:1: expressionList : expression ( COMMA ! expression )* ;
+	[GrammarRule("expressionList")]
+	private AstParserRuleReturnScope<CommonTree, IToken> expressionList()
+	{
+		EnterRule_expressionList();
+		EnterRule("expressionList", 20);
+		TraceIn("expressionList", 20);
+		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
+		retval.Start = (IToken)input.LT(1);
+
+		CommonTree root_0 = default(CommonTree);
+
+		IToken COMMA98 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> expression97 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression99 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+
+		CommonTree COMMA98_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "expressionList");
+		DebugLocation(260, 1);
+		try
+		{
+			// C:\\work\\ReoScript\\ReoScript.g:261:2: ( expression ( COMMA ! expression )* )
+			DebugEnterAlt(1);
+			// C:\\work\\ReoScript\\ReoScript.g:261:4: expression ( COMMA ! expression )*
+			{
+			root_0 = (CommonTree)adaptor.Nil();
+
+			DebugLocation(261, 4);
+			PushFollow(Follow._expression_in_expressionList1685);
+			expression97=expression();
+			PopFollow();
+
+			adaptor.AddChild(root_0, expression97.Tree);
+			DebugLocation(261, 15);
+			// C:\\work\\ReoScript\\ReoScript.g:261:15: ( COMMA ! expression )*
+			try { DebugEnterSubRule(28);
+			while (true)
+			{
+				int alt28=2;
+				try { DebugEnterDecision(28, false);
+				int LA28_0 = input.LA(1);
+
+				if ((LA28_0==COMMA))
+				{
+					int LA28_2 = input.LA(2);
+
+					if ((LA28_2==BINARY_LITERATE||LA28_2==DECREMENT||(LA28_2>=HEX_LITERATE && LA28_2<=IDENTIFIER)||LA28_2==INCREMENT||(LA28_2>=LBRACE && LA28_2<=LCURLY)||LA28_2==LESS_THAN||(LA28_2>=LIT_FALSE && LA28_2<=LIT_TRUE)||LA28_2==LPAREN||LA28_2==MINUS||LA28_2==NAN||LA28_2==NOT||LA28_2==NUMBER_LITERATE||LA28_2==PLUS||LA28_2==STRING_LITERATE||LA28_2==THIS||LA28_2==UNDEFINED||LA28_2==133||LA28_2==137||LA28_2==143||LA28_2==145))
+					{
+						alt28 = 1;
+					}
+
+
+				}
+
+
+				} finally { DebugExitDecision(28); }
+				switch ( alt28 )
+				{
+				case 1:
+					DebugEnterAlt(1);
+					// C:\\work\\ReoScript\\ReoScript.g:261:16: COMMA ! expression
+					{
+					DebugLocation(261, 21);
+					COMMA98=(IToken)Match(input,COMMA,Follow._COMMA_in_expressionList1688); 
+					DebugLocation(261, 23);
+					PushFollow(Follow._expression_in_expressionList1691);
+					expression99=expression();
+					PopFollow();
+
+					adaptor.AddChild(root_0, expression99.Tree);
+
+					}
+					break;
+
+				default:
+					goto loop28;
+				}
+			}
+
+			loop28:
+				;
+
+			} finally { DebugExitSubRule(28); }
+
+
+			}
+
+			retval.Stop = (IToken)input.LT(-1);
+
+			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
+			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
+
+		}
+		catch (RecognitionException re)
+		{
+			ReportError(re);
+			Recover(input,re);
+		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
+
+		}
+		finally
+		{
+			TraceOut("expressionList", 20);
+			LeaveRule("expressionList", 20);
+			LeaveRule_expressionList();
+		}
+		DebugLocation(262, 1);
+		} finally { DebugExitRule(GrammarFileName, "expressionList"); }
+		return retval;
+
+	}
+	// $ANTLR end "expressionList"
+
+	partial void EnterRule_assignmentExpression();
+	partial void LeaveRule_assignmentExpression();
+
+	// $ANTLR start "assignmentExpression"
+	// C:\\work\\ReoScript\\ReoScript.g:264:1: assignmentExpression : conditionalExpression ( ASSIGNMENT ^ expression )? ;
+	[GrammarRule("assignmentExpression")]
+	private AstParserRuleReturnScope<CommonTree, IToken> assignmentExpression()
+	{
+		EnterRule_assignmentExpression();
+		EnterRule("assignmentExpression", 21);
+		TraceIn("assignmentExpression", 21);
+		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
+		retval.Start = (IToken)input.LT(1);
+
+		CommonTree root_0 = default(CommonTree);
+
+		IToken ASSIGNMENT101 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> conditionalExpression100 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression102 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+
+		CommonTree ASSIGNMENT101_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "assignmentExpression");
+		DebugLocation(264, 1);
+		try
+		{
+			// C:\\work\\ReoScript\\ReoScript.g:265:2: ( conditionalExpression ( ASSIGNMENT ^ expression )? )
+			DebugEnterAlt(1);
+			// C:\\work\\ReoScript\\ReoScript.g:265:4: conditionalExpression ( ASSIGNMENT ^ expression )?
+			{
+			root_0 = (CommonTree)adaptor.Nil();
+
+			DebugLocation(265, 4);
+			PushFollow(Follow._conditionalExpression_in_assignmentExpression1705);
+			conditionalExpression100=conditionalExpression();
+			PopFollow();
+
+			adaptor.AddChild(root_0, conditionalExpression100.Tree);
+			DebugLocation(265, 26);
+			// C:\\work\\ReoScript\\ReoScript.g:265:26: ( ASSIGNMENT ^ expression )?
+			int alt29=2;
+			try { DebugEnterSubRule(29);
+			try { DebugEnterDecision(29, false);
+			int LA29_0 = input.LA(1);
+
+			if ((LA29_0==ASSIGNMENT))
+			{
+				alt29 = 1;
+			}
+			} finally { DebugExitDecision(29); }
+			switch (alt29)
+			{
+			case 1:
+				DebugEnterAlt(1);
+				// C:\\work\\ReoScript\\ReoScript.g:265:27: ASSIGNMENT ^ expression
+				{
+				DebugLocation(265, 37);
+				ASSIGNMENT101=(IToken)Match(input,ASSIGNMENT,Follow._ASSIGNMENT_in_assignmentExpression1708); 
+				ASSIGNMENT101_tree = (CommonTree)adaptor.Create(ASSIGNMENT101);
+				root_0 = (CommonTree)adaptor.BecomeRoot(ASSIGNMENT101_tree, root_0);
+				DebugLocation(265, 39);
+				PushFollow(Follow._expression_in_assignmentExpression1711);
+				expression102=expression();
+				PopFollow();
+
+				adaptor.AddChild(root_0, expression102.Tree);
+
+				}
+				break;
+
+			}
+			} finally { DebugExitSubRule(29); }
+
+
+			}
+
+			retval.Stop = (IToken)input.LT(-1);
+
+			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
+			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
+
+		}
+		catch (RecognitionException re)
+		{
+			ReportError(re);
+			Recover(input,re);
+		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
+
+		}
+		finally
+		{
+			TraceOut("assignmentExpression", 21);
+			LeaveRule("assignmentExpression", 21);
+			LeaveRule_assignmentExpression();
+		}
+		DebugLocation(266, 1);
+		} finally { DebugExitRule(GrammarFileName, "assignmentExpression"); }
+		return retval;
+
+	}
+	// $ANTLR end "assignmentExpression"
+
+	partial void EnterRule_conditionalExpression();
+	partial void LeaveRule_conditionalExpression();
+
+	// $ANTLR start "conditionalExpression"
+	// C:\\work\\ReoScript\\ReoScript.g:268:1: conditionalExpression : conditionalOrExpression ( CONDITION ^ expression COLON ! expression )? ;
+	[GrammarRule("conditionalExpression")]
+	private AstParserRuleReturnScope<CommonTree, IToken> conditionalExpression()
+	{
+		EnterRule_conditionalExpression();
+		EnterRule("conditionalExpression", 22);
+		TraceIn("conditionalExpression", 22);
+		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
+		retval.Start = (IToken)input.LT(1);
+
+		CommonTree root_0 = default(CommonTree);
+
+		IToken CONDITION104 = default(IToken);
+		IToken COLON106 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> conditionalOrExpression103 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression105 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression107 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+
+		CommonTree CONDITION104_tree = default(CommonTree);
+		CommonTree COLON106_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "conditionalExpression");
+		DebugLocation(268, 1);
+		try
+		{
+			// C:\\work\\ReoScript\\ReoScript.g:269:2: ( conditionalOrExpression ( CONDITION ^ expression COLON ! expression )? )
+			DebugEnterAlt(1);
+			// C:\\work\\ReoScript\\ReoScript.g:269:4: conditionalOrExpression ( CONDITION ^ expression COLON ! expression )?
+			{
+			root_0 = (CommonTree)adaptor.Nil();
+
+			DebugLocation(269, 4);
+			PushFollow(Follow._conditionalOrExpression_in_conditionalExpression1725);
+			conditionalOrExpression103=conditionalOrExpression();
+			PopFollow();
+
+			adaptor.AddChild(root_0, conditionalOrExpression103.Tree);
+			DebugLocation(269, 28);
+			// C:\\work\\ReoScript\\ReoScript.g:269:28: ( CONDITION ^ expression COLON ! expression )?
+			int alt30=2;
+			try { DebugEnterSubRule(30);
+			try { DebugEnterDecision(30, false);
+			int LA30_0 = input.LA(1);
+
+			if ((LA30_0==CONDITION))
+			{
+				alt30 = 1;
+			}
+			} finally { DebugExitDecision(30); }
+			switch (alt30)
+			{
+			case 1:
+				DebugEnterAlt(1);
+				// C:\\work\\ReoScript\\ReoScript.g:269:29: CONDITION ^ expression COLON ! expression
+				{
+				DebugLocation(269, 38);
+				CONDITION104=(IToken)Match(input,CONDITION,Follow._CONDITION_in_conditionalExpression1728); 
+				CONDITION104_tree = (CommonTree)adaptor.Create(CONDITION104);
+				root_0 = (CommonTree)adaptor.BecomeRoot(CONDITION104_tree, root_0);
+				DebugLocation(269, 40);
+				PushFollow(Follow._expression_in_conditionalExpression1731);
+				expression105=expression();
+				PopFollow();
+
+				adaptor.AddChild(root_0, expression105.Tree);
+				DebugLocation(269, 56);
+				COLON106=(IToken)Match(input,COLON,Follow._COLON_in_conditionalExpression1733); 
+				DebugLocation(269, 58);
+				PushFollow(Follow._expression_in_conditionalExpression1736);
+				expression107=expression();
+				PopFollow();
+
+				adaptor.AddChild(root_0, expression107.Tree);
 
 				}
 				break;
@@ -5430,56 +5370,56 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("invocationExpression", 19);
-			LeaveRule("invocationExpression", 19);
-			LeaveRule_invocationExpression();
+			TraceOut("conditionalExpression", 22);
+			LeaveRule("conditionalExpression", 22);
+			LeaveRule_conditionalExpression();
 		}
-		DebugLocation(215, 1);
-		} finally { DebugExitRule(GrammarFileName, "invocationExpression"); }
+		DebugLocation(270, 1);
+		} finally { DebugExitRule(GrammarFileName, "conditionalExpression"); }
 		return retval;
 
 	}
-	// $ANTLR end "invocationExpression"
+	// $ANTLR end "conditionalExpression"
 
-	partial void EnterRule_statementExpressionList();
-	partial void LeaveRule_statementExpressionList();
+	partial void EnterRule_conditionalOrExpression();
+	partial void LeaveRule_conditionalOrExpression();
 
-	// $ANTLR start "statementExpressionList"
-	// C:\\work\\ReoScript\\ReoScript.g:217:1: statementExpressionList : statementExpression ( COMMA ! statementExpression )* ;
-	[GrammarRule("statementExpressionList")]
-	private AstParserRuleReturnScope<CommonTree, IToken> statementExpressionList()
+	// $ANTLR start "conditionalOrExpression"
+	// C:\\work\\ReoScript\\ReoScript.g:272:1: conditionalOrExpression : conditionalAndExpression ( LOGICAL_OR ^ conditionalAndExpression )* ;
+	[GrammarRule("conditionalOrExpression")]
+	private AstParserRuleReturnScope<CommonTree, IToken> conditionalOrExpression()
 	{
-		EnterRule_statementExpressionList();
-		EnterRule("statementExpressionList", 20);
-		TraceIn("statementExpressionList", 20);
+		EnterRule_conditionalOrExpression();
+		EnterRule("conditionalOrExpression", 23);
+		TraceIn("conditionalOrExpression", 23);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken COMMA122 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> statementExpression121 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> statementExpression123 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken LOGICAL_OR109 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> conditionalAndExpression108 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> conditionalAndExpression110 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree COMMA122_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "statementExpressionList");
-		DebugLocation(217, 1);
+		CommonTree LOGICAL_OR109_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "conditionalOrExpression");
+		DebugLocation(272, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:218:2: ( statementExpression ( COMMA ! statementExpression )* )
+			// C:\\work\\ReoScript\\ReoScript.g:273:2: ( conditionalAndExpression ( LOGICAL_OR ^ conditionalAndExpression )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:218:4: statementExpression ( COMMA ! statementExpression )*
+			// C:\\work\\ReoScript\\ReoScript.g:273:4: conditionalAndExpression ( LOGICAL_OR ^ conditionalAndExpression )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(218, 4);
-			PushFollow(Follow._statementExpression_in_statementExpressionList1732);
-			statementExpression121=statementExpression();
+			DebugLocation(273, 4);
+			PushFollow(Follow._conditionalAndExpression_in_conditionalOrExpression1749);
+			conditionalAndExpression108=conditionalAndExpression();
 			PopFollow();
 
-			adaptor.AddChild(root_0, statementExpression121.Tree);
-			DebugLocation(218, 24);
-			// C:\\work\\ReoScript\\ReoScript.g:218:24: ( COMMA ! statementExpression )*
+			adaptor.AddChild(root_0, conditionalAndExpression108.Tree);
+			DebugLocation(273, 29);
+			// C:\\work\\ReoScript\\ReoScript.g:273:29: ( LOGICAL_OR ^ conditionalAndExpression )*
 			try { DebugEnterSubRule(31);
 			while (true)
 			{
@@ -5487,7 +5427,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				try { DebugEnterDecision(31, false);
 				int LA31_0 = input.LA(1);
 
-				if ((LA31_0==COMMA))
+				if ((LA31_0==LOGICAL_OR))
 				{
 					alt31 = 1;
 				}
@@ -5498,16 +5438,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:218:25: COMMA ! statementExpression
+					// C:\\work\\ReoScript\\ReoScript.g:273:30: LOGICAL_OR ^ conditionalAndExpression
 					{
-					DebugLocation(218, 30);
-					COMMA122=(IToken)Match(input,COMMA,Follow._COMMA_in_statementExpressionList1735); 
-					DebugLocation(218, 32);
-					PushFollow(Follow._statementExpression_in_statementExpressionList1738);
-					statementExpression123=statementExpression();
+					DebugLocation(273, 40);
+					LOGICAL_OR109=(IToken)Match(input,LOGICAL_OR,Follow._LOGICAL_OR_in_conditionalOrExpression1752); 
+					LOGICAL_OR109_tree = (CommonTree)adaptor.Create(LOGICAL_OR109);
+					root_0 = (CommonTree)adaptor.BecomeRoot(LOGICAL_OR109_tree, root_0);
+					DebugLocation(273, 42);
+					PushFollow(Follow._conditionalAndExpression_in_conditionalOrExpression1755);
+					conditionalAndExpression110=conditionalAndExpression();
 					PopFollow();
 
-					adaptor.AddChild(root_0, statementExpression123.Tree);
+					adaptor.AddChild(root_0, conditionalAndExpression110.Tree);
 
 					}
 					break;
@@ -5540,123 +5482,103 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("statementExpressionList", 20);
-			LeaveRule("statementExpressionList", 20);
-			LeaveRule_statementExpressionList();
+			TraceOut("conditionalOrExpression", 23);
+			LeaveRule("conditionalOrExpression", 23);
+			LeaveRule_conditionalOrExpression();
 		}
-		DebugLocation(219, 1);
-		} finally { DebugExitRule(GrammarFileName, "statementExpressionList"); }
+		DebugLocation(274, 1);
+		} finally { DebugExitRule(GrammarFileName, "conditionalOrExpression"); }
 		return retval;
 
 	}
-	// $ANTLR end "statementExpressionList"
+	// $ANTLR end "conditionalOrExpression"
 
-	partial void EnterRule_expression();
-	partial void LeaveRule_expression();
+	partial void EnterRule_conditionalAndExpression();
+	partial void LeaveRule_conditionalAndExpression();
 
-	// $ANTLR start "expression"
-	// C:\\work\\ReoScript\\ReoScript.g:222:1: public expression : ( tag | assignmentExpression ( EOF !)? );
-	[GrammarRule("expression")]
-	public AstParserRuleReturnScope<CommonTree, IToken> expression()
+	// $ANTLR start "conditionalAndExpression"
+	// C:\\work\\ReoScript\\ReoScript.g:276:1: conditionalAndExpression : inclusiveOrExpression ( LOGICAL_AND ^ inclusiveOrExpression )* ;
+	[GrammarRule("conditionalAndExpression")]
+	private AstParserRuleReturnScope<CommonTree, IToken> conditionalAndExpression()
 	{
-		EnterRule_expression();
-		EnterRule("expression", 21);
-		TraceIn("expression", 21);
+		EnterRule_conditionalAndExpression();
+		EnterRule("conditionalAndExpression", 24);
+		TraceIn("conditionalAndExpression", 24);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken EOF126 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> tag124 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> assignmentExpression125 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken LOGICAL_AND112 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> inclusiveOrExpression111 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> inclusiveOrExpression113 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree EOF126_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "expression");
-		DebugLocation(222, 1);
+		CommonTree LOGICAL_AND112_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "conditionalAndExpression");
+		DebugLocation(276, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:223:2: ( tag | assignmentExpression ( EOF !)? )
-			int alt33=2;
-			try { DebugEnterDecision(33, false);
-			int LA33_0 = input.LA(1);
-
-			if ((LA33_0==LESS_THAN))
+			// C:\\work\\ReoScript\\ReoScript.g:277:2: ( inclusiveOrExpression ( LOGICAL_AND ^ inclusiveOrExpression )* )
+			DebugEnterAlt(1);
+			// C:\\work\\ReoScript\\ReoScript.g:277:4: inclusiveOrExpression ( LOGICAL_AND ^ inclusiveOrExpression )*
 			{
-				alt33 = 1;
-			}
-			else if ((LA33_0==BINARY_LITERATE||LA33_0==DECREMENT||(LA33_0>=HEX_LITERATE && LA33_0<=IDENTIFIER)||LA33_0==INCREMENT||(LA33_0>=LBRACE && LA33_0<=LCURLY)||(LA33_0>=LIT_FALSE && LA33_0<=LIT_TRUE)||LA33_0==LPAREN||LA33_0==MINUS||LA33_0==NAN||LA33_0==NOT||LA33_0==NUMBER_LITERATE||LA33_0==PLUS||LA33_0==STRING_LITERATE||LA33_0==THIS||LA33_0==UNDEFINED||LA33_0==133||LA33_0==137||LA33_0==143||LA33_0==145))
+			root_0 = (CommonTree)adaptor.Nil();
+
+			DebugLocation(277, 4);
+			PushFollow(Follow._inclusiveOrExpression_in_conditionalAndExpression1768);
+			inclusiveOrExpression111=inclusiveOrExpression();
+			PopFollow();
+
+			adaptor.AddChild(root_0, inclusiveOrExpression111.Tree);
+			DebugLocation(277, 26);
+			// C:\\work\\ReoScript\\ReoScript.g:277:26: ( LOGICAL_AND ^ inclusiveOrExpression )*
+			try { DebugEnterSubRule(32);
+			while (true)
 			{
-				alt33 = 2;
-			}
-			else
-			{
-				NoViableAltException nvae = new NoViableAltException("", 33, 0, input);
-				DebugRecognitionException(nvae);
-				throw nvae;
-			}
-			} finally { DebugExitDecision(33); }
-			switch (alt33)
-			{
-			case 1:
-				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:227:4: tag
-				{
-				root_0 = (CommonTree)adaptor.Nil();
-
-				DebugLocation(227, 4);
-				PushFollow(Follow._tag_in_expression1763);
-				tag124=tag();
-				PopFollow();
-
-				adaptor.AddChild(root_0, tag124.Tree);
-
-				}
-				break;
-			case 2:
-				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:228:4: assignmentExpression ( EOF !)?
-				{
-				root_0 = (CommonTree)adaptor.Nil();
-
-				DebugLocation(228, 4);
-				PushFollow(Follow._assignmentExpression_in_expression1769);
-				assignmentExpression125=assignmentExpression();
-				PopFollow();
-
-				adaptor.AddChild(root_0, assignmentExpression125.Tree);
-				DebugLocation(228, 28);
-				// C:\\work\\ReoScript\\ReoScript.g:228:28: ( EOF !)?
 				int alt32=2;
-				try { DebugEnterSubRule(32);
 				try { DebugEnterDecision(32, false);
 				int LA32_0 = input.LA(1);
 
-				if ((LA32_0==EOF))
+				if ((LA32_0==LOGICAL_AND))
 				{
 					alt32 = 1;
 				}
+
+
 				} finally { DebugExitDecision(32); }
-				switch (alt32)
+				switch ( alt32 )
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:228:28: EOF !
+					// C:\\work\\ReoScript\\ReoScript.g:277:27: LOGICAL_AND ^ inclusiveOrExpression
 					{
-					DebugLocation(228, 28);
-					EOF126=(IToken)Match(input,EOF,Follow._EOF_in_expression1771); 
+					DebugLocation(277, 38);
+					LOGICAL_AND112=(IToken)Match(input,LOGICAL_AND,Follow._LOGICAL_AND_in_conditionalAndExpression1771); 
+					LOGICAL_AND112_tree = (CommonTree)adaptor.Create(LOGICAL_AND112);
+					root_0 = (CommonTree)adaptor.BecomeRoot(LOGICAL_AND112_tree, root_0);
+					DebugLocation(277, 40);
+					PushFollow(Follow._inclusiveOrExpression_in_conditionalAndExpression1774);
+					inclusiveOrExpression113=inclusiveOrExpression();
+					PopFollow();
+
+					adaptor.AddChild(root_0, inclusiveOrExpression113.Tree);
 
 					}
 					break;
 
+				default:
+					goto loop32;
 				}
-				} finally { DebugExitSubRule(32); }
+			}
 
+			loop32:
+				;
 
-				}
-				break;
+			} finally { DebugExitSubRule(32); }
+
 
 			}
+
 			retval.Stop = (IToken)input.LT(-1);
 
 			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
@@ -5672,56 +5594,168 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("expression", 21);
-			LeaveRule("expression", 21);
-			LeaveRule_expression();
+			TraceOut("conditionalAndExpression", 24);
+			LeaveRule("conditionalAndExpression", 24);
+			LeaveRule_conditionalAndExpression();
 		}
-		DebugLocation(229, 1);
-		} finally { DebugExitRule(GrammarFileName, "expression"); }
+		DebugLocation(278, 1);
+		} finally { DebugExitRule(GrammarFileName, "conditionalAndExpression"); }
 		return retval;
 
 	}
-	// $ANTLR end "expression"
+	// $ANTLR end "conditionalAndExpression"
 
-	partial void EnterRule_expressionList();
-	partial void LeaveRule_expressionList();
+	partial void EnterRule_inclusiveOrExpression();
+	partial void LeaveRule_inclusiveOrExpression();
 
-	// $ANTLR start "expressionList"
-	// C:\\work\\ReoScript\\ReoScript.g:231:1: expressionList : expression ( COMMA ! expression )* ;
-	[GrammarRule("expressionList")]
-	private AstParserRuleReturnScope<CommonTree, IToken> expressionList()
+	// $ANTLR start "inclusiveOrExpression"
+	// C:\\work\\ReoScript\\ReoScript.g:280:1: inclusiveOrExpression : exclusiveOrExpression ( OR ^ exclusiveOrExpression )* ;
+	[GrammarRule("inclusiveOrExpression")]
+	private AstParserRuleReturnScope<CommonTree, IToken> inclusiveOrExpression()
 	{
-		EnterRule_expressionList();
-		EnterRule("expressionList", 22);
-		TraceIn("expressionList", 22);
+		EnterRule_inclusiveOrExpression();
+		EnterRule("inclusiveOrExpression", 25);
+		TraceIn("inclusiveOrExpression", 25);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken COMMA128 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> expression127 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression129 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken OR115 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> exclusiveOrExpression114 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> exclusiveOrExpression116 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree COMMA128_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "expressionList");
-		DebugLocation(231, 1);
+		CommonTree OR115_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "inclusiveOrExpression");
+		DebugLocation(280, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:232:2: ( expression ( COMMA ! expression )* )
+			// C:\\work\\ReoScript\\ReoScript.g:281:2: ( exclusiveOrExpression ( OR ^ exclusiveOrExpression )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:232:4: expression ( COMMA ! expression )*
+			// C:\\work\\ReoScript\\ReoScript.g:281:4: exclusiveOrExpression ( OR ^ exclusiveOrExpression )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(232, 4);
-			PushFollow(Follow._expression_in_expressionList1785);
-			expression127=expression();
+			DebugLocation(281, 4);
+			PushFollow(Follow._exclusiveOrExpression_in_inclusiveOrExpression1789);
+			exclusiveOrExpression114=exclusiveOrExpression();
 			PopFollow();
 
-			adaptor.AddChild(root_0, expression127.Tree);
-			DebugLocation(232, 15);
-			// C:\\work\\ReoScript\\ReoScript.g:232:15: ( COMMA ! expression )*
+			adaptor.AddChild(root_0, exclusiveOrExpression114.Tree);
+			DebugLocation(281, 26);
+			// C:\\work\\ReoScript\\ReoScript.g:281:26: ( OR ^ exclusiveOrExpression )*
+			try { DebugEnterSubRule(33);
+			while (true)
+			{
+				int alt33=2;
+				try { DebugEnterDecision(33, false);
+				int LA33_0 = input.LA(1);
+
+				if ((LA33_0==OR))
+				{
+					alt33 = 1;
+				}
+
+
+				} finally { DebugExitDecision(33); }
+				switch ( alt33 )
+				{
+				case 1:
+					DebugEnterAlt(1);
+					// C:\\work\\ReoScript\\ReoScript.g:281:27: OR ^ exclusiveOrExpression
+					{
+					DebugLocation(281, 29);
+					OR115=(IToken)Match(input,OR,Follow._OR_in_inclusiveOrExpression1792); 
+					OR115_tree = (CommonTree)adaptor.Create(OR115);
+					root_0 = (CommonTree)adaptor.BecomeRoot(OR115_tree, root_0);
+					DebugLocation(281, 31);
+					PushFollow(Follow._exclusiveOrExpression_in_inclusiveOrExpression1795);
+					exclusiveOrExpression116=exclusiveOrExpression();
+					PopFollow();
+
+					adaptor.AddChild(root_0, exclusiveOrExpression116.Tree);
+
+					}
+					break;
+
+				default:
+					goto loop33;
+				}
+			}
+
+			loop33:
+				;
+
+			} finally { DebugExitSubRule(33); }
+
+
+			}
+
+			retval.Stop = (IToken)input.LT(-1);
+
+			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
+			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
+
+		}
+		catch (RecognitionException re)
+		{
+			ReportError(re);
+			Recover(input,re);
+		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
+
+		}
+		finally
+		{
+			TraceOut("inclusiveOrExpression", 25);
+			LeaveRule("inclusiveOrExpression", 25);
+			LeaveRule_inclusiveOrExpression();
+		}
+		DebugLocation(282, 1);
+		} finally { DebugExitRule(GrammarFileName, "inclusiveOrExpression"); }
+		return retval;
+
+	}
+	// $ANTLR end "inclusiveOrExpression"
+
+	partial void EnterRule_exclusiveOrExpression();
+	partial void LeaveRule_exclusiveOrExpression();
+
+	// $ANTLR start "exclusiveOrExpression"
+	// C:\\work\\ReoScript\\ReoScript.g:284:1: exclusiveOrExpression : andExpression ( XOR ^ andExpression )* ;
+	[GrammarRule("exclusiveOrExpression")]
+	private AstParserRuleReturnScope<CommonTree, IToken> exclusiveOrExpression()
+	{
+		EnterRule_exclusiveOrExpression();
+		EnterRule("exclusiveOrExpression", 26);
+		TraceIn("exclusiveOrExpression", 26);
+		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
+		retval.Start = (IToken)input.LT(1);
+
+		CommonTree root_0 = default(CommonTree);
+
+		IToken XOR118 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> andExpression117 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> andExpression119 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+
+		CommonTree XOR118_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "exclusiveOrExpression");
+		DebugLocation(284, 1);
+		try
+		{
+			// C:\\work\\ReoScript\\ReoScript.g:285:2: ( andExpression ( XOR ^ andExpression )* )
+			DebugEnterAlt(1);
+			// C:\\work\\ReoScript\\ReoScript.g:285:4: andExpression ( XOR ^ andExpression )*
+			{
+			root_0 = (CommonTree)adaptor.Nil();
+
+			DebugLocation(285, 4);
+			PushFollow(Follow._andExpression_in_exclusiveOrExpression1809);
+			andExpression117=andExpression();
+			PopFollow();
+
+			adaptor.AddChild(root_0, andExpression117.Tree);
+			DebugLocation(285, 18);
+			// C:\\work\\ReoScript\\ReoScript.g:285:18: ( XOR ^ andExpression )*
 			try { DebugEnterSubRule(34);
 			while (true)
 			{
@@ -5729,16 +5763,9 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				try { DebugEnterDecision(34, false);
 				int LA34_0 = input.LA(1);
 
-				if ((LA34_0==COMMA))
+				if ((LA34_0==XOR))
 				{
-					int LA34_2 = input.LA(2);
-
-					if ((LA34_2==BINARY_LITERATE||LA34_2==DECREMENT||(LA34_2>=HEX_LITERATE && LA34_2<=IDENTIFIER)||LA34_2==INCREMENT||(LA34_2>=LBRACE && LA34_2<=LCURLY)||LA34_2==LESS_THAN||(LA34_2>=LIT_FALSE && LA34_2<=LIT_TRUE)||LA34_2==LPAREN||LA34_2==MINUS||LA34_2==NAN||LA34_2==NOT||LA34_2==NUMBER_LITERATE||LA34_2==PLUS||LA34_2==STRING_LITERATE||LA34_2==THIS||LA34_2==UNDEFINED||LA34_2==133||LA34_2==137||LA34_2==143||LA34_2==145))
-					{
-						alt34 = 1;
-					}
-
-
+					alt34 = 1;
 				}
 
 
@@ -5747,16 +5774,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:232:16: COMMA ! expression
+					// C:\\work\\ReoScript\\ReoScript.g:285:19: XOR ^ andExpression
 					{
-					DebugLocation(232, 21);
-					COMMA128=(IToken)Match(input,COMMA,Follow._COMMA_in_expressionList1788); 
-					DebugLocation(232, 23);
-					PushFollow(Follow._expression_in_expressionList1791);
-					expression129=expression();
+					DebugLocation(285, 22);
+					XOR118=(IToken)Match(input,XOR,Follow._XOR_in_exclusiveOrExpression1812); 
+					XOR118_tree = (CommonTree)adaptor.Create(XOR118);
+					root_0 = (CommonTree)adaptor.BecomeRoot(XOR118_tree, root_0);
+					DebugLocation(285, 24);
+					PushFollow(Follow._andExpression_in_exclusiveOrExpression1815);
+					andExpression119=andExpression();
 					PopFollow();
 
-					adaptor.AddChild(root_0, expression129.Tree);
+					adaptor.AddChild(root_0, andExpression119.Tree);
 
 					}
 					break;
@@ -5789,87 +5818,98 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("expressionList", 22);
-			LeaveRule("expressionList", 22);
-			LeaveRule_expressionList();
+			TraceOut("exclusiveOrExpression", 26);
+			LeaveRule("exclusiveOrExpression", 26);
+			LeaveRule_exclusiveOrExpression();
 		}
-		DebugLocation(233, 1);
-		} finally { DebugExitRule(GrammarFileName, "expressionList"); }
+		DebugLocation(286, 1);
+		} finally { DebugExitRule(GrammarFileName, "exclusiveOrExpression"); }
 		return retval;
 
 	}
-	// $ANTLR end "expressionList"
+	// $ANTLR end "exclusiveOrExpression"
 
-	partial void EnterRule_assignmentExpression();
-	partial void LeaveRule_assignmentExpression();
+	partial void EnterRule_andExpression();
+	partial void LeaveRule_andExpression();
 
-	// $ANTLR start "assignmentExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:235:1: assignmentExpression : conditionalExpression ( ASSIGNMENT ^ expression )? ;
-	[GrammarRule("assignmentExpression")]
-	private AstParserRuleReturnScope<CommonTree, IToken> assignmentExpression()
+	// $ANTLR start "andExpression"
+	// C:\\work\\ReoScript\\ReoScript.g:288:1: andExpression : instanceOfExpression ( AND ^ instanceOfExpression )* ;
+	[GrammarRule("andExpression")]
+	private AstParserRuleReturnScope<CommonTree, IToken> andExpression()
 	{
-		EnterRule_assignmentExpression();
-		EnterRule("assignmentExpression", 23);
-		TraceIn("assignmentExpression", 23);
+		EnterRule_andExpression();
+		EnterRule("andExpression", 27);
+		TraceIn("andExpression", 27);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken ASSIGNMENT131 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> conditionalExpression130 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression132 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken AND121 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> instanceOfExpression120 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> instanceOfExpression122 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree ASSIGNMENT131_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "assignmentExpression");
-		DebugLocation(235, 1);
+		CommonTree AND121_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "andExpression");
+		DebugLocation(288, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:236:2: ( conditionalExpression ( ASSIGNMENT ^ expression )? )
+			// C:\\work\\ReoScript\\ReoScript.g:289:2: ( instanceOfExpression ( AND ^ instanceOfExpression )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:236:4: conditionalExpression ( ASSIGNMENT ^ expression )?
+			// C:\\work\\ReoScript\\ReoScript.g:289:4: instanceOfExpression ( AND ^ instanceOfExpression )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(236, 4);
-			PushFollow(Follow._conditionalExpression_in_assignmentExpression1805);
-			conditionalExpression130=conditionalExpression();
+			DebugLocation(289, 4);
+			PushFollow(Follow._instanceOfExpression_in_andExpression1829);
+			instanceOfExpression120=instanceOfExpression();
 			PopFollow();
 
-			adaptor.AddChild(root_0, conditionalExpression130.Tree);
-			DebugLocation(236, 26);
-			// C:\\work\\ReoScript\\ReoScript.g:236:26: ( ASSIGNMENT ^ expression )?
-			int alt35=2;
+			adaptor.AddChild(root_0, instanceOfExpression120.Tree);
+			DebugLocation(289, 25);
+			// C:\\work\\ReoScript\\ReoScript.g:289:25: ( AND ^ instanceOfExpression )*
 			try { DebugEnterSubRule(35);
-			try { DebugEnterDecision(35, false);
-			int LA35_0 = input.LA(1);
+			while (true)
+			{
+				int alt35=2;
+				try { DebugEnterDecision(35, false);
+				int LA35_0 = input.LA(1);
 
-			if ((LA35_0==ASSIGNMENT))
-			{
-				alt35 = 1;
-			}
-			} finally { DebugExitDecision(35); }
-			switch (alt35)
-			{
-			case 1:
-				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:236:27: ASSIGNMENT ^ expression
+				if ((LA35_0==AND))
 				{
-				DebugLocation(236, 37);
-				ASSIGNMENT131=(IToken)Match(input,ASSIGNMENT,Follow._ASSIGNMENT_in_assignmentExpression1808); 
-				ASSIGNMENT131_tree = (CommonTree)adaptor.Create(ASSIGNMENT131);
-				root_0 = (CommonTree)adaptor.BecomeRoot(ASSIGNMENT131_tree, root_0);
-				DebugLocation(236, 39);
-				PushFollow(Follow._expression_in_assignmentExpression1811);
-				expression132=expression();
-				PopFollow();
-
-				adaptor.AddChild(root_0, expression132.Tree);
-
+					alt35 = 1;
 				}
-				break;
 
+
+				} finally { DebugExitDecision(35); }
+				switch ( alt35 )
+				{
+				case 1:
+					DebugEnterAlt(1);
+					// C:\\work\\ReoScript\\ReoScript.g:289:26: AND ^ instanceOfExpression
+					{
+					DebugLocation(289, 29);
+					AND121=(IToken)Match(input,AND,Follow._AND_in_andExpression1832); 
+					AND121_tree = (CommonTree)adaptor.Create(AND121);
+					root_0 = (CommonTree)adaptor.BecomeRoot(AND121_tree, root_0);
+					DebugLocation(289, 31);
+					PushFollow(Follow._instanceOfExpression_in_andExpression1835);
+					instanceOfExpression122=instanceOfExpression();
+					PopFollow();
+
+					adaptor.AddChild(root_0, instanceOfExpression122.Tree);
+
+					}
+					break;
+
+				default:
+					goto loop35;
+				}
 			}
+
+			loop35:
+				;
+
 			} finally { DebugExitSubRule(35); }
 
 
@@ -5890,65 +5930,62 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("assignmentExpression", 23);
-			LeaveRule("assignmentExpression", 23);
-			LeaveRule_assignmentExpression();
+			TraceOut("andExpression", 27);
+			LeaveRule("andExpression", 27);
+			LeaveRule_andExpression();
 		}
-		DebugLocation(237, 1);
-		} finally { DebugExitRule(GrammarFileName, "assignmentExpression"); }
+		DebugLocation(290, 1);
+		} finally { DebugExitRule(GrammarFileName, "andExpression"); }
 		return retval;
 
 	}
-	// $ANTLR end "assignmentExpression"
+	// $ANTLR end "andExpression"
 
-	partial void EnterRule_conditionalExpression();
-	partial void LeaveRule_conditionalExpression();
+	partial void EnterRule_instanceOfExpression();
+	partial void LeaveRule_instanceOfExpression();
 
-	// $ANTLR start "conditionalExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:239:1: conditionalExpression : conditionalOrExpression ( CONDITION ^ expression COLON ! expression )? ;
-	[GrammarRule("conditionalExpression")]
-	private AstParserRuleReturnScope<CommonTree, IToken> conditionalExpression()
+	// $ANTLR start "instanceOfExpression"
+	// C:\\work\\ReoScript\\ReoScript.g:292:1: instanceOfExpression : equalityExpression ( 'instanceof' ^ expression )? ;
+	[GrammarRule("instanceOfExpression")]
+	private AstParserRuleReturnScope<CommonTree, IToken> instanceOfExpression()
 	{
-		EnterRule_conditionalExpression();
-		EnterRule("conditionalExpression", 24);
-		TraceIn("conditionalExpression", 24);
+		EnterRule_instanceOfExpression();
+		EnterRule("instanceOfExpression", 28);
+		TraceIn("instanceOfExpression", 28);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken CONDITION134 = default(IToken);
-		IToken COLON136 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> conditionalOrExpression133 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression135 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression137 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken string_literal124 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> equalityExpression123 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression125 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree CONDITION134_tree = default(CommonTree);
-		CommonTree COLON136_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "conditionalExpression");
-		DebugLocation(239, 1);
+		CommonTree string_literal124_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "instanceOfExpression");
+		DebugLocation(292, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:240:2: ( conditionalOrExpression ( CONDITION ^ expression COLON ! expression )? )
+			// C:\\work\\ReoScript\\ReoScript.g:293:2: ( equalityExpression ( 'instanceof' ^ expression )? )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:240:4: conditionalOrExpression ( CONDITION ^ expression COLON ! expression )?
+			// C:\\work\\ReoScript\\ReoScript.g:293:4: equalityExpression ( 'instanceof' ^ expression )?
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(240, 4);
-			PushFollow(Follow._conditionalOrExpression_in_conditionalExpression1825);
-			conditionalOrExpression133=conditionalOrExpression();
+			DebugLocation(293, 4);
+			PushFollow(Follow._equalityExpression_in_instanceOfExpression1849);
+			equalityExpression123=equalityExpression();
 			PopFollow();
 
-			adaptor.AddChild(root_0, conditionalOrExpression133.Tree);
-			DebugLocation(240, 28);
-			// C:\\work\\ReoScript\\ReoScript.g:240:28: ( CONDITION ^ expression COLON ! expression )?
+			adaptor.AddChild(root_0, equalityExpression123.Tree);
+			DebugLocation(293, 23);
+			// C:\\work\\ReoScript\\ReoScript.g:293:23: ( 'instanceof' ^ expression )?
 			int alt36=2;
 			try { DebugEnterSubRule(36);
 			try { DebugEnterDecision(36, false);
 			int LA36_0 = input.LA(1);
 
-			if ((LA36_0==CONDITION))
+			if ((LA36_0==INSTANCEOF))
 			{
 				alt36 = 1;
 			}
@@ -5957,26 +5994,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:240:29: CONDITION ^ expression COLON ! expression
+				// C:\\work\\ReoScript\\ReoScript.g:293:24: 'instanceof' ^ expression
 				{
-				DebugLocation(240, 38);
-				CONDITION134=(IToken)Match(input,CONDITION,Follow._CONDITION_in_conditionalExpression1828); 
-				CONDITION134_tree = (CommonTree)adaptor.Create(CONDITION134);
-				root_0 = (CommonTree)adaptor.BecomeRoot(CONDITION134_tree, root_0);
-				DebugLocation(240, 40);
-				PushFollow(Follow._expression_in_conditionalExpression1831);
-				expression135=expression();
+				DebugLocation(293, 36);
+				string_literal124=(IToken)Match(input,INSTANCEOF,Follow._INSTANCEOF_in_instanceOfExpression1852); 
+				string_literal124_tree = (CommonTree)adaptor.Create(string_literal124);
+				root_0 = (CommonTree)adaptor.BecomeRoot(string_literal124_tree, root_0);
+				DebugLocation(293, 38);
+				PushFollow(Follow._expression_in_instanceOfExpression1855);
+				expression125=expression();
 				PopFollow();
 
-				adaptor.AddChild(root_0, expression135.Tree);
-				DebugLocation(240, 56);
-				COLON136=(IToken)Match(input,COLON,Follow._COLON_in_conditionalExpression1833); 
-				DebugLocation(240, 58);
-				PushFollow(Follow._expression_in_conditionalExpression1836);
-				expression137=expression();
-				PopFollow();
-
-				adaptor.AddChild(root_0, expression137.Tree);
+				adaptor.AddChild(root_0, expression125.Tree);
 
 				}
 				break;
@@ -6002,56 +6031,56 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("conditionalExpression", 24);
-			LeaveRule("conditionalExpression", 24);
-			LeaveRule_conditionalExpression();
+			TraceOut("instanceOfExpression", 28);
+			LeaveRule("instanceOfExpression", 28);
+			LeaveRule_instanceOfExpression();
 		}
-		DebugLocation(241, 1);
-		} finally { DebugExitRule(GrammarFileName, "conditionalExpression"); }
+		DebugLocation(294, 1);
+		} finally { DebugExitRule(GrammarFileName, "instanceOfExpression"); }
 		return retval;
 
 	}
-	// $ANTLR end "conditionalExpression"
+	// $ANTLR end "instanceOfExpression"
 
-	partial void EnterRule_conditionalOrExpression();
-	partial void LeaveRule_conditionalOrExpression();
+	partial void EnterRule_equalityExpression();
+	partial void LeaveRule_equalityExpression();
 
-	// $ANTLR start "conditionalOrExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:243:1: conditionalOrExpression : conditionalAndExpression ( LOGICAL_OR ^ conditionalAndExpression )* ;
-	[GrammarRule("conditionalOrExpression")]
-	private AstParserRuleReturnScope<CommonTree, IToken> conditionalOrExpression()
+	// $ANTLR start "equalityExpression"
+	// C:\\work\\ReoScript\\ReoScript.g:296:1: equalityExpression : relationalExpression ( ( EQUALS | NOT_EQUALS | STRICT_EQUALS | STRICT_NOT_EQUALS ) ^ relationalExpression )* ;
+	[GrammarRule("equalityExpression")]
+	private AstParserRuleReturnScope<CommonTree, IToken> equalityExpression()
 	{
-		EnterRule_conditionalOrExpression();
-		EnterRule("conditionalOrExpression", 25);
-		TraceIn("conditionalOrExpression", 25);
+		EnterRule_equalityExpression();
+		EnterRule("equalityExpression", 29);
+		TraceIn("equalityExpression", 29);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken LOGICAL_OR139 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> conditionalAndExpression138 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> conditionalAndExpression140 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken set127 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> relationalExpression126 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> relationalExpression128 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree LOGICAL_OR139_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "conditionalOrExpression");
-		DebugLocation(243, 1);
+		CommonTree set127_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "equalityExpression");
+		DebugLocation(296, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:244:2: ( conditionalAndExpression ( LOGICAL_OR ^ conditionalAndExpression )* )
+			// C:\\work\\ReoScript\\ReoScript.g:297:2: ( relationalExpression ( ( EQUALS | NOT_EQUALS | STRICT_EQUALS | STRICT_NOT_EQUALS ) ^ relationalExpression )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:244:4: conditionalAndExpression ( LOGICAL_OR ^ conditionalAndExpression )*
+			// C:\\work\\ReoScript\\ReoScript.g:297:4: relationalExpression ( ( EQUALS | NOT_EQUALS | STRICT_EQUALS | STRICT_NOT_EQUALS ) ^ relationalExpression )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(244, 4);
-			PushFollow(Follow._conditionalAndExpression_in_conditionalOrExpression1849);
-			conditionalAndExpression138=conditionalAndExpression();
+			DebugLocation(297, 4);
+			PushFollow(Follow._relationalExpression_in_equalityExpression1869);
+			relationalExpression126=relationalExpression();
 			PopFollow();
 
-			adaptor.AddChild(root_0, conditionalAndExpression138.Tree);
-			DebugLocation(244, 29);
-			// C:\\work\\ReoScript\\ReoScript.g:244:29: ( LOGICAL_OR ^ conditionalAndExpression )*
+			adaptor.AddChild(root_0, relationalExpression126.Tree);
+			DebugLocation(297, 25);
+			// C:\\work\\ReoScript\\ReoScript.g:297:25: ( ( EQUALS | NOT_EQUALS | STRICT_EQUALS | STRICT_NOT_EQUALS ) ^ relationalExpression )*
 			try { DebugEnterSubRule(37);
 			while (true)
 			{
@@ -6059,7 +6088,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				try { DebugEnterDecision(37, false);
 				int LA37_0 = input.LA(1);
 
-				if ((LA37_0==LOGICAL_OR))
+				if ((LA37_0==EQUALS||LA37_0==NOT_EQUALS||(LA37_0>=STRICT_EQUALS && LA37_0<=STRICT_NOT_EQUALS)))
 				{
 					alt37 = 1;
 				}
@@ -6070,18 +6099,31 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:244:30: LOGICAL_OR ^ conditionalAndExpression
+					// C:\\work\\ReoScript\\ReoScript.g:297:26: ( EQUALS | NOT_EQUALS | STRICT_EQUALS | STRICT_NOT_EQUALS ) ^ relationalExpression
 					{
-					DebugLocation(244, 40);
-					LOGICAL_OR139=(IToken)Match(input,LOGICAL_OR,Follow._LOGICAL_OR_in_conditionalOrExpression1852); 
-					LOGICAL_OR139_tree = (CommonTree)adaptor.Create(LOGICAL_OR139);
-					root_0 = (CommonTree)adaptor.BecomeRoot(LOGICAL_OR139_tree, root_0);
-					DebugLocation(244, 42);
-					PushFollow(Follow._conditionalAndExpression_in_conditionalOrExpression1855);
-					conditionalAndExpression140=conditionalAndExpression();
+					DebugLocation(297, 83);
+
+					set127=(IToken)input.LT(1);
+					set127=(IToken)input.LT(1);
+					if (input.LA(1)==EQUALS||input.LA(1)==NOT_EQUALS||(input.LA(1)>=STRICT_EQUALS && input.LA(1)<=STRICT_NOT_EQUALS))
+					{
+						input.Consume();
+						root_0 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(set127), root_0);
+						state.errorRecovery=false;
+					}
+					else
+					{
+						MismatchedSetException mse = new MismatchedSetException(null,input);
+						DebugRecognitionException(mse);
+						throw mse;
+					}
+
+					DebugLocation(297, 85);
+					PushFollow(Follow._relationalExpression_in_equalityExpression1889);
+					relationalExpression128=relationalExpression();
 					PopFollow();
 
-					adaptor.AddChild(root_0, conditionalAndExpression140.Tree);
+					adaptor.AddChild(root_0, relationalExpression128.Tree);
 
 					}
 					break;
@@ -6114,56 +6156,56 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("conditionalOrExpression", 25);
-			LeaveRule("conditionalOrExpression", 25);
-			LeaveRule_conditionalOrExpression();
+			TraceOut("equalityExpression", 29);
+			LeaveRule("equalityExpression", 29);
+			LeaveRule_equalityExpression();
 		}
-		DebugLocation(245, 1);
-		} finally { DebugExitRule(GrammarFileName, "conditionalOrExpression"); }
+		DebugLocation(298, 1);
+		} finally { DebugExitRule(GrammarFileName, "equalityExpression"); }
 		return retval;
 
 	}
-	// $ANTLR end "conditionalOrExpression"
+	// $ANTLR end "equalityExpression"
 
-	partial void EnterRule_conditionalAndExpression();
-	partial void LeaveRule_conditionalAndExpression();
+	partial void EnterRule_relationalExpression();
+	partial void LeaveRule_relationalExpression();
 
-	// $ANTLR start "conditionalAndExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:247:1: conditionalAndExpression : inclusiveOrExpression ( LOGICAL_AND ^ inclusiveOrExpression )* ;
-	[GrammarRule("conditionalAndExpression")]
-	private AstParserRuleReturnScope<CommonTree, IToken> conditionalAndExpression()
+	// $ANTLR start "relationalExpression"
+	// C:\\work\\ReoScript\\ReoScript.g:300:1: relationalExpression : shiftExpression ( ( GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN ) ^ shiftExpression )* ;
+	[GrammarRule("relationalExpression")]
+	private AstParserRuleReturnScope<CommonTree, IToken> relationalExpression()
 	{
-		EnterRule_conditionalAndExpression();
-		EnterRule("conditionalAndExpression", 26);
-		TraceIn("conditionalAndExpression", 26);
+		EnterRule_relationalExpression();
+		EnterRule("relationalExpression", 30);
+		TraceIn("relationalExpression", 30);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken LOGICAL_AND142 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> inclusiveOrExpression141 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> inclusiveOrExpression143 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken set130 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> shiftExpression129 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> shiftExpression131 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree LOGICAL_AND142_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "conditionalAndExpression");
-		DebugLocation(247, 1);
+		CommonTree set130_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "relationalExpression");
+		DebugLocation(300, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:248:2: ( inclusiveOrExpression ( LOGICAL_AND ^ inclusiveOrExpression )* )
+			// C:\\work\\ReoScript\\ReoScript.g:301:2: ( shiftExpression ( ( GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN ) ^ shiftExpression )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:248:4: inclusiveOrExpression ( LOGICAL_AND ^ inclusiveOrExpression )*
+			// C:\\work\\ReoScript\\ReoScript.g:301:4: shiftExpression ( ( GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN ) ^ shiftExpression )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(248, 4);
-			PushFollow(Follow._inclusiveOrExpression_in_conditionalAndExpression1868);
-			inclusiveOrExpression141=inclusiveOrExpression();
+			DebugLocation(301, 4);
+			PushFollow(Follow._shiftExpression_in_relationalExpression1904);
+			shiftExpression129=shiftExpression();
 			PopFollow();
 
-			adaptor.AddChild(root_0, inclusiveOrExpression141.Tree);
-			DebugLocation(248, 26);
-			// C:\\work\\ReoScript\\ReoScript.g:248:26: ( LOGICAL_AND ^ inclusiveOrExpression )*
+			adaptor.AddChild(root_0, shiftExpression129.Tree);
+			DebugLocation(301, 20);
+			// C:\\work\\ReoScript\\ReoScript.g:301:20: ( ( GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN ) ^ shiftExpression )*
 			try { DebugEnterSubRule(38);
 			while (true)
 			{
@@ -6171,7 +6213,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				try { DebugEnterDecision(38, false);
 				int LA38_0 = input.LA(1);
 
-				if ((LA38_0==LOGICAL_AND))
+				if ((LA38_0==GREAT_THAN))
+				{
+					alt38 = 1;
+				}
+				else if ((LA38_0==GREAT_EQUALS||(LA38_0>=LESS_EQUALS && LA38_0<=LESS_THAN)))
 				{
 					alt38 = 1;
 				}
@@ -6182,18 +6228,31 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:248:27: LOGICAL_AND ^ inclusiveOrExpression
+					// C:\\work\\ReoScript\\ReoScript.g:301:21: ( GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN ) ^ shiftExpression
 					{
-					DebugLocation(248, 38);
-					LOGICAL_AND142=(IToken)Match(input,LOGICAL_AND,Follow._LOGICAL_AND_in_conditionalAndExpression1871); 
-					LOGICAL_AND142_tree = (CommonTree)adaptor.Create(LOGICAL_AND142);
-					root_0 = (CommonTree)adaptor.BecomeRoot(LOGICAL_AND142_tree, root_0);
-					DebugLocation(248, 40);
-					PushFollow(Follow._inclusiveOrExpression_in_conditionalAndExpression1874);
-					inclusiveOrExpression143=inclusiveOrExpression();
+					DebugLocation(301, 74);
+
+					set130=(IToken)input.LT(1);
+					set130=(IToken)input.LT(1);
+					if ((input.LA(1)>=GREAT_EQUALS && input.LA(1)<=GREAT_THAN)||(input.LA(1)>=LESS_EQUALS && input.LA(1)<=LESS_THAN))
+					{
+						input.Consume();
+						root_0 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(set130), root_0);
+						state.errorRecovery=false;
+					}
+					else
+					{
+						MismatchedSetException mse = new MismatchedSetException(null,input);
+						DebugRecognitionException(mse);
+						throw mse;
+					}
+
+					DebugLocation(301, 76);
+					PushFollow(Follow._shiftExpression_in_relationalExpression1924);
+					shiftExpression131=shiftExpression();
 					PopFollow();
 
-					adaptor.AddChild(root_0, inclusiveOrExpression143.Tree);
+					adaptor.AddChild(root_0, shiftExpression131.Tree);
 
 					}
 					break;
@@ -6226,56 +6285,56 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("conditionalAndExpression", 26);
-			LeaveRule("conditionalAndExpression", 26);
-			LeaveRule_conditionalAndExpression();
+			TraceOut("relationalExpression", 30);
+			LeaveRule("relationalExpression", 30);
+			LeaveRule_relationalExpression();
 		}
-		DebugLocation(249, 1);
-		} finally { DebugExitRule(GrammarFileName, "conditionalAndExpression"); }
+		DebugLocation(302, 1);
+		} finally { DebugExitRule(GrammarFileName, "relationalExpression"); }
 		return retval;
 
 	}
-	// $ANTLR end "conditionalAndExpression"
+	// $ANTLR end "relationalExpression"
 
-	partial void EnterRule_inclusiveOrExpression();
-	partial void LeaveRule_inclusiveOrExpression();
+	partial void EnterRule_shiftExpression();
+	partial void LeaveRule_shiftExpression();
 
-	// $ANTLR start "inclusiveOrExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:251:1: inclusiveOrExpression : exclusiveOrExpression ( OR ^ exclusiveOrExpression )* ;
-	[GrammarRule("inclusiveOrExpression")]
-	private AstParserRuleReturnScope<CommonTree, IToken> inclusiveOrExpression()
+	// $ANTLR start "shiftExpression"
+	// C:\\work\\ReoScript\\ReoScript.g:304:1: shiftExpression : additiveExpression ( ( LSHIFT | RSHIFT ) ^ additiveExpression )* ;
+	[GrammarRule("shiftExpression")]
+	private AstParserRuleReturnScope<CommonTree, IToken> shiftExpression()
 	{
-		EnterRule_inclusiveOrExpression();
-		EnterRule("inclusiveOrExpression", 27);
-		TraceIn("inclusiveOrExpression", 27);
+		EnterRule_shiftExpression();
+		EnterRule("shiftExpression", 31);
+		TraceIn("shiftExpression", 31);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken OR145 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> exclusiveOrExpression144 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> exclusiveOrExpression146 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken set133 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> additiveExpression132 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> additiveExpression134 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree OR145_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "inclusiveOrExpression");
-		DebugLocation(251, 1);
+		CommonTree set133_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "shiftExpression");
+		DebugLocation(304, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:252:2: ( exclusiveOrExpression ( OR ^ exclusiveOrExpression )* )
+			// C:\\work\\ReoScript\\ReoScript.g:305:2: ( additiveExpression ( ( LSHIFT | RSHIFT ) ^ additiveExpression )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:252:4: exclusiveOrExpression ( OR ^ exclusiveOrExpression )*
+			// C:\\work\\ReoScript\\ReoScript.g:305:4: additiveExpression ( ( LSHIFT | RSHIFT ) ^ additiveExpression )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(252, 4);
-			PushFollow(Follow._exclusiveOrExpression_in_inclusiveOrExpression1889);
-			exclusiveOrExpression144=exclusiveOrExpression();
+			DebugLocation(305, 4);
+			PushFollow(Follow._additiveExpression_in_shiftExpression1938);
+			additiveExpression132=additiveExpression();
 			PopFollow();
 
-			adaptor.AddChild(root_0, exclusiveOrExpression144.Tree);
-			DebugLocation(252, 26);
-			// C:\\work\\ReoScript\\ReoScript.g:252:26: ( OR ^ exclusiveOrExpression )*
+			adaptor.AddChild(root_0, additiveExpression132.Tree);
+			DebugLocation(305, 23);
+			// C:\\work\\ReoScript\\ReoScript.g:305:23: ( ( LSHIFT | RSHIFT ) ^ additiveExpression )*
 			try { DebugEnterSubRule(39);
 			while (true)
 			{
@@ -6283,7 +6342,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				try { DebugEnterDecision(39, false);
 				int LA39_0 = input.LA(1);
 
-				if ((LA39_0==OR))
+				if ((LA39_0==LSHIFT||LA39_0==RSHIFT))
 				{
 					alt39 = 1;
 				}
@@ -6294,18 +6353,31 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:252:27: OR ^ exclusiveOrExpression
+					// C:\\work\\ReoScript\\ReoScript.g:305:24: ( LSHIFT | RSHIFT ) ^ additiveExpression
 					{
-					DebugLocation(252, 29);
-					OR145=(IToken)Match(input,OR,Follow._OR_in_inclusiveOrExpression1892); 
-					OR145_tree = (CommonTree)adaptor.Create(OR145);
-					root_0 = (CommonTree)adaptor.BecomeRoot(OR145_tree, root_0);
-					DebugLocation(252, 31);
-					PushFollow(Follow._exclusiveOrExpression_in_inclusiveOrExpression1895);
-					exclusiveOrExpression146=exclusiveOrExpression();
+					DebugLocation(305, 39);
+
+					set133=(IToken)input.LT(1);
+					set133=(IToken)input.LT(1);
+					if (input.LA(1)==LSHIFT||input.LA(1)==RSHIFT)
+					{
+						input.Consume();
+						root_0 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(set133), root_0);
+						state.errorRecovery=false;
+					}
+					else
+					{
+						MismatchedSetException mse = new MismatchedSetException(null,input);
+						DebugRecognitionException(mse);
+						throw mse;
+					}
+
+					DebugLocation(305, 41);
+					PushFollow(Follow._additiveExpression_in_shiftExpression1948);
+					additiveExpression134=additiveExpression();
 					PopFollow();
 
-					adaptor.AddChild(root_0, exclusiveOrExpression146.Tree);
+					adaptor.AddChild(root_0, additiveExpression134.Tree);
 
 					}
 					break;
@@ -6338,56 +6410,56 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("inclusiveOrExpression", 27);
-			LeaveRule("inclusiveOrExpression", 27);
-			LeaveRule_inclusiveOrExpression();
+			TraceOut("shiftExpression", 31);
+			LeaveRule("shiftExpression", 31);
+			LeaveRule_shiftExpression();
 		}
-		DebugLocation(253, 1);
-		} finally { DebugExitRule(GrammarFileName, "inclusiveOrExpression"); }
+		DebugLocation(306, 1);
+		} finally { DebugExitRule(GrammarFileName, "shiftExpression"); }
 		return retval;
 
 	}
-	// $ANTLR end "inclusiveOrExpression"
+	// $ANTLR end "shiftExpression"
 
-	partial void EnterRule_exclusiveOrExpression();
-	partial void LeaveRule_exclusiveOrExpression();
+	partial void EnterRule_additiveExpression();
+	partial void LeaveRule_additiveExpression();
 
-	// $ANTLR start "exclusiveOrExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:255:1: exclusiveOrExpression : andExpression ( XOR ^ andExpression )* ;
-	[GrammarRule("exclusiveOrExpression")]
-	private AstParserRuleReturnScope<CommonTree, IToken> exclusiveOrExpression()
+	// $ANTLR start "additiveExpression"
+	// C:\\work\\ReoScript\\ReoScript.g:308:1: additiveExpression : multiplicativeExpression ( ( PLUS | MINUS ) ^ multiplicativeExpression )* ;
+	[GrammarRule("additiveExpression")]
+	private AstParserRuleReturnScope<CommonTree, IToken> additiveExpression()
 	{
-		EnterRule_exclusiveOrExpression();
-		EnterRule("exclusiveOrExpression", 28);
-		TraceIn("exclusiveOrExpression", 28);
+		EnterRule_additiveExpression();
+		EnterRule("additiveExpression", 32);
+		TraceIn("additiveExpression", 32);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken XOR148 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> andExpression147 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> andExpression149 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken set136 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> multiplicativeExpression135 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> multiplicativeExpression137 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree XOR148_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "exclusiveOrExpression");
-		DebugLocation(255, 1);
+		CommonTree set136_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "additiveExpression");
+		DebugLocation(308, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:256:2: ( andExpression ( XOR ^ andExpression )* )
+			// C:\\work\\ReoScript\\ReoScript.g:309:2: ( multiplicativeExpression ( ( PLUS | MINUS ) ^ multiplicativeExpression )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:256:4: andExpression ( XOR ^ andExpression )*
+			// C:\\work\\ReoScript\\ReoScript.g:309:4: multiplicativeExpression ( ( PLUS | MINUS ) ^ multiplicativeExpression )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(256, 4);
-			PushFollow(Follow._andExpression_in_exclusiveOrExpression1909);
-			andExpression147=andExpression();
+			DebugLocation(309, 4);
+			PushFollow(Follow._multiplicativeExpression_in_additiveExpression1963);
+			multiplicativeExpression135=multiplicativeExpression();
 			PopFollow();
 
-			adaptor.AddChild(root_0, andExpression147.Tree);
-			DebugLocation(256, 18);
-			// C:\\work\\ReoScript\\ReoScript.g:256:18: ( XOR ^ andExpression )*
+			adaptor.AddChild(root_0, multiplicativeExpression135.Tree);
+			DebugLocation(309, 29);
+			// C:\\work\\ReoScript\\ReoScript.g:309:29: ( ( PLUS | MINUS ) ^ multiplicativeExpression )*
 			try { DebugEnterSubRule(40);
 			while (true)
 			{
@@ -6395,7 +6467,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				try { DebugEnterDecision(40, false);
 				int LA40_0 = input.LA(1);
 
-				if ((LA40_0==XOR))
+				if ((LA40_0==MINUS||LA40_0==PLUS))
 				{
 					alt40 = 1;
 				}
@@ -6406,18 +6478,31 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:256:19: XOR ^ andExpression
+					// C:\\work\\ReoScript\\ReoScript.g:309:30: ( PLUS | MINUS ) ^ multiplicativeExpression
 					{
-					DebugLocation(256, 22);
-					XOR148=(IToken)Match(input,XOR,Follow._XOR_in_exclusiveOrExpression1912); 
-					XOR148_tree = (CommonTree)adaptor.Create(XOR148);
-					root_0 = (CommonTree)adaptor.BecomeRoot(XOR148_tree, root_0);
-					DebugLocation(256, 24);
-					PushFollow(Follow._andExpression_in_exclusiveOrExpression1915);
-					andExpression149=andExpression();
+					DebugLocation(309, 42);
+
+					set136=(IToken)input.LT(1);
+					set136=(IToken)input.LT(1);
+					if (input.LA(1)==MINUS||input.LA(1)==PLUS)
+					{
+						input.Consume();
+						root_0 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(set136), root_0);
+						state.errorRecovery=false;
+					}
+					else
+					{
+						MismatchedSetException mse = new MismatchedSetException(null,input);
+						DebugRecognitionException(mse);
+						throw mse;
+					}
+
+					DebugLocation(309, 44);
+					PushFollow(Follow._multiplicativeExpression_in_additiveExpression1973);
+					multiplicativeExpression137=multiplicativeExpression();
 					PopFollow();
 
-					adaptor.AddChild(root_0, andExpression149.Tree);
+					adaptor.AddChild(root_0, multiplicativeExpression137.Tree);
 
 					}
 					break;
@@ -6450,56 +6535,56 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("exclusiveOrExpression", 28);
-			LeaveRule("exclusiveOrExpression", 28);
-			LeaveRule_exclusiveOrExpression();
+			TraceOut("additiveExpression", 32);
+			LeaveRule("additiveExpression", 32);
+			LeaveRule_additiveExpression();
 		}
-		DebugLocation(257, 1);
-		} finally { DebugExitRule(GrammarFileName, "exclusiveOrExpression"); }
+		DebugLocation(310, 1);
+		} finally { DebugExitRule(GrammarFileName, "additiveExpression"); }
 		return retval;
 
 	}
-	// $ANTLR end "exclusiveOrExpression"
+	// $ANTLR end "additiveExpression"
 
-	partial void EnterRule_andExpression();
-	partial void LeaveRule_andExpression();
+	partial void EnterRule_multiplicativeExpression();
+	partial void LeaveRule_multiplicativeExpression();
 
-	// $ANTLR start "andExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:259:1: andExpression : instanceOfExpression ( AND ^ instanceOfExpression )* ;
-	[GrammarRule("andExpression")]
-	private AstParserRuleReturnScope<CommonTree, IToken> andExpression()
+	// $ANTLR start "multiplicativeExpression"
+	// C:\\work\\ReoScript\\ReoScript.g:312:1: multiplicativeExpression : unaryExpression ( ( MUL | DIV | MOD ) ^ unaryExpression )* ;
+	[GrammarRule("multiplicativeExpression")]
+	private AstParserRuleReturnScope<CommonTree, IToken> multiplicativeExpression()
 	{
-		EnterRule_andExpression();
-		EnterRule("andExpression", 29);
-		TraceIn("andExpression", 29);
+		EnterRule_multiplicativeExpression();
+		EnterRule("multiplicativeExpression", 33);
+		TraceIn("multiplicativeExpression", 33);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken AND151 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> instanceOfExpression150 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> instanceOfExpression152 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken set139 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> unaryExpression138 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> unaryExpression140 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree AND151_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "andExpression");
-		DebugLocation(259, 1);
+		CommonTree set139_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "multiplicativeExpression");
+		DebugLocation(312, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:260:2: ( instanceOfExpression ( AND ^ instanceOfExpression )* )
+			// C:\\work\\ReoScript\\ReoScript.g:313:2: ( unaryExpression ( ( MUL | DIV | MOD ) ^ unaryExpression )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:260:4: instanceOfExpression ( AND ^ instanceOfExpression )*
+			// C:\\work\\ReoScript\\ReoScript.g:313:4: unaryExpression ( ( MUL | DIV | MOD ) ^ unaryExpression )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(260, 4);
-			PushFollow(Follow._instanceOfExpression_in_andExpression1929);
-			instanceOfExpression150=instanceOfExpression();
+			DebugLocation(313, 4);
+			PushFollow(Follow._unaryExpression_in_multiplicativeExpression1987);
+			unaryExpression138=unaryExpression();
 			PopFollow();
 
-			adaptor.AddChild(root_0, instanceOfExpression150.Tree);
-			DebugLocation(260, 25);
-			// C:\\work\\ReoScript\\ReoScript.g:260:25: ( AND ^ instanceOfExpression )*
+			adaptor.AddChild(root_0, unaryExpression138.Tree);
+			DebugLocation(313, 20);
+			// C:\\work\\ReoScript\\ReoScript.g:313:20: ( ( MUL | DIV | MOD ) ^ unaryExpression )*
 			try { DebugEnterSubRule(41);
 			while (true)
 			{
@@ -6507,7 +6592,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				try { DebugEnterDecision(41, false);
 				int LA41_0 = input.LA(1);
 
-				if ((LA41_0==AND))
+				if ((LA41_0==DIV||(LA41_0>=MOD && LA41_0<=MUL)))
 				{
 					alt41 = 1;
 				}
@@ -6518,18 +6603,31 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:260:26: AND ^ instanceOfExpression
+					// C:\\work\\ReoScript\\ReoScript.g:313:21: ( MUL | DIV | MOD ) ^ unaryExpression
 					{
-					DebugLocation(260, 29);
-					AND151=(IToken)Match(input,AND,Follow._AND_in_andExpression1932); 
-					AND151_tree = (CommonTree)adaptor.Create(AND151);
-					root_0 = (CommonTree)adaptor.BecomeRoot(AND151_tree, root_0);
-					DebugLocation(260, 31);
-					PushFollow(Follow._instanceOfExpression_in_andExpression1935);
-					instanceOfExpression152=instanceOfExpression();
+					DebugLocation(313, 38);
+
+					set139=(IToken)input.LT(1);
+					set139=(IToken)input.LT(1);
+					if (input.LA(1)==DIV||(input.LA(1)>=MOD && input.LA(1)<=MUL))
+					{
+						input.Consume();
+						root_0 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(set139), root_0);
+						state.errorRecovery=false;
+					}
+					else
+					{
+						MismatchedSetException mse = new MismatchedSetException(null,input);
+						DebugRecognitionException(mse);
+						throw mse;
+					}
+
+					DebugLocation(313, 40);
+					PushFollow(Follow._unaryExpression_in_multiplicativeExpression2003);
+					unaryExpression140=unaryExpression();
 					PopFollow();
 
-					adaptor.AddChild(root_0, instanceOfExpression152.Tree);
+					adaptor.AddChild(root_0, unaryExpression140.Tree);
 
 					}
 					break;
@@ -6562,741 +6660,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("andExpression", 29);
-			LeaveRule("andExpression", 29);
-			LeaveRule_andExpression();
-		}
-		DebugLocation(261, 1);
-		} finally { DebugExitRule(GrammarFileName, "andExpression"); }
-		return retval;
-
-	}
-	// $ANTLR end "andExpression"
-
-	partial void EnterRule_instanceOfExpression();
-	partial void LeaveRule_instanceOfExpression();
-
-	// $ANTLR start "instanceOfExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:263:1: instanceOfExpression : equalityExpression ( 'instanceof' ^ expression )? ;
-	[GrammarRule("instanceOfExpression")]
-	private AstParserRuleReturnScope<CommonTree, IToken> instanceOfExpression()
-	{
-		EnterRule_instanceOfExpression();
-		EnterRule("instanceOfExpression", 30);
-		TraceIn("instanceOfExpression", 30);
-		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
-		retval.Start = (IToken)input.LT(1);
-
-		CommonTree root_0 = default(CommonTree);
-
-		IToken string_literal154 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> equalityExpression153 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression155 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-
-		CommonTree string_literal154_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "instanceOfExpression");
-		DebugLocation(263, 1);
-		try
-		{
-			// C:\\work\\ReoScript\\ReoScript.g:264:2: ( equalityExpression ( 'instanceof' ^ expression )? )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:264:4: equalityExpression ( 'instanceof' ^ expression )?
-			{
-			root_0 = (CommonTree)adaptor.Nil();
-
-			DebugLocation(264, 4);
-			PushFollow(Follow._equalityExpression_in_instanceOfExpression1949);
-			equalityExpression153=equalityExpression();
-			PopFollow();
-
-			adaptor.AddChild(root_0, equalityExpression153.Tree);
-			DebugLocation(264, 23);
-			// C:\\work\\ReoScript\\ReoScript.g:264:23: ( 'instanceof' ^ expression )?
-			int alt42=2;
-			try { DebugEnterSubRule(42);
-			try { DebugEnterDecision(42, false);
-			int LA42_0 = input.LA(1);
-
-			if ((LA42_0==INSTANCEOF))
-			{
-				alt42 = 1;
-			}
-			} finally { DebugExitDecision(42); }
-			switch (alt42)
-			{
-			case 1:
-				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:264:24: 'instanceof' ^ expression
-				{
-				DebugLocation(264, 36);
-				string_literal154=(IToken)Match(input,INSTANCEOF,Follow._INSTANCEOF_in_instanceOfExpression1952); 
-				string_literal154_tree = (CommonTree)adaptor.Create(string_literal154);
-				root_0 = (CommonTree)adaptor.BecomeRoot(string_literal154_tree, root_0);
-				DebugLocation(264, 38);
-				PushFollow(Follow._expression_in_instanceOfExpression1955);
-				expression155=expression();
-				PopFollow();
-
-				adaptor.AddChild(root_0, expression155.Tree);
-
-				}
-				break;
-
-			}
-			} finally { DebugExitSubRule(42); }
-
-
-			}
-
-			retval.Stop = (IToken)input.LT(-1);
-
-			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
-			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
-
-		}
-		catch (RecognitionException re)
-		{
-			ReportError(re);
-			Recover(input,re);
-		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
-
-		}
-		finally
-		{
-			TraceOut("instanceOfExpression", 30);
-			LeaveRule("instanceOfExpression", 30);
-			LeaveRule_instanceOfExpression();
-		}
-		DebugLocation(265, 1);
-		} finally { DebugExitRule(GrammarFileName, "instanceOfExpression"); }
-		return retval;
-
-	}
-	// $ANTLR end "instanceOfExpression"
-
-	partial void EnterRule_equalityExpression();
-	partial void LeaveRule_equalityExpression();
-
-	// $ANTLR start "equalityExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:267:1: equalityExpression : relationalExpression ( ( EQUALS | NOT_EQUALS | STRICT_EQUALS | STRICT_NOT_EQUALS ) ^ relationalExpression )* ;
-	[GrammarRule("equalityExpression")]
-	private AstParserRuleReturnScope<CommonTree, IToken> equalityExpression()
-	{
-		EnterRule_equalityExpression();
-		EnterRule("equalityExpression", 31);
-		TraceIn("equalityExpression", 31);
-		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
-		retval.Start = (IToken)input.LT(1);
-
-		CommonTree root_0 = default(CommonTree);
-
-		IToken set157 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> relationalExpression156 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> relationalExpression158 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-
-		CommonTree set157_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "equalityExpression");
-		DebugLocation(267, 1);
-		try
-		{
-			// C:\\work\\ReoScript\\ReoScript.g:268:2: ( relationalExpression ( ( EQUALS | NOT_EQUALS | STRICT_EQUALS | STRICT_NOT_EQUALS ) ^ relationalExpression )* )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:268:4: relationalExpression ( ( EQUALS | NOT_EQUALS | STRICT_EQUALS | STRICT_NOT_EQUALS ) ^ relationalExpression )*
-			{
-			root_0 = (CommonTree)adaptor.Nil();
-
-			DebugLocation(268, 4);
-			PushFollow(Follow._relationalExpression_in_equalityExpression1969);
-			relationalExpression156=relationalExpression();
-			PopFollow();
-
-			adaptor.AddChild(root_0, relationalExpression156.Tree);
-			DebugLocation(268, 25);
-			// C:\\work\\ReoScript\\ReoScript.g:268:25: ( ( EQUALS | NOT_EQUALS | STRICT_EQUALS | STRICT_NOT_EQUALS ) ^ relationalExpression )*
-			try { DebugEnterSubRule(43);
-			while (true)
-			{
-				int alt43=2;
-				try { DebugEnterDecision(43, false);
-				int LA43_0 = input.LA(1);
-
-				if ((LA43_0==EQUALS||LA43_0==NOT_EQUALS||(LA43_0>=STRICT_EQUALS && LA43_0<=STRICT_NOT_EQUALS)))
-				{
-					alt43 = 1;
-				}
-
-
-				} finally { DebugExitDecision(43); }
-				switch ( alt43 )
-				{
-				case 1:
-					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:268:26: ( EQUALS | NOT_EQUALS | STRICT_EQUALS | STRICT_NOT_EQUALS ) ^ relationalExpression
-					{
-					DebugLocation(268, 83);
-
-					set157=(IToken)input.LT(1);
-					set157=(IToken)input.LT(1);
-					if (input.LA(1)==EQUALS||input.LA(1)==NOT_EQUALS||(input.LA(1)>=STRICT_EQUALS && input.LA(1)<=STRICT_NOT_EQUALS))
-					{
-						input.Consume();
-						root_0 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(set157), root_0);
-						state.errorRecovery=false;
-					}
-					else
-					{
-						MismatchedSetException mse = new MismatchedSetException(null,input);
-						DebugRecognitionException(mse);
-						throw mse;
-					}
-
-					DebugLocation(268, 85);
-					PushFollow(Follow._relationalExpression_in_equalityExpression1989);
-					relationalExpression158=relationalExpression();
-					PopFollow();
-
-					adaptor.AddChild(root_0, relationalExpression158.Tree);
-
-					}
-					break;
-
-				default:
-					goto loop43;
-				}
-			}
-
-			loop43:
-				;
-
-			} finally { DebugExitSubRule(43); }
-
-
-			}
-
-			retval.Stop = (IToken)input.LT(-1);
-
-			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
-			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
-
-		}
-		catch (RecognitionException re)
-		{
-			ReportError(re);
-			Recover(input,re);
-		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
-
-		}
-		finally
-		{
-			TraceOut("equalityExpression", 31);
-			LeaveRule("equalityExpression", 31);
-			LeaveRule_equalityExpression();
-		}
-		DebugLocation(269, 1);
-		} finally { DebugExitRule(GrammarFileName, "equalityExpression"); }
-		return retval;
-
-	}
-	// $ANTLR end "equalityExpression"
-
-	partial void EnterRule_relationalExpression();
-	partial void LeaveRule_relationalExpression();
-
-	// $ANTLR start "relationalExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:271:1: relationalExpression : shiftExpression ( ( GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN ) ^ shiftExpression )* ;
-	[GrammarRule("relationalExpression")]
-	private AstParserRuleReturnScope<CommonTree, IToken> relationalExpression()
-	{
-		EnterRule_relationalExpression();
-		EnterRule("relationalExpression", 32);
-		TraceIn("relationalExpression", 32);
-		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
-		retval.Start = (IToken)input.LT(1);
-
-		CommonTree root_0 = default(CommonTree);
-
-		IToken set160 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> shiftExpression159 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> shiftExpression161 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-
-		CommonTree set160_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "relationalExpression");
-		DebugLocation(271, 1);
-		try
-		{
-			// C:\\work\\ReoScript\\ReoScript.g:272:2: ( shiftExpression ( ( GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN ) ^ shiftExpression )* )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:272:4: shiftExpression ( ( GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN ) ^ shiftExpression )*
-			{
-			root_0 = (CommonTree)adaptor.Nil();
-
-			DebugLocation(272, 4);
-			PushFollow(Follow._shiftExpression_in_relationalExpression2004);
-			shiftExpression159=shiftExpression();
-			PopFollow();
-
-			adaptor.AddChild(root_0, shiftExpression159.Tree);
-			DebugLocation(272, 20);
-			// C:\\work\\ReoScript\\ReoScript.g:272:20: ( ( GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN ) ^ shiftExpression )*
-			try { DebugEnterSubRule(44);
-			while (true)
-			{
-				int alt44=2;
-				try { DebugEnterDecision(44, false);
-				int LA44_0 = input.LA(1);
-
-				if ((LA44_0==GREAT_THAN))
-				{
-					alt44 = 1;
-				}
-				else if ((LA44_0==GREAT_EQUALS||(LA44_0>=LESS_EQUALS && LA44_0<=LESS_THAN)))
-				{
-					alt44 = 1;
-				}
-
-
-				} finally { DebugExitDecision(44); }
-				switch ( alt44 )
-				{
-				case 1:
-					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:272:21: ( GREAT_EQUALS | GREAT_THAN | LESS_EQUALS | LESS_THAN ) ^ shiftExpression
-					{
-					DebugLocation(272, 74);
-
-					set160=(IToken)input.LT(1);
-					set160=(IToken)input.LT(1);
-					if ((input.LA(1)>=GREAT_EQUALS && input.LA(1)<=GREAT_THAN)||(input.LA(1)>=LESS_EQUALS && input.LA(1)<=LESS_THAN))
-					{
-						input.Consume();
-						root_0 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(set160), root_0);
-						state.errorRecovery=false;
-					}
-					else
-					{
-						MismatchedSetException mse = new MismatchedSetException(null,input);
-						DebugRecognitionException(mse);
-						throw mse;
-					}
-
-					DebugLocation(272, 76);
-					PushFollow(Follow._shiftExpression_in_relationalExpression2024);
-					shiftExpression161=shiftExpression();
-					PopFollow();
-
-					adaptor.AddChild(root_0, shiftExpression161.Tree);
-
-					}
-					break;
-
-				default:
-					goto loop44;
-				}
-			}
-
-			loop44:
-				;
-
-			} finally { DebugExitSubRule(44); }
-
-
-			}
-
-			retval.Stop = (IToken)input.LT(-1);
-
-			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
-			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
-
-		}
-		catch (RecognitionException re)
-		{
-			ReportError(re);
-			Recover(input,re);
-		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
-
-		}
-		finally
-		{
-			TraceOut("relationalExpression", 32);
-			LeaveRule("relationalExpression", 32);
-			LeaveRule_relationalExpression();
-		}
-		DebugLocation(273, 1);
-		} finally { DebugExitRule(GrammarFileName, "relationalExpression"); }
-		return retval;
-
-	}
-	// $ANTLR end "relationalExpression"
-
-	partial void EnterRule_shiftExpression();
-	partial void LeaveRule_shiftExpression();
-
-	// $ANTLR start "shiftExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:275:1: shiftExpression : additiveExpression ( ( LSHIFT | RSHIFT ) ^ additiveExpression )* ;
-	[GrammarRule("shiftExpression")]
-	private AstParserRuleReturnScope<CommonTree, IToken> shiftExpression()
-	{
-		EnterRule_shiftExpression();
-		EnterRule("shiftExpression", 33);
-		TraceIn("shiftExpression", 33);
-		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
-		retval.Start = (IToken)input.LT(1);
-
-		CommonTree root_0 = default(CommonTree);
-
-		IToken set163 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> additiveExpression162 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> additiveExpression164 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-
-		CommonTree set163_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "shiftExpression");
-		DebugLocation(275, 1);
-		try
-		{
-			// C:\\work\\ReoScript\\ReoScript.g:276:2: ( additiveExpression ( ( LSHIFT | RSHIFT ) ^ additiveExpression )* )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:276:4: additiveExpression ( ( LSHIFT | RSHIFT ) ^ additiveExpression )*
-			{
-			root_0 = (CommonTree)adaptor.Nil();
-
-			DebugLocation(276, 4);
-			PushFollow(Follow._additiveExpression_in_shiftExpression2038);
-			additiveExpression162=additiveExpression();
-			PopFollow();
-
-			adaptor.AddChild(root_0, additiveExpression162.Tree);
-			DebugLocation(276, 23);
-			// C:\\work\\ReoScript\\ReoScript.g:276:23: ( ( LSHIFT | RSHIFT ) ^ additiveExpression )*
-			try { DebugEnterSubRule(45);
-			while (true)
-			{
-				int alt45=2;
-				try { DebugEnterDecision(45, false);
-				int LA45_0 = input.LA(1);
-
-				if ((LA45_0==LSHIFT||LA45_0==RSHIFT))
-				{
-					alt45 = 1;
-				}
-
-
-				} finally { DebugExitDecision(45); }
-				switch ( alt45 )
-				{
-				case 1:
-					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:276:24: ( LSHIFT | RSHIFT ) ^ additiveExpression
-					{
-					DebugLocation(276, 39);
-
-					set163=(IToken)input.LT(1);
-					set163=(IToken)input.LT(1);
-					if (input.LA(1)==LSHIFT||input.LA(1)==RSHIFT)
-					{
-						input.Consume();
-						root_0 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(set163), root_0);
-						state.errorRecovery=false;
-					}
-					else
-					{
-						MismatchedSetException mse = new MismatchedSetException(null,input);
-						DebugRecognitionException(mse);
-						throw mse;
-					}
-
-					DebugLocation(276, 41);
-					PushFollow(Follow._additiveExpression_in_shiftExpression2048);
-					additiveExpression164=additiveExpression();
-					PopFollow();
-
-					adaptor.AddChild(root_0, additiveExpression164.Tree);
-
-					}
-					break;
-
-				default:
-					goto loop45;
-				}
-			}
-
-			loop45:
-				;
-
-			} finally { DebugExitSubRule(45); }
-
-
-			}
-
-			retval.Stop = (IToken)input.LT(-1);
-
-			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
-			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
-
-		}
-		catch (RecognitionException re)
-		{
-			ReportError(re);
-			Recover(input,re);
-		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
-
-		}
-		finally
-		{
-			TraceOut("shiftExpression", 33);
-			LeaveRule("shiftExpression", 33);
-			LeaveRule_shiftExpression();
-		}
-		DebugLocation(277, 1);
-		} finally { DebugExitRule(GrammarFileName, "shiftExpression"); }
-		return retval;
-
-	}
-	// $ANTLR end "shiftExpression"
-
-	partial void EnterRule_additiveExpression();
-	partial void LeaveRule_additiveExpression();
-
-	// $ANTLR start "additiveExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:279:1: additiveExpression : multiplicativeExpression ( ( PLUS | MINUS ) ^ multiplicativeExpression )* ;
-	[GrammarRule("additiveExpression")]
-	private AstParserRuleReturnScope<CommonTree, IToken> additiveExpression()
-	{
-		EnterRule_additiveExpression();
-		EnterRule("additiveExpression", 34);
-		TraceIn("additiveExpression", 34);
-		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
-		retval.Start = (IToken)input.LT(1);
-
-		CommonTree root_0 = default(CommonTree);
-
-		IToken set166 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> multiplicativeExpression165 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> multiplicativeExpression167 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-
-		CommonTree set166_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "additiveExpression");
-		DebugLocation(279, 1);
-		try
-		{
-			// C:\\work\\ReoScript\\ReoScript.g:280:2: ( multiplicativeExpression ( ( PLUS | MINUS ) ^ multiplicativeExpression )* )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:280:4: multiplicativeExpression ( ( PLUS | MINUS ) ^ multiplicativeExpression )*
-			{
-			root_0 = (CommonTree)adaptor.Nil();
-
-			DebugLocation(280, 4);
-			PushFollow(Follow._multiplicativeExpression_in_additiveExpression2063);
-			multiplicativeExpression165=multiplicativeExpression();
-			PopFollow();
-
-			adaptor.AddChild(root_0, multiplicativeExpression165.Tree);
-			DebugLocation(280, 29);
-			// C:\\work\\ReoScript\\ReoScript.g:280:29: ( ( PLUS | MINUS ) ^ multiplicativeExpression )*
-			try { DebugEnterSubRule(46);
-			while (true)
-			{
-				int alt46=2;
-				try { DebugEnterDecision(46, false);
-				int LA46_0 = input.LA(1);
-
-				if ((LA46_0==MINUS||LA46_0==PLUS))
-				{
-					alt46 = 1;
-				}
-
-
-				} finally { DebugExitDecision(46); }
-				switch ( alt46 )
-				{
-				case 1:
-					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:280:30: ( PLUS | MINUS ) ^ multiplicativeExpression
-					{
-					DebugLocation(280, 42);
-
-					set166=(IToken)input.LT(1);
-					set166=(IToken)input.LT(1);
-					if (input.LA(1)==MINUS||input.LA(1)==PLUS)
-					{
-						input.Consume();
-						root_0 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(set166), root_0);
-						state.errorRecovery=false;
-					}
-					else
-					{
-						MismatchedSetException mse = new MismatchedSetException(null,input);
-						DebugRecognitionException(mse);
-						throw mse;
-					}
-
-					DebugLocation(280, 44);
-					PushFollow(Follow._multiplicativeExpression_in_additiveExpression2073);
-					multiplicativeExpression167=multiplicativeExpression();
-					PopFollow();
-
-					adaptor.AddChild(root_0, multiplicativeExpression167.Tree);
-
-					}
-					break;
-
-				default:
-					goto loop46;
-				}
-			}
-
-			loop46:
-				;
-
-			} finally { DebugExitSubRule(46); }
-
-
-			}
-
-			retval.Stop = (IToken)input.LT(-1);
-
-			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
-			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
-
-		}
-		catch (RecognitionException re)
-		{
-			ReportError(re);
-			Recover(input,re);
-		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
-
-		}
-		finally
-		{
-			TraceOut("additiveExpression", 34);
-			LeaveRule("additiveExpression", 34);
-			LeaveRule_additiveExpression();
-		}
-		DebugLocation(281, 1);
-		} finally { DebugExitRule(GrammarFileName, "additiveExpression"); }
-		return retval;
-
-	}
-	// $ANTLR end "additiveExpression"
-
-	partial void EnterRule_multiplicativeExpression();
-	partial void LeaveRule_multiplicativeExpression();
-
-	// $ANTLR start "multiplicativeExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:283:1: multiplicativeExpression : unaryExpression ( ( MUL | DIV | MOD ) ^ unaryExpression )* ;
-	[GrammarRule("multiplicativeExpression")]
-	private AstParserRuleReturnScope<CommonTree, IToken> multiplicativeExpression()
-	{
-		EnterRule_multiplicativeExpression();
-		EnterRule("multiplicativeExpression", 35);
-		TraceIn("multiplicativeExpression", 35);
-		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
-		retval.Start = (IToken)input.LT(1);
-
-		CommonTree root_0 = default(CommonTree);
-
-		IToken set169 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> unaryExpression168 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> unaryExpression170 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-
-		CommonTree set169_tree = default(CommonTree);
-		try { DebugEnterRule(GrammarFileName, "multiplicativeExpression");
-		DebugLocation(283, 1);
-		try
-		{
-			// C:\\work\\ReoScript\\ReoScript.g:284:2: ( unaryExpression ( ( MUL | DIV | MOD ) ^ unaryExpression )* )
-			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:284:4: unaryExpression ( ( MUL | DIV | MOD ) ^ unaryExpression )*
-			{
-			root_0 = (CommonTree)adaptor.Nil();
-
-			DebugLocation(284, 4);
-			PushFollow(Follow._unaryExpression_in_multiplicativeExpression2087);
-			unaryExpression168=unaryExpression();
-			PopFollow();
-
-			adaptor.AddChild(root_0, unaryExpression168.Tree);
-			DebugLocation(284, 20);
-			// C:\\work\\ReoScript\\ReoScript.g:284:20: ( ( MUL | DIV | MOD ) ^ unaryExpression )*
-			try { DebugEnterSubRule(47);
-			while (true)
-			{
-				int alt47=2;
-				try { DebugEnterDecision(47, false);
-				int LA47_0 = input.LA(1);
-
-				if ((LA47_0==DIV||(LA47_0>=MOD && LA47_0<=MUL)))
-				{
-					alt47 = 1;
-				}
-
-
-				} finally { DebugExitDecision(47); }
-				switch ( alt47 )
-				{
-				case 1:
-					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:284:21: ( MUL | DIV | MOD ) ^ unaryExpression
-					{
-					DebugLocation(284, 38);
-
-					set169=(IToken)input.LT(1);
-					set169=(IToken)input.LT(1);
-					if (input.LA(1)==DIV||(input.LA(1)>=MOD && input.LA(1)<=MUL))
-					{
-						input.Consume();
-						root_0 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(set169), root_0);
-						state.errorRecovery=false;
-					}
-					else
-					{
-						MismatchedSetException mse = new MismatchedSetException(null,input);
-						DebugRecognitionException(mse);
-						throw mse;
-					}
-
-					DebugLocation(284, 40);
-					PushFollow(Follow._unaryExpression_in_multiplicativeExpression2103);
-					unaryExpression170=unaryExpression();
-					PopFollow();
-
-					adaptor.AddChild(root_0, unaryExpression170.Tree);
-
-					}
-					break;
-
-				default:
-					goto loop47;
-				}
-			}
-
-			loop47:
-				;
-
-			} finally { DebugExitSubRule(47); }
-
-
-			}
-
-			retval.Stop = (IToken)input.LT(-1);
-
-			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
-			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
-
-		}
-		catch (RecognitionException re)
-		{
-			ReportError(re);
-			Recover(input,re);
-		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
-
-		}
-		finally
-		{
-			TraceOut("multiplicativeExpression", 35);
-			LeaveRule("multiplicativeExpression", 35);
+			TraceOut("multiplicativeExpression", 33);
+			LeaveRule("multiplicativeExpression", 33);
 			LeaveRule_multiplicativeExpression();
 		}
-		DebugLocation(285, 1);
+		DebugLocation(314, 1);
 		} finally { DebugExitRule(GrammarFileName, "multiplicativeExpression"); }
 		return retval;
 
@@ -7307,39 +6675,39 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_unaryExpression();
 
 	// $ANTLR start "unaryExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:287:1: unaryExpression : ( primaryExpression ( '++' -> ^( POST_UNARY_STEP primaryExpression '++' ) | '--' -> ^( POST_UNARY_STEP primaryExpression '--' ) | -> primaryExpression ) | '++' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '++' ) | '--' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '--' ) | 'new' primaryExpression -> ^( CREATE primaryExpression ) | (op= '+' |op= '-' |op= '!' |op= '~' ) unaryExpression -> ^( PRE_UNARY $op unaryExpression ) | 'typeof' unaryExpression -> ^( TYPEOF unaryExpression ) );
+	// C:\\work\\ReoScript\\ReoScript.g:316:1: unaryExpression : ( primaryExpression ( '++' -> ^( POST_UNARY_STEP primaryExpression '++' ) | '--' -> ^( POST_UNARY_STEP primaryExpression '--' ) | -> primaryExpression ) | '++' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '++' ) | '--' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '--' ) | 'new' primaryExpression -> ^( CREATE primaryExpression ) | (op= '+' |op= '-' |op= '!' |op= '~' ) unaryExpression -> ^( PRE_UNARY $op unaryExpression ) | 'typeof' unaryExpression -> ^( TYPEOF unaryExpression ) );
 	[GrammarRule("unaryExpression")]
 	private AstParserRuleReturnScope<CommonTree, IToken> unaryExpression()
 	{
 		EnterRule_unaryExpression();
-		EnterRule("unaryExpression", 36);
-		TraceIn("unaryExpression", 36);
+		EnterRule("unaryExpression", 34);
+		TraceIn("unaryExpression", 34);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
 		IToken op = default(IToken);
-		IToken string_literal172 = default(IToken);
-		IToken string_literal173 = default(IToken);
-		IToken string_literal174 = default(IToken);
-		IToken string_literal176 = default(IToken);
-		IToken string_literal178 = default(IToken);
-		IToken string_literal181 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression171 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression175 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression177 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression179 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> unaryExpression180 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> unaryExpression182 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken string_literal142 = default(IToken);
+		IToken string_literal143 = default(IToken);
+		IToken string_literal144 = default(IToken);
+		IToken string_literal146 = default(IToken);
+		IToken string_literal148 = default(IToken);
+		IToken string_literal151 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression141 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression145 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression147 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> primaryExpression149 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> unaryExpression150 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> unaryExpression152 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
 		CommonTree op_tree = default(CommonTree);
-		CommonTree string_literal172_tree = default(CommonTree);
-		CommonTree string_literal173_tree = default(CommonTree);
-		CommonTree string_literal174_tree = default(CommonTree);
-		CommonTree string_literal176_tree = default(CommonTree);
-		CommonTree string_literal178_tree = default(CommonTree);
-		CommonTree string_literal181_tree = default(CommonTree);
+		CommonTree string_literal142_tree = default(CommonTree);
+		CommonTree string_literal143_tree = default(CommonTree);
+		CommonTree string_literal144_tree = default(CommonTree);
+		CommonTree string_literal146_tree = default(CommonTree);
+		CommonTree string_literal148_tree = default(CommonTree);
+		CommonTree string_literal151_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_143=new RewriteRuleITokenStream(adaptor,"token 143");
 		RewriteRuleITokenStream stream_145=new RewriteRuleITokenStream(adaptor,"token 145");
 		RewriteRuleITokenStream stream_INCREMENT=new RewriteRuleITokenStream(adaptor,"token INCREMENT");
@@ -7351,12 +6719,12 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		RewriteRuleSubtreeStream stream_unaryExpression=new RewriteRuleSubtreeStream(adaptor,"rule unaryExpression");
 		RewriteRuleSubtreeStream stream_primaryExpression=new RewriteRuleSubtreeStream(adaptor,"rule primaryExpression");
 		try { DebugEnterRule(GrammarFileName, "unaryExpression");
-		DebugLocation(287, 1);
+		DebugLocation(316, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:288:2: ( primaryExpression ( '++' -> ^( POST_UNARY_STEP primaryExpression '++' ) | '--' -> ^( POST_UNARY_STEP primaryExpression '--' ) | -> primaryExpression ) | '++' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '++' ) | '--' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '--' ) | 'new' primaryExpression -> ^( CREATE primaryExpression ) | (op= '+' |op= '-' |op= '!' |op= '~' ) unaryExpression -> ^( PRE_UNARY $op unaryExpression ) | 'typeof' unaryExpression -> ^( TYPEOF unaryExpression ) )
-			int alt50=6;
-			try { DebugEnterDecision(50, false);
+			// C:\\work\\ReoScript\\ReoScript.g:317:2: ( primaryExpression ( '++' -> ^( POST_UNARY_STEP primaryExpression '++' ) | '--' -> ^( POST_UNARY_STEP primaryExpression '--' ) | -> primaryExpression ) | '++' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '++' ) | '--' primaryExpression -> ^( PRE_UNARY_STEP primaryExpression '--' ) | 'new' primaryExpression -> ^( CREATE primaryExpression ) | (op= '+' |op= '-' |op= '!' |op= '~' ) unaryExpression -> ^( PRE_UNARY $op unaryExpression ) | 'typeof' unaryExpression -> ^( TYPEOF unaryExpression ) )
+			int alt44=6;
+			try { DebugEnterDecision(44, false);
 			switch (input.LA(1))
 			{
 			case BINARY_LITERATE:
@@ -7375,22 +6743,22 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			case UNDEFINED:
 			case 133:
 				{
-				alt50 = 1;
+				alt44 = 1;
 				}
 				break;
 			case INCREMENT:
 				{
-				alt50 = 2;
+				alt44 = 2;
 				}
 				break;
 			case DECREMENT:
 				{
-				alt50 = 3;
+				alt44 = 3;
 				}
 				break;
 			case 137:
 				{
-				alt50 = 4;
+				alt44 = 4;
 				}
 				break;
 			case MINUS:
@@ -7398,50 +6766,50 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			case PLUS:
 			case 145:
 				{
-				alt50 = 5;
+				alt44 = 5;
 				}
 				break;
 			case 143:
 				{
-				alt50 = 6;
+				alt44 = 6;
 				}
 				break;
 			default:
 				{
-					NoViableAltException nvae = new NoViableAltException("", 50, 0, input);
+					NoViableAltException nvae = new NoViableAltException("", 44, 0, input);
 					DebugRecognitionException(nvae);
 					throw nvae;
 				}
 			}
 
-			} finally { DebugExitDecision(50); }
-			switch (alt50)
+			} finally { DebugExitDecision(44); }
+			switch (alt44)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:289:4: primaryExpression ( '++' -> ^( POST_UNARY_STEP primaryExpression '++' ) | '--' -> ^( POST_UNARY_STEP primaryExpression '--' ) | -> primaryExpression )
+				// C:\\work\\ReoScript\\ReoScript.g:318:4: primaryExpression ( '++' -> ^( POST_UNARY_STEP primaryExpression '++' ) | '--' -> ^( POST_UNARY_STEP primaryExpression '--' ) | -> primaryExpression )
 				{
-				DebugLocation(289, 4);
-				PushFollow(Follow._primaryExpression_in_unaryExpression2122);
-				primaryExpression171=primaryExpression();
+				DebugLocation(318, 4);
+				PushFollow(Follow._primaryExpression_in_unaryExpression2022);
+				primaryExpression141=primaryExpression();
 				PopFollow();
 
-				stream_primaryExpression.Add(primaryExpression171.Tree);
-				DebugLocation(289, 22);
-				// C:\\work\\ReoScript\\ReoScript.g:289:22: ( '++' -> ^( POST_UNARY_STEP primaryExpression '++' ) | '--' -> ^( POST_UNARY_STEP primaryExpression '--' ) | -> primaryExpression )
-				int alt48=3;
-				try { DebugEnterSubRule(48);
-				try { DebugEnterDecision(48, false);
+				stream_primaryExpression.Add(primaryExpression141.Tree);
+				DebugLocation(318, 22);
+				// C:\\work\\ReoScript\\ReoScript.g:318:22: ( '++' -> ^( POST_UNARY_STEP primaryExpression '++' ) | '--' -> ^( POST_UNARY_STEP primaryExpression '--' ) | -> primaryExpression )
+				int alt42=3;
+				try { DebugEnterSubRule(42);
+				try { DebugEnterDecision(42, false);
 				switch (input.LA(1))
 				{
 				case INCREMENT:
 					{
-					alt48 = 1;
+					alt42 = 1;
 					}
 					break;
 				case DECREMENT:
 					{
-					alt48 = 2;
+					alt42 = 2;
 					}
 					break;
 				case EOF:
@@ -7489,35 +6857,35 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				case STRICT_EQUALS:
 				case STRICT_NOT_EQUALS:
 				case XOR:
-				case 121:
+				case 122:
 					{
-					alt48 = 3;
+					alt42 = 3;
 					}
 					break;
 				default:
 					{
-						NoViableAltException nvae = new NoViableAltException("", 48, 0, input);
+						NoViableAltException nvae = new NoViableAltException("", 42, 0, input);
 						DebugRecognitionException(nvae);
 						throw nvae;
 					}
 				}
 
-				} finally { DebugExitDecision(48); }
-				switch (alt48)
+				} finally { DebugExitDecision(42); }
+				switch (alt42)
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:290:6: '++'
+					// C:\\work\\ReoScript\\ReoScript.g:319:6: '++'
 					{
-					DebugLocation(290, 6);
-					string_literal172=(IToken)Match(input,INCREMENT,Follow._INCREMENT_in_unaryExpression2132);  
-					stream_INCREMENT.Add(string_literal172);
+					DebugLocation(319, 6);
+					string_literal142=(IToken)Match(input,INCREMENT,Follow._INCREMENT_in_unaryExpression2032);  
+					stream_INCREMENT.Add(string_literal142);
 
 
 
 					{
 					// AST REWRITE
-					// elements: primaryExpression, INCREMENT
+					// elements: INCREMENT, primaryExpression
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -7527,18 +6895,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 					root_0 = (CommonTree)adaptor.Nil();
-					// 290:12: -> ^( POST_UNARY_STEP primaryExpression '++' )
+					// 319:12: -> ^( POST_UNARY_STEP primaryExpression '++' )
 					{
-						DebugLocation(290, 15);
-						// C:\\work\\ReoScript\\ReoScript.g:290:15: ^( POST_UNARY_STEP primaryExpression '++' )
+						DebugLocation(319, 15);
+						// C:\\work\\ReoScript\\ReoScript.g:319:15: ^( POST_UNARY_STEP primaryExpression '++' )
 						{
 						CommonTree root_1 = (CommonTree)adaptor.Nil();
-						DebugLocation(290, 17);
+						DebugLocation(319, 17);
 						root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(POST_UNARY_STEP, "POST_UNARY_STEP"), root_1);
 
-						DebugLocation(290, 33);
+						DebugLocation(319, 33);
 						adaptor.AddChild(root_1, stream_primaryExpression.NextTree());
-						DebugLocation(290, 51);
+						DebugLocation(319, 51);
 						adaptor.AddChild(root_1, stream_INCREMENT.NextNode());
 
 						adaptor.AddChild(root_0, root_1);
@@ -7553,17 +6921,17 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// C:\\work\\ReoScript\\ReoScript.g:291:10: '--'
+					// C:\\work\\ReoScript\\ReoScript.g:320:10: '--'
 					{
-					DebugLocation(291, 10);
-					string_literal173=(IToken)Match(input,DECREMENT,Follow._DECREMENT_in_unaryExpression2154);  
-					stream_DECREMENT.Add(string_literal173);
+					DebugLocation(320, 10);
+					string_literal143=(IToken)Match(input,DECREMENT,Follow._DECREMENT_in_unaryExpression2054);  
+					stream_DECREMENT.Add(string_literal143);
 
 
 
 					{
 					// AST REWRITE
-					// elements: primaryExpression, DECREMENT
+					// elements: DECREMENT, primaryExpression
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -7573,18 +6941,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 					root_0 = (CommonTree)adaptor.Nil();
-					// 291:16: -> ^( POST_UNARY_STEP primaryExpression '--' )
+					// 320:16: -> ^( POST_UNARY_STEP primaryExpression '--' )
 					{
-						DebugLocation(291, 19);
-						// C:\\work\\ReoScript\\ReoScript.g:291:19: ^( POST_UNARY_STEP primaryExpression '--' )
+						DebugLocation(320, 19);
+						// C:\\work\\ReoScript\\ReoScript.g:320:19: ^( POST_UNARY_STEP primaryExpression '--' )
 						{
 						CommonTree root_1 = (CommonTree)adaptor.Nil();
-						DebugLocation(291, 21);
+						DebugLocation(320, 21);
 						root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(POST_UNARY_STEP, "POST_UNARY_STEP"), root_1);
 
-						DebugLocation(291, 37);
+						DebugLocation(320, 37);
 						adaptor.AddChild(root_1, stream_primaryExpression.NextTree());
-						DebugLocation(291, 55);
+						DebugLocation(320, 55);
 						adaptor.AddChild(root_1, stream_DECREMENT.NextNode());
 
 						adaptor.AddChild(root_0, root_1);
@@ -7599,7 +6967,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 				case 3:
 					DebugEnterAlt(3);
-					// C:\\work\\ReoScript\\ReoScript.g:292:10: 
+					// C:\\work\\ReoScript\\ReoScript.g:321:10: 
 					{
 
 					{
@@ -7614,9 +6982,9 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 					root_0 = (CommonTree)adaptor.Nil();
-					// 292:10: -> primaryExpression
+					// 321:10: -> primaryExpression
 					{
-						DebugLocation(292, 13);
+						DebugLocation(321, 13);
 						adaptor.AddChild(root_0, stream_primaryExpression.NextTree());
 
 					}
@@ -7628,30 +6996,30 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 
 				}
-				} finally { DebugExitSubRule(48); }
+				} finally { DebugExitSubRule(42); }
 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:294:4: '++' primaryExpression
+				// C:\\work\\ReoScript\\ReoScript.g:323:4: '++' primaryExpression
 				{
-				DebugLocation(294, 4);
-				string_literal174=(IToken)Match(input,INCREMENT,Follow._INCREMENT_in_unaryExpression2192);  
-				stream_INCREMENT.Add(string_literal174);
+				DebugLocation(323, 4);
+				string_literal144=(IToken)Match(input,INCREMENT,Follow._INCREMENT_in_unaryExpression2092);  
+				stream_INCREMENT.Add(string_literal144);
 
-				DebugLocation(294, 9);
-				PushFollow(Follow._primaryExpression_in_unaryExpression2194);
-				primaryExpression175=primaryExpression();
+				DebugLocation(323, 9);
+				PushFollow(Follow._primaryExpression_in_unaryExpression2094);
+				primaryExpression145=primaryExpression();
 				PopFollow();
 
-				stream_primaryExpression.Add(primaryExpression175.Tree);
+				stream_primaryExpression.Add(primaryExpression145.Tree);
 
 
 				{
 				// AST REWRITE
-				// elements: INCREMENT, primaryExpression
+				// elements: primaryExpression, INCREMENT
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -7661,18 +7029,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 295:3: -> ^( PRE_UNARY_STEP primaryExpression '++' )
+				// 324:3: -> ^( PRE_UNARY_STEP primaryExpression '++' )
 				{
-					DebugLocation(295, 6);
-					// C:\\work\\ReoScript\\ReoScript.g:295:6: ^( PRE_UNARY_STEP primaryExpression '++' )
+					DebugLocation(324, 6);
+					// C:\\work\\ReoScript\\ReoScript.g:324:6: ^( PRE_UNARY_STEP primaryExpression '++' )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(295, 8);
+					DebugLocation(324, 8);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PRE_UNARY_STEP, "PRE_UNARY_STEP"), root_1);
 
-					DebugLocation(295, 23);
+					DebugLocation(324, 23);
 					adaptor.AddChild(root_1, stream_primaryExpression.NextTree());
-					DebugLocation(295, 41);
+					DebugLocation(324, 41);
 					adaptor.AddChild(root_1, stream_INCREMENT.NextNode());
 
 					adaptor.AddChild(root_0, root_1);
@@ -7687,18 +7055,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// C:\\work\\ReoScript\\ReoScript.g:296:4: '--' primaryExpression
+				// C:\\work\\ReoScript\\ReoScript.g:325:4: '--' primaryExpression
 				{
-				DebugLocation(296, 4);
-				string_literal176=(IToken)Match(input,DECREMENT,Follow._DECREMENT_in_unaryExpression2211);  
-				stream_DECREMENT.Add(string_literal176);
+				DebugLocation(325, 4);
+				string_literal146=(IToken)Match(input,DECREMENT,Follow._DECREMENT_in_unaryExpression2111);  
+				stream_DECREMENT.Add(string_literal146);
 
-				DebugLocation(296, 9);
-				PushFollow(Follow._primaryExpression_in_unaryExpression2213);
-				primaryExpression177=primaryExpression();
+				DebugLocation(325, 9);
+				PushFollow(Follow._primaryExpression_in_unaryExpression2113);
+				primaryExpression147=primaryExpression();
 				PopFollow();
 
-				stream_primaryExpression.Add(primaryExpression177.Tree);
+				stream_primaryExpression.Add(primaryExpression147.Tree);
 
 
 				{
@@ -7713,18 +7081,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 297:3: -> ^( PRE_UNARY_STEP primaryExpression '--' )
+				// 326:3: -> ^( PRE_UNARY_STEP primaryExpression '--' )
 				{
-					DebugLocation(297, 6);
-					// C:\\work\\ReoScript\\ReoScript.g:297:6: ^( PRE_UNARY_STEP primaryExpression '--' )
+					DebugLocation(326, 6);
+					// C:\\work\\ReoScript\\ReoScript.g:326:6: ^( PRE_UNARY_STEP primaryExpression '--' )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(297, 8);
+					DebugLocation(326, 8);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PRE_UNARY_STEP, "PRE_UNARY_STEP"), root_1);
 
-					DebugLocation(297, 23);
+					DebugLocation(326, 23);
 					adaptor.AddChild(root_1, stream_primaryExpression.NextTree());
-					DebugLocation(297, 41);
+					DebugLocation(326, 41);
 					adaptor.AddChild(root_1, stream_DECREMENT.NextNode());
 
 					adaptor.AddChild(root_0, root_1);
@@ -7739,18 +7107,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 4:
 				DebugEnterAlt(4);
-				// C:\\work\\ReoScript\\ReoScript.g:298:4: 'new' primaryExpression
+				// C:\\work\\ReoScript\\ReoScript.g:327:4: 'new' primaryExpression
 				{
-				DebugLocation(298, 4);
-				string_literal178=(IToken)Match(input,137,Follow._137_in_unaryExpression2230);  
-				stream_137.Add(string_literal178);
+				DebugLocation(327, 4);
+				string_literal148=(IToken)Match(input,137,Follow._137_in_unaryExpression2130);  
+				stream_137.Add(string_literal148);
 
-				DebugLocation(298, 10);
-				PushFollow(Follow._primaryExpression_in_unaryExpression2232);
-				primaryExpression179=primaryExpression();
+				DebugLocation(327, 10);
+				PushFollow(Follow._primaryExpression_in_unaryExpression2132);
+				primaryExpression149=primaryExpression();
 				PopFollow();
 
-				stream_primaryExpression.Add(primaryExpression179.Tree);
+				stream_primaryExpression.Add(primaryExpression149.Tree);
 
 
 				{
@@ -7765,16 +7133,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 299:3: -> ^( CREATE primaryExpression )
+				// 328:3: -> ^( CREATE primaryExpression )
 				{
-					DebugLocation(299, 6);
-					// C:\\work\\ReoScript\\ReoScript.g:299:6: ^( CREATE primaryExpression )
+					DebugLocation(328, 6);
+					// C:\\work\\ReoScript\\ReoScript.g:328:6: ^( CREATE primaryExpression )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(299, 8);
+					DebugLocation(328, 8);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(CREATE, "CREATE"), root_1);
 
-					DebugLocation(299, 15);
+					DebugLocation(328, 15);
 					adaptor.AddChild(root_1, stream_primaryExpression.NextTree());
 
 					adaptor.AddChild(root_0, root_1);
@@ -7789,52 +7157,52 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 5:
 				DebugEnterAlt(5);
-				// C:\\work\\ReoScript\\ReoScript.g:300:4: (op= '+' |op= '-' |op= '!' |op= '~' ) unaryExpression
+				// C:\\work\\ReoScript\\ReoScript.g:329:4: (op= '+' |op= '-' |op= '!' |op= '~' ) unaryExpression
 				{
-				DebugLocation(300, 4);
-				// C:\\work\\ReoScript\\ReoScript.g:300:4: (op= '+' |op= '-' |op= '!' |op= '~' )
-				int alt49=4;
-				try { DebugEnterSubRule(49);
-				try { DebugEnterDecision(49, false);
+				DebugLocation(329, 4);
+				// C:\\work\\ReoScript\\ReoScript.g:329:4: (op= '+' |op= '-' |op= '!' |op= '~' )
+				int alt43=4;
+				try { DebugEnterSubRule(43);
+				try { DebugEnterDecision(43, false);
 				switch (input.LA(1))
 				{
 				case PLUS:
 					{
-					alt49 = 1;
+					alt43 = 1;
 					}
 					break;
 				case MINUS:
 					{
-					alt49 = 2;
+					alt43 = 2;
 					}
 					break;
 				case NOT:
 					{
-					alt49 = 3;
+					alt43 = 3;
 					}
 					break;
 				case 145:
 					{
-					alt49 = 4;
+					alt43 = 4;
 					}
 					break;
 				default:
 					{
-						NoViableAltException nvae = new NoViableAltException("", 49, 0, input);
+						NoViableAltException nvae = new NoViableAltException("", 43, 0, input);
 						DebugRecognitionException(nvae);
 						throw nvae;
 					}
 				}
 
-				} finally { DebugExitDecision(49); }
-				switch (alt49)
+				} finally { DebugExitDecision(43); }
+				switch (alt43)
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:300:5: op= '+'
+					// C:\\work\\ReoScript\\ReoScript.g:329:5: op= '+'
 					{
-					DebugLocation(300, 7);
-					op=(IToken)Match(input,PLUS,Follow._PLUS_in_unaryExpression2250);  
+					DebugLocation(329, 7);
+					op=(IToken)Match(input,PLUS,Follow._PLUS_in_unaryExpression2150);  
 					stream_PLUS.Add(op);
 
 
@@ -7842,10 +7210,10 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// C:\\work\\ReoScript\\ReoScript.g:300:12: op= '-'
+					// C:\\work\\ReoScript\\ReoScript.g:329:12: op= '-'
 					{
-					DebugLocation(300, 14);
-					op=(IToken)Match(input,MINUS,Follow._MINUS_in_unaryExpression2254);  
+					DebugLocation(329, 14);
+					op=(IToken)Match(input,MINUS,Follow._MINUS_in_unaryExpression2154);  
 					stream_MINUS.Add(op);
 
 
@@ -7853,10 +7221,10 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 				case 3:
 					DebugEnterAlt(3);
-					// C:\\work\\ReoScript\\ReoScript.g:300:19: op= '!'
+					// C:\\work\\ReoScript\\ReoScript.g:329:19: op= '!'
 					{
-					DebugLocation(300, 21);
-					op=(IToken)Match(input,NOT,Follow._NOT_in_unaryExpression2258);  
+					DebugLocation(329, 21);
+					op=(IToken)Match(input,NOT,Follow._NOT_in_unaryExpression2158);  
 					stream_NOT.Add(op);
 
 
@@ -7864,10 +7232,10 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 				case 4:
 					DebugEnterAlt(4);
-					// C:\\work\\ReoScript\\ReoScript.g:300:26: op= '~'
+					// C:\\work\\ReoScript\\ReoScript.g:329:26: op= '~'
 					{
-					DebugLocation(300, 28);
-					op=(IToken)Match(input,145,Follow._145_in_unaryExpression2262);  
+					DebugLocation(329, 28);
+					op=(IToken)Match(input,145,Follow._145_in_unaryExpression2162);  
 					stream_145.Add(op);
 
 
@@ -7875,14 +7243,14 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 
 				}
-				} finally { DebugExitSubRule(49); }
+				} finally { DebugExitSubRule(43); }
 
-				DebugLocation(300, 34);
-				PushFollow(Follow._unaryExpression_in_unaryExpression2265);
-				unaryExpression180=unaryExpression();
+				DebugLocation(329, 34);
+				PushFollow(Follow._unaryExpression_in_unaryExpression2165);
+				unaryExpression150=unaryExpression();
 				PopFollow();
 
-				stream_unaryExpression.Add(unaryExpression180.Tree);
+				stream_unaryExpression.Add(unaryExpression150.Tree);
 
 
 				{
@@ -7898,18 +7266,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 301:3: -> ^( PRE_UNARY $op unaryExpression )
+				// 330:3: -> ^( PRE_UNARY $op unaryExpression )
 				{
-					DebugLocation(301, 6);
-					// C:\\work\\ReoScript\\ReoScript.g:301:6: ^( PRE_UNARY $op unaryExpression )
+					DebugLocation(330, 6);
+					// C:\\work\\ReoScript\\ReoScript.g:330:6: ^( PRE_UNARY $op unaryExpression )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(301, 8);
+					DebugLocation(330, 8);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PRE_UNARY, "PRE_UNARY"), root_1);
 
-					DebugLocation(301, 19);
+					DebugLocation(330, 19);
 					adaptor.AddChild(root_1, stream_op.NextNode());
-					DebugLocation(301, 22);
+					DebugLocation(330, 22);
 					adaptor.AddChild(root_1, stream_unaryExpression.NextTree());
 
 					adaptor.AddChild(root_0, root_1);
@@ -7924,18 +7292,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// C:\\work\\ReoScript\\ReoScript.g:302:7: 'typeof' unaryExpression
+				// C:\\work\\ReoScript\\ReoScript.g:331:7: 'typeof' unaryExpression
 				{
-				DebugLocation(302, 7);
-				string_literal181=(IToken)Match(input,143,Follow._143_in_unaryExpression2286);  
-				stream_143.Add(string_literal181);
+				DebugLocation(331, 7);
+				string_literal151=(IToken)Match(input,143,Follow._143_in_unaryExpression2186);  
+				stream_143.Add(string_literal151);
 
-				DebugLocation(302, 16);
-				PushFollow(Follow._unaryExpression_in_unaryExpression2288);
-				unaryExpression182=unaryExpression();
+				DebugLocation(331, 16);
+				PushFollow(Follow._unaryExpression_in_unaryExpression2188);
+				unaryExpression152=unaryExpression();
 				PopFollow();
 
-				stream_unaryExpression.Add(unaryExpression182.Tree);
+				stream_unaryExpression.Add(unaryExpression152.Tree);
 
 
 				{
@@ -7950,16 +7318,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 302:32: -> ^( TYPEOF unaryExpression )
+				// 331:32: -> ^( TYPEOF unaryExpression )
 				{
-					DebugLocation(302, 35);
-					// C:\\work\\ReoScript\\ReoScript.g:302:35: ^( TYPEOF unaryExpression )
+					DebugLocation(331, 35);
+					// C:\\work\\ReoScript\\ReoScript.g:331:35: ^( TYPEOF unaryExpression )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(302, 37);
+					DebugLocation(331, 37);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(TYPEOF, "TYPEOF"), root_1);
 
-					DebugLocation(302, 44);
+					DebugLocation(331, 44);
 					adaptor.AddChild(root_1, stream_unaryExpression.NextTree());
 
 					adaptor.AddChild(root_0, root_1);
@@ -7989,11 +7357,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("unaryExpression", 36);
-			LeaveRule("unaryExpression", 36);
+			TraceOut("unaryExpression", 34);
+			LeaveRule("unaryExpression", 34);
 			LeaveRule_unaryExpression();
 		}
-		DebugLocation(303, 1);
+		DebugLocation(332, 1);
 		} finally { DebugExitRule(GrammarFileName, "unaryExpression"); }
 		return retval;
 
@@ -8004,50 +7372,51 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_primaryExpression();
 
 	// $ANTLR start "primaryExpression"
-	// C:\\work\\ReoScript\\ReoScript.g:305:1: primaryExpression : ( ( variable -> variable | literal -> literal | array_literal -> array_literal | anonymous_function_define -> anonymous_function_define | '(' expression ')' -> expression ) ( '(' ( ')' -> ^( FUNCTION_CALL $primaryExpression) |exp= expressionList ')' -> ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) ) ) | '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) | '[' idx= expression ']' -> ^( ARRAY_ACCESS $primaryExpression $idx) | object_literal -> ^( COMBINE_OBJECT $primaryExpression object_literal ) )* | ( object_literal -> object_literal ) ( '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) )* );
+	// C:\\work\\ReoScript\\ReoScript.g:334:1: primaryExpression : ( ( variable -> variable | literal -> literal |cl= constLiteral -> ^( CONST_VALUE ) | array_literal -> array_literal | anonymous_function_define -> anonymous_function_define | '(' expression ')' -> expression ) ( '(' ( ')' -> ^( FUNCTION_CALL $primaryExpression) |exp= expressionList ')' -> ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) ) ) | '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) | '[' idx= expression ']' -> ^( ARRAY_ACCESS $primaryExpression $idx) | object_literal -> ^( COMBINE_OBJECT $primaryExpression object_literal ) )* | ( object_literal -> object_literal ) ( '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) )* );
 	[GrammarRule("primaryExpression")]
 	private AstParserRuleReturnScope<CommonTree, IToken> primaryExpression()
 	{
 		EnterRule_primaryExpression();
-		EnterRule("primaryExpression", 37);
-		TraceIn("primaryExpression", 37);
+		EnterRule("primaryExpression", 35);
+		TraceIn("primaryExpression", 35);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken char_literal187 = default(IToken);
-		IToken char_literal189 = default(IToken);
-		IToken char_literal190 = default(IToken);
-		IToken char_literal191 = default(IToken);
-		IToken char_literal192 = default(IToken);
-		IToken char_literal193 = default(IToken);
-		IToken IDENTIFIER194 = default(IToken);
-		IToken char_literal195 = default(IToken);
-		IToken char_literal196 = default(IToken);
-		IToken char_literal199 = default(IToken);
-		IToken IDENTIFIER200 = default(IToken);
+		IToken char_literal157 = default(IToken);
+		IToken char_literal159 = default(IToken);
+		IToken char_literal160 = default(IToken);
+		IToken char_literal161 = default(IToken);
+		IToken char_literal162 = default(IToken);
+		IToken char_literal163 = default(IToken);
+		IToken IDENTIFIER164 = default(IToken);
+		IToken char_literal165 = default(IToken);
+		IToken char_literal166 = default(IToken);
+		IToken char_literal169 = default(IToken);
+		IToken IDENTIFIER170 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> cl = default(AstParserRuleReturnScope<CommonTree, IToken>);
 		AstParserRuleReturnScope<CommonTree, IToken> exp = default(AstParserRuleReturnScope<CommonTree, IToken>);
 		AstParserRuleReturnScope<CommonTree, IToken> idx = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> variable183 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> literal184 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> array_literal185 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> anonymous_function_define186 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression188 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> object_literal197 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> object_literal198 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> variable153 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> literal154 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> array_literal155 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> anonymous_function_define156 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression158 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> object_literal167 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> object_literal168 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree char_literal187_tree = default(CommonTree);
-		CommonTree char_literal189_tree = default(CommonTree);
-		CommonTree char_literal190_tree = default(CommonTree);
-		CommonTree char_literal191_tree = default(CommonTree);
-		CommonTree char_literal192_tree = default(CommonTree);
-		CommonTree char_literal193_tree = default(CommonTree);
-		CommonTree IDENTIFIER194_tree = default(CommonTree);
-		CommonTree char_literal195_tree = default(CommonTree);
-		CommonTree char_literal196_tree = default(CommonTree);
-		CommonTree char_literal199_tree = default(CommonTree);
-		CommonTree IDENTIFIER200_tree = default(CommonTree);
+		CommonTree char_literal157_tree = default(CommonTree);
+		CommonTree char_literal159_tree = default(CommonTree);
+		CommonTree char_literal160_tree = default(CommonTree);
+		CommonTree char_literal161_tree = default(CommonTree);
+		CommonTree char_literal162_tree = default(CommonTree);
+		CommonTree char_literal163_tree = default(CommonTree);
+		CommonTree IDENTIFIER164_tree = default(CommonTree);
+		CommonTree char_literal165_tree = default(CommonTree);
+		CommonTree char_literal166_tree = default(CommonTree);
+		CommonTree char_literal169_tree = default(CommonTree);
+		CommonTree IDENTIFIER170_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_RPAREN=new RewriteRuleITokenStream(adaptor,"token RPAREN");
 		RewriteRuleITokenStream stream_RBRACE=new RewriteRuleITokenStream(adaptor,"token RBRACE");
 		RewriteRuleITokenStream stream_DOT=new RewriteRuleITokenStream(adaptor,"token DOT");
@@ -8056,66 +7425,72 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		RewriteRuleITokenStream stream_LBRACE=new RewriteRuleITokenStream(adaptor,"token LBRACE");
 		RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
 		RewriteRuleSubtreeStream stream_anonymous_function_define=new RewriteRuleSubtreeStream(adaptor,"rule anonymous_function_define");
+		RewriteRuleSubtreeStream stream_constLiteral=new RewriteRuleSubtreeStream(adaptor,"rule constLiteral");
 		RewriteRuleSubtreeStream stream_array_literal=new RewriteRuleSubtreeStream(adaptor,"rule array_literal");
 		RewriteRuleSubtreeStream stream_expressionList=new RewriteRuleSubtreeStream(adaptor,"rule expressionList");
 		RewriteRuleSubtreeStream stream_object_literal=new RewriteRuleSubtreeStream(adaptor,"rule object_literal");
 		RewriteRuleSubtreeStream stream_variable=new RewriteRuleSubtreeStream(adaptor,"rule variable");
 		RewriteRuleSubtreeStream stream_literal=new RewriteRuleSubtreeStream(adaptor,"rule literal");
 		try { DebugEnterRule(GrammarFileName, "primaryExpression");
-		DebugLocation(305, 1);
+		DebugLocation(334, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:306:2: ( ( variable -> variable | literal -> literal | array_literal -> array_literal | anonymous_function_define -> anonymous_function_define | '(' expression ')' -> expression ) ( '(' ( ')' -> ^( FUNCTION_CALL $primaryExpression) |exp= expressionList ')' -> ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) ) ) | '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) | '[' idx= expression ']' -> ^( ARRAY_ACCESS $primaryExpression $idx) | object_literal -> ^( COMBINE_OBJECT $primaryExpression object_literal ) )* | ( object_literal -> object_literal ) ( '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) )* )
-			int alt55=2;
-			try { DebugEnterDecision(55, false);
-			int LA55_0 = input.LA(1);
+			// C:\\work\\ReoScript\\ReoScript.g:335:2: ( ( variable -> variable | literal -> literal |cl= constLiteral -> ^( CONST_VALUE ) | array_literal -> array_literal | anonymous_function_define -> anonymous_function_define | '(' expression ')' -> expression ) ( '(' ( ')' -> ^( FUNCTION_CALL $primaryExpression) |exp= expressionList ')' -> ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) ) ) | '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) | '[' idx= expression ']' -> ^( ARRAY_ACCESS $primaryExpression $idx) | object_literal -> ^( COMBINE_OBJECT $primaryExpression object_literal ) )* | ( object_literal -> object_literal ) ( '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) )* )
+			int alt49=2;
+			try { DebugEnterDecision(49, false);
+			int LA49_0 = input.LA(1);
 
-			if ((LA55_0==BINARY_LITERATE||(LA55_0>=HEX_LITERATE && LA55_0<=IDENTIFIER)||LA55_0==LBRACE||(LA55_0>=LIT_FALSE && LA55_0<=LIT_TRUE)||LA55_0==LPAREN||LA55_0==NAN||LA55_0==NUMBER_LITERATE||LA55_0==STRING_LITERATE||LA55_0==THIS||LA55_0==UNDEFINED||LA55_0==133))
+			if ((LA49_0==BINARY_LITERATE||(LA49_0>=HEX_LITERATE && LA49_0<=IDENTIFIER)||LA49_0==LBRACE||(LA49_0>=LIT_FALSE && LA49_0<=LIT_TRUE)||LA49_0==LPAREN||LA49_0==NAN||LA49_0==NUMBER_LITERATE||LA49_0==STRING_LITERATE||LA49_0==THIS||LA49_0==UNDEFINED||LA49_0==133))
 			{
-				alt55 = 1;
+				alt49 = 1;
 			}
-			else if ((LA55_0==LCURLY))
+			else if ((LA49_0==LCURLY))
 			{
-				alt55 = 2;
+				alt49 = 2;
 			}
 			else
 			{
-				NoViableAltException nvae = new NoViableAltException("", 55, 0, input);
+				NoViableAltException nvae = new NoViableAltException("", 49, 0, input);
 				DebugRecognitionException(nvae);
 				throw nvae;
 			}
-			} finally { DebugExitDecision(55); }
-			switch (alt55)
+			} finally { DebugExitDecision(49); }
+			switch (alt49)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:307:2: ( variable -> variable | literal -> literal | array_literal -> array_literal | anonymous_function_define -> anonymous_function_define | '(' expression ')' -> expression ) ( '(' ( ')' -> ^( FUNCTION_CALL $primaryExpression) |exp= expressionList ')' -> ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) ) ) | '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) | '[' idx= expression ']' -> ^( ARRAY_ACCESS $primaryExpression $idx) | object_literal -> ^( COMBINE_OBJECT $primaryExpression object_literal ) )*
+				// C:\\work\\ReoScript\\ReoScript.g:336:2: ( variable -> variable | literal -> literal |cl= constLiteral -> ^( CONST_VALUE ) | array_literal -> array_literal | anonymous_function_define -> anonymous_function_define | '(' expression ')' -> expression ) ( '(' ( ')' -> ^( FUNCTION_CALL $primaryExpression) |exp= expressionList ')' -> ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) ) ) | '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) | '[' idx= expression ']' -> ^( ARRAY_ACCESS $primaryExpression $idx) | object_literal -> ^( COMBINE_OBJECT $primaryExpression object_literal ) )*
 				{
-				DebugLocation(307, 2);
-				// C:\\work\\ReoScript\\ReoScript.g:307:2: ( variable -> variable | literal -> literal | array_literal -> array_literal | anonymous_function_define -> anonymous_function_define | '(' expression ')' -> expression )
-				int alt51=5;
-				try { DebugEnterSubRule(51);
-				try { DebugEnterDecision(51, false);
+				DebugLocation(336, 2);
+				// C:\\work\\ReoScript\\ReoScript.g:336:2: ( variable -> variable | literal -> literal |cl= constLiteral -> ^( CONST_VALUE ) | array_literal -> array_literal | anonymous_function_define -> anonymous_function_define | '(' expression ')' -> expression )
+				int alt45=6;
+				try { DebugEnterSubRule(45);
+				try { DebugEnterDecision(45, false);
 				switch (input.LA(1))
 				{
 				case IDENTIFIER:
 					{
-					int LA51_1 = input.LA(2);
+					int LA45_1 = input.LA(2);
 
-					if ((LA51_1==123))
+					if ((LA45_1==124))
 					{
-						alt51 = 4;
+						alt45 = 5;
 					}
-					else if ((LA51_1==EOF||LA51_1==AND||(LA51_1>=ASSIGNMENT && LA51_1<=ASSIGN_RSHIFT)||LA51_1==COLON||LA51_1==COMMA||LA51_1==CONDITION||LA51_1==DECREMENT||(LA51_1>=DIV && LA51_1<=DOT)||LA51_1==EQUALS||(LA51_1>=GREAT_EQUALS && LA51_1<=GREAT_THAN)||LA51_1==IDENTIFIER||(LA51_1>=INCREMENT && LA51_1<=INSTANCEOF)||(LA51_1>=LBRACE && LA51_1<=LESS_THAN)||(LA51_1>=LOGICAL_AND && LA51_1<=LSHIFT)||(LA51_1>=MINUS && LA51_1<=MUL)||LA51_1==NOT_EQUALS||LA51_1==OR||LA51_1==PLUS||(LA51_1>=RBRACE && LA51_1<=RCURLY)||(LA51_1>=RPAREN && LA51_1<=STRICT_NOT_EQUALS)||(LA51_1>=XOR && LA51_1<=121)))
+					else if ((LA45_1==EOF||LA45_1==AND||(LA45_1>=ASSIGNMENT && LA45_1<=ASSIGN_RSHIFT)||LA45_1==COLON||LA45_1==COMMA||LA45_1==CONDITION||LA45_1==DECREMENT||(LA45_1>=DIV && LA45_1<=DOT)||LA45_1==EQUALS||(LA45_1>=GREAT_EQUALS && LA45_1<=GREAT_THAN)||LA45_1==IDENTIFIER||(LA45_1>=INCREMENT && LA45_1<=INSTANCEOF)||(LA45_1>=LBRACE && LA45_1<=LESS_THAN)||(LA45_1>=LOGICAL_AND && LA45_1<=LSHIFT)||(LA45_1>=MINUS && LA45_1<=MUL)||LA45_1==NOT_EQUALS||LA45_1==OR||LA45_1==PLUS||(LA45_1>=RBRACE && LA45_1<=RCURLY)||(LA45_1>=RPAREN && LA45_1<=STRICT_NOT_EQUALS)||(LA45_1>=XOR && LA45_1<=122)))
 					{
-						alt51 = 1;
+						alt45 = 1;
 					}
 					else
 					{
-						NoViableAltException nvae = new NoViableAltException("", 51, 1, input);
+						NoViableAltException nvae = new NoViableAltException("", 45, 1, input);
 						DebugRecognitionException(nvae);
 						throw nvae;
 					}
+					}
+					break;
+				case THIS:
+					{
+					alt45 = 2;
 					}
 					break;
 				case BINARY_LITERATE:
@@ -8126,20 +7501,19 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				case NAN:
 				case NUMBER_LITERATE:
 				case STRING_LITERATE:
-				case THIS:
 				case UNDEFINED:
 					{
-					alt51 = 2;
+					alt45 = 3;
 					}
 					break;
 				case LBRACE:
 					{
-					alt51 = 3;
+					alt45 = 4;
 					}
 					break;
 				case 133:
 					{
-					alt51 = 4;
+					alt45 = 5;
 					}
 					break;
 				case LPAREN:
@@ -8180,31 +7554,31 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 						case STRICT_EQUALS:
 						case STRICT_NOT_EQUALS:
 						case XOR:
-						case 123:
+						case 124:
 							{
-							alt51 = 5;
+							alt45 = 6;
 							}
 							break;
 						case COMMA:
 							{
-							alt51 = 4;
+							alt45 = 5;
 							}
 							break;
 						case RPAREN:
 							{
-							int LA51_9 = input.LA(4);
+							int LA45_10 = input.LA(4);
 
-							if ((LA51_9==123))
+							if ((LA45_10==124))
 							{
-								alt51 = 4;
+								alt45 = 5;
 							}
-							else if ((LA51_9==EOF||LA51_9==AND||(LA51_9>=ASSIGNMENT && LA51_9<=ASSIGN_RSHIFT)||LA51_9==COLON||LA51_9==COMMA||LA51_9==CONDITION||LA51_9==DECREMENT||(LA51_9>=DIV && LA51_9<=DOT)||LA51_9==EQUALS||(LA51_9>=GREAT_EQUALS && LA51_9<=GREAT_THAN)||LA51_9==IDENTIFIER||(LA51_9>=INCREMENT && LA51_9<=INSTANCEOF)||(LA51_9>=LBRACE && LA51_9<=LESS_THAN)||(LA51_9>=LOGICAL_AND && LA51_9<=LSHIFT)||(LA51_9>=MINUS && LA51_9<=MUL)||LA51_9==NOT_EQUALS||LA51_9==OR||LA51_9==PLUS||(LA51_9>=RBRACE && LA51_9<=RCURLY)||(LA51_9>=RPAREN && LA51_9<=STRICT_NOT_EQUALS)||(LA51_9>=XOR && LA51_9<=121)))
+							else if ((LA45_10==EOF||LA45_10==AND||(LA45_10>=ASSIGNMENT && LA45_10<=ASSIGN_RSHIFT)||LA45_10==COLON||LA45_10==COMMA||LA45_10==CONDITION||LA45_10==DECREMENT||(LA45_10>=DIV && LA45_10<=DOT)||LA45_10==EQUALS||(LA45_10>=GREAT_EQUALS && LA45_10<=GREAT_THAN)||LA45_10==IDENTIFIER||(LA45_10>=INCREMENT && LA45_10<=INSTANCEOF)||(LA45_10>=LBRACE && LA45_10<=LESS_THAN)||(LA45_10>=LOGICAL_AND && LA45_10<=LSHIFT)||(LA45_10>=MINUS && LA45_10<=MUL)||LA45_10==NOT_EQUALS||LA45_10==OR||LA45_10==PLUS||(LA45_10>=RBRACE && LA45_10<=RCURLY)||(LA45_10>=RPAREN && LA45_10<=STRICT_NOT_EQUALS)||(LA45_10>=XOR && LA45_10<=122)))
 							{
-								alt51 = 5;
+								alt45 = 6;
 							}
 							else
 							{
-								NoViableAltException nvae = new NoViableAltException("", 51, 9, input);
+								NoViableAltException nvae = new NoViableAltException("", 45, 10, input);
 								DebugRecognitionException(nvae);
 								throw nvae;
 							}
@@ -8212,7 +7586,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 							break;
 						default:
 							{
-								NoViableAltException nvae = new NoViableAltException("", 51, 7, input);
+								NoViableAltException nvae = new NoViableAltException("", 45, 8, input);
 								DebugRecognitionException(nvae);
 								throw nvae;
 							}
@@ -8222,7 +7596,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 						break;
 					case RPAREN:
 						{
-						alt51 = 4;
+						alt45 = 5;
 						}
 						break;
 					case BINARY_LITERATE:
@@ -8249,12 +7623,12 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					case 143:
 					case 145:
 						{
-						alt51 = 5;
+						alt45 = 6;
 						}
 						break;
 					default:
 						{
-							NoViableAltException nvae = new NoViableAltException("", 51, 5, input);
+							NoViableAltException nvae = new NoViableAltException("", 45, 6, input);
 							DebugRecognitionException(nvae);
 							throw nvae;
 						}
@@ -8264,25 +7638,25 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 				default:
 					{
-						NoViableAltException nvae = new NoViableAltException("", 51, 0, input);
+						NoViableAltException nvae = new NoViableAltException("", 45, 0, input);
 						DebugRecognitionException(nvae);
 						throw nvae;
 					}
 				}
 
-				} finally { DebugExitDecision(51); }
-				switch (alt51)
+				} finally { DebugExitDecision(45); }
+				switch (alt45)
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:308:5: variable
+					// C:\\work\\ReoScript\\ReoScript.g:337:5: variable
 					{
-					DebugLocation(308, 5);
-					PushFollow(Follow._variable_in_primaryExpression2315);
-					variable183=variable();
+					DebugLocation(337, 5);
+					PushFollow(Follow._variable_in_primaryExpression2215);
+					variable153=variable();
 					PopFollow();
 
-					stream_variable.Add(variable183.Tree);
+					stream_variable.Add(variable153.Tree);
 
 
 					{
@@ -8297,9 +7671,9 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 					root_0 = (CommonTree)adaptor.Nil();
-					// 308:20: -> variable
+					// 337:20: -> variable
 					{
-						DebugLocation(308, 23);
+						DebugLocation(337, 23);
 						adaptor.AddChild(root_0, stream_variable.NextTree());
 
 					}
@@ -8311,14 +7685,14 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// C:\\work\\ReoScript\\ReoScript.g:309:5: literal
+					// C:\\work\\ReoScript\\ReoScript.g:338:5: literal
 					{
-					DebugLocation(309, 5);
-					PushFollow(Follow._literal_in_primaryExpression2331);
-					literal184=literal();
+					DebugLocation(338, 5);
+					PushFollow(Follow._literal_in_primaryExpression2231);
+					literal154=literal();
 					PopFollow();
 
-					stream_literal.Add(literal184.Tree);
+					stream_literal.Add(literal154.Tree);
 
 
 					{
@@ -8333,9 +7707,9 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 					root_0 = (CommonTree)adaptor.Nil();
-					// 309:20: -> literal
+					// 338:19: -> literal
 					{
-						DebugLocation(309, 23);
+						DebugLocation(338, 22);
 						adaptor.AddChild(root_0, stream_literal.NextTree());
 
 					}
@@ -8347,14 +7721,60 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 				case 3:
 					DebugEnterAlt(3);
-					// C:\\work\\ReoScript\\ReoScript.g:310:5: array_literal
+					// C:\\work\\ReoScript\\ReoScript.g:339:5: cl= constLiteral
 					{
-					DebugLocation(310, 5);
-					PushFollow(Follow._array_literal_in_primaryExpression2348);
-					array_literal185=array_literal();
+					DebugLocation(339, 7);
+					PushFollow(Follow._constLiteral_in_primaryExpression2249);
+					cl=constLiteral();
 					PopFollow();
 
-					stream_array_literal.Add(array_literal185.Tree);
+					stream_constLiteral.Add(cl.Tree);
+
+
+					{
+					// AST REWRITE
+					// elements: 
+					// token labels: 
+					// rule labels: retval
+					// token list labels: 
+					// rule list labels: 
+					// wildcard labels: 
+					retval.Tree = root_0;
+					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
+
+					root_0 = (CommonTree)adaptor.Nil();
+					// 339:25: -> ^( CONST_VALUE )
+					{
+						DebugLocation(339, 28);
+						// C:\\work\\ReoScript\\ReoScript.g:339:28: ^( CONST_VALUE )
+						{
+						CommonTree root_1 = (CommonTree)adaptor.Nil();
+						DebugLocation(339, 30);
+						root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(CONST_VALUE, "CONST_VALUE"), root_1);
+
+						DebugLocation(339, 42);
+						adaptor.AddChild(root_1,  ConstLiteral(cl.Tree) );
+
+						adaptor.AddChild(root_0, root_1);
+						}
+
+					}
+
+					retval.Tree = root_0;
+					}
+
+					}
+					break;
+				case 4:
+					DebugEnterAlt(4);
+					// C:\\work\\ReoScript\\ReoScript.g:340:5: array_literal
+					{
+					DebugLocation(340, 5);
+					PushFollow(Follow._array_literal_in_primaryExpression2268);
+					array_literal155=array_literal();
+					PopFollow();
+
+					stream_array_literal.Add(array_literal155.Tree);
 
 
 					{
@@ -8369,9 +7789,9 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 					root_0 = (CommonTree)adaptor.Nil();
-					// 310:23: -> array_literal
+					// 340:23: -> array_literal
 					{
-						DebugLocation(310, 26);
+						DebugLocation(340, 26);
 						adaptor.AddChild(root_0, stream_array_literal.NextTree());
 
 					}
@@ -8381,16 +7801,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 					}
 					break;
-				case 4:
-					DebugEnterAlt(4);
-					// C:\\work\\ReoScript\\ReoScript.g:311:5: anonymous_function_define
+				case 5:
+					DebugEnterAlt(5);
+					// C:\\work\\ReoScript\\ReoScript.g:341:5: anonymous_function_define
 					{
-					DebugLocation(311, 5);
-					PushFollow(Follow._anonymous_function_define_in_primaryExpression2362);
-					anonymous_function_define186=anonymous_function_define();
+					DebugLocation(341, 5);
+					PushFollow(Follow._anonymous_function_define_in_primaryExpression2282);
+					anonymous_function_define156=anonymous_function_define();
 					PopFollow();
 
-					stream_anonymous_function_define.Add(anonymous_function_define186.Tree);
+					stream_anonymous_function_define.Add(anonymous_function_define156.Tree);
 
 
 					{
@@ -8405,9 +7825,9 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 					root_0 = (CommonTree)adaptor.Nil();
-					// 311:32: -> anonymous_function_define
+					// 341:32: -> anonymous_function_define
 					{
-						DebugLocation(311, 35);
+						DebugLocation(341, 35);
 						adaptor.AddChild(root_0, stream_anonymous_function_define.NextTree());
 
 					}
@@ -8417,23 +7837,23 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 					}
 					break;
-				case 5:
-					DebugEnterAlt(5);
-					// C:\\work\\ReoScript\\ReoScript.g:312:5: '(' expression ')'
+				case 6:
+					DebugEnterAlt(6);
+					// C:\\work\\ReoScript\\ReoScript.g:342:5: '(' expression ')'
 					{
-					DebugLocation(312, 5);
-					char_literal187=(IToken)Match(input,LPAREN,Follow._LPAREN_in_primaryExpression2373);  
-					stream_LPAREN.Add(char_literal187);
+					DebugLocation(342, 5);
+					char_literal157=(IToken)Match(input,LPAREN,Follow._LPAREN_in_primaryExpression2293);  
+					stream_LPAREN.Add(char_literal157);
 
-					DebugLocation(312, 9);
-					PushFollow(Follow._expression_in_primaryExpression2375);
-					expression188=expression();
+					DebugLocation(342, 9);
+					PushFollow(Follow._expression_in_primaryExpression2295);
+					expression158=expression();
 					PopFollow();
 
-					stream_expression.Add(expression188.Tree);
-					DebugLocation(312, 20);
-					char_literal189=(IToken)Match(input,RPAREN,Follow._RPAREN_in_primaryExpression2377);  
-					stream_RPAREN.Add(char_literal189);
+					stream_expression.Add(expression158.Tree);
+					DebugLocation(342, 20);
+					char_literal159=(IToken)Match(input,RPAREN,Follow._RPAREN_in_primaryExpression2297);  
+					stream_RPAREN.Add(char_literal159);
 
 
 
@@ -8449,9 +7869,9 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 					root_0 = (CommonTree)adaptor.Nil();
-					// 312:26: -> expression
+					// 342:26: -> expression
 					{
-						DebugLocation(312, 29);
+						DebugLocation(342, 29);
 						adaptor.AddChild(root_0, stream_expression.NextTree());
 
 					}
@@ -8463,81 +7883,81 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 
 				}
-				} finally { DebugExitSubRule(51); }
+				} finally { DebugExitSubRule(45); }
 
-				DebugLocation(314, 2);
-				// C:\\work\\ReoScript\\ReoScript.g:314:2: ( '(' ( ')' -> ^( FUNCTION_CALL $primaryExpression) |exp= expressionList ')' -> ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) ) ) | '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) | '[' idx= expression ']' -> ^( ARRAY_ACCESS $primaryExpression $idx) | object_literal -> ^( COMBINE_OBJECT $primaryExpression object_literal ) )*
-				try { DebugEnterSubRule(53);
+				DebugLocation(344, 2);
+				// C:\\work\\ReoScript\\ReoScript.g:344:2: ( '(' ( ')' -> ^( FUNCTION_CALL $primaryExpression) |exp= expressionList ')' -> ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) ) ) | '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) | '[' idx= expression ']' -> ^( ARRAY_ACCESS $primaryExpression $idx) | object_literal -> ^( COMBINE_OBJECT $primaryExpression object_literal ) )*
+				try { DebugEnterSubRule(47);
 				while (true)
 				{
-					int alt53=5;
-					try { DebugEnterDecision(53, false);
+					int alt47=5;
+					try { DebugEnterDecision(47, false);
 					switch (input.LA(1))
 					{
 					case LPAREN:
 						{
-						alt53 = 1;
+						alt47 = 1;
 						}
 						break;
 					case DOT:
 						{
-						alt53 = 2;
+						alt47 = 2;
 						}
 						break;
 					case LBRACE:
 						{
-						alt53 = 3;
+						alt47 = 3;
 						}
 						break;
 					case LCURLY:
 						{
-						alt53 = 4;
+						alt47 = 4;
 						}
 						break;
 					}
 
-					} finally { DebugExitDecision(53); }
-					switch ( alt53 )
+					} finally { DebugExitDecision(47); }
+					switch ( alt47 )
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// C:\\work\\ReoScript\\ReoScript.g:315:3: '(' ( ')' -> ^( FUNCTION_CALL $primaryExpression) |exp= expressionList ')' -> ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) ) )
+						// C:\\work\\ReoScript\\ReoScript.g:345:3: '(' ( ')' -> ^( FUNCTION_CALL $primaryExpression) |exp= expressionList ')' -> ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) ) )
 						{
-						DebugLocation(315, 3);
-						char_literal190=(IToken)Match(input,LPAREN,Follow._LPAREN_in_primaryExpression2393);  
-						stream_LPAREN.Add(char_literal190);
+						DebugLocation(345, 3);
+						char_literal160=(IToken)Match(input,LPAREN,Follow._LPAREN_in_primaryExpression2313);  
+						stream_LPAREN.Add(char_literal160);
 
-						DebugLocation(315, 7);
-						// C:\\work\\ReoScript\\ReoScript.g:315:7: ( ')' -> ^( FUNCTION_CALL $primaryExpression) |exp= expressionList ')' -> ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) ) )
-						int alt52=2;
-						try { DebugEnterSubRule(52);
-						try { DebugEnterDecision(52, false);
-						int LA52_0 = input.LA(1);
+						DebugLocation(345, 7);
+						// C:\\work\\ReoScript\\ReoScript.g:345:7: ( ')' -> ^( FUNCTION_CALL $primaryExpression) |exp= expressionList ')' -> ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) ) )
+						int alt46=2;
+						try { DebugEnterSubRule(46);
+						try { DebugEnterDecision(46, false);
+						int LA46_0 = input.LA(1);
 
-						if ((LA52_0==RPAREN))
+						if ((LA46_0==RPAREN))
 						{
-							alt52 = 1;
+							alt46 = 1;
 						}
-						else if ((LA52_0==BINARY_LITERATE||LA52_0==DECREMENT||(LA52_0>=HEX_LITERATE && LA52_0<=IDENTIFIER)||LA52_0==INCREMENT||(LA52_0>=LBRACE && LA52_0<=LCURLY)||LA52_0==LESS_THAN||(LA52_0>=LIT_FALSE && LA52_0<=LIT_TRUE)||LA52_0==LPAREN||LA52_0==MINUS||LA52_0==NAN||LA52_0==NOT||LA52_0==NUMBER_LITERATE||LA52_0==PLUS||LA52_0==STRING_LITERATE||LA52_0==THIS||LA52_0==UNDEFINED||LA52_0==133||LA52_0==137||LA52_0==143||LA52_0==145))
+						else if ((LA46_0==BINARY_LITERATE||LA46_0==DECREMENT||(LA46_0>=HEX_LITERATE && LA46_0<=IDENTIFIER)||LA46_0==INCREMENT||(LA46_0>=LBRACE && LA46_0<=LCURLY)||LA46_0==LESS_THAN||(LA46_0>=LIT_FALSE && LA46_0<=LIT_TRUE)||LA46_0==LPAREN||LA46_0==MINUS||LA46_0==NAN||LA46_0==NOT||LA46_0==NUMBER_LITERATE||LA46_0==PLUS||LA46_0==STRING_LITERATE||LA46_0==THIS||LA46_0==UNDEFINED||LA46_0==133||LA46_0==137||LA46_0==143||LA46_0==145))
 						{
-							alt52 = 2;
+							alt46 = 2;
 						}
 						else
 						{
-							NoViableAltException nvae = new NoViableAltException("", 52, 0, input);
+							NoViableAltException nvae = new NoViableAltException("", 46, 0, input);
 							DebugRecognitionException(nvae);
 							throw nvae;
 						}
-						} finally { DebugExitDecision(52); }
-						switch (alt52)
+						} finally { DebugExitDecision(46); }
+						switch (alt46)
 						{
 						case 1:
 							DebugEnterAlt(1);
-							// C:\\work\\ReoScript\\ReoScript.g:316:4: ')'
+							// C:\\work\\ReoScript\\ReoScript.g:346:4: ')'
 							{
-							DebugLocation(316, 4);
-							char_literal191=(IToken)Match(input,RPAREN,Follow._RPAREN_in_primaryExpression2401);  
-							stream_RPAREN.Add(char_literal191);
+							DebugLocation(346, 4);
+							char_literal161=(IToken)Match(input,RPAREN,Follow._RPAREN_in_primaryExpression2321);  
+							stream_RPAREN.Add(char_literal161);
 
 
 
@@ -8553,16 +7973,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 							RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 							root_0 = (CommonTree)adaptor.Nil();
-							// 316:9: -> ^( FUNCTION_CALL $primaryExpression)
+							// 346:9: -> ^( FUNCTION_CALL $primaryExpression)
 							{
-								DebugLocation(316, 12);
-								// C:\\work\\ReoScript\\ReoScript.g:316:12: ^( FUNCTION_CALL $primaryExpression)
+								DebugLocation(346, 12);
+								// C:\\work\\ReoScript\\ReoScript.g:346:12: ^( FUNCTION_CALL $primaryExpression)
 								{
 								CommonTree root_1 = (CommonTree)adaptor.Nil();
-								DebugLocation(316, 14);
+								DebugLocation(346, 14);
 								root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(FUNCTION_CALL, "FUNCTION_CALL"), root_1);
 
-								DebugLocation(316, 29);
+								DebugLocation(346, 29);
 								adaptor.AddChild(root_1, stream_retval.NextTree());
 
 								adaptor.AddChild(root_0, root_1);
@@ -8577,23 +7997,23 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 							break;
 						case 2:
 							DebugEnterAlt(2);
-							// C:\\work\\ReoScript\\ReoScript.g:317:6: exp= expressionList ')'
+							// C:\\work\\ReoScript\\ReoScript.g:347:6: exp= expressionList ')'
 							{
-							DebugLocation(317, 9);
-							PushFollow(Follow._expressionList_in_primaryExpression2420);
+							DebugLocation(347, 9);
+							PushFollow(Follow._expressionList_in_primaryExpression2340);
 							exp=expressionList();
 							PopFollow();
 
 							stream_expressionList.Add(exp.Tree);
-							DebugLocation(317, 25);
-							char_literal192=(IToken)Match(input,RPAREN,Follow._RPAREN_in_primaryExpression2422);  
-							stream_RPAREN.Add(char_literal192);
+							DebugLocation(347, 25);
+							char_literal162=(IToken)Match(input,RPAREN,Follow._RPAREN_in_primaryExpression2342);  
+							stream_RPAREN.Add(char_literal162);
 
 
 
 							{
 							// AST REWRITE
-							// elements: primaryExpression, exp
+							// elements: exp, primaryExpression
 							// token labels: 
 							// rule labels: exp, retval
 							// token list labels: 
@@ -8604,25 +8024,25 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 							RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 							root_0 = (CommonTree)adaptor.Nil();
-							// 318:6: -> ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) )
+							// 348:6: -> ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) )
 							{
-								DebugLocation(318, 9);
-								// C:\\work\\ReoScript\\ReoScript.g:318:9: ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) )
+								DebugLocation(348, 9);
+								// C:\\work\\ReoScript\\ReoScript.g:348:9: ^( FUNCTION_CALL $primaryExpression ^( ARGUMENT_LIST $exp) )
 								{
 								CommonTree root_1 = (CommonTree)adaptor.Nil();
-								DebugLocation(318, 11);
+								DebugLocation(348, 11);
 								root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(FUNCTION_CALL, "FUNCTION_CALL"), root_1);
 
-								DebugLocation(318, 26);
+								DebugLocation(348, 26);
 								adaptor.AddChild(root_1, stream_retval.NextTree());
-								DebugLocation(318, 44);
-								// C:\\work\\ReoScript\\ReoScript.g:318:44: ^( ARGUMENT_LIST $exp)
+								DebugLocation(348, 44);
+								// C:\\work\\ReoScript\\ReoScript.g:348:44: ^( ARGUMENT_LIST $exp)
 								{
 								CommonTree root_2 = (CommonTree)adaptor.Nil();
-								DebugLocation(318, 46);
+								DebugLocation(348, 46);
 								root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ARGUMENT_LIST, "ARGUMENT_LIST"), root_2);
 
-								DebugLocation(318, 61);
+								DebugLocation(348, 61);
 								adaptor.AddChild(root_2, stream_exp.NextTree());
 
 								adaptor.AddChild(root_1, root_2);
@@ -8640,22 +8060,22 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 							break;
 
 						}
-						} finally { DebugExitSubRule(52); }
+						} finally { DebugExitSubRule(46); }
 
 
 						}
 						break;
 					case 2:
 						DebugEnterAlt(2);
-						// C:\\work\\ReoScript\\ReoScript.g:320:5: '.' IDENTIFIER
+						// C:\\work\\ReoScript\\ReoScript.g:350:5: '.' IDENTIFIER
 						{
-						DebugLocation(320, 5);
-						char_literal193=(IToken)Match(input,DOT,Follow._DOT_in_primaryExpression2454);  
-						stream_DOT.Add(char_literal193);
+						DebugLocation(350, 5);
+						char_literal163=(IToken)Match(input,DOT,Follow._DOT_in_primaryExpression2374);  
+						stream_DOT.Add(char_literal163);
 
-						DebugLocation(320, 9);
-						IDENTIFIER194=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_primaryExpression2456);  
-						stream_IDENTIFIER.Add(IDENTIFIER194);
+						DebugLocation(350, 9);
+						IDENTIFIER164=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_primaryExpression2376);  
+						stream_IDENTIFIER.Add(IDENTIFIER164);
 
 
 
@@ -8671,18 +8091,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 						RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 						root_0 = (CommonTree)adaptor.Nil();
-						// 321:4: -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER )
+						// 351:4: -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER )
 						{
-							DebugLocation(321, 7);
-							// C:\\work\\ReoScript\\ReoScript.g:321:7: ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER )
+							DebugLocation(351, 7);
+							// C:\\work\\ReoScript\\ReoScript.g:351:7: ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER )
 							{
 							CommonTree root_1 = (CommonTree)adaptor.Nil();
-							DebugLocation(321, 9);
+							DebugLocation(351, 9);
 							root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PROPERTY_ACCESS, "PROPERTY_ACCESS"), root_1);
 
-							DebugLocation(321, 26);
+							DebugLocation(351, 26);
 							adaptor.AddChild(root_1, stream_retval.NextTree());
-							DebugLocation(321, 44);
+							DebugLocation(351, 44);
 							adaptor.AddChild(root_1, stream_IDENTIFIER.NextNode());
 
 							adaptor.AddChild(root_0, root_1);
@@ -8697,21 +8117,21 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 						break;
 					case 3:
 						DebugEnterAlt(3);
-						// C:\\work\\ReoScript\\ReoScript.g:322:5: '[' idx= expression ']'
+						// C:\\work\\ReoScript\\ReoScript.g:352:5: '[' idx= expression ']'
 						{
-						DebugLocation(322, 5);
-						char_literal195=(IToken)Match(input,LBRACE,Follow._LBRACE_in_primaryExpression2476);  
-						stream_LBRACE.Add(char_literal195);
+						DebugLocation(352, 5);
+						char_literal165=(IToken)Match(input,LBRACE,Follow._LBRACE_in_primaryExpression2396);  
+						stream_LBRACE.Add(char_literal165);
 
-						DebugLocation(322, 12);
-						PushFollow(Follow._expression_in_primaryExpression2480);
+						DebugLocation(352, 12);
+						PushFollow(Follow._expression_in_primaryExpression2400);
 						idx=expression();
 						PopFollow();
 
 						stream_expression.Add(idx.Tree);
-						DebugLocation(322, 24);
-						char_literal196=(IToken)Match(input,RBRACE,Follow._RBRACE_in_primaryExpression2482);  
-						stream_RBRACE.Add(char_literal196);
+						DebugLocation(352, 24);
+						char_literal166=(IToken)Match(input,RBRACE,Follow._RBRACE_in_primaryExpression2402);  
+						stream_RBRACE.Add(char_literal166);
 
 
 
@@ -8728,18 +8148,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 						RewriteRuleSubtreeStream stream_idx=new RewriteRuleSubtreeStream(adaptor,"rule idx",idx!=null?idx.Tree:null);
 
 						root_0 = (CommonTree)adaptor.Nil();
-						// 323:4: -> ^( ARRAY_ACCESS $primaryExpression $idx)
+						// 353:4: -> ^( ARRAY_ACCESS $primaryExpression $idx)
 						{
-							DebugLocation(323, 7);
-							// C:\\work\\ReoScript\\ReoScript.g:323:7: ^( ARRAY_ACCESS $primaryExpression $idx)
+							DebugLocation(353, 7);
+							// C:\\work\\ReoScript\\ReoScript.g:353:7: ^( ARRAY_ACCESS $primaryExpression $idx)
 							{
 							CommonTree root_1 = (CommonTree)adaptor.Nil();
-							DebugLocation(323, 9);
+							DebugLocation(353, 9);
 							root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ARRAY_ACCESS, "ARRAY_ACCESS"), root_1);
 
-							DebugLocation(323, 23);
+							DebugLocation(353, 23);
 							adaptor.AddChild(root_1, stream_retval.NextTree());
-							DebugLocation(323, 42);
+							DebugLocation(353, 42);
 							adaptor.AddChild(root_1, stream_idx.NextTree());
 
 							adaptor.AddChild(root_0, root_1);
@@ -8754,19 +8174,19 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 						break;
 					case 4:
 						DebugEnterAlt(4);
-						// C:\\work\\ReoScript\\ReoScript.g:324:5: object_literal
+						// C:\\work\\ReoScript\\ReoScript.g:354:5: object_literal
 						{
-						DebugLocation(324, 5);
-						PushFollow(Follow._object_literal_in_primaryExpression2503);
-						object_literal197=object_literal();
+						DebugLocation(354, 5);
+						PushFollow(Follow._object_literal_in_primaryExpression2423);
+						object_literal167=object_literal();
 						PopFollow();
 
-						stream_object_literal.Add(object_literal197.Tree);
+						stream_object_literal.Add(object_literal167.Tree);
 
 
 						{
 						// AST REWRITE
-						// elements: object_literal, primaryExpression
+						// elements: primaryExpression, object_literal
 						// token labels: 
 						// rule labels: retval
 						// token list labels: 
@@ -8776,18 +8196,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 						RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 						root_0 = (CommonTree)adaptor.Nil();
-						// 325:4: -> ^( COMBINE_OBJECT $primaryExpression object_literal )
+						// 355:4: -> ^( COMBINE_OBJECT $primaryExpression object_literal )
 						{
-							DebugLocation(325, 7);
-							// C:\\work\\ReoScript\\ReoScript.g:325:7: ^( COMBINE_OBJECT $primaryExpression object_literal )
+							DebugLocation(355, 7);
+							// C:\\work\\ReoScript\\ReoScript.g:355:7: ^( COMBINE_OBJECT $primaryExpression object_literal )
 							{
 							CommonTree root_1 = (CommonTree)adaptor.Nil();
-							DebugLocation(325, 9);
+							DebugLocation(355, 9);
 							root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(COMBINE_OBJECT, "COMBINE_OBJECT"), root_1);
 
-							DebugLocation(325, 25);
+							DebugLocation(355, 25);
 							adaptor.AddChild(root_1, stream_retval.NextTree());
-							DebugLocation(325, 43);
+							DebugLocation(355, 43);
 							adaptor.AddChild(root_1, stream_object_literal.NextTree());
 
 							adaptor.AddChild(root_0, root_1);
@@ -8802,33 +8222,33 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 						break;
 
 					default:
-						goto loop53;
+						goto loop47;
 					}
 				}
 
-				loop53:
+				loop47:
 					;
 
-				} finally { DebugExitSubRule(53); }
+				} finally { DebugExitSubRule(47); }
 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:327:4: ( object_literal -> object_literal ) ( '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) )*
+				// C:\\work\\ReoScript\\ReoScript.g:357:4: ( object_literal -> object_literal ) ( '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) )*
 				{
-				DebugLocation(327, 4);
-				// C:\\work\\ReoScript\\ReoScript.g:327:4: ( object_literal -> object_literal )
+				DebugLocation(357, 4);
+				// C:\\work\\ReoScript\\ReoScript.g:357:4: ( object_literal -> object_literal )
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:328:2: object_literal
+				// C:\\work\\ReoScript\\ReoScript.g:358:2: object_literal
 				{
-				DebugLocation(328, 2);
-				PushFollow(Follow._object_literal_in_primaryExpression2529);
-				object_literal198=object_literal();
+				DebugLocation(358, 2);
+				PushFollow(Follow._object_literal_in_primaryExpression2449);
+				object_literal168=object_literal();
 				PopFollow();
 
-				stream_object_literal.Add(object_literal198.Tree);
+				stream_object_literal.Add(object_literal168.Tree);
 
 
 				{
@@ -8843,9 +8263,9 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 328:20: -> object_literal
+				// 358:20: -> object_literal
 				{
-					DebugLocation(328, 23);
+					DebugLocation(358, 23);
 					adaptor.AddChild(root_0, stream_object_literal.NextTree());
 
 				}
@@ -8855,48 +8275,48 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 				}
 
-				DebugLocation(330, 2);
-				// C:\\work\\ReoScript\\ReoScript.g:330:2: ( '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) )*
-				try { DebugEnterSubRule(54);
+				DebugLocation(360, 2);
+				// C:\\work\\ReoScript\\ReoScript.g:360:2: ( '.' IDENTIFIER -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER ) )*
+				try { DebugEnterSubRule(48);
 				while (true)
 				{
-					int alt54=2;
-					try { DebugEnterDecision(54, false);
-					int LA54_0 = input.LA(1);
+					int alt48=2;
+					try { DebugEnterDecision(48, false);
+					int LA48_0 = input.LA(1);
 
-					if ((LA54_0==DOT))
+					if ((LA48_0==DOT))
 					{
-						int LA54_2 = input.LA(2);
+						int LA48_2 = input.LA(2);
 
-						if ((LA54_2==IDENTIFIER))
+						if ((LA48_2==IDENTIFIER))
 						{
-							alt54 = 1;
+							alt48 = 1;
 						}
 
 
 					}
 
 
-					} finally { DebugExitDecision(54); }
-					switch ( alt54 )
+					} finally { DebugExitDecision(48); }
+					switch ( alt48 )
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// C:\\work\\ReoScript\\ReoScript.g:330:4: '.' IDENTIFIER
+						// C:\\work\\ReoScript\\ReoScript.g:360:4: '.' IDENTIFIER
 						{
-						DebugLocation(330, 4);
-						char_literal199=(IToken)Match(input,DOT,Follow._DOT_in_primaryExpression2544);  
-						stream_DOT.Add(char_literal199);
+						DebugLocation(360, 4);
+						char_literal169=(IToken)Match(input,DOT,Follow._DOT_in_primaryExpression2464);  
+						stream_DOT.Add(char_literal169);
 
-						DebugLocation(330, 8);
-						IDENTIFIER200=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_primaryExpression2546);  
-						stream_IDENTIFIER.Add(IDENTIFIER200);
+						DebugLocation(360, 8);
+						IDENTIFIER170=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_primaryExpression2466);  
+						stream_IDENTIFIER.Add(IDENTIFIER170);
 
 
 
 						{
 						// AST REWRITE
-						// elements: IDENTIFIER, primaryExpression
+						// elements: primaryExpression, IDENTIFIER
 						// token labels: 
 						// rule labels: retval
 						// token list labels: 
@@ -8906,18 +8326,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 						RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 						root_0 = (CommonTree)adaptor.Nil();
-						// 331:3: -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER )
+						// 361:3: -> ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER )
 						{
-							DebugLocation(331, 6);
-							// C:\\work\\ReoScript\\ReoScript.g:331:6: ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER )
+							DebugLocation(361, 6);
+							// C:\\work\\ReoScript\\ReoScript.g:361:6: ^( PROPERTY_ACCESS $primaryExpression IDENTIFIER )
 							{
 							CommonTree root_1 = (CommonTree)adaptor.Nil();
-							DebugLocation(331, 8);
+							DebugLocation(361, 8);
 							root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PROPERTY_ACCESS, "PROPERTY_ACCESS"), root_1);
 
-							DebugLocation(331, 25);
+							DebugLocation(361, 25);
 							adaptor.AddChild(root_1, stream_retval.NextTree());
-							DebugLocation(331, 43);
+							DebugLocation(361, 43);
 							adaptor.AddChild(root_1, stream_IDENTIFIER.NextNode());
 
 							adaptor.AddChild(root_0, root_1);
@@ -8932,14 +8352,14 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 						break;
 
 					default:
-						goto loop54;
+						goto loop48;
 					}
 				}
 
-				loop54:
+				loop48:
 					;
 
-				} finally { DebugExitSubRule(54); }
+				} finally { DebugExitSubRule(48); }
 
 
 				}
@@ -8961,11 +8381,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("primaryExpression", 37);
-			LeaveRule("primaryExpression", 37);
+			TraceOut("primaryExpression", 35);
+			LeaveRule("primaryExpression", 35);
 			LeaveRule_primaryExpression();
 		}
-		DebugLocation(335, 1);
+		DebugLocation(365, 1);
 		} finally { DebugExitRule(GrammarFileName, "primaryExpression"); }
 		return retval;
 
@@ -8976,13 +8396,13 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_tag();
 
 	// $ANTLR start "tag"
-	// C:\\work\\ReoScript\\ReoScript.g:337:1: tag : '<' (ns= IDENTIFIER ':' )? name= IDENTIFIER ( tagAttr )* ( '>' s= tagStmt '</' ( IDENTIFIER ':' )? IDENTIFIER '>' | '/>' ) -> ^( TAG ^( TAG_NAME $name ( $ns)? ) ^( TAG_ATTR_LIST ( tagAttr )* ) ( $s)? ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:367:1: tag : '<' (ns= IDENTIFIER ':' )? name= IDENTIFIER ( tagAttr )* ( '>' s= tagStmt '</' ( IDENTIFIER ':' )? IDENTIFIER '>' | '/>' ) -> ^( TAG ^( TAG_NAME $name ( $ns)? ) ^( TAG_ATTR_LIST ( tagAttr )* ) ( $s)? ) ;
 	[GrammarRule("tag")]
 	private AstParserRuleReturnScope<CommonTree, IToken> tag()
 	{
 		EnterRule_tag();
-		EnterRule("tag", 38);
-		TraceIn("tag", 38);
+		EnterRule("tag", 36);
+		TraceIn("tag", 36);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
@@ -8990,244 +8410,244 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 		IToken ns = default(IToken);
 		IToken name = default(IToken);
-		IToken char_literal201 = default(IToken);
-		IToken char_literal202 = default(IToken);
-		IToken char_literal204 = default(IToken);
-		IToken string_literal205 = default(IToken);
-		IToken IDENTIFIER206 = default(IToken);
-		IToken char_literal207 = default(IToken);
-		IToken IDENTIFIER208 = default(IToken);
-		IToken char_literal209 = default(IToken);
-		IToken string_literal210 = default(IToken);
+		IToken char_literal171 = default(IToken);
+		IToken char_literal172 = default(IToken);
+		IToken char_literal174 = default(IToken);
+		IToken string_literal175 = default(IToken);
+		IToken IDENTIFIER176 = default(IToken);
+		IToken char_literal177 = default(IToken);
+		IToken IDENTIFIER178 = default(IToken);
+		IToken char_literal179 = default(IToken);
+		IToken string_literal180 = default(IToken);
 		AstParserRuleReturnScope<CommonTree, IToken> s = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> tagAttr203 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> tagAttr173 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
 		CommonTree ns_tree = default(CommonTree);
 		CommonTree name_tree = default(CommonTree);
-		CommonTree char_literal201_tree = default(CommonTree);
-		CommonTree char_literal202_tree = default(CommonTree);
-		CommonTree char_literal204_tree = default(CommonTree);
-		CommonTree string_literal205_tree = default(CommonTree);
-		CommonTree IDENTIFIER206_tree = default(CommonTree);
-		CommonTree char_literal207_tree = default(CommonTree);
-		CommonTree IDENTIFIER208_tree = default(CommonTree);
-		CommonTree char_literal209_tree = default(CommonTree);
-		CommonTree string_literal210_tree = default(CommonTree);
+		CommonTree char_literal171_tree = default(CommonTree);
+		CommonTree char_literal172_tree = default(CommonTree);
+		CommonTree char_literal174_tree = default(CommonTree);
+		CommonTree string_literal175_tree = default(CommonTree);
+		CommonTree IDENTIFIER176_tree = default(CommonTree);
+		CommonTree char_literal177_tree = default(CommonTree);
+		CommonTree IDENTIFIER178_tree = default(CommonTree);
+		CommonTree char_literal179_tree = default(CommonTree);
+		CommonTree string_literal180_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_COLON=new RewriteRuleITokenStream(adaptor,"token COLON");
-		RewriteRuleITokenStream stream_121=new RewriteRuleITokenStream(adaptor,"token 121");
 		RewriteRuleITokenStream stream_122=new RewriteRuleITokenStream(adaptor,"token 122");
+		RewriteRuleITokenStream stream_123=new RewriteRuleITokenStream(adaptor,"token 123");
 		RewriteRuleITokenStream stream_IDENTIFIER=new RewriteRuleITokenStream(adaptor,"token IDENTIFIER");
 		RewriteRuleITokenStream stream_GREAT_THAN=new RewriteRuleITokenStream(adaptor,"token GREAT_THAN");
 		RewriteRuleITokenStream stream_LESS_THAN=new RewriteRuleITokenStream(adaptor,"token LESS_THAN");
 		RewriteRuleSubtreeStream stream_tagAttr=new RewriteRuleSubtreeStream(adaptor,"rule tagAttr");
 		RewriteRuleSubtreeStream stream_tagStmt=new RewriteRuleSubtreeStream(adaptor,"rule tagStmt");
 		try { DebugEnterRule(GrammarFileName, "tag");
-		DebugLocation(337, 1);
+		DebugLocation(367, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:338:2: ( '<' (ns= IDENTIFIER ':' )? name= IDENTIFIER ( tagAttr )* ( '>' s= tagStmt '</' ( IDENTIFIER ':' )? IDENTIFIER '>' | '/>' ) -> ^( TAG ^( TAG_NAME $name ( $ns)? ) ^( TAG_ATTR_LIST ( tagAttr )* ) ( $s)? ) )
+			// C:\\work\\ReoScript\\ReoScript.g:368:2: ( '<' (ns= IDENTIFIER ':' )? name= IDENTIFIER ( tagAttr )* ( '>' s= tagStmt '</' ( IDENTIFIER ':' )? IDENTIFIER '>' | '/>' ) -> ^( TAG ^( TAG_NAME $name ( $ns)? ) ^( TAG_ATTR_LIST ( tagAttr )* ) ( $s)? ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:338:4: '<' (ns= IDENTIFIER ':' )? name= IDENTIFIER ( tagAttr )* ( '>' s= tagStmt '</' ( IDENTIFIER ':' )? IDENTIFIER '>' | '/>' )
+			// C:\\work\\ReoScript\\ReoScript.g:368:4: '<' (ns= IDENTIFIER ':' )? name= IDENTIFIER ( tagAttr )* ( '>' s= tagStmt '</' ( IDENTIFIER ':' )? IDENTIFIER '>' | '/>' )
 			{
-			DebugLocation(338, 4);
-			char_literal201=(IToken)Match(input,LESS_THAN,Follow._LESS_THAN_in_tag2576);  
-			stream_LESS_THAN.Add(char_literal201);
+			DebugLocation(368, 4);
+			char_literal171=(IToken)Match(input,LESS_THAN,Follow._LESS_THAN_in_tag2496);  
+			stream_LESS_THAN.Add(char_literal171);
 
-			DebugLocation(338, 8);
-			// C:\\work\\ReoScript\\ReoScript.g:338:8: (ns= IDENTIFIER ':' )?
-			int alt56=2;
-			try { DebugEnterSubRule(56);
-			try { DebugEnterDecision(56, false);
-			int LA56_0 = input.LA(1);
+			DebugLocation(368, 8);
+			// C:\\work\\ReoScript\\ReoScript.g:368:8: (ns= IDENTIFIER ':' )?
+			int alt50=2;
+			try { DebugEnterSubRule(50);
+			try { DebugEnterDecision(50, false);
+			int LA50_0 = input.LA(1);
 
-			if ((LA56_0==IDENTIFIER))
+			if ((LA50_0==IDENTIFIER))
 			{
-				int LA56_1 = input.LA(2);
+				int LA50_1 = input.LA(2);
 
-				if ((LA56_1==COLON))
+				if ((LA50_1==COLON))
 				{
-					alt56 = 1;
+					alt50 = 1;
 				}
 			}
-			} finally { DebugExitDecision(56); }
-			switch (alt56)
+			} finally { DebugExitDecision(50); }
+			switch (alt50)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:338:9: ns= IDENTIFIER ':'
+				// C:\\work\\ReoScript\\ReoScript.g:368:9: ns= IDENTIFIER ':'
 				{
-				DebugLocation(338, 11);
-				ns=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_tag2581);  
+				DebugLocation(368, 11);
+				ns=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_tag2501);  
 				stream_IDENTIFIER.Add(ns);
 
-				DebugLocation(338, 23);
-				char_literal202=(IToken)Match(input,COLON,Follow._COLON_in_tag2583);  
-				stream_COLON.Add(char_literal202);
+				DebugLocation(368, 23);
+				char_literal172=(IToken)Match(input,COLON,Follow._COLON_in_tag2503);  
+				stream_COLON.Add(char_literal172);
 
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(56); }
+			} finally { DebugExitSubRule(50); }
 
-			DebugLocation(338, 33);
-			name=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_tag2589);  
+			DebugLocation(368, 33);
+			name=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_tag2509);  
 			stream_IDENTIFIER.Add(name);
 
-			DebugLocation(338, 45);
-			// C:\\work\\ReoScript\\ReoScript.g:338:45: ( tagAttr )*
-			try { DebugEnterSubRule(57);
+			DebugLocation(368, 45);
+			// C:\\work\\ReoScript\\ReoScript.g:368:45: ( tagAttr )*
+			try { DebugEnterSubRule(51);
 			while (true)
 			{
-				int alt57=2;
-				try { DebugEnterDecision(57, false);
-				int LA57_0 = input.LA(1);
+				int alt51=2;
+				try { DebugEnterDecision(51, false);
+				int LA51_0 = input.LA(1);
 
-				if ((LA57_0==IDENTIFIER))
+				if ((LA51_0==IDENTIFIER))
 				{
-					alt57 = 1;
+					alt51 = 1;
 				}
 
 
-				} finally { DebugExitDecision(57); }
-				switch ( alt57 )
+				} finally { DebugExitDecision(51); }
+				switch ( alt51 )
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:338:45: tagAttr
+					// C:\\work\\ReoScript\\ReoScript.g:368:45: tagAttr
 					{
-					DebugLocation(338, 45);
-					PushFollow(Follow._tagAttr_in_tag2591);
-					tagAttr203=tagAttr();
+					DebugLocation(368, 45);
+					PushFollow(Follow._tagAttr_in_tag2511);
+					tagAttr173=tagAttr();
 					PopFollow();
 
-					stream_tagAttr.Add(tagAttr203.Tree);
+					stream_tagAttr.Add(tagAttr173.Tree);
 
 					}
 					break;
 
 				default:
-					goto loop57;
+					goto loop51;
 				}
 			}
 
-			loop57:
+			loop51:
 				;
 
-			} finally { DebugExitSubRule(57); }
+			} finally { DebugExitSubRule(51); }
 
-			DebugLocation(339, 2);
-			// C:\\work\\ReoScript\\ReoScript.g:339:2: ( '>' s= tagStmt '</' ( IDENTIFIER ':' )? IDENTIFIER '>' | '/>' )
-			int alt59=2;
-			try { DebugEnterSubRule(59);
-			try { DebugEnterDecision(59, false);
-			int LA59_0 = input.LA(1);
+			DebugLocation(369, 2);
+			// C:\\work\\ReoScript\\ReoScript.g:369:2: ( '>' s= tagStmt '</' ( IDENTIFIER ':' )? IDENTIFIER '>' | '/>' )
+			int alt53=2;
+			try { DebugEnterSubRule(53);
+			try { DebugEnterDecision(53, false);
+			int LA53_0 = input.LA(1);
 
-			if ((LA59_0==GREAT_THAN))
+			if ((LA53_0==GREAT_THAN))
 			{
-				alt59 = 1;
+				alt53 = 1;
 			}
-			else if ((LA59_0==121))
+			else if ((LA53_0==122))
 			{
-				alt59 = 2;
+				alt53 = 2;
 			}
 			else
 			{
-				NoViableAltException nvae = new NoViableAltException("", 59, 0, input);
+				NoViableAltException nvae = new NoViableAltException("", 53, 0, input);
 				DebugRecognitionException(nvae);
 				throw nvae;
 			}
-			} finally { DebugExitDecision(59); }
-			switch (alt59)
+			} finally { DebugExitDecision(53); }
+			switch (alt53)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:340:4: '>' s= tagStmt '</' ( IDENTIFIER ':' )? IDENTIFIER '>'
+				// C:\\work\\ReoScript\\ReoScript.g:370:4: '>' s= tagStmt '</' ( IDENTIFIER ':' )? IDENTIFIER '>'
 				{
-				DebugLocation(340, 4);
-				char_literal204=(IToken)Match(input,GREAT_THAN,Follow._GREAT_THAN_in_tag2601);  
-				stream_GREAT_THAN.Add(char_literal204);
+				DebugLocation(370, 4);
+				char_literal174=(IToken)Match(input,GREAT_THAN,Follow._GREAT_THAN_in_tag2521);  
+				stream_GREAT_THAN.Add(char_literal174);
 
-				DebugLocation(340, 9);
-				PushFollow(Follow._tagStmt_in_tag2605);
+				DebugLocation(370, 9);
+				PushFollow(Follow._tagStmt_in_tag2525);
 				s=tagStmt();
 				PopFollow();
 
 				stream_tagStmt.Add(s.Tree);
-				DebugLocation(340, 19);
-				string_literal205=(IToken)Match(input,122,Follow._122_in_tag2608);  
-				stream_122.Add(string_literal205);
+				DebugLocation(370, 19);
+				string_literal175=(IToken)Match(input,123,Follow._123_in_tag2528);  
+				stream_123.Add(string_literal175);
 
-				DebugLocation(340, 24);
-				// C:\\work\\ReoScript\\ReoScript.g:340:24: ( IDENTIFIER ':' )?
-				int alt58=2;
-				try { DebugEnterSubRule(58);
-				try { DebugEnterDecision(58, false);
-				int LA58_0 = input.LA(1);
+				DebugLocation(370, 24);
+				// C:\\work\\ReoScript\\ReoScript.g:370:24: ( IDENTIFIER ':' )?
+				int alt52=2;
+				try { DebugEnterSubRule(52);
+				try { DebugEnterDecision(52, false);
+				int LA52_0 = input.LA(1);
 
-				if ((LA58_0==IDENTIFIER))
+				if ((LA52_0==IDENTIFIER))
 				{
-					int LA58_1 = input.LA(2);
+					int LA52_1 = input.LA(2);
 
-					if ((LA58_1==COLON))
+					if ((LA52_1==COLON))
 					{
-						alt58 = 1;
+						alt52 = 1;
 					}
 				}
-				} finally { DebugExitDecision(58); }
-				switch (alt58)
+				} finally { DebugExitDecision(52); }
+				switch (alt52)
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:340:25: IDENTIFIER ':'
+					// C:\\work\\ReoScript\\ReoScript.g:370:25: IDENTIFIER ':'
 					{
-					DebugLocation(340, 25);
-					IDENTIFIER206=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_tag2611);  
-					stream_IDENTIFIER.Add(IDENTIFIER206);
+					DebugLocation(370, 25);
+					IDENTIFIER176=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_tag2531);  
+					stream_IDENTIFIER.Add(IDENTIFIER176);
 
-					DebugLocation(340, 36);
-					char_literal207=(IToken)Match(input,COLON,Follow._COLON_in_tag2613);  
-					stream_COLON.Add(char_literal207);
+					DebugLocation(370, 36);
+					char_literal177=(IToken)Match(input,COLON,Follow._COLON_in_tag2533);  
+					stream_COLON.Add(char_literal177);
 
 
 					}
 					break;
 
 				}
-				} finally { DebugExitSubRule(58); }
+				} finally { DebugExitSubRule(52); }
 
-				DebugLocation(340, 42);
-				IDENTIFIER208=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_tag2617);  
-				stream_IDENTIFIER.Add(IDENTIFIER208);
+				DebugLocation(370, 42);
+				IDENTIFIER178=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_tag2537);  
+				stream_IDENTIFIER.Add(IDENTIFIER178);
 
-				DebugLocation(340, 53);
-				char_literal209=(IToken)Match(input,GREAT_THAN,Follow._GREAT_THAN_in_tag2619);  
-				stream_GREAT_THAN.Add(char_literal209);
+				DebugLocation(370, 53);
+				char_literal179=(IToken)Match(input,GREAT_THAN,Follow._GREAT_THAN_in_tag2539);  
+				stream_GREAT_THAN.Add(char_literal179);
 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:341:4: '/>'
+				// C:\\work\\ReoScript\\ReoScript.g:371:4: '/>'
 				{
-				DebugLocation(341, 4);
-				string_literal210=(IToken)Match(input,121,Follow._121_in_tag2625);  
-				stream_121.Add(string_literal210);
+				DebugLocation(371, 4);
+				string_literal180=(IToken)Match(input,122,Follow._122_in_tag2545);  
+				stream_122.Add(string_literal180);
 
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(59); }
+			} finally { DebugExitSubRule(53); }
 
 
 
 			{
 			// AST REWRITE
-			// elements: name, ns, tagAttr, s
+			// elements: s, tagAttr, ns, name
 			// token labels: ns, name
 			// rule labels: retval, s
 			// token list labels: 
@@ -9240,29 +8660,29 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_s=new RewriteRuleSubtreeStream(adaptor,"rule s",s!=null?s.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 343:2: -> ^( TAG ^( TAG_NAME $name ( $ns)? ) ^( TAG_ATTR_LIST ( tagAttr )* ) ( $s)? )
+			// 373:2: -> ^( TAG ^( TAG_NAME $name ( $ns)? ) ^( TAG_ATTR_LIST ( tagAttr )* ) ( $s)? )
 			{
-				DebugLocation(343, 5);
-				// C:\\work\\ReoScript\\ReoScript.g:343:5: ^( TAG ^( TAG_NAME $name ( $ns)? ) ^( TAG_ATTR_LIST ( tagAttr )* ) ( $s)? )
+				DebugLocation(373, 5);
+				// C:\\work\\ReoScript\\ReoScript.g:373:5: ^( TAG ^( TAG_NAME $name ( $ns)? ) ^( TAG_ATTR_LIST ( tagAttr )* ) ( $s)? )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(343, 7);
+				DebugLocation(373, 7);
 				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(TAG, "TAG"), root_1);
 
-				DebugLocation(343, 11);
-				// C:\\work\\ReoScript\\ReoScript.g:343:11: ^( TAG_NAME $name ( $ns)? )
+				DebugLocation(373, 11);
+				// C:\\work\\ReoScript\\ReoScript.g:373:11: ^( TAG_NAME $name ( $ns)? )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(343, 13);
+				DebugLocation(373, 13);
 				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(TAG_NAME, "TAG_NAME"), root_2);
 
-				DebugLocation(343, 23);
+				DebugLocation(373, 23);
 				adaptor.AddChild(root_2, stream_name.NextNode());
-				DebugLocation(343, 29);
-				// C:\\work\\ReoScript\\ReoScript.g:343:29: ( $ns)?
+				DebugLocation(373, 29);
+				// C:\\work\\ReoScript\\ReoScript.g:373:29: ( $ns)?
 				if (stream_ns.HasNext)
 				{
-					DebugLocation(343, 29);
+					DebugLocation(373, 29);
 					adaptor.AddChild(root_2, stream_ns.NextNode());
 
 				}
@@ -9270,18 +8690,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 				adaptor.AddChild(root_1, root_2);
 				}
-				DebugLocation(343, 34);
-				// C:\\work\\ReoScript\\ReoScript.g:343:34: ^( TAG_ATTR_LIST ( tagAttr )* )
+				DebugLocation(373, 34);
+				// C:\\work\\ReoScript\\ReoScript.g:373:34: ^( TAG_ATTR_LIST ( tagAttr )* )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(343, 36);
+				DebugLocation(373, 36);
 				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(TAG_ATTR_LIST, "TAG_ATTR_LIST"), root_2);
 
-				DebugLocation(343, 50);
-				// C:\\work\\ReoScript\\ReoScript.g:343:50: ( tagAttr )*
+				DebugLocation(373, 50);
+				// C:\\work\\ReoScript\\ReoScript.g:373:50: ( tagAttr )*
 				while ( stream_tagAttr.HasNext )
 				{
-					DebugLocation(343, 50);
+					DebugLocation(373, 50);
 					adaptor.AddChild(root_2, stream_tagAttr.NextTree());
 
 				}
@@ -9289,11 +8709,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 				adaptor.AddChild(root_1, root_2);
 				}
-				DebugLocation(343, 61);
-				// C:\\work\\ReoScript\\ReoScript.g:343:61: ( $s)?
+				DebugLocation(373, 61);
+				// C:\\work\\ReoScript\\ReoScript.g:373:61: ( $s)?
 				if (stream_s.HasNext)
 				{
-					DebugLocation(343, 61);
+					DebugLocation(373, 61);
 					adaptor.AddChild(root_1, stream_s.NextTree());
 
 				}
@@ -9324,11 +8744,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("tag", 38);
-			LeaveRule("tag", 38);
+			TraceOut("tag", 36);
+			LeaveRule("tag", 36);
 			LeaveRule_tag();
 		}
-		DebugLocation(344, 1);
+		DebugLocation(374, 1);
 		} finally { DebugExitRule(GrammarFileName, "tag"); }
 		return retval;
 
@@ -9339,89 +8759,89 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_tagStmt();
 
 	// $ANTLR start "tagStmt"
-	// C:\\work\\ReoScript\\ReoScript.g:346:1: tagStmt : ( statement | tag )* ;
+	// C:\\work\\ReoScript\\ReoScript.g:376:1: tagStmt : ( statement | tag )* ;
 	[GrammarRule("tagStmt")]
 	private AstParserRuleReturnScope<CommonTree, IToken> tagStmt()
 	{
 		EnterRule_tagStmt();
-		EnterRule("tagStmt", 39);
-		TraceIn("tagStmt", 39);
+		EnterRule("tagStmt", 37);
+		TraceIn("tagStmt", 37);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		AstParserRuleReturnScope<CommonTree, IToken> statement211 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> tag212 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> statement181 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> tag182 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
 		try { DebugEnterRule(GrammarFileName, "tagStmt");
-		DebugLocation(346, 1);
+		DebugLocation(376, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:347:2: ( ( statement | tag )* )
+			// C:\\work\\ReoScript\\ReoScript.g:377:2: ( ( statement | tag )* )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:347:4: ( statement | tag )*
+			// C:\\work\\ReoScript\\ReoScript.g:377:4: ( statement | tag )*
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(347, 4);
-			// C:\\work\\ReoScript\\ReoScript.g:347:4: ( statement | tag )*
-			try { DebugEnterSubRule(60);
+			DebugLocation(377, 4);
+			// C:\\work\\ReoScript\\ReoScript.g:377:4: ( statement | tag )*
+			try { DebugEnterSubRule(54);
 			while (true)
 			{
-				int alt60=3;
-				try { DebugEnterDecision(60, false);
-				int LA60_0 = input.LA(1);
+				int alt54=3;
+				try { DebugEnterDecision(54, false);
+				int LA54_0 = input.LA(1);
 
-				if ((LA60_0==BINARY_LITERATE||LA60_0==DECREMENT||(LA60_0>=HEX_LITERATE && LA60_0<=IDENTIFIER)||LA60_0==INCREMENT||(LA60_0>=LBRACE && LA60_0<=LCURLY)||(LA60_0>=LIT_FALSE && LA60_0<=LIT_TRUE)||LA60_0==LPAREN||LA60_0==NAN||LA60_0==NUMBER_LITERATE||LA60_0==PRIVATE||(LA60_0>=PROTECTED && LA60_0<=PUBLIC)||LA60_0==STRING_LITERATE||LA60_0==THIS||LA60_0==TYPE||LA60_0==UNDEFINED||LA60_0==124||(LA60_0>=127 && LA60_0<=128)||LA60_0==130||(LA60_0>=132 && LA60_0<=135)||(LA60_0>=137 && LA60_0<=142)||LA60_0==144))
+				if ((LA54_0==BINARY_LITERATE||LA54_0==DECREMENT||(LA54_0>=HEX_LITERATE && LA54_0<=IDENTIFIER)||LA54_0==INCREMENT||LA54_0==INTERNAL||(LA54_0>=LBRACE && LA54_0<=LCURLY)||(LA54_0>=LIT_FALSE && LA54_0<=LIT_TRUE)||LA54_0==LPAREN||LA54_0==NAN||LA54_0==NUMBER_LITERATE||LA54_0==PRIVATE||(LA54_0>=PROTECTED && LA54_0<=PUBLIC)||LA54_0==STRING_LITERATE||LA54_0==THIS||LA54_0==TYPE||LA54_0==UNDEFINED||LA54_0==125||LA54_0==128||LA54_0==130||(LA54_0>=132 && LA54_0<=135)||(LA54_0>=137 && LA54_0<=142)||LA54_0==144))
 				{
-					alt60 = 1;
+					alt54 = 1;
 				}
-				else if ((LA60_0==LESS_THAN))
+				else if ((LA54_0==LESS_THAN))
 				{
-					alt60 = 2;
+					alt54 = 2;
 				}
 
 
-				} finally { DebugExitDecision(60); }
-				switch ( alt60 )
+				} finally { DebugExitDecision(54); }
+				switch ( alt54 )
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:347:5: statement
+					// C:\\work\\ReoScript\\ReoScript.g:377:5: statement
 					{
-					DebugLocation(347, 5);
-					PushFollow(Follow._statement_in_tagStmt2672);
-					statement211=statement();
+					DebugLocation(377, 5);
+					PushFollow(Follow._statement_in_tagStmt2592);
+					statement181=statement();
 					PopFollow();
 
-					adaptor.AddChild(root_0, statement211.Tree);
+					adaptor.AddChild(root_0, statement181.Tree);
 
 					}
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// C:\\work\\ReoScript\\ReoScript.g:347:17: tag
+					// C:\\work\\ReoScript\\ReoScript.g:377:17: tag
 					{
-					DebugLocation(347, 17);
-					PushFollow(Follow._tag_in_tagStmt2676);
-					tag212=tag();
+					DebugLocation(377, 17);
+					PushFollow(Follow._tag_in_tagStmt2596);
+					tag182=tag();
 					PopFollow();
 
-					adaptor.AddChild(root_0, tag212.Tree);
+					adaptor.AddChild(root_0, tag182.Tree);
 
 					}
 					break;
 
 				default:
-					goto loop60;
+					goto loop54;
 				}
 			}
 
-			loop60:
+			loop54:
 				;
 
-			} finally { DebugExitSubRule(60); }
+			} finally { DebugExitSubRule(54); }
 
 
 			}
@@ -9441,11 +8861,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("tagStmt", 39);
-			LeaveRule("tagStmt", 39);
+			TraceOut("tagStmt", 37);
+			LeaveRule("tagStmt", 37);
 			LeaveRule_tagStmt();
 		}
-		DebugLocation(348, 1);
+		DebugLocation(378, 1);
 		} finally { DebugExitRule(GrammarFileName, "tagStmt"); }
 		return retval;
 
@@ -9456,45 +8876,45 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_tagAttr();
 
 	// $ANTLR start "tagAttr"
-	// C:\\work\\ReoScript\\ReoScript.g:350:1: tagAttr : name= IDENTIFIER '=' val= unaryExpression -> ^( TAG_ATTR $name $val) ;
+	// C:\\work\\ReoScript\\ReoScript.g:380:1: tagAttr : name= IDENTIFIER '=' val= unaryExpression -> ^( TAG_ATTR $name $val) ;
 	[GrammarRule("tagAttr")]
 	private AstParserRuleReturnScope<CommonTree, IToken> tagAttr()
 	{
 		EnterRule_tagAttr();
-		EnterRule("tagAttr", 40);
-		TraceIn("tagAttr", 40);
+		EnterRule("tagAttr", 38);
+		TraceIn("tagAttr", 38);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
 		IToken name = default(IToken);
-		IToken char_literal213 = default(IToken);
+		IToken char_literal183 = default(IToken);
 		AstParserRuleReturnScope<CommonTree, IToken> val = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
 		CommonTree name_tree = default(CommonTree);
-		CommonTree char_literal213_tree = default(CommonTree);
+		CommonTree char_literal183_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_ASSIGNMENT=new RewriteRuleITokenStream(adaptor,"token ASSIGNMENT");
 		RewriteRuleITokenStream stream_IDENTIFIER=new RewriteRuleITokenStream(adaptor,"token IDENTIFIER");
 		RewriteRuleSubtreeStream stream_unaryExpression=new RewriteRuleSubtreeStream(adaptor,"rule unaryExpression");
 		try { DebugEnterRule(GrammarFileName, "tagAttr");
-		DebugLocation(350, 1);
+		DebugLocation(380, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:351:2: (name= IDENTIFIER '=' val= unaryExpression -> ^( TAG_ATTR $name $val) )
+			// C:\\work\\ReoScript\\ReoScript.g:381:2: (name= IDENTIFIER '=' val= unaryExpression -> ^( TAG_ATTR $name $val) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:351:4: name= IDENTIFIER '=' val= unaryExpression
+			// C:\\work\\ReoScript\\ReoScript.g:381:4: name= IDENTIFIER '=' val= unaryExpression
 			{
-			DebugLocation(351, 8);
-			name=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_tagAttr2691);  
+			DebugLocation(381, 8);
+			name=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_tagAttr2611);  
 			stream_IDENTIFIER.Add(name);
 
-			DebugLocation(351, 20);
-			char_literal213=(IToken)Match(input,ASSIGNMENT,Follow._ASSIGNMENT_in_tagAttr2693);  
-			stream_ASSIGNMENT.Add(char_literal213);
+			DebugLocation(381, 20);
+			char_literal183=(IToken)Match(input,ASSIGNMENT,Follow._ASSIGNMENT_in_tagAttr2613);  
+			stream_ASSIGNMENT.Add(char_literal183);
 
-			DebugLocation(351, 27);
-			PushFollow(Follow._unaryExpression_in_tagAttr2697);
+			DebugLocation(381, 27);
+			PushFollow(Follow._unaryExpression_in_tagAttr2617);
 			val=unaryExpression();
 			PopFollow();
 
@@ -9503,7 +8923,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 			{
 			// AST REWRITE
-			// elements: val, name
+			// elements: name, val
 			// token labels: name
 			// rule labels: val, retval
 			// token list labels: 
@@ -9515,18 +8935,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 352:3: -> ^( TAG_ATTR $name $val)
+			// 382:3: -> ^( TAG_ATTR $name $val)
 			{
-				DebugLocation(352, 6);
-				// C:\\work\\ReoScript\\ReoScript.g:352:6: ^( TAG_ATTR $name $val)
+				DebugLocation(382, 6);
+				// C:\\work\\ReoScript\\ReoScript.g:382:6: ^( TAG_ATTR $name $val)
 				{
 				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(352, 8);
+				DebugLocation(382, 8);
 				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(TAG_ATTR, "TAG_ATTR"), root_1);
 
-				DebugLocation(352, 18);
+				DebugLocation(382, 18);
 				adaptor.AddChild(root_1, stream_name.NextNode());
-				DebugLocation(352, 24);
+				DebugLocation(382, 24);
 				adaptor.AddChild(root_1, stream_val.NextTree());
 
 				adaptor.AddChild(root_0, root_1);
@@ -9554,11 +8974,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("tagAttr", 40);
-			LeaveRule("tagAttr", 40);
+			TraceOut("tagAttr", 38);
+			LeaveRule("tagAttr", 38);
 			LeaveRule_tagAttr();
 		}
-		DebugLocation(353, 1);
+		DebugLocation(383, 1);
 		} finally { DebugExitRule(GrammarFileName, "tagAttr"); }
 		return retval;
 
@@ -9569,34 +8989,34 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_tagTemplateDefine();
 
 	// $ANTLR start "tagTemplateDefine"
-	// C:\\work\\ReoScript\\ReoScript.g:355:1: tagTemplateDefine : ( memberModifier )? 'template' '<' typename= IDENTIFIER '>' ( '(' args= parameterDeclarationList ')' )? tag -> ^( TEMPLATE_DEFINE $typename ^( PARAMETER_DEFINES ( $args)? ) tag ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:385:1: tagTemplateDefine : ( memberModifier )? 'template' '<' typename= IDENTIFIER '>' ( '(' args= parameterDeclarationList ')' )? tag -> ^( TEMPLATE_DEFINE $typename ^( PARAMETER_DEFINES ( $args)? ) tag ) ;
 	[GrammarRule("tagTemplateDefine")]
 	private AstParserRuleReturnScope<CommonTree, IToken> tagTemplateDefine()
 	{
 		EnterRule_tagTemplateDefine();
-		EnterRule("tagTemplateDefine", 41);
-		TraceIn("tagTemplateDefine", 41);
+		EnterRule("tagTemplateDefine", 39);
+		TraceIn("tagTemplateDefine", 39);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
 		IToken typename = default(IToken);
-		IToken string_literal215 = default(IToken);
-		IToken char_literal216 = default(IToken);
-		IToken char_literal217 = default(IToken);
-		IToken char_literal218 = default(IToken);
-		IToken char_literal219 = default(IToken);
+		IToken string_literal185 = default(IToken);
+		IToken char_literal186 = default(IToken);
+		IToken char_literal187 = default(IToken);
+		IToken char_literal188 = default(IToken);
+		IToken char_literal189 = default(IToken);
 		AstParserRuleReturnScope<CommonTree, IToken> args = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> memberModifier214 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> tag220 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> memberModifier184 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> tag190 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
 		CommonTree typename_tree = default(CommonTree);
-		CommonTree string_literal215_tree = default(CommonTree);
-		CommonTree char_literal216_tree = default(CommonTree);
-		CommonTree char_literal217_tree = default(CommonTree);
-		CommonTree char_literal218_tree = default(CommonTree);
-		CommonTree char_literal219_tree = default(CommonTree);
+		CommonTree string_literal185_tree = default(CommonTree);
+		CommonTree char_literal186_tree = default(CommonTree);
+		CommonTree char_literal187_tree = default(CommonTree);
+		CommonTree char_literal188_tree = default(CommonTree);
+		CommonTree char_literal189_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_RPAREN=new RewriteRuleITokenStream(adaptor,"token RPAREN");
 		RewriteRuleITokenStream stream_IDENTIFIER=new RewriteRuleITokenStream(adaptor,"token IDENTIFIER");
 		RewriteRuleITokenStream stream_140=new RewriteRuleITokenStream(adaptor,"token 140");
@@ -9607,110 +9027,110 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		RewriteRuleSubtreeStream stream_memberModifier=new RewriteRuleSubtreeStream(adaptor,"rule memberModifier");
 		RewriteRuleSubtreeStream stream_parameterDeclarationList=new RewriteRuleSubtreeStream(adaptor,"rule parameterDeclarationList");
 		try { DebugEnterRule(GrammarFileName, "tagTemplateDefine");
-		DebugLocation(355, 1);
+		DebugLocation(385, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:356:2: ( ( memberModifier )? 'template' '<' typename= IDENTIFIER '>' ( '(' args= parameterDeclarationList ')' )? tag -> ^( TEMPLATE_DEFINE $typename ^( PARAMETER_DEFINES ( $args)? ) tag ) )
+			// C:\\work\\ReoScript\\ReoScript.g:386:2: ( ( memberModifier )? 'template' '<' typename= IDENTIFIER '>' ( '(' args= parameterDeclarationList ')' )? tag -> ^( TEMPLATE_DEFINE $typename ^( PARAMETER_DEFINES ( $args)? ) tag ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:356:4: ( memberModifier )? 'template' '<' typename= IDENTIFIER '>' ( '(' args= parameterDeclarationList ')' )? tag
+			// C:\\work\\ReoScript\\ReoScript.g:386:4: ( memberModifier )? 'template' '<' typename= IDENTIFIER '>' ( '(' args= parameterDeclarationList ')' )? tag
 			{
-			DebugLocation(356, 4);
-			// C:\\work\\ReoScript\\ReoScript.g:356:4: ( memberModifier )?
-			int alt61=2;
-			try { DebugEnterSubRule(61);
-			try { DebugEnterDecision(61, false);
-			int LA61_0 = input.LA(1);
+			DebugLocation(386, 4);
+			// C:\\work\\ReoScript\\ReoScript.g:386:4: ( memberModifier )?
+			int alt55=2;
+			try { DebugEnterSubRule(55);
+			try { DebugEnterDecision(55, false);
+			int LA55_0 = input.LA(1);
 
-			if ((LA61_0==PRIVATE||(LA61_0>=PROTECTED && LA61_0<=PUBLIC)))
+			if ((LA55_0==INTERNAL||LA55_0==PRIVATE||(LA55_0>=PROTECTED && LA55_0<=PUBLIC)))
 			{
-				alt61 = 1;
+				alt55 = 1;
 			}
-			} finally { DebugExitDecision(61); }
-			switch (alt61)
+			} finally { DebugExitDecision(55); }
+			switch (alt55)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:356:4: memberModifier
+				// C:\\work\\ReoScript\\ReoScript.g:386:4: memberModifier
 				{
-				DebugLocation(356, 4);
-				PushFollow(Follow._memberModifier_in_tagTemplateDefine2723);
-				memberModifier214=memberModifier();
+				DebugLocation(386, 4);
+				PushFollow(Follow._memberModifier_in_tagTemplateDefine2643);
+				memberModifier184=memberModifier();
 				PopFollow();
 
-				stream_memberModifier.Add(memberModifier214.Tree);
+				stream_memberModifier.Add(memberModifier184.Tree);
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(61); }
+			} finally { DebugExitSubRule(55); }
 
-			DebugLocation(356, 20);
-			string_literal215=(IToken)Match(input,140,Follow._140_in_tagTemplateDefine2726);  
-			stream_140.Add(string_literal215);
+			DebugLocation(386, 20);
+			string_literal185=(IToken)Match(input,140,Follow._140_in_tagTemplateDefine2646);  
+			stream_140.Add(string_literal185);
 
-			DebugLocation(356, 31);
-			char_literal216=(IToken)Match(input,LESS_THAN,Follow._LESS_THAN_in_tagTemplateDefine2728);  
-			stream_LESS_THAN.Add(char_literal216);
+			DebugLocation(386, 31);
+			char_literal186=(IToken)Match(input,LESS_THAN,Follow._LESS_THAN_in_tagTemplateDefine2648);  
+			stream_LESS_THAN.Add(char_literal186);
 
-			DebugLocation(356, 43);
-			typename=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_tagTemplateDefine2732);  
+			DebugLocation(386, 43);
+			typename=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_tagTemplateDefine2652);  
 			stream_IDENTIFIER.Add(typename);
 
-			DebugLocation(356, 55);
-			char_literal217=(IToken)Match(input,GREAT_THAN,Follow._GREAT_THAN_in_tagTemplateDefine2734);  
-			stream_GREAT_THAN.Add(char_literal217);
+			DebugLocation(386, 55);
+			char_literal187=(IToken)Match(input,GREAT_THAN,Follow._GREAT_THAN_in_tagTemplateDefine2654);  
+			stream_GREAT_THAN.Add(char_literal187);
 
-			DebugLocation(356, 59);
-			// C:\\work\\ReoScript\\ReoScript.g:356:59: ( '(' args= parameterDeclarationList ')' )?
-			int alt62=2;
-			try { DebugEnterSubRule(62);
-			try { DebugEnterDecision(62, false);
-			int LA62_0 = input.LA(1);
+			DebugLocation(386, 59);
+			// C:\\work\\ReoScript\\ReoScript.g:386:59: ( '(' args= parameterDeclarationList ')' )?
+			int alt56=2;
+			try { DebugEnterSubRule(56);
+			try { DebugEnterDecision(56, false);
+			int LA56_0 = input.LA(1);
 
-			if ((LA62_0==LPAREN))
+			if ((LA56_0==LPAREN))
 			{
-				alt62 = 1;
+				alt56 = 1;
 			}
-			} finally { DebugExitDecision(62); }
-			switch (alt62)
+			} finally { DebugExitDecision(56); }
+			switch (alt56)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:356:61: '(' args= parameterDeclarationList ')'
+				// C:\\work\\ReoScript\\ReoScript.g:386:61: '(' args= parameterDeclarationList ')'
 				{
-				DebugLocation(356, 61);
-				char_literal218=(IToken)Match(input,LPAREN,Follow._LPAREN_in_tagTemplateDefine2738);  
-				stream_LPAREN.Add(char_literal218);
+				DebugLocation(386, 61);
+				char_literal188=(IToken)Match(input,LPAREN,Follow._LPAREN_in_tagTemplateDefine2658);  
+				stream_LPAREN.Add(char_literal188);
 
-				DebugLocation(356, 69);
-				PushFollow(Follow._parameterDeclarationList_in_tagTemplateDefine2742);
+				DebugLocation(386, 69);
+				PushFollow(Follow._parameterDeclarationList_in_tagTemplateDefine2662);
 				args=parameterDeclarationList();
 				PopFollow();
 
 				stream_parameterDeclarationList.Add(args.Tree);
-				DebugLocation(356, 95);
-				char_literal219=(IToken)Match(input,RPAREN,Follow._RPAREN_in_tagTemplateDefine2744);  
-				stream_RPAREN.Add(char_literal219);
+				DebugLocation(386, 95);
+				char_literal189=(IToken)Match(input,RPAREN,Follow._RPAREN_in_tagTemplateDefine2664);  
+				stream_RPAREN.Add(char_literal189);
 
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(62); }
+			} finally { DebugExitSubRule(56); }
 
-			DebugLocation(356, 102);
-			PushFollow(Follow._tag_in_tagTemplateDefine2749);
-			tag220=tag();
+			DebugLocation(386, 102);
+			PushFollow(Follow._tag_in_tagTemplateDefine2669);
+			tag190=tag();
 			PopFollow();
 
-			stream_tag.Add(tag220.Tree);
+			stream_tag.Add(tag190.Tree);
 
 
 			{
 			// AST REWRITE
-			// elements: args, tag, typename
+			// elements: tag, args, typename
 			// token labels: typename
 			// rule labels: retval, args
 			// token list labels: 
@@ -9722,29 +9142,29 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_args=new RewriteRuleSubtreeStream(adaptor,"rule args",args!=null?args.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 357:3: -> ^( TEMPLATE_DEFINE $typename ^( PARAMETER_DEFINES ( $args)? ) tag )
+			// 387:3: -> ^( TEMPLATE_DEFINE $typename ^( PARAMETER_DEFINES ( $args)? ) tag )
 			{
-				DebugLocation(357, 6);
-				// C:\\work\\ReoScript\\ReoScript.g:357:6: ^( TEMPLATE_DEFINE $typename ^( PARAMETER_DEFINES ( $args)? ) tag )
+				DebugLocation(387, 6);
+				// C:\\work\\ReoScript\\ReoScript.g:387:6: ^( TEMPLATE_DEFINE $typename ^( PARAMETER_DEFINES ( $args)? ) tag )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(357, 8);
+				DebugLocation(387, 8);
 				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(TEMPLATE_DEFINE, "TEMPLATE_DEFINE"), root_1);
 
-				DebugLocation(357, 25);
+				DebugLocation(387, 25);
 				adaptor.AddChild(root_1, stream_typename.NextNode());
-				DebugLocation(357, 34);
-				// C:\\work\\ReoScript\\ReoScript.g:357:34: ^( PARAMETER_DEFINES ( $args)? )
+				DebugLocation(387, 34);
+				// C:\\work\\ReoScript\\ReoScript.g:387:34: ^( PARAMETER_DEFINES ( $args)? )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(357, 36);
+				DebugLocation(387, 36);
 				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(PARAMETER_DEFINES, "PARAMETER_DEFINES"), root_2);
 
-				DebugLocation(357, 55);
-				// C:\\work\\ReoScript\\ReoScript.g:357:55: ( $args)?
+				DebugLocation(387, 55);
+				// C:\\work\\ReoScript\\ReoScript.g:387:55: ( $args)?
 				if (stream_args.HasNext)
 				{
-					DebugLocation(357, 55);
+					DebugLocation(387, 55);
 					adaptor.AddChild(root_2, stream_args.NextTree());
 
 				}
@@ -9752,7 +9172,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 				adaptor.AddChild(root_1, root_2);
 				}
-				DebugLocation(357, 62);
+				DebugLocation(387, 62);
 				adaptor.AddChild(root_1, stream_tag.NextTree());
 
 				adaptor.AddChild(root_0, root_1);
@@ -9780,11 +9200,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("tagTemplateDefine", 41);
-			LeaveRule("tagTemplateDefine", 41);
+			TraceOut("tagTemplateDefine", 39);
+			LeaveRule("tagTemplateDefine", 39);
 			LeaveRule_tagTemplateDefine();
 		}
-		DebugLocation(358, 1);
+		DebugLocation(388, 1);
 		} finally { DebugExitRule(GrammarFileName, "tagTemplateDefine"); }
 		return retval;
 
@@ -9795,35 +9215,35 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_variable();
 
 	// $ANTLR start "variable"
-	// C:\\work\\ReoScript\\ReoScript.g:360:1: variable : IDENTIFIER ;
+	// C:\\work\\ReoScript\\ReoScript.g:390:1: variable : IDENTIFIER ;
 	[GrammarRule("variable")]
 	private AstParserRuleReturnScope<CommonTree, IToken> variable()
 	{
 		EnterRule_variable();
-		EnterRule("variable", 42);
-		TraceIn("variable", 42);
+		EnterRule("variable", 40);
+		TraceIn("variable", 40);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken IDENTIFIER221 = default(IToken);
+		IToken IDENTIFIER191 = default(IToken);
 
-		CommonTree IDENTIFIER221_tree = default(CommonTree);
+		CommonTree IDENTIFIER191_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "variable");
-		DebugLocation(360, 1);
+		DebugLocation(390, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:361:2: ( IDENTIFIER )
+			// C:\\work\\ReoScript\\ReoScript.g:391:2: ( IDENTIFIER )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:361:4: IDENTIFIER
+			// C:\\work\\ReoScript\\ReoScript.g:391:4: IDENTIFIER
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(361, 4);
-			IDENTIFIER221=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_variable2781); 
-			IDENTIFIER221_tree = (CommonTree)adaptor.Create(IDENTIFIER221);
-			adaptor.AddChild(root_0, IDENTIFIER221_tree);
+			DebugLocation(391, 4);
+			IDENTIFIER191=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_variable2701); 
+			IDENTIFIER191_tree = (CommonTree)adaptor.Create(IDENTIFIER191);
+			adaptor.AddChild(root_0, IDENTIFIER191_tree);
 
 			}
 
@@ -9842,11 +9262,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("variable", 42);
-			LeaveRule("variable", 42);
+			TraceOut("variable", 40);
+			LeaveRule("variable", 40);
 			LeaveRule_variable();
 		}
-		DebugLocation(362, 1);
+		DebugLocation(392, 1);
 		} finally { DebugExitRule(GrammarFileName, "variable"); }
 		return retval;
 
@@ -9857,116 +9277,116 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_array_literal();
 
 	// $ANTLR start "array_literal"
-	// C:\\work\\ReoScript\\ReoScript.g:364:1: array_literal : '[' ( expressionList )? ( ',' )* ']' -> ^( ARRAY_LITERAL ( expressionList )? ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:394:1: array_literal : '[' ( expressionList )? ( ',' )* ']' -> ^( ARRAY_LITERAL ( expressionList )? ) ;
 	[GrammarRule("array_literal")]
 	private AstParserRuleReturnScope<CommonTree, IToken> array_literal()
 	{
 		EnterRule_array_literal();
-		EnterRule("array_literal", 43);
-		TraceIn("array_literal", 43);
+		EnterRule("array_literal", 41);
+		TraceIn("array_literal", 41);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken char_literal222 = default(IToken);
-		IToken char_literal224 = default(IToken);
-		IToken char_literal225 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> expressionList223 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken char_literal192 = default(IToken);
+		IToken char_literal194 = default(IToken);
+		IToken char_literal195 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> expressionList193 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree char_literal222_tree = default(CommonTree);
-		CommonTree char_literal224_tree = default(CommonTree);
-		CommonTree char_literal225_tree = default(CommonTree);
+		CommonTree char_literal192_tree = default(CommonTree);
+		CommonTree char_literal194_tree = default(CommonTree);
+		CommonTree char_literal195_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_RBRACE=new RewriteRuleITokenStream(adaptor,"token RBRACE");
 		RewriteRuleITokenStream stream_COMMA=new RewriteRuleITokenStream(adaptor,"token COMMA");
 		RewriteRuleITokenStream stream_LBRACE=new RewriteRuleITokenStream(adaptor,"token LBRACE");
 		RewriteRuleSubtreeStream stream_expressionList=new RewriteRuleSubtreeStream(adaptor,"rule expressionList");
 		try { DebugEnterRule(GrammarFileName, "array_literal");
-		DebugLocation(364, 1);
+		DebugLocation(394, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:365:2: ( '[' ( expressionList )? ( ',' )* ']' -> ^( ARRAY_LITERAL ( expressionList )? ) )
+			// C:\\work\\ReoScript\\ReoScript.g:395:2: ( '[' ( expressionList )? ( ',' )* ']' -> ^( ARRAY_LITERAL ( expressionList )? ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:365:4: '[' ( expressionList )? ( ',' )* ']'
+			// C:\\work\\ReoScript\\ReoScript.g:395:4: '[' ( expressionList )? ( ',' )* ']'
 			{
-			DebugLocation(365, 4);
-			char_literal222=(IToken)Match(input,LBRACE,Follow._LBRACE_in_array_literal2792);  
-			stream_LBRACE.Add(char_literal222);
+			DebugLocation(395, 4);
+			char_literal192=(IToken)Match(input,LBRACE,Follow._LBRACE_in_array_literal2712);  
+			stream_LBRACE.Add(char_literal192);
 
-			DebugLocation(365, 8);
-			// C:\\work\\ReoScript\\ReoScript.g:365:8: ( expressionList )?
-			int alt63=2;
-			try { DebugEnterSubRule(63);
-			try { DebugEnterDecision(63, false);
-			int LA63_0 = input.LA(1);
+			DebugLocation(395, 8);
+			// C:\\work\\ReoScript\\ReoScript.g:395:8: ( expressionList )?
+			int alt57=2;
+			try { DebugEnterSubRule(57);
+			try { DebugEnterDecision(57, false);
+			int LA57_0 = input.LA(1);
 
-			if ((LA63_0==BINARY_LITERATE||LA63_0==DECREMENT||(LA63_0>=HEX_LITERATE && LA63_0<=IDENTIFIER)||LA63_0==INCREMENT||(LA63_0>=LBRACE && LA63_0<=LCURLY)||LA63_0==LESS_THAN||(LA63_0>=LIT_FALSE && LA63_0<=LIT_TRUE)||LA63_0==LPAREN||LA63_0==MINUS||LA63_0==NAN||LA63_0==NOT||LA63_0==NUMBER_LITERATE||LA63_0==PLUS||LA63_0==STRING_LITERATE||LA63_0==THIS||LA63_0==UNDEFINED||LA63_0==133||LA63_0==137||LA63_0==143||LA63_0==145))
+			if ((LA57_0==BINARY_LITERATE||LA57_0==DECREMENT||(LA57_0>=HEX_LITERATE && LA57_0<=IDENTIFIER)||LA57_0==INCREMENT||(LA57_0>=LBRACE && LA57_0<=LCURLY)||LA57_0==LESS_THAN||(LA57_0>=LIT_FALSE && LA57_0<=LIT_TRUE)||LA57_0==LPAREN||LA57_0==MINUS||LA57_0==NAN||LA57_0==NOT||LA57_0==NUMBER_LITERATE||LA57_0==PLUS||LA57_0==STRING_LITERATE||LA57_0==THIS||LA57_0==UNDEFINED||LA57_0==133||LA57_0==137||LA57_0==143||LA57_0==145))
 			{
-				alt63 = 1;
+				alt57 = 1;
 			}
-			} finally { DebugExitDecision(63); }
-			switch (alt63)
+			} finally { DebugExitDecision(57); }
+			switch (alt57)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:365:8: expressionList
+				// C:\\work\\ReoScript\\ReoScript.g:395:8: expressionList
 				{
-				DebugLocation(365, 8);
-				PushFollow(Follow._expressionList_in_array_literal2794);
-				expressionList223=expressionList();
+				DebugLocation(395, 8);
+				PushFollow(Follow._expressionList_in_array_literal2714);
+				expressionList193=expressionList();
 				PopFollow();
 
-				stream_expressionList.Add(expressionList223.Tree);
+				stream_expressionList.Add(expressionList193.Tree);
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(63); }
+			} finally { DebugExitSubRule(57); }
 
-			DebugLocation(365, 24);
-			// C:\\work\\ReoScript\\ReoScript.g:365:24: ( ',' )*
-			try { DebugEnterSubRule(64);
+			DebugLocation(395, 24);
+			// C:\\work\\ReoScript\\ReoScript.g:395:24: ( ',' )*
+			try { DebugEnterSubRule(58);
 			while (true)
 			{
-				int alt64=2;
-				try { DebugEnterDecision(64, false);
-				int LA64_0 = input.LA(1);
+				int alt58=2;
+				try { DebugEnterDecision(58, false);
+				int LA58_0 = input.LA(1);
 
-				if ((LA64_0==COMMA))
+				if ((LA58_0==COMMA))
 				{
-					alt64 = 1;
+					alt58 = 1;
 				}
 
 
-				} finally { DebugExitDecision(64); }
-				switch ( alt64 )
+				} finally { DebugExitDecision(58); }
+				switch ( alt58 )
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:365:24: ','
+					// C:\\work\\ReoScript\\ReoScript.g:395:24: ','
 					{
-					DebugLocation(365, 24);
-					char_literal224=(IToken)Match(input,COMMA,Follow._COMMA_in_array_literal2797);  
-					stream_COMMA.Add(char_literal224);
+					DebugLocation(395, 24);
+					char_literal194=(IToken)Match(input,COMMA,Follow._COMMA_in_array_literal2717);  
+					stream_COMMA.Add(char_literal194);
 
 
 					}
 					break;
 
 				default:
-					goto loop64;
+					goto loop58;
 				}
 			}
 
-			loop64:
+			loop58:
 				;
 
-			} finally { DebugExitSubRule(64); }
+			} finally { DebugExitSubRule(58); }
 
-			DebugLocation(365, 29);
-			char_literal225=(IToken)Match(input,RBRACE,Follow._RBRACE_in_array_literal2800);  
-			stream_RBRACE.Add(char_literal225);
+			DebugLocation(395, 29);
+			char_literal195=(IToken)Match(input,RBRACE,Follow._RBRACE_in_array_literal2720);  
+			stream_RBRACE.Add(char_literal195);
 
 
 
@@ -9982,20 +9402,20 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 366:4: -> ^( ARRAY_LITERAL ( expressionList )? )
+			// 396:4: -> ^( ARRAY_LITERAL ( expressionList )? )
 			{
-				DebugLocation(366, 7);
-				// C:\\work\\ReoScript\\ReoScript.g:366:7: ^( ARRAY_LITERAL ( expressionList )? )
+				DebugLocation(396, 7);
+				// C:\\work\\ReoScript\\ReoScript.g:396:7: ^( ARRAY_LITERAL ( expressionList )? )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(366, 9);
+				DebugLocation(396, 9);
 				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(ARRAY_LITERAL, "ARRAY_LITERAL"), root_1);
 
-				DebugLocation(366, 23);
-				// C:\\work\\ReoScript\\ReoScript.g:366:23: ( expressionList )?
+				DebugLocation(396, 23);
+				// C:\\work\\ReoScript\\ReoScript.g:396:23: ( expressionList )?
 				if (stream_expressionList.HasNext)
 				{
-					DebugLocation(366, 23);
+					DebugLocation(396, 23);
 					adaptor.AddChild(root_1, stream_expressionList.NextTree());
 
 				}
@@ -10026,11 +9446,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("array_literal", 43);
-			LeaveRule("array_literal", 43);
+			TraceOut("array_literal", 41);
+			LeaveRule("array_literal", 41);
 			LeaveRule_array_literal();
 		}
-		DebugLocation(367, 1);
+		DebugLocation(397, 1);
 		} finally { DebugExitRule(GrammarFileName, "array_literal"); }
 		return retval;
 
@@ -10041,172 +9461,172 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_object_literal();
 
 	// $ANTLR start "object_literal"
-	// C:\\work\\ReoScript\\ReoScript.g:369:1: object_literal : '{' ( keypair )? ( ',' keypair )* ( ',' )* '}' -> ^( OBJECT_LITERAL ( keypair )* ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:399:1: object_literal : '{' ( keypair )? ( ',' keypair )* ( ',' )* '}' -> ^( OBJECT_LITERAL ( keypair )* ) ;
 	[GrammarRule("object_literal")]
 	private AstParserRuleReturnScope<CommonTree, IToken> object_literal()
 	{
 		EnterRule_object_literal();
-		EnterRule("object_literal", 44);
-		TraceIn("object_literal", 44);
+		EnterRule("object_literal", 42);
+		TraceIn("object_literal", 42);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken char_literal226 = default(IToken);
-		IToken char_literal228 = default(IToken);
-		IToken char_literal230 = default(IToken);
-		IToken char_literal231 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> keypair227 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> keypair229 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken char_literal196 = default(IToken);
+		IToken char_literal198 = default(IToken);
+		IToken char_literal200 = default(IToken);
+		IToken char_literal201 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> keypair197 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> keypair199 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree char_literal226_tree = default(CommonTree);
-		CommonTree char_literal228_tree = default(CommonTree);
-		CommonTree char_literal230_tree = default(CommonTree);
-		CommonTree char_literal231_tree = default(CommonTree);
+		CommonTree char_literal196_tree = default(CommonTree);
+		CommonTree char_literal198_tree = default(CommonTree);
+		CommonTree char_literal200_tree = default(CommonTree);
+		CommonTree char_literal201_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_LCURLY=new RewriteRuleITokenStream(adaptor,"token LCURLY");
 		RewriteRuleITokenStream stream_COMMA=new RewriteRuleITokenStream(adaptor,"token COMMA");
 		RewriteRuleITokenStream stream_RCURLY=new RewriteRuleITokenStream(adaptor,"token RCURLY");
 		RewriteRuleSubtreeStream stream_keypair=new RewriteRuleSubtreeStream(adaptor,"rule keypair");
 		try { DebugEnterRule(GrammarFileName, "object_literal");
-		DebugLocation(369, 1);
+		DebugLocation(399, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:370:2: ( '{' ( keypair )? ( ',' keypair )* ( ',' )* '}' -> ^( OBJECT_LITERAL ( keypair )* ) )
+			// C:\\work\\ReoScript\\ReoScript.g:400:2: ( '{' ( keypair )? ( ',' keypair )* ( ',' )* '}' -> ^( OBJECT_LITERAL ( keypair )* ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:370:4: '{' ( keypair )? ( ',' keypair )* ( ',' )* '}'
+			// C:\\work\\ReoScript\\ReoScript.g:400:4: '{' ( keypair )? ( ',' keypair )* ( ',' )* '}'
 			{
-			DebugLocation(370, 4);
-			char_literal226=(IToken)Match(input,LCURLY,Follow._LCURLY_in_object_literal2823);  
-			stream_LCURLY.Add(char_literal226);
+			DebugLocation(400, 4);
+			char_literal196=(IToken)Match(input,LCURLY,Follow._LCURLY_in_object_literal2743);  
+			stream_LCURLY.Add(char_literal196);
 
-			DebugLocation(370, 8);
-			// C:\\work\\ReoScript\\ReoScript.g:370:8: ( keypair )?
-			int alt65=2;
-			try { DebugEnterSubRule(65);
-			try { DebugEnterDecision(65, false);
-			int LA65_0 = input.LA(1);
+			DebugLocation(400, 8);
+			// C:\\work\\ReoScript\\ReoScript.g:400:8: ( keypair )?
+			int alt59=2;
+			try { DebugEnterSubRule(59);
+			try { DebugEnterDecision(59, false);
+			int LA59_0 = input.LA(1);
 
-			if ((LA65_0==IDENTIFIER||LA65_0==STRING_LITERATE))
+			if ((LA59_0==IDENTIFIER||LA59_0==STRING_LITERATE))
 			{
-				alt65 = 1;
+				alt59 = 1;
 			}
-			} finally { DebugExitDecision(65); }
-			switch (alt65)
+			} finally { DebugExitDecision(59); }
+			switch (alt59)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:370:8: keypair
+				// C:\\work\\ReoScript\\ReoScript.g:400:8: keypair
 				{
-				DebugLocation(370, 8);
-				PushFollow(Follow._keypair_in_object_literal2825);
-				keypair227=keypair();
+				DebugLocation(400, 8);
+				PushFollow(Follow._keypair_in_object_literal2745);
+				keypair197=keypair();
 				PopFollow();
 
-				stream_keypair.Add(keypair227.Tree);
+				stream_keypair.Add(keypair197.Tree);
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(65); }
+			} finally { DebugExitSubRule(59); }
 
-			DebugLocation(370, 17);
-			// C:\\work\\ReoScript\\ReoScript.g:370:17: ( ',' keypair )*
-			try { DebugEnterSubRule(66);
+			DebugLocation(400, 17);
+			// C:\\work\\ReoScript\\ReoScript.g:400:17: ( ',' keypair )*
+			try { DebugEnterSubRule(60);
 			while (true)
 			{
-				int alt66=2;
-				try { DebugEnterDecision(66, false);
-				int LA66_0 = input.LA(1);
+				int alt60=2;
+				try { DebugEnterDecision(60, false);
+				int LA60_0 = input.LA(1);
 
-				if ((LA66_0==COMMA))
+				if ((LA60_0==COMMA))
 				{
-					int LA66_1 = input.LA(2);
+					int LA60_1 = input.LA(2);
 
-					if ((LA66_1==IDENTIFIER||LA66_1==STRING_LITERATE))
+					if ((LA60_1==IDENTIFIER||LA60_1==STRING_LITERATE))
 					{
-						alt66 = 1;
+						alt60 = 1;
 					}
 
 
 				}
 
 
-				} finally { DebugExitDecision(66); }
-				switch ( alt66 )
+				} finally { DebugExitDecision(60); }
+				switch ( alt60 )
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:370:18: ',' keypair
+					// C:\\work\\ReoScript\\ReoScript.g:400:18: ',' keypair
 					{
-					DebugLocation(370, 18);
-					char_literal228=(IToken)Match(input,COMMA,Follow._COMMA_in_object_literal2829);  
-					stream_COMMA.Add(char_literal228);
+					DebugLocation(400, 18);
+					char_literal198=(IToken)Match(input,COMMA,Follow._COMMA_in_object_literal2749);  
+					stream_COMMA.Add(char_literal198);
 
-					DebugLocation(370, 22);
-					PushFollow(Follow._keypair_in_object_literal2831);
-					keypair229=keypair();
+					DebugLocation(400, 22);
+					PushFollow(Follow._keypair_in_object_literal2751);
+					keypair199=keypair();
 					PopFollow();
 
-					stream_keypair.Add(keypair229.Tree);
+					stream_keypair.Add(keypair199.Tree);
 
 					}
 					break;
 
 				default:
-					goto loop66;
+					goto loop60;
 				}
 			}
 
-			loop66:
+			loop60:
 				;
 
-			} finally { DebugExitSubRule(66); }
+			} finally { DebugExitSubRule(60); }
 
-			DebugLocation(370, 32);
-			// C:\\work\\ReoScript\\ReoScript.g:370:32: ( ',' )*
-			try { DebugEnterSubRule(67);
+			DebugLocation(400, 32);
+			// C:\\work\\ReoScript\\ReoScript.g:400:32: ( ',' )*
+			try { DebugEnterSubRule(61);
 			while (true)
 			{
-				int alt67=2;
-				try { DebugEnterDecision(67, false);
-				int LA67_0 = input.LA(1);
+				int alt61=2;
+				try { DebugEnterDecision(61, false);
+				int LA61_0 = input.LA(1);
 
-				if ((LA67_0==COMMA))
+				if ((LA61_0==COMMA))
 				{
-					alt67 = 1;
+					alt61 = 1;
 				}
 
 
-				} finally { DebugExitDecision(67); }
-				switch ( alt67 )
+				} finally { DebugExitDecision(61); }
+				switch ( alt61 )
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:370:32: ','
+					// C:\\work\\ReoScript\\ReoScript.g:400:32: ','
 					{
-					DebugLocation(370, 32);
-					char_literal230=(IToken)Match(input,COMMA,Follow._COMMA_in_object_literal2835);  
-					stream_COMMA.Add(char_literal230);
+					DebugLocation(400, 32);
+					char_literal200=(IToken)Match(input,COMMA,Follow._COMMA_in_object_literal2755);  
+					stream_COMMA.Add(char_literal200);
 
 
 					}
 					break;
 
 				default:
-					goto loop67;
+					goto loop61;
 				}
 			}
 
-			loop67:
+			loop61:
 				;
 
-			} finally { DebugExitSubRule(67); }
+			} finally { DebugExitSubRule(61); }
 
-			DebugLocation(370, 37);
-			char_literal231=(IToken)Match(input,RCURLY,Follow._RCURLY_in_object_literal2838);  
-			stream_RCURLY.Add(char_literal231);
+			DebugLocation(400, 37);
+			char_literal201=(IToken)Match(input,RCURLY,Follow._RCURLY_in_object_literal2758);  
+			stream_RCURLY.Add(char_literal201);
 
 
 
@@ -10222,20 +9642,20 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 371:4: -> ^( OBJECT_LITERAL ( keypair )* )
+			// 401:4: -> ^( OBJECT_LITERAL ( keypair )* )
 			{
-				DebugLocation(371, 7);
-				// C:\\work\\ReoScript\\ReoScript.g:371:7: ^( OBJECT_LITERAL ( keypair )* )
+				DebugLocation(401, 7);
+				// C:\\work\\ReoScript\\ReoScript.g:401:7: ^( OBJECT_LITERAL ( keypair )* )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(371, 9);
+				DebugLocation(401, 9);
 				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(OBJECT_LITERAL, "OBJECT_LITERAL"), root_1);
 
-				DebugLocation(371, 24);
-				// C:\\work\\ReoScript\\ReoScript.g:371:24: ( keypair )*
+				DebugLocation(401, 24);
+				// C:\\work\\ReoScript\\ReoScript.g:401:24: ( keypair )*
 				while ( stream_keypair.HasNext )
 				{
-					DebugLocation(371, 24);
+					DebugLocation(401, 24);
 					adaptor.AddChild(root_1, stream_keypair.NextTree());
 
 				}
@@ -10266,11 +9686,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("object_literal", 44);
-			LeaveRule("object_literal", 44);
+			TraceOut("object_literal", 42);
+			LeaveRule("object_literal", 42);
 			LeaveRule_object_literal();
 		}
-		DebugLocation(372, 1);
+		DebugLocation(402, 1);
 		} finally { DebugExitRule(GrammarFileName, "object_literal"); }
 		return retval;
 
@@ -10281,95 +9701,95 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_keypair();
 
 	// $ANTLR start "keypair"
-	// C:\\work\\ReoScript\\ReoScript.g:374:1: keypair : ( variable | STRING_LITERATE ) ':' ! expression ;
+	// C:\\work\\ReoScript\\ReoScript.g:404:1: keypair : ( variable | STRING_LITERATE ) ':' ! expression ;
 	[GrammarRule("keypair")]
 	private AstParserRuleReturnScope<CommonTree, IToken> keypair()
 	{
 		EnterRule_keypair();
-		EnterRule("keypair", 45);
-		TraceIn("keypair", 45);
+		EnterRule("keypair", 43);
+		TraceIn("keypair", 43);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken STRING_LITERATE233 = default(IToken);
-		IToken char_literal234 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> variable232 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression235 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken STRING_LITERATE203 = default(IToken);
+		IToken char_literal204 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> variable202 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression205 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree STRING_LITERATE233_tree = default(CommonTree);
-		CommonTree char_literal234_tree = default(CommonTree);
+		CommonTree STRING_LITERATE203_tree = default(CommonTree);
+		CommonTree char_literal204_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "keypair");
-		DebugLocation(374, 1);
+		DebugLocation(404, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:375:2: ( ( variable | STRING_LITERATE ) ':' ! expression )
+			// C:\\work\\ReoScript\\ReoScript.g:405:2: ( ( variable | STRING_LITERATE ) ':' ! expression )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:375:4: ( variable | STRING_LITERATE ) ':' ! expression
+			// C:\\work\\ReoScript\\ReoScript.g:405:4: ( variable | STRING_LITERATE ) ':' ! expression
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(375, 4);
-			// C:\\work\\ReoScript\\ReoScript.g:375:4: ( variable | STRING_LITERATE )
-			int alt68=2;
-			try { DebugEnterSubRule(68);
-			try { DebugEnterDecision(68, false);
-			int LA68_0 = input.LA(1);
+			DebugLocation(405, 4);
+			// C:\\work\\ReoScript\\ReoScript.g:405:4: ( variable | STRING_LITERATE )
+			int alt62=2;
+			try { DebugEnterSubRule(62);
+			try { DebugEnterDecision(62, false);
+			int LA62_0 = input.LA(1);
 
-			if ((LA68_0==IDENTIFIER))
+			if ((LA62_0==IDENTIFIER))
 			{
-				alt68 = 1;
+				alt62 = 1;
 			}
-			else if ((LA68_0==STRING_LITERATE))
+			else if ((LA62_0==STRING_LITERATE))
 			{
-				alt68 = 2;
+				alt62 = 2;
 			}
 			else
 			{
-				NoViableAltException nvae = new NoViableAltException("", 68, 0, input);
+				NoViableAltException nvae = new NoViableAltException("", 62, 0, input);
 				DebugRecognitionException(nvae);
 				throw nvae;
 			}
-			} finally { DebugExitDecision(68); }
-			switch (alt68)
+			} finally { DebugExitDecision(62); }
+			switch (alt62)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:375:5: variable
+				// C:\\work\\ReoScript\\ReoScript.g:405:5: variable
 				{
-				DebugLocation(375, 5);
-				PushFollow(Follow._variable_in_keypair2863);
-				variable232=variable();
+				DebugLocation(405, 5);
+				PushFollow(Follow._variable_in_keypair2783);
+				variable202=variable();
 				PopFollow();
 
-				adaptor.AddChild(root_0, variable232.Tree);
+				adaptor.AddChild(root_0, variable202.Tree);
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:375:14: STRING_LITERATE
+				// C:\\work\\ReoScript\\ReoScript.g:405:14: STRING_LITERATE
 				{
-				DebugLocation(375, 14);
-				STRING_LITERATE233=(IToken)Match(input,STRING_LITERATE,Follow._STRING_LITERATE_in_keypair2865); 
-				STRING_LITERATE233_tree = (CommonTree)adaptor.Create(STRING_LITERATE233);
-				adaptor.AddChild(root_0, STRING_LITERATE233_tree);
+				DebugLocation(405, 14);
+				STRING_LITERATE203=(IToken)Match(input,STRING_LITERATE,Follow._STRING_LITERATE_in_keypair2785); 
+				STRING_LITERATE203_tree = (CommonTree)adaptor.Create(STRING_LITERATE203);
+				adaptor.AddChild(root_0, STRING_LITERATE203_tree);
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(68); }
+			} finally { DebugExitSubRule(62); }
 
-			DebugLocation(375, 34);
-			char_literal234=(IToken)Match(input,COLON,Follow._COLON_in_keypair2868); 
-			DebugLocation(375, 36);
-			PushFollow(Follow._expression_in_keypair2871);
-			expression235=expression();
+			DebugLocation(405, 34);
+			char_literal204=(IToken)Match(input,COLON,Follow._COLON_in_keypair2788); 
+			DebugLocation(405, 36);
+			PushFollow(Follow._expression_in_keypair2791);
+			expression205=expression();
 			PopFollow();
 
-			adaptor.AddChild(root_0, expression235.Tree);
+			adaptor.AddChild(root_0, expression205.Tree);
 
 			}
 
@@ -10388,11 +9808,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("keypair", 45);
-			LeaveRule("keypair", 45);
+			TraceOut("keypair", 43);
+			LeaveRule("keypair", 43);
 			LeaveRule_keypair();
 		}
-		DebugLocation(376, 1);
+		DebugLocation(406, 1);
 		} finally { DebugExitRule(GrammarFileName, "keypair"); }
 		return retval;
 
@@ -10403,171 +9823,171 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_jsonParse();
 
 	// $ANTLR start "jsonParse"
-	// C:\\work\\ReoScript\\ReoScript.g:379:1: public jsonParse[ScriptContext ctx, System.Action<string, object> handler] : '{' ( jsonParse_keypair[ctx, handler] )? ( ',' jsonParse_keypair[ctx, handler] )* ( ',' )* '}' ;
+	// C:\\work\\ReoScript\\ReoScript.g:409:1: public jsonParse[ScriptContext ctx, System.Action<string, object> handler] : '{' ( jsonParse_keypair[ctx, handler] )? ( ',' jsonParse_keypair[ctx, handler] )* ( ',' )* '}' ;
 	[GrammarRule("jsonParse")]
 	public AstParserRuleReturnScope<CommonTree, IToken> jsonParse(ScriptContext ctx, System.Action<string, object> handler)
 	{
 		EnterRule_jsonParse();
-		EnterRule("jsonParse", 46);
-		TraceIn("jsonParse", 46);
+		EnterRule("jsonParse", 44);
+		TraceIn("jsonParse", 44);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken char_literal236 = default(IToken);
-		IToken char_literal238 = default(IToken);
-		IToken char_literal240 = default(IToken);
-		IToken char_literal241 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> jsonParse_keypair237 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> jsonParse_keypair239 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken char_literal206 = default(IToken);
+		IToken char_literal208 = default(IToken);
+		IToken char_literal210 = default(IToken);
+		IToken char_literal211 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> jsonParse_keypair207 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> jsonParse_keypair209 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree char_literal236_tree = default(CommonTree);
-		CommonTree char_literal238_tree = default(CommonTree);
-		CommonTree char_literal240_tree = default(CommonTree);
-		CommonTree char_literal241_tree = default(CommonTree);
+		CommonTree char_literal206_tree = default(CommonTree);
+		CommonTree char_literal208_tree = default(CommonTree);
+		CommonTree char_literal210_tree = default(CommonTree);
+		CommonTree char_literal211_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "jsonParse");
-		DebugLocation(379, 1);
+		DebugLocation(409, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:380:2: ( '{' ( jsonParse_keypair[ctx, handler] )? ( ',' jsonParse_keypair[ctx, handler] )* ( ',' )* '}' )
+			// C:\\work\\ReoScript\\ReoScript.g:410:2: ( '{' ( jsonParse_keypair[ctx, handler] )? ( ',' jsonParse_keypair[ctx, handler] )* ( ',' )* '}' )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:380:4: '{' ( jsonParse_keypair[ctx, handler] )? ( ',' jsonParse_keypair[ctx, handler] )* ( ',' )* '}'
+			// C:\\work\\ReoScript\\ReoScript.g:410:4: '{' ( jsonParse_keypair[ctx, handler] )? ( ',' jsonParse_keypair[ctx, handler] )* ( ',' )* '}'
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(380, 4);
-			char_literal236=(IToken)Match(input,LCURLY,Follow._LCURLY_in_jsonParse2887); 
-			char_literal236_tree = (CommonTree)adaptor.Create(char_literal236);
-			adaptor.AddChild(root_0, char_literal236_tree);
-			DebugLocation(380, 8);
-			// C:\\work\\ReoScript\\ReoScript.g:380:8: ( jsonParse_keypair[ctx, handler] )?
-			int alt69=2;
-			try { DebugEnterSubRule(69);
-			try { DebugEnterDecision(69, false);
-			int LA69_0 = input.LA(1);
+			DebugLocation(410, 4);
+			char_literal206=(IToken)Match(input,LCURLY,Follow._LCURLY_in_jsonParse2807); 
+			char_literal206_tree = (CommonTree)adaptor.Create(char_literal206);
+			adaptor.AddChild(root_0, char_literal206_tree);
+			DebugLocation(410, 8);
+			// C:\\work\\ReoScript\\ReoScript.g:410:8: ( jsonParse_keypair[ctx, handler] )?
+			int alt63=2;
+			try { DebugEnterSubRule(63);
+			try { DebugEnterDecision(63, false);
+			int LA63_0 = input.LA(1);
 
-			if ((LA69_0==IDENTIFIER||LA69_0==STRING_LITERATE))
+			if ((LA63_0==IDENTIFIER||LA63_0==STRING_LITERATE))
 			{
-				alt69 = 1;
+				alt63 = 1;
 			}
-			} finally { DebugExitDecision(69); }
-			switch (alt69)
+			} finally { DebugExitDecision(63); }
+			switch (alt63)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:380:8: jsonParse_keypair[ctx, handler]
+				// C:\\work\\ReoScript\\ReoScript.g:410:8: jsonParse_keypair[ctx, handler]
 				{
-				DebugLocation(380, 8);
-				PushFollow(Follow._jsonParse_keypair_in_jsonParse2889);
-				jsonParse_keypair237=jsonParse_keypair(ctx, handler);
+				DebugLocation(410, 8);
+				PushFollow(Follow._jsonParse_keypair_in_jsonParse2809);
+				jsonParse_keypair207=jsonParse_keypair(ctx, handler);
 				PopFollow();
 
-				adaptor.AddChild(root_0, jsonParse_keypair237.Tree);
+				adaptor.AddChild(root_0, jsonParse_keypair207.Tree);
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(69); }
+			} finally { DebugExitSubRule(63); }
 
-			DebugLocation(380, 41);
-			// C:\\work\\ReoScript\\ReoScript.g:380:41: ( ',' jsonParse_keypair[ctx, handler] )*
-			try { DebugEnterSubRule(70);
+			DebugLocation(410, 41);
+			// C:\\work\\ReoScript\\ReoScript.g:410:41: ( ',' jsonParse_keypair[ctx, handler] )*
+			try { DebugEnterSubRule(64);
 			while (true)
 			{
-				int alt70=2;
-				try { DebugEnterDecision(70, false);
-				int LA70_0 = input.LA(1);
+				int alt64=2;
+				try { DebugEnterDecision(64, false);
+				int LA64_0 = input.LA(1);
 
-				if ((LA70_0==COMMA))
+				if ((LA64_0==COMMA))
 				{
-					int LA70_1 = input.LA(2);
+					int LA64_1 = input.LA(2);
 
-					if ((LA70_1==IDENTIFIER||LA70_1==STRING_LITERATE))
+					if ((LA64_1==IDENTIFIER||LA64_1==STRING_LITERATE))
 					{
-						alt70 = 1;
+						alt64 = 1;
 					}
 
 
 				}
 
 
-				} finally { DebugExitDecision(70); }
-				switch ( alt70 )
+				} finally { DebugExitDecision(64); }
+				switch ( alt64 )
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:380:42: ',' jsonParse_keypair[ctx, handler]
+					// C:\\work\\ReoScript\\ReoScript.g:410:42: ',' jsonParse_keypair[ctx, handler]
 					{
-					DebugLocation(380, 42);
-					char_literal238=(IToken)Match(input,COMMA,Follow._COMMA_in_jsonParse2894); 
-					char_literal238_tree = (CommonTree)adaptor.Create(char_literal238);
-					adaptor.AddChild(root_0, char_literal238_tree);
-					DebugLocation(380, 46);
-					PushFollow(Follow._jsonParse_keypair_in_jsonParse2896);
-					jsonParse_keypair239=jsonParse_keypair(ctx, handler);
+					DebugLocation(410, 42);
+					char_literal208=(IToken)Match(input,COMMA,Follow._COMMA_in_jsonParse2814); 
+					char_literal208_tree = (CommonTree)adaptor.Create(char_literal208);
+					adaptor.AddChild(root_0, char_literal208_tree);
+					DebugLocation(410, 46);
+					PushFollow(Follow._jsonParse_keypair_in_jsonParse2816);
+					jsonParse_keypair209=jsonParse_keypair(ctx, handler);
 					PopFollow();
 
-					adaptor.AddChild(root_0, jsonParse_keypair239.Tree);
+					adaptor.AddChild(root_0, jsonParse_keypair209.Tree);
 
 					}
 					break;
 
 				default:
-					goto loop70;
+					goto loop64;
 				}
 			}
 
-			loop70:
+			loop64:
 				;
 
-			} finally { DebugExitSubRule(70); }
+			} finally { DebugExitSubRule(64); }
 
-			DebugLocation(380, 80);
-			// C:\\work\\ReoScript\\ReoScript.g:380:80: ( ',' )*
-			try { DebugEnterSubRule(71);
+			DebugLocation(410, 80);
+			// C:\\work\\ReoScript\\ReoScript.g:410:80: ( ',' )*
+			try { DebugEnterSubRule(65);
 			while (true)
 			{
-				int alt71=2;
-				try { DebugEnterDecision(71, false);
-				int LA71_0 = input.LA(1);
+				int alt65=2;
+				try { DebugEnterDecision(65, false);
+				int LA65_0 = input.LA(1);
 
-				if ((LA71_0==COMMA))
+				if ((LA65_0==COMMA))
 				{
-					alt71 = 1;
+					alt65 = 1;
 				}
 
 
-				} finally { DebugExitDecision(71); }
-				switch ( alt71 )
+				} finally { DebugExitDecision(65); }
+				switch ( alt65 )
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:380:80: ','
+					// C:\\work\\ReoScript\\ReoScript.g:410:80: ','
 					{
-					DebugLocation(380, 80);
-					char_literal240=(IToken)Match(input,COMMA,Follow._COMMA_in_jsonParse2901); 
-					char_literal240_tree = (CommonTree)adaptor.Create(char_literal240);
-					adaptor.AddChild(root_0, char_literal240_tree);
+					DebugLocation(410, 80);
+					char_literal210=(IToken)Match(input,COMMA,Follow._COMMA_in_jsonParse2821); 
+					char_literal210_tree = (CommonTree)adaptor.Create(char_literal210);
+					adaptor.AddChild(root_0, char_literal210_tree);
 
 					}
 					break;
 
 				default:
-					goto loop71;
+					goto loop65;
 				}
 			}
 
-			loop71:
+			loop65:
 				;
 
-			} finally { DebugExitSubRule(71); }
+			} finally { DebugExitSubRule(65); }
 
-			DebugLocation(380, 85);
-			char_literal241=(IToken)Match(input,RCURLY,Follow._RCURLY_in_jsonParse2904); 
-			char_literal241_tree = (CommonTree)adaptor.Create(char_literal241);
-			adaptor.AddChild(root_0, char_literal241_tree);
+			DebugLocation(410, 85);
+			char_literal211=(IToken)Match(input,RCURLY,Follow._RCURLY_in_jsonParse2824); 
+			char_literal211_tree = (CommonTree)adaptor.Create(char_literal211);
+			adaptor.AddChild(root_0, char_literal211_tree);
 
 			}
 
@@ -10586,11 +10006,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("jsonParse", 46);
-			LeaveRule("jsonParse", 46);
+			TraceOut("jsonParse", 44);
+			LeaveRule("jsonParse", 44);
 			LeaveRule_jsonParse();
 		}
-		DebugLocation(381, 1);
+		DebugLocation(411, 1);
 		} finally { DebugExitRule(GrammarFileName, "jsonParse"); }
 		return retval;
 
@@ -10601,65 +10021,65 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_jsonParse_keypair();
 
 	// $ANTLR start "jsonParse_keypair"
-	// C:\\work\\ReoScript\\ReoScript.g:383:1: jsonParse_keypair[ScriptContext ctx, System.Action<string, object> handler] : (var= variable |id= STRING_LITERATE ) ':' !exp= expression ;
+	// C:\\work\\ReoScript\\ReoScript.g:413:1: jsonParse_keypair[ScriptContext ctx, System.Action<string, object> handler] : (var= variable |id= STRING_LITERATE ) ':' !exp= expression ;
 	[GrammarRule("jsonParse_keypair")]
 	private AstParserRuleReturnScope<CommonTree, IToken> jsonParse_keypair(ScriptContext ctx, System.Action<string, object> handler)
 	{
 		EnterRule_jsonParse_keypair();
-		EnterRule("jsonParse_keypair", 47);
-		TraceIn("jsonParse_keypair", 47);
+		EnterRule("jsonParse_keypair", 45);
+		TraceIn("jsonParse_keypair", 45);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
 		IToken id = default(IToken);
-		IToken char_literal242 = default(IToken);
+		IToken char_literal212 = default(IToken);
 		AstParserRuleReturnScope<CommonTree, IToken> var = default(AstParserRuleReturnScope<CommonTree, IToken>);
 		AstParserRuleReturnScope<CommonTree, IToken> exp = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
 		CommonTree id_tree = default(CommonTree);
-		CommonTree char_literal242_tree = default(CommonTree);
+		CommonTree char_literal212_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "jsonParse_keypair");
-		DebugLocation(383, 1);
+		DebugLocation(413, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:384:2: ( (var= variable |id= STRING_LITERATE ) ':' !exp= expression )
+			// C:\\work\\ReoScript\\ReoScript.g:414:2: ( (var= variable |id= STRING_LITERATE ) ':' !exp= expression )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:384:4: (var= variable |id= STRING_LITERATE ) ':' !exp= expression
+			// C:\\work\\ReoScript\\ReoScript.g:414:4: (var= variable |id= STRING_LITERATE ) ':' !exp= expression
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(384, 4);
-			// C:\\work\\ReoScript\\ReoScript.g:384:4: (var= variable |id= STRING_LITERATE )
-			int alt72=2;
-			try { DebugEnterSubRule(72);
-			try { DebugEnterDecision(72, false);
-			int LA72_0 = input.LA(1);
+			DebugLocation(414, 4);
+			// C:\\work\\ReoScript\\ReoScript.g:414:4: (var= variable |id= STRING_LITERATE )
+			int alt66=2;
+			try { DebugEnterSubRule(66);
+			try { DebugEnterDecision(66, false);
+			int LA66_0 = input.LA(1);
 
-			if ((LA72_0==IDENTIFIER))
+			if ((LA66_0==IDENTIFIER))
 			{
-				alt72 = 1;
+				alt66 = 1;
 			}
-			else if ((LA72_0==STRING_LITERATE))
+			else if ((LA66_0==STRING_LITERATE))
 			{
-				alt72 = 2;
+				alt66 = 2;
 			}
 			else
 			{
-				NoViableAltException nvae = new NoViableAltException("", 72, 0, input);
+				NoViableAltException nvae = new NoViableAltException("", 66, 0, input);
 				DebugRecognitionException(nvae);
 				throw nvae;
 			}
-			} finally { DebugExitDecision(72); }
-			switch (alt72)
+			} finally { DebugExitDecision(66); }
+			switch (alt66)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:384:5: var= variable
+				// C:\\work\\ReoScript\\ReoScript.g:414:5: var= variable
 				{
-				DebugLocation(384, 8);
-				PushFollow(Follow._variable_in_jsonParse_keypair2919);
+				DebugLocation(414, 8);
+				PushFollow(Follow._variable_in_jsonParse_keypair2839);
 				var=variable();
 				PopFollow();
 
@@ -10669,10 +10089,10 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:384:18: id= STRING_LITERATE
+				// C:\\work\\ReoScript\\ReoScript.g:414:18: id= STRING_LITERATE
 				{
-				DebugLocation(384, 20);
-				id=(IToken)Match(input,STRING_LITERATE,Follow._STRING_LITERATE_in_jsonParse_keypair2923); 
+				DebugLocation(414, 20);
+				id=(IToken)Match(input,STRING_LITERATE,Follow._STRING_LITERATE_in_jsonParse_keypair2843); 
 				id_tree = (CommonTree)adaptor.Create(id);
 				adaptor.AddChild(root_0, id_tree);
 
@@ -10680,19 +10100,19 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 
 			}
-			} finally { DebugExitSubRule(72); }
+			} finally { DebugExitSubRule(66); }
 
-			DebugLocation(384, 41);
-			char_literal242=(IToken)Match(input,COLON,Follow._COLON_in_jsonParse_keypair2926); 
-			DebugLocation(384, 46);
-			PushFollow(Follow._expression_in_jsonParse_keypair2931);
+			DebugLocation(414, 41);
+			char_literal212=(IToken)Match(input,COLON,Follow._COLON_in_jsonParse_keypair2846); 
+			DebugLocation(414, 46);
+			PushFollow(Follow._expression_in_jsonParse_keypair2851);
 			exp=expression();
 			PopFollow();
 
 			adaptor.AddChild(root_0, exp.Tree);
-			DebugLocation(384, 58);
+			DebugLocation(414, 58);
 
-					handler(var == null ? id.Text : var.Tree.Text, ctx.Srm.ParseNode(exp.Tree, ctx));
+					handler(var == null ? id.Text : var.Tree.Text, ScriptRunningMachine.ParseNode(exp.Tree, ctx));
 				
 
 			}
@@ -10712,11 +10132,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("jsonParse_keypair", 47);
-			LeaveRule("jsonParse_keypair", 47);
+			TraceOut("jsonParse_keypair", 45);
+			LeaveRule("jsonParse_keypair", 45);
 			LeaveRule_jsonParse_keypair();
 		}
-		DebugLocation(387, 1);
+		DebugLocation(417, 1);
 		} finally { DebugExitRule(GrammarFileName, "jsonParse_keypair"); }
 		return retval;
 
@@ -10727,30 +10147,30 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_ifelse();
 
 	// $ANTLR start "ifelse"
-	// C:\\work\\ReoScript\\ReoScript.g:391:1: ifelse : 'if' LPAREN conditionalOrExpression RPAREN es1= embeddedStatement ( 'else' es2= embeddedStatement )? -> ^( IF_STATEMENT conditionalOrExpression $es1 ( $es2)? ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:421:1: ifelse : 'if' LPAREN conditionalOrExpression RPAREN es1= embeddedStatement ( 'else' es2= embeddedStatement )? -> ^( IF_STATEMENT conditionalOrExpression $es1 ( $es2)? ) ;
 	[GrammarRule("ifelse")]
 	private AstParserRuleReturnScope<CommonTree, IToken> ifelse()
 	{
 		EnterRule_ifelse();
-		EnterRule("ifelse", 48);
-		TraceIn("ifelse", 48);
+		EnterRule("ifelse", 46);
+		TraceIn("ifelse", 46);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken string_literal243 = default(IToken);
-		IToken LPAREN244 = default(IToken);
-		IToken RPAREN246 = default(IToken);
-		IToken string_literal247 = default(IToken);
+		IToken string_literal213 = default(IToken);
+		IToken LPAREN214 = default(IToken);
+		IToken RPAREN216 = default(IToken);
+		IToken string_literal217 = default(IToken);
 		AstParserRuleReturnScope<CommonTree, IToken> es1 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 		AstParserRuleReturnScope<CommonTree, IToken> es2 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> conditionalOrExpression245 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> conditionalOrExpression215 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree string_literal243_tree = default(CommonTree);
-		CommonTree LPAREN244_tree = default(CommonTree);
-		CommonTree RPAREN246_tree = default(CommonTree);
-		CommonTree string_literal247_tree = default(CommonTree);
+		CommonTree string_literal213_tree = default(CommonTree);
+		CommonTree LPAREN214_tree = default(CommonTree);
+		CommonTree RPAREN216_tree = default(CommonTree);
+		CommonTree string_literal217_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_134=new RewriteRuleITokenStream(adaptor,"token 134");
 		RewriteRuleITokenStream stream_RPAREN=new RewriteRuleITokenStream(adaptor,"token RPAREN");
 		RewriteRuleITokenStream stream_LPAREN=new RewriteRuleITokenStream(adaptor,"token LPAREN");
@@ -10758,61 +10178,61 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		RewriteRuleSubtreeStream stream_embeddedStatement=new RewriteRuleSubtreeStream(adaptor,"rule embeddedStatement");
 		RewriteRuleSubtreeStream stream_conditionalOrExpression=new RewriteRuleSubtreeStream(adaptor,"rule conditionalOrExpression");
 		try { DebugEnterRule(GrammarFileName, "ifelse");
-		DebugLocation(391, 1);
+		DebugLocation(421, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:392:2: ( 'if' LPAREN conditionalOrExpression RPAREN es1= embeddedStatement ( 'else' es2= embeddedStatement )? -> ^( IF_STATEMENT conditionalOrExpression $es1 ( $es2)? ) )
+			// C:\\work\\ReoScript\\ReoScript.g:422:2: ( 'if' LPAREN conditionalOrExpression RPAREN es1= embeddedStatement ( 'else' es2= embeddedStatement )? -> ^( IF_STATEMENT conditionalOrExpression $es1 ( $es2)? ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:392:4: 'if' LPAREN conditionalOrExpression RPAREN es1= embeddedStatement ( 'else' es2= embeddedStatement )?
+			// C:\\work\\ReoScript\\ReoScript.g:422:4: 'if' LPAREN conditionalOrExpression RPAREN es1= embeddedStatement ( 'else' es2= embeddedStatement )?
 			{
-			DebugLocation(392, 4);
-			string_literal243=(IToken)Match(input,134,Follow._134_in_ifelse2948);  
-			stream_134.Add(string_literal243);
+			DebugLocation(422, 4);
+			string_literal213=(IToken)Match(input,134,Follow._134_in_ifelse2868);  
+			stream_134.Add(string_literal213);
 
-			DebugLocation(392, 9);
-			LPAREN244=(IToken)Match(input,LPAREN,Follow._LPAREN_in_ifelse2950);  
-			stream_LPAREN.Add(LPAREN244);
+			DebugLocation(422, 9);
+			LPAREN214=(IToken)Match(input,LPAREN,Follow._LPAREN_in_ifelse2870);  
+			stream_LPAREN.Add(LPAREN214);
 
-			DebugLocation(392, 16);
-			PushFollow(Follow._conditionalOrExpression_in_ifelse2952);
-			conditionalOrExpression245=conditionalOrExpression();
+			DebugLocation(422, 16);
+			PushFollow(Follow._conditionalOrExpression_in_ifelse2872);
+			conditionalOrExpression215=conditionalOrExpression();
 			PopFollow();
 
-			stream_conditionalOrExpression.Add(conditionalOrExpression245.Tree);
-			DebugLocation(392, 40);
-			RPAREN246=(IToken)Match(input,RPAREN,Follow._RPAREN_in_ifelse2954);  
-			stream_RPAREN.Add(RPAREN246);
+			stream_conditionalOrExpression.Add(conditionalOrExpression215.Tree);
+			DebugLocation(422, 40);
+			RPAREN216=(IToken)Match(input,RPAREN,Follow._RPAREN_in_ifelse2874);  
+			stream_RPAREN.Add(RPAREN216);
 
-			DebugLocation(392, 50);
-			PushFollow(Follow._embeddedStatement_in_ifelse2958);
+			DebugLocation(422, 50);
+			PushFollow(Follow._embeddedStatement_in_ifelse2878);
 			es1=embeddedStatement();
 			PopFollow();
 
 			stream_embeddedStatement.Add(es1.Tree);
-			DebugLocation(392, 69);
-			// C:\\work\\ReoScript\\ReoScript.g:392:69: ( 'else' es2= embeddedStatement )?
-			int alt73=2;
-			try { DebugEnterSubRule(73);
-			try { DebugEnterDecision(73, false);
-			int LA73_0 = input.LA(1);
+			DebugLocation(422, 69);
+			// C:\\work\\ReoScript\\ReoScript.g:422:69: ( 'else' es2= embeddedStatement )?
+			int alt67=2;
+			try { DebugEnterSubRule(67);
+			try { DebugEnterDecision(67, false);
+			int LA67_0 = input.LA(1);
 
-			if ((LA73_0==ELSE))
+			if ((LA67_0==ELSE))
 			{
-				alt73 = 1;
+				alt67 = 1;
 			}
-			} finally { DebugExitDecision(73); }
-			switch (alt73)
+			} finally { DebugExitDecision(67); }
+			switch (alt67)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:392:70: 'else' es2= embeddedStatement
+				// C:\\work\\ReoScript\\ReoScript.g:422:70: 'else' es2= embeddedStatement
 				{
-				DebugLocation(392, 70);
-				string_literal247=(IToken)Match(input,ELSE,Follow._ELSE_in_ifelse2961);  
-				stream_ELSE.Add(string_literal247);
+				DebugLocation(422, 70);
+				string_literal217=(IToken)Match(input,ELSE,Follow._ELSE_in_ifelse2881);  
+				stream_ELSE.Add(string_literal217);
 
-				DebugLocation(392, 80);
-				PushFollow(Follow._embeddedStatement_in_ifelse2965);
+				DebugLocation(422, 80);
+				PushFollow(Follow._embeddedStatement_in_ifelse2885);
 				es2=embeddedStatement();
 				PopFollow();
 
@@ -10822,13 +10242,13 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 
 			}
-			} finally { DebugExitSubRule(73); }
+			} finally { DebugExitSubRule(67); }
 
 
 
 			{
 			// AST REWRITE
-			// elements: es2, es1, conditionalOrExpression
+			// elements: conditionalOrExpression, es1, es2
 			// token labels: 
 			// rule labels: retval, es2, es1
 			// token list labels: 
@@ -10840,24 +10260,24 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_es1=new RewriteRuleSubtreeStream(adaptor,"rule es1",es1!=null?es1.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 393:3: -> ^( IF_STATEMENT conditionalOrExpression $es1 ( $es2)? )
+			// 423:3: -> ^( IF_STATEMENT conditionalOrExpression $es1 ( $es2)? )
 			{
-				DebugLocation(393, 6);
-				// C:\\work\\ReoScript\\ReoScript.g:393:6: ^( IF_STATEMENT conditionalOrExpression $es1 ( $es2)? )
+				DebugLocation(423, 6);
+				// C:\\work\\ReoScript\\ReoScript.g:423:6: ^( IF_STATEMENT conditionalOrExpression $es1 ( $es2)? )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(393, 8);
+				DebugLocation(423, 8);
 				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(IF_STATEMENT, "IF_STATEMENT"), root_1);
 
-				DebugLocation(393, 21);
+				DebugLocation(423, 21);
 				adaptor.AddChild(root_1, stream_conditionalOrExpression.NextTree());
-				DebugLocation(393, 46);
+				DebugLocation(423, 46);
 				adaptor.AddChild(root_1, stream_es1.NextTree());
-				DebugLocation(393, 51);
-				// C:\\work\\ReoScript\\ReoScript.g:393:51: ( $es2)?
+				DebugLocation(423, 51);
+				// C:\\work\\ReoScript\\ReoScript.g:423:51: ( $es2)?
 				if (stream_es2.HasNext)
 				{
-					DebugLocation(393, 51);
+					DebugLocation(423, 51);
 					adaptor.AddChild(root_1, stream_es2.NextTree());
 
 				}
@@ -10888,11 +10308,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("ifelse", 48);
-			LeaveRule("ifelse", 48);
+			TraceOut("ifelse", 46);
+			LeaveRule("ifelse", 46);
 			LeaveRule_ifelse();
 		}
-		DebugLocation(394, 1);
+		DebugLocation(424, 1);
 		} finally { DebugExitRule(GrammarFileName, "ifelse"); }
 		return retval;
 
@@ -10903,33 +10323,33 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_forStatement();
 
 	// $ANTLR start "forStatement"
-	// C:\\work\\ReoScript\\ReoScript.g:396:1: forStatement : 'for' '(' ( forInit )? SEMI ( conditionalOrExpression )? SEMI ( statementExpressionList )? ')' embeddedStatement -> ^( FOR_STATEMENT ^( FOR_INIT ( forInit )? ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ( statementExpressionList )? ) ^( FOR_BODY embeddedStatement ) ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:426:1: forStatement : 'for' '(' ( forInit )? SEMI ( conditionalOrExpression )? SEMI ( statementExpressionList )? ')' embeddedStatement -> ^( FOR_STATEMENT ^( FOR_INIT ( forInit )? ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ( statementExpressionList )? ) ^( FOR_BODY embeddedStatement ) ) ;
 	[GrammarRule("forStatement")]
 	private AstParserRuleReturnScope<CommonTree, IToken> forStatement()
 	{
 		EnterRule_forStatement();
-		EnterRule("forStatement", 49);
-		TraceIn("forStatement", 49);
+		EnterRule("forStatement", 47);
+		TraceIn("forStatement", 47);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken string_literal248 = default(IToken);
-		IToken char_literal249 = default(IToken);
-		IToken SEMI251 = default(IToken);
-		IToken SEMI253 = default(IToken);
-		IToken char_literal255 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> forInit250 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> conditionalOrExpression252 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> statementExpressionList254 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> embeddedStatement256 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken string_literal218 = default(IToken);
+		IToken char_literal219 = default(IToken);
+		IToken SEMI221 = default(IToken);
+		IToken SEMI223 = default(IToken);
+		IToken char_literal225 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> forInit220 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> conditionalOrExpression222 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> statementExpressionList224 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> embeddedStatement226 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree string_literal248_tree = default(CommonTree);
-		CommonTree char_literal249_tree = default(CommonTree);
-		CommonTree SEMI251_tree = default(CommonTree);
-		CommonTree SEMI253_tree = default(CommonTree);
-		CommonTree char_literal255_tree = default(CommonTree);
+		CommonTree string_literal218_tree = default(CommonTree);
+		CommonTree char_literal219_tree = default(CommonTree);
+		CommonTree SEMI221_tree = default(CommonTree);
+		CommonTree SEMI223_tree = default(CommonTree);
+		CommonTree char_literal225_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_RPAREN=new RewriteRuleITokenStream(adaptor,"token RPAREN");
 		RewriteRuleITokenStream stream_132=new RewriteRuleITokenStream(adaptor,"token 132");
 		RewriteRuleITokenStream stream_SEMI=new RewriteRuleITokenStream(adaptor,"token SEMI");
@@ -10939,137 +10359,137 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		RewriteRuleSubtreeStream stream_forInit=new RewriteRuleSubtreeStream(adaptor,"rule forInit");
 		RewriteRuleSubtreeStream stream_statementExpressionList=new RewriteRuleSubtreeStream(adaptor,"rule statementExpressionList");
 		try { DebugEnterRule(GrammarFileName, "forStatement");
-		DebugLocation(396, 1);
+		DebugLocation(426, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:397:2: ( 'for' '(' ( forInit )? SEMI ( conditionalOrExpression )? SEMI ( statementExpressionList )? ')' embeddedStatement -> ^( FOR_STATEMENT ^( FOR_INIT ( forInit )? ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ( statementExpressionList )? ) ^( FOR_BODY embeddedStatement ) ) )
+			// C:\\work\\ReoScript\\ReoScript.g:427:2: ( 'for' '(' ( forInit )? SEMI ( conditionalOrExpression )? SEMI ( statementExpressionList )? ')' embeddedStatement -> ^( FOR_STATEMENT ^( FOR_INIT ( forInit )? ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ( statementExpressionList )? ) ^( FOR_BODY embeddedStatement ) ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:397:4: 'for' '(' ( forInit )? SEMI ( conditionalOrExpression )? SEMI ( statementExpressionList )? ')' embeddedStatement
+			// C:\\work\\ReoScript\\ReoScript.g:427:4: 'for' '(' ( forInit )? SEMI ( conditionalOrExpression )? SEMI ( statementExpressionList )? ')' embeddedStatement
 			{
-			DebugLocation(397, 4);
-			string_literal248=(IToken)Match(input,132,Follow._132_in_forStatement2999);  
-			stream_132.Add(string_literal248);
+			DebugLocation(427, 4);
+			string_literal218=(IToken)Match(input,132,Follow._132_in_forStatement2919);  
+			stream_132.Add(string_literal218);
 
-			DebugLocation(397, 10);
-			char_literal249=(IToken)Match(input,LPAREN,Follow._LPAREN_in_forStatement3001);  
-			stream_LPAREN.Add(char_literal249);
+			DebugLocation(427, 10);
+			char_literal219=(IToken)Match(input,LPAREN,Follow._LPAREN_in_forStatement2921);  
+			stream_LPAREN.Add(char_literal219);
 
-			DebugLocation(397, 14);
-			// C:\\work\\ReoScript\\ReoScript.g:397:14: ( forInit )?
-			int alt74=2;
-			try { DebugEnterSubRule(74);
-			try { DebugEnterDecision(74, false);
-			int LA74_0 = input.LA(1);
+			DebugLocation(427, 14);
+			// C:\\work\\ReoScript\\ReoScript.g:427:14: ( forInit )?
+			int alt68=2;
+			try { DebugEnterSubRule(68);
+			try { DebugEnterDecision(68, false);
+			int LA68_0 = input.LA(1);
 
-			if ((LA74_0==BINARY_LITERATE||LA74_0==DECREMENT||(LA74_0>=HEX_LITERATE && LA74_0<=IDENTIFIER)||LA74_0==INCREMENT||(LA74_0>=LBRACE && LA74_0<=LCURLY)||(LA74_0>=LIT_FALSE && LA74_0<=LIT_TRUE)||LA74_0==LPAREN||LA74_0==NAN||LA74_0==NUMBER_LITERATE||LA74_0==STRING_LITERATE||LA74_0==THIS||LA74_0==TYPE||LA74_0==UNDEFINED||LA74_0==130||LA74_0==133||LA74_0==137))
+			if ((LA68_0==BINARY_LITERATE||LA68_0==DECREMENT||(LA68_0>=HEX_LITERATE && LA68_0<=IDENTIFIER)||LA68_0==INCREMENT||(LA68_0>=LBRACE && LA68_0<=LCURLY)||(LA68_0>=LIT_FALSE && LA68_0<=LIT_TRUE)||LA68_0==LPAREN||LA68_0==NAN||LA68_0==NUMBER_LITERATE||LA68_0==STRING_LITERATE||LA68_0==THIS||LA68_0==TYPE||LA68_0==UNDEFINED||LA68_0==130||LA68_0==133||LA68_0==137))
 			{
-				alt74 = 1;
+				alt68 = 1;
 			}
-			} finally { DebugExitDecision(74); }
-			switch (alt74)
+			} finally { DebugExitDecision(68); }
+			switch (alt68)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:397:14: forInit
+				// C:\\work\\ReoScript\\ReoScript.g:427:14: forInit
 				{
-				DebugLocation(397, 14);
-				PushFollow(Follow._forInit_in_forStatement3003);
-				forInit250=forInit();
+				DebugLocation(427, 14);
+				PushFollow(Follow._forInit_in_forStatement2923);
+				forInit220=forInit();
 				PopFollow();
 
-				stream_forInit.Add(forInit250.Tree);
+				stream_forInit.Add(forInit220.Tree);
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(74); }
+			} finally { DebugExitSubRule(68); }
 
-			DebugLocation(397, 23);
-			SEMI251=(IToken)Match(input,SEMI,Follow._SEMI_in_forStatement3006);  
-			stream_SEMI.Add(SEMI251);
+			DebugLocation(427, 23);
+			SEMI221=(IToken)Match(input,SEMI,Follow._SEMI_in_forStatement2926);  
+			stream_SEMI.Add(SEMI221);
 
-			DebugLocation(397, 28);
-			// C:\\work\\ReoScript\\ReoScript.g:397:28: ( conditionalOrExpression )?
-			int alt75=2;
-			try { DebugEnterSubRule(75);
-			try { DebugEnterDecision(75, false);
-			int LA75_0 = input.LA(1);
+			DebugLocation(427, 28);
+			// C:\\work\\ReoScript\\ReoScript.g:427:28: ( conditionalOrExpression )?
+			int alt69=2;
+			try { DebugEnterSubRule(69);
+			try { DebugEnterDecision(69, false);
+			int LA69_0 = input.LA(1);
 
-			if ((LA75_0==BINARY_LITERATE||LA75_0==DECREMENT||(LA75_0>=HEX_LITERATE && LA75_0<=IDENTIFIER)||LA75_0==INCREMENT||(LA75_0>=LBRACE && LA75_0<=LCURLY)||(LA75_0>=LIT_FALSE && LA75_0<=LIT_TRUE)||LA75_0==LPAREN||LA75_0==MINUS||LA75_0==NAN||LA75_0==NOT||LA75_0==NUMBER_LITERATE||LA75_0==PLUS||LA75_0==STRING_LITERATE||LA75_0==THIS||LA75_0==UNDEFINED||LA75_0==133||LA75_0==137||LA75_0==143||LA75_0==145))
+			if ((LA69_0==BINARY_LITERATE||LA69_0==DECREMENT||(LA69_0>=HEX_LITERATE && LA69_0<=IDENTIFIER)||LA69_0==INCREMENT||(LA69_0>=LBRACE && LA69_0<=LCURLY)||(LA69_0>=LIT_FALSE && LA69_0<=LIT_TRUE)||LA69_0==LPAREN||LA69_0==MINUS||LA69_0==NAN||LA69_0==NOT||LA69_0==NUMBER_LITERATE||LA69_0==PLUS||LA69_0==STRING_LITERATE||LA69_0==THIS||LA69_0==UNDEFINED||LA69_0==133||LA69_0==137||LA69_0==143||LA69_0==145))
 			{
-				alt75 = 1;
+				alt69 = 1;
 			}
-			} finally { DebugExitDecision(75); }
-			switch (alt75)
+			} finally { DebugExitDecision(69); }
+			switch (alt69)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:397:28: conditionalOrExpression
+				// C:\\work\\ReoScript\\ReoScript.g:427:28: conditionalOrExpression
 				{
-				DebugLocation(397, 28);
-				PushFollow(Follow._conditionalOrExpression_in_forStatement3008);
-				conditionalOrExpression252=conditionalOrExpression();
+				DebugLocation(427, 28);
+				PushFollow(Follow._conditionalOrExpression_in_forStatement2928);
+				conditionalOrExpression222=conditionalOrExpression();
 				PopFollow();
 
-				stream_conditionalOrExpression.Add(conditionalOrExpression252.Tree);
+				stream_conditionalOrExpression.Add(conditionalOrExpression222.Tree);
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(75); }
+			} finally { DebugExitSubRule(69); }
 
-			DebugLocation(397, 53);
-			SEMI253=(IToken)Match(input,SEMI,Follow._SEMI_in_forStatement3011);  
-			stream_SEMI.Add(SEMI253);
+			DebugLocation(427, 53);
+			SEMI223=(IToken)Match(input,SEMI,Follow._SEMI_in_forStatement2931);  
+			stream_SEMI.Add(SEMI223);
 
-			DebugLocation(397, 58);
-			// C:\\work\\ReoScript\\ReoScript.g:397:58: ( statementExpressionList )?
-			int alt76=2;
-			try { DebugEnterSubRule(76);
-			try { DebugEnterDecision(76, false);
-			int LA76_0 = input.LA(1);
+			DebugLocation(427, 58);
+			// C:\\work\\ReoScript\\ReoScript.g:427:58: ( statementExpressionList )?
+			int alt70=2;
+			try { DebugEnterSubRule(70);
+			try { DebugEnterDecision(70, false);
+			int LA70_0 = input.LA(1);
 
-			if ((LA76_0==BINARY_LITERATE||LA76_0==DECREMENT||(LA76_0>=HEX_LITERATE && LA76_0<=IDENTIFIER)||LA76_0==INCREMENT||(LA76_0>=LBRACE && LA76_0<=LCURLY)||(LA76_0>=LIT_FALSE && LA76_0<=LIT_TRUE)||LA76_0==LPAREN||LA76_0==NAN||LA76_0==NUMBER_LITERATE||LA76_0==STRING_LITERATE||LA76_0==THIS||LA76_0==UNDEFINED||LA76_0==130||LA76_0==133||LA76_0==137))
+			if ((LA70_0==BINARY_LITERATE||LA70_0==DECREMENT||(LA70_0>=HEX_LITERATE && LA70_0<=IDENTIFIER)||LA70_0==INCREMENT||(LA70_0>=LBRACE && LA70_0<=LCURLY)||(LA70_0>=LIT_FALSE && LA70_0<=LIT_TRUE)||LA70_0==LPAREN||LA70_0==NAN||LA70_0==NUMBER_LITERATE||LA70_0==STRING_LITERATE||LA70_0==THIS||LA70_0==UNDEFINED||LA70_0==130||LA70_0==133||LA70_0==137))
 			{
-				alt76 = 1;
+				alt70 = 1;
 			}
-			} finally { DebugExitDecision(76); }
-			switch (alt76)
+			} finally { DebugExitDecision(70); }
+			switch (alt70)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:397:58: statementExpressionList
+				// C:\\work\\ReoScript\\ReoScript.g:427:58: statementExpressionList
 				{
-				DebugLocation(397, 58);
-				PushFollow(Follow._statementExpressionList_in_forStatement3013);
-				statementExpressionList254=statementExpressionList();
+				DebugLocation(427, 58);
+				PushFollow(Follow._statementExpressionList_in_forStatement2933);
+				statementExpressionList224=statementExpressionList();
 				PopFollow();
 
-				stream_statementExpressionList.Add(statementExpressionList254.Tree);
+				stream_statementExpressionList.Add(statementExpressionList224.Tree);
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(76); }
+			} finally { DebugExitSubRule(70); }
 
-			DebugLocation(397, 83);
-			char_literal255=(IToken)Match(input,RPAREN,Follow._RPAREN_in_forStatement3016);  
-			stream_RPAREN.Add(char_literal255);
+			DebugLocation(427, 83);
+			char_literal225=(IToken)Match(input,RPAREN,Follow._RPAREN_in_forStatement2936);  
+			stream_RPAREN.Add(char_literal225);
 
-			DebugLocation(397, 87);
-			PushFollow(Follow._embeddedStatement_in_forStatement3018);
-			embeddedStatement256=embeddedStatement();
+			DebugLocation(427, 87);
+			PushFollow(Follow._embeddedStatement_in_forStatement2938);
+			embeddedStatement226=embeddedStatement();
 			PopFollow();
 
-			stream_embeddedStatement.Add(embeddedStatement256.Tree);
+			stream_embeddedStatement.Add(embeddedStatement226.Tree);
 
 
 			{
 			// AST REWRITE
-			// elements: embeddedStatement, statementExpressionList, conditionalOrExpression, forInit
+			// elements: forInit, statementExpressionList, embeddedStatement, conditionalOrExpression
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -11079,27 +10499,27 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 398:3: -> ^( FOR_STATEMENT ^( FOR_INIT ( forInit )? ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ( statementExpressionList )? ) ^( FOR_BODY embeddedStatement ) )
+			// 428:3: -> ^( FOR_STATEMENT ^( FOR_INIT ( forInit )? ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ( statementExpressionList )? ) ^( FOR_BODY embeddedStatement ) )
 			{
-				DebugLocation(398, 6);
-				// C:\\work\\ReoScript\\ReoScript.g:398:6: ^( FOR_STATEMENT ^( FOR_INIT ( forInit )? ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ( statementExpressionList )? ) ^( FOR_BODY embeddedStatement ) )
+				DebugLocation(428, 6);
+				// C:\\work\\ReoScript\\ReoScript.g:428:6: ^( FOR_STATEMENT ^( FOR_INIT ( forInit )? ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ( statementExpressionList )? ) ^( FOR_BODY embeddedStatement ) )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(398, 8);
+				DebugLocation(428, 8);
 				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(FOR_STATEMENT, "FOR_STATEMENT"), root_1);
 
-				DebugLocation(399, 5);
-				// C:\\work\\ReoScript\\ReoScript.g:399:5: ^( FOR_INIT ( forInit )? )
+				DebugLocation(429, 5);
+				// C:\\work\\ReoScript\\ReoScript.g:429:5: ^( FOR_INIT ( forInit )? )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(399, 7);
+				DebugLocation(429, 7);
 				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(FOR_INIT, "FOR_INIT"), root_2);
 
-				DebugLocation(399, 16);
-				// C:\\work\\ReoScript\\ReoScript.g:399:16: ( forInit )?
+				DebugLocation(429, 16);
+				// C:\\work\\ReoScript\\ReoScript.g:429:16: ( forInit )?
 				if (stream_forInit.HasNext)
 				{
-					DebugLocation(399, 16);
+					DebugLocation(429, 16);
 					adaptor.AddChild(root_2, stream_forInit.NextTree());
 
 				}
@@ -11107,18 +10527,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 				adaptor.AddChild(root_1, root_2);
 				}
-				DebugLocation(400, 5);
-				// C:\\work\\ReoScript\\ReoScript.g:400:5: ^( FOR_CONDITION ( conditionalOrExpression )? )
+				DebugLocation(430, 5);
+				// C:\\work\\ReoScript\\ReoScript.g:430:5: ^( FOR_CONDITION ( conditionalOrExpression )? )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(400, 7);
+				DebugLocation(430, 7);
 				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(FOR_CONDITION, "FOR_CONDITION"), root_2);
 
-				DebugLocation(400, 21);
-				// C:\\work\\ReoScript\\ReoScript.g:400:21: ( conditionalOrExpression )?
+				DebugLocation(430, 21);
+				// C:\\work\\ReoScript\\ReoScript.g:430:21: ( conditionalOrExpression )?
 				if (stream_conditionalOrExpression.HasNext)
 				{
-					DebugLocation(400, 21);
+					DebugLocation(430, 21);
 					adaptor.AddChild(root_2, stream_conditionalOrExpression.NextTree());
 
 				}
@@ -11126,18 +10546,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 				adaptor.AddChild(root_1, root_2);
 				}
-				DebugLocation(401, 5);
-				// C:\\work\\ReoScript\\ReoScript.g:401:5: ^( FOR_ITERATOR ( statementExpressionList )? )
+				DebugLocation(431, 5);
+				// C:\\work\\ReoScript\\ReoScript.g:431:5: ^( FOR_ITERATOR ( statementExpressionList )? )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(401, 7);
+				DebugLocation(431, 7);
 				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(FOR_ITERATOR, "FOR_ITERATOR"), root_2);
 
-				DebugLocation(401, 20);
-				// C:\\work\\ReoScript\\ReoScript.g:401:20: ( statementExpressionList )?
+				DebugLocation(431, 20);
+				// C:\\work\\ReoScript\\ReoScript.g:431:20: ( statementExpressionList )?
 				if (stream_statementExpressionList.HasNext)
 				{
-					DebugLocation(401, 20);
+					DebugLocation(431, 20);
 					adaptor.AddChild(root_2, stream_statementExpressionList.NextTree());
 
 				}
@@ -11145,14 +10565,14 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 				adaptor.AddChild(root_1, root_2);
 				}
-				DebugLocation(402, 5);
-				// C:\\work\\ReoScript\\ReoScript.g:402:5: ^( FOR_BODY embeddedStatement )
+				DebugLocation(432, 5);
+				// C:\\work\\ReoScript\\ReoScript.g:432:5: ^( FOR_BODY embeddedStatement )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(402, 7);
+				DebugLocation(432, 7);
 				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(FOR_BODY, "FOR_BODY"), root_2);
 
-				DebugLocation(402, 16);
+				DebugLocation(432, 16);
 				adaptor.AddChild(root_2, stream_embeddedStatement.NextTree());
 
 				adaptor.AddChild(root_1, root_2);
@@ -11183,11 +10603,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("forStatement", 49);
-			LeaveRule("forStatement", 49);
+			TraceOut("forStatement", 47);
+			LeaveRule("forStatement", 47);
 			LeaveRule_forStatement();
 		}
-		DebugLocation(404, 1);
+		DebugLocation(434, 1);
 		} finally { DebugExitRule(GrammarFileName, "forStatement"); }
 		return retval;
 
@@ -11198,74 +10618,74 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_forInit();
 
 	// $ANTLR start "forInit"
-	// C:\\work\\ReoScript\\ReoScript.g:406:1: forInit : ( localVariableDeclaration | statementExpressionList );
+	// C:\\work\\ReoScript\\ReoScript.g:436:1: forInit : ( localVariableDeclaration | statementExpressionList );
 	[GrammarRule("forInit")]
 	private AstParserRuleReturnScope<CommonTree, IToken> forInit()
 	{
 		EnterRule_forInit();
-		EnterRule("forInit", 50);
-		TraceIn("forInit", 50);
+		EnterRule("forInit", 48);
+		TraceIn("forInit", 48);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		AstParserRuleReturnScope<CommonTree, IToken> localVariableDeclaration257 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> statementExpressionList258 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> localVariableDeclaration227 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> statementExpressionList228 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
 		try { DebugEnterRule(GrammarFileName, "forInit");
-		DebugLocation(406, 1);
+		DebugLocation(436, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:407:2: ( localVariableDeclaration | statementExpressionList )
-			int alt77=2;
-			try { DebugEnterDecision(77, false);
-			int LA77_0 = input.LA(1);
+			// C:\\work\\ReoScript\\ReoScript.g:437:2: ( localVariableDeclaration | statementExpressionList )
+			int alt71=2;
+			try { DebugEnterDecision(71, false);
+			int LA71_0 = input.LA(1);
 
-			if ((LA77_0==TYPE))
+			if ((LA71_0==TYPE))
 			{
-				alt77 = 1;
+				alt71 = 1;
 			}
-			else if ((LA77_0==BINARY_LITERATE||LA77_0==DECREMENT||(LA77_0>=HEX_LITERATE && LA77_0<=IDENTIFIER)||LA77_0==INCREMENT||(LA77_0>=LBRACE && LA77_0<=LCURLY)||(LA77_0>=LIT_FALSE && LA77_0<=LIT_TRUE)||LA77_0==LPAREN||LA77_0==NAN||LA77_0==NUMBER_LITERATE||LA77_0==STRING_LITERATE||LA77_0==THIS||LA77_0==UNDEFINED||LA77_0==130||LA77_0==133||LA77_0==137))
+			else if ((LA71_0==BINARY_LITERATE||LA71_0==DECREMENT||(LA71_0>=HEX_LITERATE && LA71_0<=IDENTIFIER)||LA71_0==INCREMENT||(LA71_0>=LBRACE && LA71_0<=LCURLY)||(LA71_0>=LIT_FALSE && LA71_0<=LIT_TRUE)||LA71_0==LPAREN||LA71_0==NAN||LA71_0==NUMBER_LITERATE||LA71_0==STRING_LITERATE||LA71_0==THIS||LA71_0==UNDEFINED||LA71_0==130||LA71_0==133||LA71_0==137))
 			{
-				alt77 = 2;
+				alt71 = 2;
 			}
 			else
 			{
-				NoViableAltException nvae = new NoViableAltException("", 77, 0, input);
+				NoViableAltException nvae = new NoViableAltException("", 71, 0, input);
 				DebugRecognitionException(nvae);
 				throw nvae;
 			}
-			} finally { DebugExitDecision(77); }
-			switch (alt77)
+			} finally { DebugExitDecision(71); }
+			switch (alt71)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:407:4: localVariableDeclaration
+				// C:\\work\\ReoScript\\ReoScript.g:437:4: localVariableDeclaration
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(407, 4);
-				PushFollow(Follow._localVariableDeclaration_in_forInit3090);
-				localVariableDeclaration257=localVariableDeclaration();
+				DebugLocation(437, 4);
+				PushFollow(Follow._localVariableDeclaration_in_forInit3010);
+				localVariableDeclaration227=localVariableDeclaration();
 				PopFollow();
 
-				adaptor.AddChild(root_0, localVariableDeclaration257.Tree);
+				adaptor.AddChild(root_0, localVariableDeclaration227.Tree);
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:408:4: statementExpressionList
+				// C:\\work\\ReoScript\\ReoScript.g:438:4: statementExpressionList
 				{
 				root_0 = (CommonTree)adaptor.Nil();
 
-				DebugLocation(408, 4);
-				PushFollow(Follow._statementExpressionList_in_forInit3096);
-				statementExpressionList258=statementExpressionList();
+				DebugLocation(438, 4);
+				PushFollow(Follow._statementExpressionList_in_forInit3016);
+				statementExpressionList228=statementExpressionList();
 				PopFollow();
 
-				adaptor.AddChild(root_0, statementExpressionList258.Tree);
+				adaptor.AddChild(root_0, statementExpressionList228.Tree);
 
 				}
 				break;
@@ -11286,11 +10706,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("forInit", 50);
-			LeaveRule("forInit", 50);
+			TraceOut("forInit", 48);
+			LeaveRule("forInit", 48);
 			LeaveRule_forInit();
 		}
-		DebugLocation(409, 1);
+		DebugLocation(439, 1);
 		} finally { DebugExitRule(GrammarFileName, "forInit"); }
 		return retval;
 
@@ -11301,33 +10721,33 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_foreachStatement();
 
 	// $ANTLR start "foreachStatement"
-	// C:\\work\\ReoScript\\ReoScript.g:411:1: foreachStatement : 'for' '(' (local= 'var' )? IDENTIFIER 'in' expression ')' embeddedStatement -> ^( FOREACH_STATEMENT IDENTIFIER expression embeddedStatement ( $local)? ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:441:1: foreachStatement : 'for' '(' (local= 'var' )? IDENTIFIER 'in' expression ')' embeddedStatement -> ^( FOREACH_STATEMENT IDENTIFIER expression embeddedStatement ( $local)? ) ;
 	[GrammarRule("foreachStatement")]
 	private AstParserRuleReturnScope<CommonTree, IToken> foreachStatement()
 	{
 		EnterRule_foreachStatement();
-		EnterRule("foreachStatement", 51);
-		TraceIn("foreachStatement", 51);
+		EnterRule("foreachStatement", 49);
+		TraceIn("foreachStatement", 49);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
 		IToken local = default(IToken);
-		IToken string_literal259 = default(IToken);
-		IToken char_literal260 = default(IToken);
-		IToken IDENTIFIER261 = default(IToken);
-		IToken string_literal262 = default(IToken);
-		IToken char_literal264 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> expression263 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> embeddedStatement265 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken string_literal229 = default(IToken);
+		IToken char_literal230 = default(IToken);
+		IToken IDENTIFIER231 = default(IToken);
+		IToken string_literal232 = default(IToken);
+		IToken char_literal234 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> expression233 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> embeddedStatement235 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
 		CommonTree local_tree = default(CommonTree);
-		CommonTree string_literal259_tree = default(CommonTree);
-		CommonTree char_literal260_tree = default(CommonTree);
-		CommonTree IDENTIFIER261_tree = default(CommonTree);
-		CommonTree string_literal262_tree = default(CommonTree);
-		CommonTree char_literal264_tree = default(CommonTree);
+		CommonTree string_literal229_tree = default(CommonTree);
+		CommonTree char_literal230_tree = default(CommonTree);
+		CommonTree IDENTIFIER231_tree = default(CommonTree);
+		CommonTree string_literal232_tree = default(CommonTree);
+		CommonTree char_literal234_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_RPAREN=new RewriteRuleITokenStream(adaptor,"token RPAREN");
 		RewriteRuleITokenStream stream_132=new RewriteRuleITokenStream(adaptor,"token 132");
 		RewriteRuleITokenStream stream_136=new RewriteRuleITokenStream(adaptor,"token 136");
@@ -11337,41 +10757,41 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
 		RewriteRuleSubtreeStream stream_embeddedStatement=new RewriteRuleSubtreeStream(adaptor,"rule embeddedStatement");
 		try { DebugEnterRule(GrammarFileName, "foreachStatement");
-		DebugLocation(411, 1);
+		DebugLocation(441, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:412:2: ( 'for' '(' (local= 'var' )? IDENTIFIER 'in' expression ')' embeddedStatement -> ^( FOREACH_STATEMENT IDENTIFIER expression embeddedStatement ( $local)? ) )
+			// C:\\work\\ReoScript\\ReoScript.g:442:2: ( 'for' '(' (local= 'var' )? IDENTIFIER 'in' expression ')' embeddedStatement -> ^( FOREACH_STATEMENT IDENTIFIER expression embeddedStatement ( $local)? ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:412:4: 'for' '(' (local= 'var' )? IDENTIFIER 'in' expression ')' embeddedStatement
+			// C:\\work\\ReoScript\\ReoScript.g:442:4: 'for' '(' (local= 'var' )? IDENTIFIER 'in' expression ')' embeddedStatement
 			{
-			DebugLocation(412, 4);
-			string_literal259=(IToken)Match(input,132,Follow._132_in_foreachStatement3108);  
-			stream_132.Add(string_literal259);
+			DebugLocation(442, 4);
+			string_literal229=(IToken)Match(input,132,Follow._132_in_foreachStatement3028);  
+			stream_132.Add(string_literal229);
 
-			DebugLocation(412, 10);
-			char_literal260=(IToken)Match(input,LPAREN,Follow._LPAREN_in_foreachStatement3110);  
-			stream_LPAREN.Add(char_literal260);
+			DebugLocation(442, 10);
+			char_literal230=(IToken)Match(input,LPAREN,Follow._LPAREN_in_foreachStatement3030);  
+			stream_LPAREN.Add(char_literal230);
 
-			DebugLocation(412, 19);
-			// C:\\work\\ReoScript\\ReoScript.g:412:19: (local= 'var' )?
-			int alt78=2;
-			try { DebugEnterSubRule(78);
-			try { DebugEnterDecision(78, false);
-			int LA78_0 = input.LA(1);
+			DebugLocation(442, 19);
+			// C:\\work\\ReoScript\\ReoScript.g:442:19: (local= 'var' )?
+			int alt72=2;
+			try { DebugEnterSubRule(72);
+			try { DebugEnterDecision(72, false);
+			int LA72_0 = input.LA(1);
 
-			if ((LA78_0==TYPE))
+			if ((LA72_0==TYPE))
 			{
-				alt78 = 1;
+				alt72 = 1;
 			}
-			} finally { DebugExitDecision(78); }
-			switch (alt78)
+			} finally { DebugExitDecision(72); }
+			switch (alt72)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:412:19: local= 'var'
+				// C:\\work\\ReoScript\\ReoScript.g:442:19: local= 'var'
 				{
-				DebugLocation(412, 19);
-				local=(IToken)Match(input,TYPE,Follow._TYPE_in_foreachStatement3114);  
+				DebugLocation(442, 19);
+				local=(IToken)Match(input,TYPE,Follow._TYPE_in_foreachStatement3034);  
 				stream_TYPE.Add(local);
 
 
@@ -11379,37 +10799,37 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 
 			}
-			} finally { DebugExitSubRule(78); }
+			} finally { DebugExitSubRule(72); }
 
-			DebugLocation(412, 27);
-			IDENTIFIER261=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_foreachStatement3117);  
-			stream_IDENTIFIER.Add(IDENTIFIER261);
+			DebugLocation(442, 27);
+			IDENTIFIER231=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_foreachStatement3037);  
+			stream_IDENTIFIER.Add(IDENTIFIER231);
 
-			DebugLocation(412, 38);
-			string_literal262=(IToken)Match(input,136,Follow._136_in_foreachStatement3119);  
-			stream_136.Add(string_literal262);
+			DebugLocation(442, 38);
+			string_literal232=(IToken)Match(input,136,Follow._136_in_foreachStatement3039);  
+			stream_136.Add(string_literal232);
 
-			DebugLocation(412, 43);
-			PushFollow(Follow._expression_in_foreachStatement3121);
-			expression263=expression();
+			DebugLocation(442, 43);
+			PushFollow(Follow._expression_in_foreachStatement3041);
+			expression233=expression();
 			PopFollow();
 
-			stream_expression.Add(expression263.Tree);
-			DebugLocation(412, 54);
-			char_literal264=(IToken)Match(input,RPAREN,Follow._RPAREN_in_foreachStatement3123);  
-			stream_RPAREN.Add(char_literal264);
+			stream_expression.Add(expression233.Tree);
+			DebugLocation(442, 54);
+			char_literal234=(IToken)Match(input,RPAREN,Follow._RPAREN_in_foreachStatement3043);  
+			stream_RPAREN.Add(char_literal234);
 
-			DebugLocation(412, 58);
-			PushFollow(Follow._embeddedStatement_in_foreachStatement3125);
-			embeddedStatement265=embeddedStatement();
+			DebugLocation(442, 58);
+			PushFollow(Follow._embeddedStatement_in_foreachStatement3045);
+			embeddedStatement235=embeddedStatement();
 			PopFollow();
 
-			stream_embeddedStatement.Add(embeddedStatement265.Tree);
+			stream_embeddedStatement.Add(embeddedStatement235.Tree);
 
 
 			{
 			// AST REWRITE
-			// elements: IDENTIFIER, local, embeddedStatement, expression
+			// elements: embeddedStatement, expression, local, IDENTIFIER
 			// token labels: local
 			// rule labels: retval
 			// token list labels: 
@@ -11420,26 +10840,26 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 413:3: -> ^( FOREACH_STATEMENT IDENTIFIER expression embeddedStatement ( $local)? )
+			// 443:3: -> ^( FOREACH_STATEMENT IDENTIFIER expression embeddedStatement ( $local)? )
 			{
-				DebugLocation(413, 6);
-				// C:\\work\\ReoScript\\ReoScript.g:413:6: ^( FOREACH_STATEMENT IDENTIFIER expression embeddedStatement ( $local)? )
+				DebugLocation(443, 6);
+				// C:\\work\\ReoScript\\ReoScript.g:443:6: ^( FOREACH_STATEMENT IDENTIFIER expression embeddedStatement ( $local)? )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(413, 8);
+				DebugLocation(443, 8);
 				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(FOREACH_STATEMENT, "FOREACH_STATEMENT"), root_1);
 
-				DebugLocation(413, 26);
+				DebugLocation(443, 26);
 				adaptor.AddChild(root_1, stream_IDENTIFIER.NextNode());
-				DebugLocation(413, 37);
+				DebugLocation(443, 37);
 				adaptor.AddChild(root_1, stream_expression.NextTree());
-				DebugLocation(413, 48);
+				DebugLocation(443, 48);
 				adaptor.AddChild(root_1, stream_embeddedStatement.NextTree());
-				DebugLocation(413, 67);
-				// C:\\work\\ReoScript\\ReoScript.g:413:67: ( $local)?
+				DebugLocation(443, 67);
+				// C:\\work\\ReoScript\\ReoScript.g:443:67: ( $local)?
 				if (stream_local.HasNext)
 				{
-					DebugLocation(413, 67);
+					DebugLocation(443, 67);
 					adaptor.AddChild(root_1, stream_local.NextNode());
 
 				}
@@ -11470,11 +10890,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("foreachStatement", 51);
-			LeaveRule("foreachStatement", 51);
+			TraceOut("foreachStatement", 49);
+			LeaveRule("foreachStatement", 49);
 			LeaveRule_foreachStatement();
 		}
-		DebugLocation(414, 1);
+		DebugLocation(444, 1);
 		} finally { DebugExitRule(GrammarFileName, "foreachStatement"); }
 		return retval;
 
@@ -11485,72 +10905,72 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_whileStatement();
 
 	// $ANTLR start "whileStatement"
-	// C:\\work\\ReoScript\\ReoScript.g:416:1: whileStatement : 'while' LPAREN ( conditionalOrExpression ) RPAREN embeddedStatement -> ^( FOR_STATEMENT ^( FOR_INIT ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ) ^( FOR_BODY embeddedStatement ) ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:446:1: whileStatement : 'while' LPAREN ( conditionalOrExpression ) RPAREN embeddedStatement -> ^( FOR_STATEMENT ^( FOR_INIT ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ) ^( FOR_BODY embeddedStatement ) ) ;
 	[GrammarRule("whileStatement")]
 	private AstParserRuleReturnScope<CommonTree, IToken> whileStatement()
 	{
 		EnterRule_whileStatement();
-		EnterRule("whileStatement", 52);
-		TraceIn("whileStatement", 52);
+		EnterRule("whileStatement", 50);
+		TraceIn("whileStatement", 50);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken string_literal266 = default(IToken);
-		IToken LPAREN267 = default(IToken);
-		IToken RPAREN269 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> conditionalOrExpression268 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> embeddedStatement270 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken string_literal236 = default(IToken);
+		IToken LPAREN237 = default(IToken);
+		IToken RPAREN239 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> conditionalOrExpression238 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> embeddedStatement240 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree string_literal266_tree = default(CommonTree);
-		CommonTree LPAREN267_tree = default(CommonTree);
-		CommonTree RPAREN269_tree = default(CommonTree);
+		CommonTree string_literal236_tree = default(CommonTree);
+		CommonTree LPAREN237_tree = default(CommonTree);
+		CommonTree RPAREN239_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_144=new RewriteRuleITokenStream(adaptor,"token 144");
 		RewriteRuleITokenStream stream_RPAREN=new RewriteRuleITokenStream(adaptor,"token RPAREN");
 		RewriteRuleITokenStream stream_LPAREN=new RewriteRuleITokenStream(adaptor,"token LPAREN");
 		RewriteRuleSubtreeStream stream_embeddedStatement=new RewriteRuleSubtreeStream(adaptor,"rule embeddedStatement");
 		RewriteRuleSubtreeStream stream_conditionalOrExpression=new RewriteRuleSubtreeStream(adaptor,"rule conditionalOrExpression");
 		try { DebugEnterRule(GrammarFileName, "whileStatement");
-		DebugLocation(416, 1);
+		DebugLocation(446, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:417:2: ( 'while' LPAREN ( conditionalOrExpression ) RPAREN embeddedStatement -> ^( FOR_STATEMENT ^( FOR_INIT ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ) ^( FOR_BODY embeddedStatement ) ) )
+			// C:\\work\\ReoScript\\ReoScript.g:447:2: ( 'while' LPAREN ( conditionalOrExpression ) RPAREN embeddedStatement -> ^( FOR_STATEMENT ^( FOR_INIT ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ) ^( FOR_BODY embeddedStatement ) ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:417:4: 'while' LPAREN ( conditionalOrExpression ) RPAREN embeddedStatement
+			// C:\\work\\ReoScript\\ReoScript.g:447:4: 'while' LPAREN ( conditionalOrExpression ) RPAREN embeddedStatement
 			{
-			DebugLocation(417, 4);
-			string_literal266=(IToken)Match(input,144,Follow._144_in_whileStatement3154);  
-			stream_144.Add(string_literal266);
+			DebugLocation(447, 4);
+			string_literal236=(IToken)Match(input,144,Follow._144_in_whileStatement3074);  
+			stream_144.Add(string_literal236);
 
-			DebugLocation(417, 12);
-			LPAREN267=(IToken)Match(input,LPAREN,Follow._LPAREN_in_whileStatement3156);  
-			stream_LPAREN.Add(LPAREN267);
+			DebugLocation(447, 12);
+			LPAREN237=(IToken)Match(input,LPAREN,Follow._LPAREN_in_whileStatement3076);  
+			stream_LPAREN.Add(LPAREN237);
 
-			DebugLocation(417, 19);
-			// C:\\work\\ReoScript\\ReoScript.g:417:19: ( conditionalOrExpression )
+			DebugLocation(447, 19);
+			// C:\\work\\ReoScript\\ReoScript.g:447:19: ( conditionalOrExpression )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:417:20: conditionalOrExpression
+			// C:\\work\\ReoScript\\ReoScript.g:447:20: conditionalOrExpression
 			{
-			DebugLocation(417, 20);
-			PushFollow(Follow._conditionalOrExpression_in_whileStatement3159);
-			conditionalOrExpression268=conditionalOrExpression();
+			DebugLocation(447, 20);
+			PushFollow(Follow._conditionalOrExpression_in_whileStatement3079);
+			conditionalOrExpression238=conditionalOrExpression();
 			PopFollow();
 
-			stream_conditionalOrExpression.Add(conditionalOrExpression268.Tree);
+			stream_conditionalOrExpression.Add(conditionalOrExpression238.Tree);
 
 			}
 
-			DebugLocation(417, 45);
-			RPAREN269=(IToken)Match(input,RPAREN,Follow._RPAREN_in_whileStatement3162);  
-			stream_RPAREN.Add(RPAREN269);
+			DebugLocation(447, 45);
+			RPAREN239=(IToken)Match(input,RPAREN,Follow._RPAREN_in_whileStatement3082);  
+			stream_RPAREN.Add(RPAREN239);
 
-			DebugLocation(417, 52);
-			PushFollow(Follow._embeddedStatement_in_whileStatement3164);
-			embeddedStatement270=embeddedStatement();
+			DebugLocation(447, 52);
+			PushFollow(Follow._embeddedStatement_in_whileStatement3084);
+			embeddedStatement240=embeddedStatement();
 			PopFollow();
 
-			stream_embeddedStatement.Add(embeddedStatement270.Tree);
+			stream_embeddedStatement.Add(embeddedStatement240.Tree);
 
 
 			{
@@ -11565,36 +10985,36 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 418:3: -> ^( FOR_STATEMENT ^( FOR_INIT ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ) ^( FOR_BODY embeddedStatement ) )
+			// 448:3: -> ^( FOR_STATEMENT ^( FOR_INIT ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ) ^( FOR_BODY embeddedStatement ) )
 			{
-				DebugLocation(418, 7);
-				// C:\\work\\ReoScript\\ReoScript.g:418:7: ^( FOR_STATEMENT ^( FOR_INIT ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ) ^( FOR_BODY embeddedStatement ) )
+				DebugLocation(448, 7);
+				// C:\\work\\ReoScript\\ReoScript.g:448:7: ^( FOR_STATEMENT ^( FOR_INIT ) ^( FOR_CONDITION ( conditionalOrExpression )? ) ^( FOR_ITERATOR ) ^( FOR_BODY embeddedStatement ) )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(418, 9);
+				DebugLocation(448, 9);
 				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(FOR_STATEMENT, "FOR_STATEMENT"), root_1);
 
-				DebugLocation(419, 5);
-				// C:\\work\\ReoScript\\ReoScript.g:419:5: ^( FOR_INIT )
+				DebugLocation(449, 5);
+				// C:\\work\\ReoScript\\ReoScript.g:449:5: ^( FOR_INIT )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(419, 7);
+				DebugLocation(449, 7);
 				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(FOR_INIT, "FOR_INIT"), root_2);
 
 				adaptor.AddChild(root_1, root_2);
 				}
-				DebugLocation(420, 5);
-				// C:\\work\\ReoScript\\ReoScript.g:420:5: ^( FOR_CONDITION ( conditionalOrExpression )? )
+				DebugLocation(450, 5);
+				// C:\\work\\ReoScript\\ReoScript.g:450:5: ^( FOR_CONDITION ( conditionalOrExpression )? )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(420, 7);
+				DebugLocation(450, 7);
 				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(FOR_CONDITION, "FOR_CONDITION"), root_2);
 
-				DebugLocation(420, 21);
-				// C:\\work\\ReoScript\\ReoScript.g:420:21: ( conditionalOrExpression )?
+				DebugLocation(450, 21);
+				// C:\\work\\ReoScript\\ReoScript.g:450:21: ( conditionalOrExpression )?
 				if (stream_conditionalOrExpression.HasNext)
 				{
-					DebugLocation(420, 21);
+					DebugLocation(450, 21);
 					adaptor.AddChild(root_2, stream_conditionalOrExpression.NextTree());
 
 				}
@@ -11602,23 +11022,23 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 				adaptor.AddChild(root_1, root_2);
 				}
-				DebugLocation(421, 5);
-				// C:\\work\\ReoScript\\ReoScript.g:421:5: ^( FOR_ITERATOR )
+				DebugLocation(451, 5);
+				// C:\\work\\ReoScript\\ReoScript.g:451:5: ^( FOR_ITERATOR )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(421, 7);
+				DebugLocation(451, 7);
 				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(FOR_ITERATOR, "FOR_ITERATOR"), root_2);
 
 				adaptor.AddChild(root_1, root_2);
 				}
-				DebugLocation(422, 5);
-				// C:\\work\\ReoScript\\ReoScript.g:422:5: ^( FOR_BODY embeddedStatement )
+				DebugLocation(452, 5);
+				// C:\\work\\ReoScript\\ReoScript.g:452:5: ^( FOR_BODY embeddedStatement )
 				{
 				CommonTree root_2 = (CommonTree)adaptor.Nil();
-				DebugLocation(422, 7);
+				DebugLocation(452, 7);
 				root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(FOR_BODY, "FOR_BODY"), root_2);
 
-				DebugLocation(422, 16);
+				DebugLocation(452, 16);
 				adaptor.AddChild(root_2, stream_embeddedStatement.NextTree());
 
 				adaptor.AddChild(root_1, root_2);
@@ -11649,11 +11069,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("whileStatement", 52);
-			LeaveRule("whileStatement", 52);
+			TraceOut("whileStatement", 50);
+			LeaveRule("whileStatement", 50);
 			LeaveRule_whileStatement();
 		}
-		DebugLocation(424, 1);
+		DebugLocation(454, 1);
 		} finally { DebugExitRule(GrammarFileName, "whileStatement"); }
 		return retval;
 
@@ -11664,31 +11084,31 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_switchStatement();
 
 	// $ANTLR start "switchStatement"
-	// C:\\work\\ReoScript\\ReoScript.g:426:1: switchStatement : 'switch' '(' conditionalOrExpression ')' '{' ( switchCaseStatementList )? '}' -> ^( SWITCH conditionalOrExpression ( switchCaseStatementList )? ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:456:1: switchStatement : 'switch' '(' conditionalOrExpression ')' '{' ( switchCaseStatementList )? '}' -> ^( SWITCH conditionalOrExpression ( switchCaseStatementList )? ) ;
 	[GrammarRule("switchStatement")]
 	private AstParserRuleReturnScope<CommonTree, IToken> switchStatement()
 	{
 		EnterRule_switchStatement();
-		EnterRule("switchStatement", 53);
-		TraceIn("switchStatement", 53);
+		EnterRule("switchStatement", 51);
+		TraceIn("switchStatement", 51);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken string_literal271 = default(IToken);
-		IToken char_literal272 = default(IToken);
-		IToken char_literal274 = default(IToken);
-		IToken char_literal275 = default(IToken);
-		IToken char_literal277 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> conditionalOrExpression273 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> switchCaseStatementList276 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken string_literal241 = default(IToken);
+		IToken char_literal242 = default(IToken);
+		IToken char_literal244 = default(IToken);
+		IToken char_literal245 = default(IToken);
+		IToken char_literal247 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> conditionalOrExpression243 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> switchCaseStatementList246 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree string_literal271_tree = default(CommonTree);
-		CommonTree char_literal272_tree = default(CommonTree);
-		CommonTree char_literal274_tree = default(CommonTree);
-		CommonTree char_literal275_tree = default(CommonTree);
-		CommonTree char_literal277_tree = default(CommonTree);
+		CommonTree string_literal241_tree = default(CommonTree);
+		CommonTree char_literal242_tree = default(CommonTree);
+		CommonTree char_literal244_tree = default(CommonTree);
+		CommonTree char_literal245_tree = default(CommonTree);
+		CommonTree char_literal247_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_RPAREN=new RewriteRuleITokenStream(adaptor,"token RPAREN");
 		RewriteRuleITokenStream stream_LCURLY=new RewriteRuleITokenStream(adaptor,"token LCURLY");
 		RewriteRuleITokenStream stream_139=new RewriteRuleITokenStream(adaptor,"token 139");
@@ -11697,69 +11117,69 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		RewriteRuleSubtreeStream stream_switchCaseStatementList=new RewriteRuleSubtreeStream(adaptor,"rule switchCaseStatementList");
 		RewriteRuleSubtreeStream stream_conditionalOrExpression=new RewriteRuleSubtreeStream(adaptor,"rule conditionalOrExpression");
 		try { DebugEnterRule(GrammarFileName, "switchStatement");
-		DebugLocation(426, 1);
+		DebugLocation(456, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:427:2: ( 'switch' '(' conditionalOrExpression ')' '{' ( switchCaseStatementList )? '}' -> ^( SWITCH conditionalOrExpression ( switchCaseStatementList )? ) )
+			// C:\\work\\ReoScript\\ReoScript.g:457:2: ( 'switch' '(' conditionalOrExpression ')' '{' ( switchCaseStatementList )? '}' -> ^( SWITCH conditionalOrExpression ( switchCaseStatementList )? ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:427:4: 'switch' '(' conditionalOrExpression ')' '{' ( switchCaseStatementList )? '}'
+			// C:\\work\\ReoScript\\ReoScript.g:457:4: 'switch' '(' conditionalOrExpression ')' '{' ( switchCaseStatementList )? '}'
 			{
-			DebugLocation(427, 4);
-			string_literal271=(IToken)Match(input,139,Follow._139_in_switchStatement3230);  
-			stream_139.Add(string_literal271);
+			DebugLocation(457, 4);
+			string_literal241=(IToken)Match(input,139,Follow._139_in_switchStatement3150);  
+			stream_139.Add(string_literal241);
 
-			DebugLocation(427, 13);
-			char_literal272=(IToken)Match(input,LPAREN,Follow._LPAREN_in_switchStatement3232);  
-			stream_LPAREN.Add(char_literal272);
+			DebugLocation(457, 13);
+			char_literal242=(IToken)Match(input,LPAREN,Follow._LPAREN_in_switchStatement3152);  
+			stream_LPAREN.Add(char_literal242);
 
-			DebugLocation(427, 17);
-			PushFollow(Follow._conditionalOrExpression_in_switchStatement3234);
-			conditionalOrExpression273=conditionalOrExpression();
+			DebugLocation(457, 17);
+			PushFollow(Follow._conditionalOrExpression_in_switchStatement3154);
+			conditionalOrExpression243=conditionalOrExpression();
 			PopFollow();
 
-			stream_conditionalOrExpression.Add(conditionalOrExpression273.Tree);
-			DebugLocation(427, 41);
-			char_literal274=(IToken)Match(input,RPAREN,Follow._RPAREN_in_switchStatement3236);  
-			stream_RPAREN.Add(char_literal274);
+			stream_conditionalOrExpression.Add(conditionalOrExpression243.Tree);
+			DebugLocation(457, 41);
+			char_literal244=(IToken)Match(input,RPAREN,Follow._RPAREN_in_switchStatement3156);  
+			stream_RPAREN.Add(char_literal244);
 
-			DebugLocation(428, 4);
-			char_literal275=(IToken)Match(input,LCURLY,Follow._LCURLY_in_switchStatement3241);  
-			stream_LCURLY.Add(char_literal275);
+			DebugLocation(458, 4);
+			char_literal245=(IToken)Match(input,LCURLY,Follow._LCURLY_in_switchStatement3161);  
+			stream_LCURLY.Add(char_literal245);
 
-			DebugLocation(428, 8);
-			// C:\\work\\ReoScript\\ReoScript.g:428:8: ( switchCaseStatementList )?
-			int alt79=2;
-			try { DebugEnterSubRule(79);
-			try { DebugEnterDecision(79, false);
-			int LA79_0 = input.LA(1);
+			DebugLocation(458, 8);
+			// C:\\work\\ReoScript\\ReoScript.g:458:8: ( switchCaseStatementList )?
+			int alt73=2;
+			try { DebugEnterSubRule(73);
+			try { DebugEnterDecision(73, false);
+			int LA73_0 = input.LA(1);
 
-			if ((LA79_0==BINARY_LITERATE||LA79_0==DECREMENT||(LA79_0>=HEX_LITERATE && LA79_0<=IDENTIFIER)||LA79_0==INCREMENT||(LA79_0>=LBRACE && LA79_0<=LCURLY)||(LA79_0>=LIT_FALSE && LA79_0<=LIT_TRUE)||LA79_0==LPAREN||LA79_0==NAN||LA79_0==NUMBER_LITERATE||LA79_0==PRIVATE||(LA79_0>=PROTECTED && LA79_0<=PUBLIC)||LA79_0==STRING_LITERATE||LA79_0==THIS||LA79_0==TYPE||LA79_0==UNDEFINED||(LA79_0>=124 && LA79_0<=125)||(LA79_0>=127 && LA79_0<=130)||(LA79_0>=132 && LA79_0<=135)||(LA79_0>=137 && LA79_0<=142)||LA79_0==144))
+			if ((LA73_0==BINARY_LITERATE||LA73_0==DECREMENT||(LA73_0>=HEX_LITERATE && LA73_0<=IDENTIFIER)||LA73_0==INCREMENT||LA73_0==INTERNAL||(LA73_0>=LBRACE && LA73_0<=LCURLY)||(LA73_0>=LIT_FALSE && LA73_0<=LIT_TRUE)||LA73_0==LPAREN||LA73_0==NAN||LA73_0==NUMBER_LITERATE||LA73_0==PRIVATE||(LA73_0>=PROTECTED && LA73_0<=PUBLIC)||LA73_0==STRING_LITERATE||LA73_0==THIS||LA73_0==TYPE||LA73_0==UNDEFINED||(LA73_0>=125 && LA73_0<=126)||(LA73_0>=128 && LA73_0<=130)||(LA73_0>=132 && LA73_0<=135)||(LA73_0>=137 && LA73_0<=142)||LA73_0==144))
 			{
-				alt79 = 1;
+				alt73 = 1;
 			}
-			} finally { DebugExitDecision(79); }
-			switch (alt79)
+			} finally { DebugExitDecision(73); }
+			switch (alt73)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:428:8: switchCaseStatementList
+				// C:\\work\\ReoScript\\ReoScript.g:458:8: switchCaseStatementList
 				{
-				DebugLocation(428, 8);
-				PushFollow(Follow._switchCaseStatementList_in_switchStatement3243);
-				switchCaseStatementList276=switchCaseStatementList();
+				DebugLocation(458, 8);
+				PushFollow(Follow._switchCaseStatementList_in_switchStatement3163);
+				switchCaseStatementList246=switchCaseStatementList();
 				PopFollow();
 
-				stream_switchCaseStatementList.Add(switchCaseStatementList276.Tree);
+				stream_switchCaseStatementList.Add(switchCaseStatementList246.Tree);
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(79); }
+			} finally { DebugExitSubRule(73); }
 
-			DebugLocation(428, 33);
-			char_literal277=(IToken)Match(input,RCURLY,Follow._RCURLY_in_switchStatement3246);  
-			stream_RCURLY.Add(char_literal277);
+			DebugLocation(458, 33);
+			char_literal247=(IToken)Match(input,RCURLY,Follow._RCURLY_in_switchStatement3166);  
+			stream_RCURLY.Add(char_literal247);
 
 
 
@@ -11775,22 +11195,22 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 429:4: -> ^( SWITCH conditionalOrExpression ( switchCaseStatementList )? )
+			// 459:4: -> ^( SWITCH conditionalOrExpression ( switchCaseStatementList )? )
 			{
-				DebugLocation(429, 7);
-				// C:\\work\\ReoScript\\ReoScript.g:429:7: ^( SWITCH conditionalOrExpression ( switchCaseStatementList )? )
+				DebugLocation(459, 7);
+				// C:\\work\\ReoScript\\ReoScript.g:459:7: ^( SWITCH conditionalOrExpression ( switchCaseStatementList )? )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(429, 9);
+				DebugLocation(459, 9);
 				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(SWITCH, "SWITCH"), root_1);
 
-				DebugLocation(429, 16);
+				DebugLocation(459, 16);
 				adaptor.AddChild(root_1, stream_conditionalOrExpression.NextTree());
-				DebugLocation(429, 40);
-				// C:\\work\\ReoScript\\ReoScript.g:429:40: ( switchCaseStatementList )?
+				DebugLocation(459, 40);
+				// C:\\work\\ReoScript\\ReoScript.g:459:40: ( switchCaseStatementList )?
 				if (stream_switchCaseStatementList.HasNext)
 				{
-					DebugLocation(429, 40);
+					DebugLocation(459, 40);
 					adaptor.AddChild(root_1, stream_switchCaseStatementList.NextTree());
 
 				}
@@ -11821,11 +11241,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("switchStatement", 53);
-			LeaveRule("switchStatement", 53);
+			TraceOut("switchStatement", 51);
+			LeaveRule("switchStatement", 51);
 			LeaveRule_switchStatement();
 		}
-		DebugLocation(430, 1);
+		DebugLocation(460, 1);
 		} finally { DebugExitRule(GrammarFileName, "switchStatement"); }
 		return retval;
 
@@ -11836,77 +11256,77 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_switchCaseStatementList();
 
 	// $ANTLR start "switchCaseStatementList"
-	// C:\\work\\ReoScript\\ReoScript.g:432:1: switchCaseStatementList : ( switchCaseCondition )+ ;
+	// C:\\work\\ReoScript\\ReoScript.g:462:1: switchCaseStatementList : ( switchCaseCondition )+ ;
 	[GrammarRule("switchCaseStatementList")]
 	private AstParserRuleReturnScope<CommonTree, IToken> switchCaseStatementList()
 	{
 		EnterRule_switchCaseStatementList();
-		EnterRule("switchCaseStatementList", 54);
-		TraceIn("switchCaseStatementList", 54);
+		EnterRule("switchCaseStatementList", 52);
+		TraceIn("switchCaseStatementList", 52);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		AstParserRuleReturnScope<CommonTree, IToken> switchCaseCondition278 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> switchCaseCondition248 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
 		try { DebugEnterRule(GrammarFileName, "switchCaseStatementList");
-		DebugLocation(432, 1);
+		DebugLocation(462, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:433:2: ( ( switchCaseCondition )+ )
+			// C:\\work\\ReoScript\\ReoScript.g:463:2: ( ( switchCaseCondition )+ )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:433:4: ( switchCaseCondition )+
+			// C:\\work\\ReoScript\\ReoScript.g:463:4: ( switchCaseCondition )+
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(433, 4);
-			// C:\\work\\ReoScript\\ReoScript.g:433:4: ( switchCaseCondition )+
-			int cnt80=0;
-			try { DebugEnterSubRule(80);
+			DebugLocation(463, 4);
+			// C:\\work\\ReoScript\\ReoScript.g:463:4: ( switchCaseCondition )+
+			int cnt74=0;
+			try { DebugEnterSubRule(74);
 			while (true)
 			{
-				int alt80=2;
-				try { DebugEnterDecision(80, false);
-				int LA80_0 = input.LA(1);
+				int alt74=2;
+				try { DebugEnterDecision(74, false);
+				int LA74_0 = input.LA(1);
 
-				if ((LA80_0==BINARY_LITERATE||LA80_0==DECREMENT||(LA80_0>=HEX_LITERATE && LA80_0<=IDENTIFIER)||LA80_0==INCREMENT||(LA80_0>=LBRACE && LA80_0<=LCURLY)||(LA80_0>=LIT_FALSE && LA80_0<=LIT_TRUE)||LA80_0==LPAREN||LA80_0==NAN||LA80_0==NUMBER_LITERATE||LA80_0==PRIVATE||(LA80_0>=PROTECTED && LA80_0<=PUBLIC)||LA80_0==STRING_LITERATE||LA80_0==THIS||LA80_0==TYPE||LA80_0==UNDEFINED||(LA80_0>=124 && LA80_0<=125)||(LA80_0>=127 && LA80_0<=130)||(LA80_0>=132 && LA80_0<=135)||(LA80_0>=137 && LA80_0<=142)||LA80_0==144))
+				if ((LA74_0==BINARY_LITERATE||LA74_0==DECREMENT||(LA74_0>=HEX_LITERATE && LA74_0<=IDENTIFIER)||LA74_0==INCREMENT||LA74_0==INTERNAL||(LA74_0>=LBRACE && LA74_0<=LCURLY)||(LA74_0>=LIT_FALSE && LA74_0<=LIT_TRUE)||LA74_0==LPAREN||LA74_0==NAN||LA74_0==NUMBER_LITERATE||LA74_0==PRIVATE||(LA74_0>=PROTECTED && LA74_0<=PUBLIC)||LA74_0==STRING_LITERATE||LA74_0==THIS||LA74_0==TYPE||LA74_0==UNDEFINED||(LA74_0>=125 && LA74_0<=126)||(LA74_0>=128 && LA74_0<=130)||(LA74_0>=132 && LA74_0<=135)||(LA74_0>=137 && LA74_0<=142)||LA74_0==144))
 				{
-					alt80 = 1;
+					alt74 = 1;
 				}
 
 
-				} finally { DebugExitDecision(80); }
-				switch (alt80)
+				} finally { DebugExitDecision(74); }
+				switch (alt74)
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:433:5: switchCaseCondition
+					// C:\\work\\ReoScript\\ReoScript.g:463:5: switchCaseCondition
 					{
-					DebugLocation(433, 5);
-					PushFollow(Follow._switchCaseCondition_in_switchCaseStatementList3272);
-					switchCaseCondition278=switchCaseCondition();
+					DebugLocation(463, 5);
+					PushFollow(Follow._switchCaseCondition_in_switchCaseStatementList3192);
+					switchCaseCondition248=switchCaseCondition();
 					PopFollow();
 
-					adaptor.AddChild(root_0, switchCaseCondition278.Tree);
+					adaptor.AddChild(root_0, switchCaseCondition248.Tree);
 
 					}
 					break;
 
 				default:
-					if (cnt80 >= 1)
-						goto loop80;
+					if (cnt74 >= 1)
+						goto loop74;
 
-					EarlyExitException eee80 = new EarlyExitException( 80, input );
-					DebugRecognitionException(eee80);
-					throw eee80;
+					EarlyExitException eee74 = new EarlyExitException( 74, input );
+					DebugRecognitionException(eee74);
+					throw eee74;
 				}
-				cnt80++;
+				cnt74++;
 			}
-			loop80:
+			loop74:
 				;
 
-			} finally { DebugExitSubRule(80); }
+			} finally { DebugExitSubRule(74); }
 
 
 			}
@@ -11926,11 +11346,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("switchCaseStatementList", 54);
-			LeaveRule("switchCaseStatementList", 54);
+			TraceOut("switchCaseStatementList", 52);
+			LeaveRule("switchCaseStatementList", 52);
 			LeaveRule_switchCaseStatementList();
 		}
-		DebugLocation(434, 1);
+		DebugLocation(464, 1);
 		} finally { DebugExitRule(GrammarFileName, "switchCaseStatementList"); }
 		return retval;
 
@@ -11941,46 +11361,46 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_switchCaseCondition();
 
 	// $ANTLR start "switchCaseCondition"
-	// C:\\work\\ReoScript\\ReoScript.g:436:1: switchCaseCondition : ( 'case' expression ':' -> ^( SWITCH_CASE expression ) | statement -> statement | 'default' ':' -> ^( SWITCH_CASE_ELSE ) );
+	// C:\\work\\ReoScript\\ReoScript.g:466:1: switchCaseCondition : ( 'case' expression ':' -> ^( SWITCH_CASE expression ) | statement -> statement | 'default' ':' -> ^( SWITCH_CASE_ELSE ) );
 	[GrammarRule("switchCaseCondition")]
 	private AstParserRuleReturnScope<CommonTree, IToken> switchCaseCondition()
 	{
 		EnterRule_switchCaseCondition();
-		EnterRule("switchCaseCondition", 55);
-		TraceIn("switchCaseCondition", 55);
+		EnterRule("switchCaseCondition", 53);
+		TraceIn("switchCaseCondition", 53);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken string_literal279 = default(IToken);
-		IToken char_literal281 = default(IToken);
-		IToken string_literal283 = default(IToken);
-		IToken char_literal284 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> expression280 = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> statement282 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken string_literal249 = default(IToken);
+		IToken char_literal251 = default(IToken);
+		IToken string_literal253 = default(IToken);
+		IToken char_literal254 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> expression250 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> statement252 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree string_literal279_tree = default(CommonTree);
-		CommonTree char_literal281_tree = default(CommonTree);
-		CommonTree string_literal283_tree = default(CommonTree);
-		CommonTree char_literal284_tree = default(CommonTree);
+		CommonTree string_literal249_tree = default(CommonTree);
+		CommonTree char_literal251_tree = default(CommonTree);
+		CommonTree string_literal253_tree = default(CommonTree);
+		CommonTree char_literal254_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_COLON=new RewriteRuleITokenStream(adaptor,"token COLON");
-		RewriteRuleITokenStream stream_125=new RewriteRuleITokenStream(adaptor,"token 125");
+		RewriteRuleITokenStream stream_126=new RewriteRuleITokenStream(adaptor,"token 126");
 		RewriteRuleITokenStream stream_129=new RewriteRuleITokenStream(adaptor,"token 129");
 		RewriteRuleSubtreeStream stream_statement=new RewriteRuleSubtreeStream(adaptor,"rule statement");
 		RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
 		try { DebugEnterRule(GrammarFileName, "switchCaseCondition");
-		DebugLocation(436, 1);
+		DebugLocation(466, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:437:2: ( 'case' expression ':' -> ^( SWITCH_CASE expression ) | statement -> statement | 'default' ':' -> ^( SWITCH_CASE_ELSE ) )
-			int alt81=3;
-			try { DebugEnterDecision(81, false);
+			// C:\\work\\ReoScript\\ReoScript.g:467:2: ( 'case' expression ':' -> ^( SWITCH_CASE expression ) | statement -> statement | 'default' ':' -> ^( SWITCH_CASE_ELSE ) )
+			int alt75=3;
+			try { DebugEnterDecision(75, false);
 			switch (input.LA(1))
 			{
-			case 125:
+			case 126:
 				{
-				alt81 = 1;
+				alt75 = 1;
 				}
 				break;
 			case BINARY_LITERATE:
@@ -11988,6 +11408,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			case HEX_LITERATE:
 			case IDENTIFIER:
 			case INCREMENT:
+			case INTERNAL:
 			case LBRACE:
 			case LCURLY:
 			case LIT_FALSE:
@@ -12003,8 +11424,7 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			case THIS:
 			case TYPE:
 			case UNDEFINED:
-			case 124:
-			case 127:
+			case 125:
 			case 128:
 			case 130:
 			case 132:
@@ -12019,42 +11439,42 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			case 142:
 			case 144:
 				{
-				alt81 = 2;
+				alt75 = 2;
 				}
 				break;
 			case 129:
 				{
-				alt81 = 3;
+				alt75 = 3;
 				}
 				break;
 			default:
 				{
-					NoViableAltException nvae = new NoViableAltException("", 81, 0, input);
+					NoViableAltException nvae = new NoViableAltException("", 75, 0, input);
 					DebugRecognitionException(nvae);
 					throw nvae;
 				}
 			}
 
-			} finally { DebugExitDecision(81); }
-			switch (alt81)
+			} finally { DebugExitDecision(75); }
+			switch (alt75)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:438:4: 'case' expression ':'
+				// C:\\work\\ReoScript\\ReoScript.g:468:4: 'case' expression ':'
 				{
-				DebugLocation(438, 4);
-				string_literal279=(IToken)Match(input,125,Follow._125_in_switchCaseCondition3290);  
-				stream_125.Add(string_literal279);
+				DebugLocation(468, 4);
+				string_literal249=(IToken)Match(input,126,Follow._126_in_switchCaseCondition3210);  
+				stream_126.Add(string_literal249);
 
-				DebugLocation(438, 11);
-				PushFollow(Follow._expression_in_switchCaseCondition3292);
-				expression280=expression();
+				DebugLocation(468, 11);
+				PushFollow(Follow._expression_in_switchCaseCondition3212);
+				expression250=expression();
 				PopFollow();
 
-				stream_expression.Add(expression280.Tree);
-				DebugLocation(438, 22);
-				char_literal281=(IToken)Match(input,COLON,Follow._COLON_in_switchCaseCondition3294);  
-				stream_COLON.Add(char_literal281);
+				stream_expression.Add(expression250.Tree);
+				DebugLocation(468, 22);
+				char_literal251=(IToken)Match(input,COLON,Follow._COLON_in_switchCaseCondition3214);  
+				stream_COLON.Add(char_literal251);
 
 
 
@@ -12070,16 +11490,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 438:28: -> ^( SWITCH_CASE expression )
+				// 468:28: -> ^( SWITCH_CASE expression )
 				{
-					DebugLocation(438, 31);
-					// C:\\work\\ReoScript\\ReoScript.g:438:31: ^( SWITCH_CASE expression )
+					DebugLocation(468, 31);
+					// C:\\work\\ReoScript\\ReoScript.g:468:31: ^( SWITCH_CASE expression )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(438, 33);
+					DebugLocation(468, 33);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(SWITCH_CASE, "SWITCH_CASE"), root_1);
 
-					DebugLocation(438, 45);
+					DebugLocation(468, 45);
 					adaptor.AddChild(root_1, stream_expression.NextTree());
 
 					adaptor.AddChild(root_0, root_1);
@@ -12094,14 +11514,14 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:439:4: statement
+				// C:\\work\\ReoScript\\ReoScript.g:469:4: statement
 				{
-				DebugLocation(439, 4);
-				PushFollow(Follow._statement_in_switchCaseCondition3309);
-				statement282=statement();
+				DebugLocation(469, 4);
+				PushFollow(Follow._statement_in_switchCaseCondition3229);
+				statement252=statement();
 				PopFollow();
 
-				stream_statement.Add(statement282.Tree);
+				stream_statement.Add(statement252.Tree);
 
 
 				{
@@ -12116,9 +11536,9 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 439:19: -> statement
+				// 469:19: -> statement
 				{
-					DebugLocation(439, 22);
+					DebugLocation(469, 22);
 					adaptor.AddChild(root_0, stream_statement.NextTree());
 
 				}
@@ -12130,15 +11550,15 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// C:\\work\\ReoScript\\ReoScript.g:440:4: 'default' ':'
+				// C:\\work\\ReoScript\\ReoScript.g:470:4: 'default' ':'
 				{
-				DebugLocation(440, 4);
-				string_literal283=(IToken)Match(input,129,Follow._129_in_switchCaseCondition3323);  
-				stream_129.Add(string_literal283);
+				DebugLocation(470, 4);
+				string_literal253=(IToken)Match(input,129,Follow._129_in_switchCaseCondition3243);  
+				stream_129.Add(string_literal253);
 
-				DebugLocation(440, 14);
-				char_literal284=(IToken)Match(input,COLON,Follow._COLON_in_switchCaseCondition3325);  
-				stream_COLON.Add(char_literal284);
+				DebugLocation(470, 14);
+				char_literal254=(IToken)Match(input,COLON,Follow._COLON_in_switchCaseCondition3245);  
+				stream_COLON.Add(char_literal254);
 
 
 
@@ -12154,13 +11574,13 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 440:22: -> ^( SWITCH_CASE_ELSE )
+				// 470:22: -> ^( SWITCH_CASE_ELSE )
 				{
-					DebugLocation(440, 25);
-					// C:\\work\\ReoScript\\ReoScript.g:440:25: ^( SWITCH_CASE_ELSE )
+					DebugLocation(470, 25);
+					// C:\\work\\ReoScript\\ReoScript.g:470:25: ^( SWITCH_CASE_ELSE )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(440, 27);
+					DebugLocation(470, 27);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(SWITCH_CASE_ELSE, "SWITCH_CASE_ELSE"), root_1);
 
 					adaptor.AddChild(root_0, root_1);
@@ -12190,11 +11610,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("switchCaseCondition", 55);
-			LeaveRule("switchCaseCondition", 55);
+			TraceOut("switchCaseCondition", 53);
+			LeaveRule("switchCaseCondition", 53);
 			LeaveRule_switchCaseCondition();
 		}
-		DebugLocation(441, 1);
+		DebugLocation(471, 1);
 		} finally { DebugExitRule(GrammarFileName, "switchCaseCondition"); }
 		return retval;
 
@@ -12205,41 +11625,41 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_tryCatchStatement();
 
 	// $ANTLR start "tryCatchStatement"
-	// C:\\work\\ReoScript\\ReoScript.g:443:1: tryCatchStatement : ( 'try' t= block ( ( 'catch' ( '(' err= IDENTIFIER ')' )? b= block ) | ( 'finally' f= block ) ) -> ^( TRY_CATCH $t ^( TRY_CATCH_CASE ( $b)? ( $err)? ) ^( TRY_CATCH_FINAL ( $f)? ) ) | 'throw' expression SEMI -> ^( TRY_CATCH_TRHOW expression ) );
+	// C:\\work\\ReoScript\\ReoScript.g:473:1: tryCatchStatement : ( 'try' t= block ( ( 'catch' ( '(' err= IDENTIFIER ')' )? b= block ) | ( 'finally' f= block ) ) -> ^( TRY_CATCH $t ^( TRY_CATCH_CASE ( $b)? ( $err)? ) ^( TRY_CATCH_FINAL ( $f)? ) ) | 'throw' expression SEMI -> ^( TRY_CATCH_TRHOW expression ) );
 	[GrammarRule("tryCatchStatement")]
 	private AstParserRuleReturnScope<CommonTree, IToken> tryCatchStatement()
 	{
 		EnterRule_tryCatchStatement();
-		EnterRule("tryCatchStatement", 56);
-		TraceIn("tryCatchStatement", 56);
+		EnterRule("tryCatchStatement", 54);
+		TraceIn("tryCatchStatement", 54);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
 		IToken err = default(IToken);
-		IToken string_literal285 = default(IToken);
-		IToken string_literal286 = default(IToken);
-		IToken char_literal287 = default(IToken);
-		IToken char_literal288 = default(IToken);
-		IToken string_literal289 = default(IToken);
-		IToken string_literal290 = default(IToken);
-		IToken SEMI292 = default(IToken);
+		IToken string_literal255 = default(IToken);
+		IToken string_literal256 = default(IToken);
+		IToken char_literal257 = default(IToken);
+		IToken char_literal258 = default(IToken);
+		IToken string_literal259 = default(IToken);
+		IToken string_literal260 = default(IToken);
+		IToken SEMI262 = default(IToken);
 		AstParserRuleReturnScope<CommonTree, IToken> t = default(AstParserRuleReturnScope<CommonTree, IToken>);
 		AstParserRuleReturnScope<CommonTree, IToken> b = default(AstParserRuleReturnScope<CommonTree, IToken>);
 		AstParserRuleReturnScope<CommonTree, IToken> f = default(AstParserRuleReturnScope<CommonTree, IToken>);
-		AstParserRuleReturnScope<CommonTree, IToken> expression291 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		AstParserRuleReturnScope<CommonTree, IToken> expression261 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
 		CommonTree err_tree = default(CommonTree);
-		CommonTree string_literal285_tree = default(CommonTree);
-		CommonTree string_literal286_tree = default(CommonTree);
-		CommonTree char_literal287_tree = default(CommonTree);
-		CommonTree char_literal288_tree = default(CommonTree);
-		CommonTree string_literal289_tree = default(CommonTree);
-		CommonTree string_literal290_tree = default(CommonTree);
-		CommonTree SEMI292_tree = default(CommonTree);
-		RewriteRuleITokenStream stream_126=new RewriteRuleITokenStream(adaptor,"token 126");
+		CommonTree string_literal255_tree = default(CommonTree);
+		CommonTree string_literal256_tree = default(CommonTree);
+		CommonTree char_literal257_tree = default(CommonTree);
+		CommonTree char_literal258_tree = default(CommonTree);
+		CommonTree string_literal259_tree = default(CommonTree);
+		CommonTree string_literal260_tree = default(CommonTree);
+		CommonTree SEMI262_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_RPAREN=new RewriteRuleITokenStream(adaptor,"token RPAREN");
+		RewriteRuleITokenStream stream_127=new RewriteRuleITokenStream(adaptor,"token 127");
 		RewriteRuleITokenStream stream_SEMI=new RewriteRuleITokenStream(adaptor,"token SEMI");
 		RewriteRuleITokenStream stream_IDENTIFIER=new RewriteRuleITokenStream(adaptor,"token IDENTIFIER");
 		RewriteRuleITokenStream stream_131=new RewriteRuleITokenStream(adaptor,"token 131");
@@ -12249,121 +11669,121 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
 		RewriteRuleSubtreeStream stream_block=new RewriteRuleSubtreeStream(adaptor,"rule block");
 		try { DebugEnterRule(GrammarFileName, "tryCatchStatement");
-		DebugLocation(443, 1);
+		DebugLocation(473, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:444:2: ( 'try' t= block ( ( 'catch' ( '(' err= IDENTIFIER ')' )? b= block ) | ( 'finally' f= block ) ) -> ^( TRY_CATCH $t ^( TRY_CATCH_CASE ( $b)? ( $err)? ) ^( TRY_CATCH_FINAL ( $f)? ) ) | 'throw' expression SEMI -> ^( TRY_CATCH_TRHOW expression ) )
-			int alt84=2;
-			try { DebugEnterDecision(84, false);
-			int LA84_0 = input.LA(1);
+			// C:\\work\\ReoScript\\ReoScript.g:474:2: ( 'try' t= block ( ( 'catch' ( '(' err= IDENTIFIER ')' )? b= block ) | ( 'finally' f= block ) ) -> ^( TRY_CATCH $t ^( TRY_CATCH_CASE ( $b)? ( $err)? ) ^( TRY_CATCH_FINAL ( $f)? ) ) | 'throw' expression SEMI -> ^( TRY_CATCH_TRHOW expression ) )
+			int alt78=2;
+			try { DebugEnterDecision(78, false);
+			int LA78_0 = input.LA(1);
 
-			if ((LA84_0==142))
+			if ((LA78_0==142))
 			{
-				alt84 = 1;
+				alt78 = 1;
 			}
-			else if ((LA84_0==141))
+			else if ((LA78_0==141))
 			{
-				alt84 = 2;
+				alt78 = 2;
 			}
 			else
 			{
-				NoViableAltException nvae = new NoViableAltException("", 84, 0, input);
+				NoViableAltException nvae = new NoViableAltException("", 78, 0, input);
 				DebugRecognitionException(nvae);
 				throw nvae;
 			}
-			} finally { DebugExitDecision(84); }
-			switch (alt84)
+			} finally { DebugExitDecision(78); }
+			switch (alt78)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:444:4: 'try' t= block ( ( 'catch' ( '(' err= IDENTIFIER ')' )? b= block ) | ( 'finally' f= block ) )
+				// C:\\work\\ReoScript\\ReoScript.g:474:4: 'try' t= block ( ( 'catch' ( '(' err= IDENTIFIER ')' )? b= block ) | ( 'finally' f= block ) )
 				{
-				DebugLocation(444, 4);
-				string_literal285=(IToken)Match(input,142,Follow._142_in_tryCatchStatement3347);  
-				stream_142.Add(string_literal285);
+				DebugLocation(474, 4);
+				string_literal255=(IToken)Match(input,142,Follow._142_in_tryCatchStatement3267);  
+				stream_142.Add(string_literal255);
 
-				DebugLocation(444, 11);
-				PushFollow(Follow._block_in_tryCatchStatement3351);
+				DebugLocation(474, 11);
+				PushFollow(Follow._block_in_tryCatchStatement3271);
 				t=block();
 				PopFollow();
 
 				stream_block.Add(t.Tree);
-				DebugLocation(444, 18);
-				// C:\\work\\ReoScript\\ReoScript.g:444:18: ( ( 'catch' ( '(' err= IDENTIFIER ')' )? b= block ) | ( 'finally' f= block ) )
-				int alt83=2;
-				try { DebugEnterSubRule(83);
-				try { DebugEnterDecision(83, false);
-				int LA83_0 = input.LA(1);
+				DebugLocation(474, 18);
+				// C:\\work\\ReoScript\\ReoScript.g:474:18: ( ( 'catch' ( '(' err= IDENTIFIER ')' )? b= block ) | ( 'finally' f= block ) )
+				int alt77=2;
+				try { DebugEnterSubRule(77);
+				try { DebugEnterDecision(77, false);
+				int LA77_0 = input.LA(1);
 
-				if ((LA83_0==126))
+				if ((LA77_0==127))
 				{
-					alt83 = 1;
+					alt77 = 1;
 				}
-				else if ((LA83_0==131))
+				else if ((LA77_0==131))
 				{
-					alt83 = 2;
+					alt77 = 2;
 				}
 				else
 				{
-					NoViableAltException nvae = new NoViableAltException("", 83, 0, input);
+					NoViableAltException nvae = new NoViableAltException("", 77, 0, input);
 					DebugRecognitionException(nvae);
 					throw nvae;
 				}
-				} finally { DebugExitDecision(83); }
-				switch (alt83)
+				} finally { DebugExitDecision(77); }
+				switch (alt77)
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:444:20: ( 'catch' ( '(' err= IDENTIFIER ')' )? b= block )
+					// C:\\work\\ReoScript\\ReoScript.g:474:20: ( 'catch' ( '(' err= IDENTIFIER ')' )? b= block )
 					{
-					DebugLocation(444, 20);
-					// C:\\work\\ReoScript\\ReoScript.g:444:20: ( 'catch' ( '(' err= IDENTIFIER ')' )? b= block )
+					DebugLocation(474, 20);
+					// C:\\work\\ReoScript\\ReoScript.g:474:20: ( 'catch' ( '(' err= IDENTIFIER ')' )? b= block )
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:444:21: 'catch' ( '(' err= IDENTIFIER ')' )? b= block
+					// C:\\work\\ReoScript\\ReoScript.g:474:21: 'catch' ( '(' err= IDENTIFIER ')' )? b= block
 					{
-					DebugLocation(444, 21);
-					string_literal286=(IToken)Match(input,126,Follow._126_in_tryCatchStatement3356);  
-					stream_126.Add(string_literal286);
+					DebugLocation(474, 21);
+					string_literal256=(IToken)Match(input,127,Follow._127_in_tryCatchStatement3276);  
+					stream_127.Add(string_literal256);
 
-					DebugLocation(444, 29);
-					// C:\\work\\ReoScript\\ReoScript.g:444:29: ( '(' err= IDENTIFIER ')' )?
-					int alt82=2;
-					try { DebugEnterSubRule(82);
-					try { DebugEnterDecision(82, false);
-					int LA82_0 = input.LA(1);
+					DebugLocation(474, 29);
+					// C:\\work\\ReoScript\\ReoScript.g:474:29: ( '(' err= IDENTIFIER ')' )?
+					int alt76=2;
+					try { DebugEnterSubRule(76);
+					try { DebugEnterDecision(76, false);
+					int LA76_0 = input.LA(1);
 
-					if ((LA82_0==LPAREN))
+					if ((LA76_0==LPAREN))
 					{
-						alt82 = 1;
+						alt76 = 1;
 					}
-					} finally { DebugExitDecision(82); }
-					switch (alt82)
+					} finally { DebugExitDecision(76); }
+					switch (alt76)
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// C:\\work\\ReoScript\\ReoScript.g:444:30: '(' err= IDENTIFIER ')'
+						// C:\\work\\ReoScript\\ReoScript.g:474:30: '(' err= IDENTIFIER ')'
 						{
-						DebugLocation(444, 30);
-						char_literal287=(IToken)Match(input,LPAREN,Follow._LPAREN_in_tryCatchStatement3359);  
-						stream_LPAREN.Add(char_literal287);
+						DebugLocation(474, 30);
+						char_literal257=(IToken)Match(input,LPAREN,Follow._LPAREN_in_tryCatchStatement3279);  
+						stream_LPAREN.Add(char_literal257);
 
-						DebugLocation(444, 37);
-						err=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_tryCatchStatement3363);  
+						DebugLocation(474, 37);
+						err=(IToken)Match(input,IDENTIFIER,Follow._IDENTIFIER_in_tryCatchStatement3283);  
 						stream_IDENTIFIER.Add(err);
 
-						DebugLocation(444, 49);
-						char_literal288=(IToken)Match(input,RPAREN,Follow._RPAREN_in_tryCatchStatement3365);  
-						stream_RPAREN.Add(char_literal288);
+						DebugLocation(474, 49);
+						char_literal258=(IToken)Match(input,RPAREN,Follow._RPAREN_in_tryCatchStatement3285);  
+						stream_RPAREN.Add(char_literal258);
 
 
 						}
 						break;
 
 					}
-					} finally { DebugExitSubRule(82); }
+					} finally { DebugExitSubRule(76); }
 
-					DebugLocation(444, 57);
-					PushFollow(Follow._block_in_tryCatchStatement3372);
+					DebugLocation(474, 57);
+					PushFollow(Follow._block_in_tryCatchStatement3292);
 					b=block();
 					PopFollow();
 
@@ -12376,19 +11796,19 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 				case 2:
 					DebugEnterAlt(2);
-					// C:\\work\\ReoScript\\ReoScript.g:444:67: ( 'finally' f= block )
+					// C:\\work\\ReoScript\\ReoScript.g:474:67: ( 'finally' f= block )
 					{
-					DebugLocation(444, 67);
-					// C:\\work\\ReoScript\\ReoScript.g:444:67: ( 'finally' f= block )
+					DebugLocation(474, 67);
+					// C:\\work\\ReoScript\\ReoScript.g:474:67: ( 'finally' f= block )
 					DebugEnterAlt(1);
-					// C:\\work\\ReoScript\\ReoScript.g:444:68: 'finally' f= block
+					// C:\\work\\ReoScript\\ReoScript.g:474:68: 'finally' f= block
 					{
-					DebugLocation(444, 68);
-					string_literal289=(IToken)Match(input,131,Follow._131_in_tryCatchStatement3378);  
-					stream_131.Add(string_literal289);
+					DebugLocation(474, 68);
+					string_literal259=(IToken)Match(input,131,Follow._131_in_tryCatchStatement3298);  
+					stream_131.Add(string_literal259);
 
-					DebugLocation(444, 79);
-					PushFollow(Follow._block_in_tryCatchStatement3382);
+					DebugLocation(474, 79);
+					PushFollow(Follow._block_in_tryCatchStatement3302);
 					f=block();
 					PopFollow();
 
@@ -12401,13 +11821,13 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 					break;
 
 				}
-				} finally { DebugExitSubRule(83); }
+				} finally { DebugExitSubRule(77); }
 
 
 
 				{
 				// AST REWRITE
-				// elements: t, err, f, b
+				// elements: err, b, f, t
 				// token labels: err
 				// rule labels: f, retval, t, b
 				// token list labels: 
@@ -12421,38 +11841,38 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_b=new RewriteRuleSubtreeStream(adaptor,"rule b",b!=null?b.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 445:3: -> ^( TRY_CATCH $t ^( TRY_CATCH_CASE ( $b)? ( $err)? ) ^( TRY_CATCH_FINAL ( $f)? ) )
+				// 475:3: -> ^( TRY_CATCH $t ^( TRY_CATCH_CASE ( $b)? ( $err)? ) ^( TRY_CATCH_FINAL ( $f)? ) )
 				{
-					DebugLocation(445, 6);
-					// C:\\work\\ReoScript\\ReoScript.g:445:6: ^( TRY_CATCH $t ^( TRY_CATCH_CASE ( $b)? ( $err)? ) ^( TRY_CATCH_FINAL ( $f)? ) )
+					DebugLocation(475, 6);
+					// C:\\work\\ReoScript\\ReoScript.g:475:6: ^( TRY_CATCH $t ^( TRY_CATCH_CASE ( $b)? ( $err)? ) ^( TRY_CATCH_FINAL ( $f)? ) )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(445, 8);
+					DebugLocation(475, 8);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(TRY_CATCH, "TRY_CATCH"), root_1);
 
-					DebugLocation(445, 19);
+					DebugLocation(475, 19);
 					adaptor.AddChild(root_1, stream_t.NextTree());
-					DebugLocation(445, 21);
-					// C:\\work\\ReoScript\\ReoScript.g:445:21: ^( TRY_CATCH_CASE ( $b)? ( $err)? )
+					DebugLocation(475, 21);
+					// C:\\work\\ReoScript\\ReoScript.g:475:21: ^( TRY_CATCH_CASE ( $b)? ( $err)? )
 					{
 					CommonTree root_2 = (CommonTree)adaptor.Nil();
-					DebugLocation(445, 23);
+					DebugLocation(475, 23);
 					root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(TRY_CATCH_CASE, "TRY_CATCH_CASE"), root_2);
 
-					DebugLocation(445, 39);
-					// C:\\work\\ReoScript\\ReoScript.g:445:39: ( $b)?
+					DebugLocation(475, 39);
+					// C:\\work\\ReoScript\\ReoScript.g:475:39: ( $b)?
 					if (stream_b.HasNext)
 					{
-						DebugLocation(445, 39);
+						DebugLocation(475, 39);
 						adaptor.AddChild(root_2, stream_b.NextTree());
 
 					}
 					stream_b.Reset();
-					DebugLocation(445, 43);
-					// C:\\work\\ReoScript\\ReoScript.g:445:43: ( $err)?
+					DebugLocation(475, 43);
+					// C:\\work\\ReoScript\\ReoScript.g:475:43: ( $err)?
 					if (stream_err.HasNext)
 					{
-						DebugLocation(445, 43);
+						DebugLocation(475, 43);
 						adaptor.AddChild(root_2, stream_err.NextNode());
 
 					}
@@ -12460,18 +11880,18 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 
 					adaptor.AddChild(root_1, root_2);
 					}
-					DebugLocation(445, 49);
-					// C:\\work\\ReoScript\\ReoScript.g:445:49: ^( TRY_CATCH_FINAL ( $f)? )
+					DebugLocation(475, 49);
+					// C:\\work\\ReoScript\\ReoScript.g:475:49: ^( TRY_CATCH_FINAL ( $f)? )
 					{
 					CommonTree root_2 = (CommonTree)adaptor.Nil();
-					DebugLocation(445, 51);
+					DebugLocation(475, 51);
 					root_2 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(TRY_CATCH_FINAL, "TRY_CATCH_FINAL"), root_2);
 
-					DebugLocation(445, 68);
-					// C:\\work\\ReoScript\\ReoScript.g:445:68: ( $f)?
+					DebugLocation(475, 68);
+					// C:\\work\\ReoScript\\ReoScript.g:475:68: ( $f)?
 					if (stream_f.HasNext)
 					{
-						DebugLocation(445, 68);
+						DebugLocation(475, 68);
 						adaptor.AddChild(root_2, stream_f.NextTree());
 
 					}
@@ -12492,21 +11912,21 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:446:4: 'throw' expression SEMI
+				// C:\\work\\ReoScript\\ReoScript.g:476:4: 'throw' expression SEMI
 				{
-				DebugLocation(446, 4);
-				string_literal290=(IToken)Match(input,141,Follow._141_in_tryCatchStatement3421);  
-				stream_141.Add(string_literal290);
+				DebugLocation(476, 4);
+				string_literal260=(IToken)Match(input,141,Follow._141_in_tryCatchStatement3341);  
+				stream_141.Add(string_literal260);
 
-				DebugLocation(446, 12);
-				PushFollow(Follow._expression_in_tryCatchStatement3423);
-				expression291=expression();
+				DebugLocation(476, 12);
+				PushFollow(Follow._expression_in_tryCatchStatement3343);
+				expression261=expression();
 				PopFollow();
 
-				stream_expression.Add(expression291.Tree);
-				DebugLocation(446, 23);
-				SEMI292=(IToken)Match(input,SEMI,Follow._SEMI_in_tryCatchStatement3425);  
-				stream_SEMI.Add(SEMI292);
+				stream_expression.Add(expression261.Tree);
+				DebugLocation(476, 23);
+				SEMI262=(IToken)Match(input,SEMI,Follow._SEMI_in_tryCatchStatement3345);  
+				stream_SEMI.Add(SEMI262);
 
 
 
@@ -12522,16 +11942,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 447:3: -> ^( TRY_CATCH_TRHOW expression )
+				// 477:3: -> ^( TRY_CATCH_TRHOW expression )
 				{
-					DebugLocation(447, 6);
-					// C:\\work\\ReoScript\\ReoScript.g:447:6: ^( TRY_CATCH_TRHOW expression )
+					DebugLocation(477, 6);
+					// C:\\work\\ReoScript\\ReoScript.g:477:6: ^( TRY_CATCH_TRHOW expression )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.Nil();
-					DebugLocation(447, 8);
+					DebugLocation(477, 8);
 					root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(TRY_CATCH_TRHOW, "TRY_CATCH_TRHOW"), root_1);
 
-					DebugLocation(447, 24);
+					DebugLocation(477, 24);
 					adaptor.AddChild(root_1, stream_expression.NextTree());
 
 					adaptor.AddChild(root_0, root_1);
@@ -12561,11 +11981,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("tryCatchStatement", 56);
-			LeaveRule("tryCatchStatement", 56);
+			TraceOut("tryCatchStatement", 54);
+			LeaveRule("tryCatchStatement", 54);
 			LeaveRule_tryCatchStatement();
 		}
-		DebugLocation(448, 1);
+		DebugLocation(478, 1);
 		} finally { DebugExitRule(GrammarFileName, "tryCatchStatement"); }
 		return retval;
 
@@ -12576,81 +11996,81 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_terminalStatement();
 
 	// $ANTLR start "terminalStatement"
-	// C:\\work\\ReoScript\\ReoScript.g:450:1: terminalStatement : ( returnStatement -> returnStatement | ( 'break' ) -> BREAK | ( 'continue' ) -> CONTINUE ) SEMI ;
+	// C:\\work\\ReoScript\\ReoScript.g:480:1: terminalStatement : ( returnStatement -> returnStatement | ( 'break' ) -> BREAK | ( 'continue' ) -> CONTINUE ) SEMI ;
 	[GrammarRule("terminalStatement")]
 	private AstParserRuleReturnScope<CommonTree, IToken> terminalStatement()
 	{
 		EnterRule_terminalStatement();
-		EnterRule("terminalStatement", 57);
-		TraceIn("terminalStatement", 57);
+		EnterRule("terminalStatement", 55);
+		TraceIn("terminalStatement", 55);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken string_literal294 = default(IToken);
-		IToken string_literal295 = default(IToken);
-		IToken SEMI296 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> returnStatement293 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken string_literal264 = default(IToken);
+		IToken string_literal265 = default(IToken);
+		IToken SEMI266 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> returnStatement263 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree string_literal294_tree = default(CommonTree);
-		CommonTree string_literal295_tree = default(CommonTree);
-		CommonTree SEMI296_tree = default(CommonTree);
+		CommonTree string_literal264_tree = default(CommonTree);
+		CommonTree string_literal265_tree = default(CommonTree);
+		CommonTree SEMI266_tree = default(CommonTree);
+		RewriteRuleITokenStream stream_125=new RewriteRuleITokenStream(adaptor,"token 125");
 		RewriteRuleITokenStream stream_128=new RewriteRuleITokenStream(adaptor,"token 128");
-		RewriteRuleITokenStream stream_124=new RewriteRuleITokenStream(adaptor,"token 124");
 		RewriteRuleITokenStream stream_SEMI=new RewriteRuleITokenStream(adaptor,"token SEMI");
 		RewriteRuleSubtreeStream stream_returnStatement=new RewriteRuleSubtreeStream(adaptor,"rule returnStatement");
 		try { DebugEnterRule(GrammarFileName, "terminalStatement");
-		DebugLocation(450, 1);
+		DebugLocation(480, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:451:2: ( ( returnStatement -> returnStatement | ( 'break' ) -> BREAK | ( 'continue' ) -> CONTINUE ) SEMI )
+			// C:\\work\\ReoScript\\ReoScript.g:481:2: ( ( returnStatement -> returnStatement | ( 'break' ) -> BREAK | ( 'continue' ) -> CONTINUE ) SEMI )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:451:4: ( returnStatement -> returnStatement | ( 'break' ) -> BREAK | ( 'continue' ) -> CONTINUE ) SEMI
+			// C:\\work\\ReoScript\\ReoScript.g:481:4: ( returnStatement -> returnStatement | ( 'break' ) -> BREAK | ( 'continue' ) -> CONTINUE ) SEMI
 			{
-			DebugLocation(451, 4);
-			// C:\\work\\ReoScript\\ReoScript.g:451:4: ( returnStatement -> returnStatement | ( 'break' ) -> BREAK | ( 'continue' ) -> CONTINUE )
-			int alt85=3;
-			try { DebugEnterSubRule(85);
-			try { DebugEnterDecision(85, false);
+			DebugLocation(481, 4);
+			// C:\\work\\ReoScript\\ReoScript.g:481:4: ( returnStatement -> returnStatement | ( 'break' ) -> BREAK | ( 'continue' ) -> CONTINUE )
+			int alt79=3;
+			try { DebugEnterSubRule(79);
+			try { DebugEnterDecision(79, false);
 			switch (input.LA(1))
 			{
 			case 138:
 				{
-				alt85 = 1;
+				alt79 = 1;
 				}
 				break;
-			case 124:
+			case 125:
 				{
-				alt85 = 2;
+				alt79 = 2;
 				}
 				break;
 			case 128:
 				{
-				alt85 = 3;
+				alt79 = 3;
 				}
 				break;
 			default:
 				{
-					NoViableAltException nvae = new NoViableAltException("", 85, 0, input);
+					NoViableAltException nvae = new NoViableAltException("", 79, 0, input);
 					DebugRecognitionException(nvae);
 					throw nvae;
 				}
 			}
 
-			} finally { DebugExitDecision(85); }
-			switch (alt85)
+			} finally { DebugExitDecision(79); }
+			switch (alt79)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:451:6: returnStatement
+				// C:\\work\\ReoScript\\ReoScript.g:481:6: returnStatement
 				{
-				DebugLocation(451, 6);
-				PushFollow(Follow._returnStatement_in_terminalStatement3449);
-				returnStatement293=returnStatement();
+				DebugLocation(481, 6);
+				PushFollow(Follow._returnStatement_in_terminalStatement3369);
+				returnStatement263=returnStatement();
 				PopFollow();
 
-				stream_returnStatement.Add(returnStatement293.Tree);
+				stream_returnStatement.Add(returnStatement263.Tree);
 
 
 				{
@@ -12665,9 +12085,9 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 451:22: -> returnStatement
+				// 481:22: -> returnStatement
 				{
-					DebugLocation(451, 25);
+					DebugLocation(481, 25);
 					adaptor.AddChild(root_0, stream_returnStatement.NextTree());
 
 				}
@@ -12679,16 +12099,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// C:\\work\\ReoScript\\ReoScript.g:451:43: ( 'break' )
+				// C:\\work\\ReoScript\\ReoScript.g:481:43: ( 'break' )
 				{
-				DebugLocation(451, 43);
-				// C:\\work\\ReoScript\\ReoScript.g:451:43: ( 'break' )
+				DebugLocation(481, 43);
+				// C:\\work\\ReoScript\\ReoScript.g:481:43: ( 'break' )
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:451:44: 'break'
+				// C:\\work\\ReoScript\\ReoScript.g:481:44: 'break'
 				{
-				DebugLocation(451, 44);
-				string_literal294=(IToken)Match(input,124,Follow._124_in_terminalStatement3458);  
-				stream_124.Add(string_literal294);
+				DebugLocation(481, 44);
+				string_literal264=(IToken)Match(input,125,Follow._125_in_terminalStatement3378);  
+				stream_125.Add(string_literal264);
 
 
 				}
@@ -12707,9 +12127,9 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 451:52: -> BREAK
+				// 481:52: -> BREAK
 				{
-					DebugLocation(451, 54);
+					DebugLocation(481, 54);
 					adaptor.AddChild(root_0, (CommonTree)adaptor.Create(BREAK, "BREAK"));
 
 				}
@@ -12721,16 +12141,16 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 			case 3:
 				DebugEnterAlt(3);
-				// C:\\work\\ReoScript\\ReoScript.g:451:62: ( 'continue' )
+				// C:\\work\\ReoScript\\ReoScript.g:481:62: ( 'continue' )
 				{
-				DebugLocation(451, 62);
-				// C:\\work\\ReoScript\\ReoScript.g:451:62: ( 'continue' )
+				DebugLocation(481, 62);
+				// C:\\work\\ReoScript\\ReoScript.g:481:62: ( 'continue' )
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:451:63: 'continue'
+				// C:\\work\\ReoScript\\ReoScript.g:481:63: 'continue'
 				{
-				DebugLocation(451, 63);
-				string_literal295=(IToken)Match(input,128,Follow._128_in_terminalStatement3466);  
-				stream_128.Add(string_literal295);
+				DebugLocation(481, 63);
+				string_literal265=(IToken)Match(input,128,Follow._128_in_terminalStatement3386);  
+				stream_128.Add(string_literal265);
 
 
 				}
@@ -12749,9 +12169,9 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 				root_0 = (CommonTree)adaptor.Nil();
-				// 451:74: -> CONTINUE
+				// 481:74: -> CONTINUE
 				{
-					DebugLocation(451, 76);
+					DebugLocation(481, 76);
 					adaptor.AddChild(root_0, (CommonTree)adaptor.Create(CONTINUE, "CONTINUE"));
 
 				}
@@ -12763,11 +12183,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 				break;
 
 			}
-			} finally { DebugExitSubRule(85); }
+			} finally { DebugExitSubRule(79); }
 
-			DebugLocation(451, 87);
-			SEMI296=(IToken)Match(input,SEMI,Follow._SEMI_in_terminalStatement3473);  
-			stream_SEMI.Add(SEMI296);
+			DebugLocation(481, 87);
+			SEMI266=(IToken)Match(input,SEMI,Follow._SEMI_in_terminalStatement3393);  
+			stream_SEMI.Add(SEMI266);
 
 
 			}
@@ -12787,11 +12207,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("terminalStatement", 57);
-			LeaveRule("terminalStatement", 57);
+			TraceOut("terminalStatement", 55);
+			LeaveRule("terminalStatement", 55);
 			LeaveRule_terminalStatement();
 		}
-		DebugLocation(452, 1);
+		DebugLocation(482, 1);
 		} finally { DebugExitRule(GrammarFileName, "terminalStatement"); }
 		return retval;
 
@@ -12802,66 +12222,66 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_returnStatement();
 
 	// $ANTLR start "returnStatement"
-	// C:\\work\\ReoScript\\ReoScript.g:454:1: returnStatement : 'return' ( expression )? -> ^( RETURN ( expression )? ) ;
+	// C:\\work\\ReoScript\\ReoScript.g:484:1: returnStatement : 'return' ( expression )? -> ^( RETURN ( expression )? ) ;
 	[GrammarRule("returnStatement")]
 	private AstParserRuleReturnScope<CommonTree, IToken> returnStatement()
 	{
 		EnterRule_returnStatement();
-		EnterRule("returnStatement", 58);
-		TraceIn("returnStatement", 58);
+		EnterRule("returnStatement", 56);
+		TraceIn("returnStatement", 56);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken string_literal297 = default(IToken);
-		AstParserRuleReturnScope<CommonTree, IToken> expression298 = default(AstParserRuleReturnScope<CommonTree, IToken>);
+		IToken string_literal267 = default(IToken);
+		AstParserRuleReturnScope<CommonTree, IToken> expression268 = default(AstParserRuleReturnScope<CommonTree, IToken>);
 
-		CommonTree string_literal297_tree = default(CommonTree);
+		CommonTree string_literal267_tree = default(CommonTree);
 		RewriteRuleITokenStream stream_138=new RewriteRuleITokenStream(adaptor,"token 138");
 		RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
 		try { DebugEnterRule(GrammarFileName, "returnStatement");
-		DebugLocation(454, 1);
+		DebugLocation(484, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:455:2: ( 'return' ( expression )? -> ^( RETURN ( expression )? ) )
+			// C:\\work\\ReoScript\\ReoScript.g:485:2: ( 'return' ( expression )? -> ^( RETURN ( expression )? ) )
 			DebugEnterAlt(1);
-			// C:\\work\\ReoScript\\ReoScript.g:455:4: 'return' ( expression )?
+			// C:\\work\\ReoScript\\ReoScript.g:485:4: 'return' ( expression )?
 			{
-			DebugLocation(455, 4);
-			string_literal297=(IToken)Match(input,138,Follow._138_in_returnStatement3484);  
-			stream_138.Add(string_literal297);
+			DebugLocation(485, 4);
+			string_literal267=(IToken)Match(input,138,Follow._138_in_returnStatement3404);  
+			stream_138.Add(string_literal267);
 
-			DebugLocation(455, 13);
-			// C:\\work\\ReoScript\\ReoScript.g:455:13: ( expression )?
-			int alt86=2;
-			try { DebugEnterSubRule(86);
-			try { DebugEnterDecision(86, false);
-			int LA86_0 = input.LA(1);
+			DebugLocation(485, 13);
+			// C:\\work\\ReoScript\\ReoScript.g:485:13: ( expression )?
+			int alt80=2;
+			try { DebugEnterSubRule(80);
+			try { DebugEnterDecision(80, false);
+			int LA80_0 = input.LA(1);
 
-			if ((LA86_0==BINARY_LITERATE||LA86_0==DECREMENT||(LA86_0>=HEX_LITERATE && LA86_0<=IDENTIFIER)||LA86_0==INCREMENT||(LA86_0>=LBRACE && LA86_0<=LCURLY)||LA86_0==LESS_THAN||(LA86_0>=LIT_FALSE && LA86_0<=LIT_TRUE)||LA86_0==LPAREN||LA86_0==MINUS||LA86_0==NAN||LA86_0==NOT||LA86_0==NUMBER_LITERATE||LA86_0==PLUS||LA86_0==STRING_LITERATE||LA86_0==THIS||LA86_0==UNDEFINED||LA86_0==133||LA86_0==137||LA86_0==143||LA86_0==145))
+			if ((LA80_0==BINARY_LITERATE||LA80_0==DECREMENT||(LA80_0>=HEX_LITERATE && LA80_0<=IDENTIFIER)||LA80_0==INCREMENT||(LA80_0>=LBRACE && LA80_0<=LCURLY)||LA80_0==LESS_THAN||(LA80_0>=LIT_FALSE && LA80_0<=LIT_TRUE)||LA80_0==LPAREN||LA80_0==MINUS||LA80_0==NAN||LA80_0==NOT||LA80_0==NUMBER_LITERATE||LA80_0==PLUS||LA80_0==STRING_LITERATE||LA80_0==THIS||LA80_0==UNDEFINED||LA80_0==133||LA80_0==137||LA80_0==143||LA80_0==145))
 			{
-				alt86 = 1;
+				alt80 = 1;
 			}
-			} finally { DebugExitDecision(86); }
-			switch (alt86)
+			} finally { DebugExitDecision(80); }
+			switch (alt80)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// C:\\work\\ReoScript\\ReoScript.g:455:13: expression
+				// C:\\work\\ReoScript\\ReoScript.g:485:13: expression
 				{
-				DebugLocation(455, 13);
-				PushFollow(Follow._expression_in_returnStatement3486);
-				expression298=expression();
+				DebugLocation(485, 13);
+				PushFollow(Follow._expression_in_returnStatement3406);
+				expression268=expression();
 				PopFollow();
 
-				stream_expression.Add(expression298.Tree);
+				stream_expression.Add(expression268.Tree);
 
 				}
 				break;
 
 			}
-			} finally { DebugExitSubRule(86); }
+			} finally { DebugExitSubRule(80); }
 
 
 
@@ -12877,20 +12297,20 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 			root_0 = (CommonTree)adaptor.Nil();
-			// 455:25: -> ^( RETURN ( expression )? )
+			// 485:25: -> ^( RETURN ( expression )? )
 			{
-				DebugLocation(455, 28);
-				// C:\\work\\ReoScript\\ReoScript.g:455:28: ^( RETURN ( expression )? )
+				DebugLocation(485, 28);
+				// C:\\work\\ReoScript\\ReoScript.g:485:28: ^( RETURN ( expression )? )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.Nil();
-				DebugLocation(455, 30);
+				DebugLocation(485, 30);
 				root_1 = (CommonTree)adaptor.BecomeRoot((CommonTree)adaptor.Create(RETURN, "RETURN"), root_1);
 
-				DebugLocation(455, 37);
-				// C:\\work\\ReoScript\\ReoScript.g:455:37: ( expression )?
+				DebugLocation(485, 37);
+				// C:\\work\\ReoScript\\ReoScript.g:485:37: ( expression )?
 				if (stream_expression.HasNext)
 				{
-					DebugLocation(455, 37);
+					DebugLocation(485, 37);
 					adaptor.AddChild(root_1, stream_expression.NextTree());
 
 				}
@@ -12921,11 +12341,11 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("returnStatement", 58);
-			LeaveRule("returnStatement", 58);
+			TraceOut("returnStatement", 56);
+			LeaveRule("returnStatement", 56);
 			LeaveRule_returnStatement();
 		}
-		DebugLocation(456, 1);
+		DebugLocation(486, 1);
 		} finally { DebugExitRule(GrammarFileName, "returnStatement"); }
 		return retval;
 
@@ -12936,38 +12356,100 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 	partial void LeaveRule_literal();
 
 	// $ANTLR start "literal"
-	// C:\\work\\ReoScript\\ReoScript.g:461:1: literal : ( LIT_TRUE | LIT_FALSE | NUMBER_LITERATE | STRING_LITERATE | THIS | LIT_NULL | UNDEFINED | HEX_LITERATE | BINARY_LITERATE | NAN );
+	// C:\\work\\ReoScript\\ReoScript.g:491:1: literal : THIS ;
 	[GrammarRule("literal")]
 	private AstParserRuleReturnScope<CommonTree, IToken> literal()
 	{
 		EnterRule_literal();
-		EnterRule("literal", 59);
-		TraceIn("literal", 59);
+		EnterRule("literal", 57);
+		TraceIn("literal", 57);
 		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
 		retval.Start = (IToken)input.LT(1);
 
 		CommonTree root_0 = default(CommonTree);
 
-		IToken set299 = default(IToken);
+		IToken THIS269 = default(IToken);
 
-		CommonTree set299_tree = default(CommonTree);
+		CommonTree THIS269_tree = default(CommonTree);
 		try { DebugEnterRule(GrammarFileName, "literal");
-		DebugLocation(461, 1);
+		DebugLocation(491, 1);
 		try
 		{
-			// C:\\work\\ReoScript\\ReoScript.g:462:2: ( LIT_TRUE | LIT_FALSE | NUMBER_LITERATE | STRING_LITERATE | THIS | LIT_NULL | UNDEFINED | HEX_LITERATE | BINARY_LITERATE | NAN )
+			// C:\\work\\ReoScript\\ReoScript.g:492:2: ( THIS )
+			DebugEnterAlt(1);
+			// C:\\work\\ReoScript\\ReoScript.g:493:2: THIS
+			{
+			root_0 = (CommonTree)adaptor.Nil();
+
+			DebugLocation(493, 2);
+			THIS269=(IToken)Match(input,THIS,Follow._THIS_in_literal3433); 
+			THIS269_tree = (CommonTree)adaptor.Create(THIS269);
+			adaptor.AddChild(root_0, THIS269_tree);
+
+			}
+
+			retval.Stop = (IToken)input.LT(-1);
+
+			retval.Tree = (CommonTree)adaptor.RulePostProcessing(root_0);
+			adaptor.SetTokenBoundaries(retval.Tree, retval.Start, retval.Stop);
+
+		}
+		catch (RecognitionException re)
+		{
+			ReportError(re);
+			Recover(input,re);
+		retval.Tree = (CommonTree)adaptor.ErrorNode(input, retval.Start, input.LT(-1), re);
+
+		}
+		finally
+		{
+			TraceOut("literal", 57);
+			LeaveRule("literal", 57);
+			LeaveRule_literal();
+		}
+		DebugLocation(494, 1);
+		} finally { DebugExitRule(GrammarFileName, "literal"); }
+		return retval;
+
+	}
+	// $ANTLR end "literal"
+
+	partial void EnterRule_constLiteral();
+	partial void LeaveRule_constLiteral();
+
+	// $ANTLR start "constLiteral"
+	// C:\\work\\ReoScript\\ReoScript.g:496:1: constLiteral : ( LIT_TRUE | LIT_FALSE | NUMBER_LITERATE | STRING_LITERATE | LIT_NULL | UNDEFINED | HEX_LITERATE | BINARY_LITERATE | NAN );
+	[GrammarRule("constLiteral")]
+	private AstParserRuleReturnScope<CommonTree, IToken> constLiteral()
+	{
+		EnterRule_constLiteral();
+		EnterRule("constLiteral", 58);
+		TraceIn("constLiteral", 58);
+		AstParserRuleReturnScope<CommonTree, IToken> retval = new AstParserRuleReturnScope<CommonTree, IToken>();
+		retval.Start = (IToken)input.LT(1);
+
+		CommonTree root_0 = default(CommonTree);
+
+		IToken set270 = default(IToken);
+
+		CommonTree set270_tree = default(CommonTree);
+		try { DebugEnterRule(GrammarFileName, "constLiteral");
+		DebugLocation(496, 1);
+		try
+		{
+			// C:\\work\\ReoScript\\ReoScript.g:497:2: ( LIT_TRUE | LIT_FALSE | NUMBER_LITERATE | STRING_LITERATE | LIT_NULL | UNDEFINED | HEX_LITERATE | BINARY_LITERATE | NAN )
 			DebugEnterAlt(1);
 			// C:\\work\\ReoScript\\ReoScript.g:
 			{
 			root_0 = (CommonTree)adaptor.Nil();
 
-			DebugLocation(462, 2);
+			DebugLocation(497, 2);
 
-			set299=(IToken)input.LT(1);
-			if (input.LA(1)==BINARY_LITERATE||input.LA(1)==HEX_LITERATE||(input.LA(1)>=LIT_FALSE && input.LA(1)<=LIT_TRUE)||input.LA(1)==NAN||input.LA(1)==NUMBER_LITERATE||input.LA(1)==STRING_LITERATE||input.LA(1)==THIS||input.LA(1)==UNDEFINED)
+			set270=(IToken)input.LT(1);
+			if (input.LA(1)==BINARY_LITERATE||input.LA(1)==HEX_LITERATE||(input.LA(1)>=LIT_FALSE && input.LA(1)<=LIT_TRUE)||input.LA(1)==NAN||input.LA(1)==NUMBER_LITERATE||input.LA(1)==STRING_LITERATE||input.LA(1)==UNDEFINED)
 			{
 				input.Consume();
-				adaptor.AddChild(root_0, (CommonTree)adaptor.Create(set299));
+				adaptor.AddChild(root_0, (CommonTree)adaptor.Create(set270));
 				state.errorRecovery=false;
 			}
 			else
@@ -12995,346 +12477,331 @@ public partial class ReoScriptParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("literal", 59);
-			LeaveRule("literal", 59);
-			LeaveRule_literal();
+			TraceOut("constLiteral", 58);
+			LeaveRule("constLiteral", 58);
+			LeaveRule_constLiteral();
 		}
-		DebugLocation(473, 1);
-		} finally { DebugExitRule(GrammarFileName, "literal"); }
+		DebugLocation(506, 1);
+		} finally { DebugExitRule(GrammarFileName, "constLiteral"); }
 		return retval;
 
 	}
-	// $ANTLR end "literal"
+	// $ANTLR end "constLiteral"
 	#endregion Rules
 
 
 	#region Follow sets
 	private static class Follow
 	{
-		public static readonly BitSet _statement_in_script521 = new BitSet(new ulong[]{0xE326000100100002UL,0x902840100D004408UL,0x17EF5UL});
-		public static readonly BitSet _function_define_in_function_defines534 = new BitSet(new ulong[]{0x2UL,0xD000000UL,0x20UL});
-		public static readonly BitSet _memberModifier_in_function_define546 = new BitSet(new ulong[]{0x0UL,0x0UL,0x20UL});
-		public static readonly BitSet _133_in_function_define549 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _IDENTIFIER_in_function_define553 = new BitSet(new ulong[]{0x0UL,0x8UL});
-		public static readonly BitSet _LPAREN_in_function_define555 = new BitSet(new ulong[]{0x4000000000000UL,0x80000000UL});
-		public static readonly BitSet _parameterDeclarationList_in_function_define557 = new BitSet(new ulong[]{0x0UL,0x80000000UL});
-		public static readonly BitSet _RPAREN_in_function_define560 = new BitSet(new ulong[]{0x200000000000000UL});
-		public static readonly BitSet _block_in_function_define563 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _133_in_anonymous_function_define605 = new BitSet(new ulong[]{0x0UL,0x8UL});
-		public static readonly BitSet _LPAREN_in_anonymous_function_define607 = new BitSet(new ulong[]{0x4000000000000UL,0x80000000UL});
-		public static readonly BitSet _parameterDeclarationList_in_anonymous_function_define609 = new BitSet(new ulong[]{0x0UL,0x80000000UL});
-		public static readonly BitSet _RPAREN_in_anonymous_function_define612 = new BitSet(new ulong[]{0x200000000000000UL});
-		public static readonly BitSet _block_in_anonymous_function_define614 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LPAREN_in_anonymous_function_define636 = new BitSet(new ulong[]{0x4000000000000UL,0x80000000UL});
-		public static readonly BitSet _parameterDeclarationList_in_anonymous_function_define638 = new BitSet(new ulong[]{0x0UL,0x80000000UL});
-		public static readonly BitSet _RPAREN_in_anonymous_function_define641 = new BitSet(new ulong[]{0x0UL,0x800000000000000UL});
-		public static readonly BitSet _123_in_anonymous_function_define643 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _block_in_anonymous_function_define651 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _assignmentExpression_in_anonymous_function_define675 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IDENTIFIER_in_anonymous_function_define706 = new BitSet(new ulong[]{0x0UL,0x800000000000000UL});
-		public static readonly BitSet _123_in_anonymous_function_define708 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _block_in_anonymous_function_define716 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _assignmentExpression_in_anonymous_function_define739 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IDENTIFIER_in_parameterDeclarationList775 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_parameterDeclarationList778 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _IDENTIFIER_in_parameterDeclarationList781 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _parameterDeclarationWithDefaultValue_in_parameterDeclarationWithDefaultValueList795 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_parameterDeclarationWithDefaultValueList798 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _parameterDeclarationWithDefaultValue_in_parameterDeclarationWithDefaultValueList801 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _IDENTIFIER_in_parameterDeclarationWithDefaultValue814 = new BitSet(new ulong[]{0x202UL});
-		public static readonly BitSet _ASSIGNMENT_in_parameterDeclarationWithDefaultValue817 = new BitSet(new ulong[]{0xE306000000100000UL,0x20401000004408UL,0x20UL});
-		public static readonly BitSet _primaryExpression_in_parameterDeclarationWithDefaultValue819 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LCURLY_in_block845 = new BitSet(new ulong[]{0xE326000100100000UL,0x902840102D004408UL,0x17EF5UL});
-		public static readonly BitSet _statement_in_block847 = new BitSet(new ulong[]{0xE326000100100000UL,0x902840102D004408UL,0x17EF5UL});
-		public static readonly BitSet _RCURLY_in_block850 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _127_in_class_define873 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _IDENTIFIER_in_class_define875 = new BitSet(new ulong[]{0x200000001000000UL});
-		public static readonly BitSet _COLON_in_class_define878 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _IDENTIFIER_in_class_define881 = new BitSet(new ulong[]{0x1000000UL});
-		public static readonly BitSet _COLON_in_class_define883 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _IDENTIFIER_in_class_define887 = new BitSet(new ulong[]{0x200000000000000UL});
-		public static readonly BitSet _LCURLY_in_class_define893 = new BitSet(new ulong[]{0x0UL,0x800002D000000UL,0x20UL});
-		public static readonly BitSet _localMemberVariableDeclaration_in_class_define905 = new BitSet(new ulong[]{0x0UL,0x200000000UL});
-		public static readonly BitSet _SEMI_in_class_define907 = new BitSet(new ulong[]{0x0UL,0x800002D000000UL,0x20UL});
-		public static readonly BitSet _function_define_in_class_define915 = new BitSet(new ulong[]{0x0UL,0x800022D000000UL,0x20UL});
-		public static readonly BitSet _SEMI_in_class_define917 = new BitSet(new ulong[]{0x0UL,0x800002D000000UL,0x20UL});
-		public static readonly BitSet _RCURLY_in_class_define929 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _importStatement_in_statement947 = new BitSet(new ulong[]{0x0UL,0x200000000UL});
-		public static readonly BitSet _SEMI_in_statement949 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _localVariableDeclaration_in_statement955 = new BitSet(new ulong[]{0x0UL,0x200000000UL});
-		public static readonly BitSet _SEMI_in_statement957 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _function_define_in_statement963 = new BitSet(new ulong[]{0x2UL,0x200000000UL});
-		public static readonly BitSet _SEMI_in_statement965 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _class_define_in_statement972 = new BitSet(new ulong[]{0x2UL,0x200000000UL});
-		public static readonly BitSet _SEMI_in_statement974 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _tagTemplateDefine_in_statement981 = new BitSet(new ulong[]{0x2UL,0x200000000UL});
-		public static readonly BitSet _SEMI_in_statement983 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _embeddedStatement_in_statement990 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _135_in_importStatement1001 = new BitSet(new ulong[]{0x4000000000000UL,0x1000000000UL});
-		public static readonly BitSet _namespaceDeclare_in_importStatement1012 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _STRING_LITERATE_in_importStatement1027 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IDENTIFIER_in_namespaceDeclare1052 = new BitSet(new ulong[]{0x800000002UL});
-		public static readonly BitSet _DOT_in_namespaceDeclare1055 = new BitSet(new ulong[]{0x4000000000000UL,0x200UL});
-		public static readonly BitSet _set_in_namespaceDeclare1057 = new BitSet(new ulong[]{0x800000002UL});
-		public static readonly BitSet _block_in_embeddedStatement1078 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _statementExpression_in_embeddedStatement1083 = new BitSet(new ulong[]{0x0UL,0x200000000UL});
-		public static readonly BitSet _SEMI_in_embeddedStatement1085 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ifelse_in_embeddedStatement1091 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _forStatement_in_embeddedStatement1096 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _foreachStatement_in_embeddedStatement1101 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _whileStatement_in_embeddedStatement1106 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _switchStatement_in_embeddedStatement1111 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _terminalStatement_in_embeddedStatement1116 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _tryCatchStatement_in_embeddedStatement1121 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _invocationExpression_in_statementExpression1136 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _137_in_statementExpression1141 = new BitSet(new ulong[]{0xE306000000100000UL,0x20401000004408UL,0x20UL});
-		public static readonly BitSet _primaryExpression_in_statementExpression1143 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _130_in_statementExpression1158 = new BitSet(new ulong[]{0xE306000000100000UL,0x20401000004408UL,0x20UL});
-		public static readonly BitSet _primaryExpression_in_statementExpression1160 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _INCREMENT_in_statementExpression1176 = new BitSet(new ulong[]{0xE306000000100000UL,0x20401000004408UL,0x20UL});
-		public static readonly BitSet _primaryExpression_in_statementExpression1178 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _DECREMENT_in_statementExpression1195 = new BitSet(new ulong[]{0xE306000000100000UL,0x20401000004408UL,0x20UL});
-		public static readonly BitSet _primaryExpression_in_statementExpression1197 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _memberModifier_in_localMemberVariableDeclaration1220 = new BitSet(new ulong[]{0x0UL,0x8000000000000UL});
-		public static readonly BitSet _TYPE_in_localMemberVariableDeclaration1223 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _localVariableDeclarationAssignment_in_localMemberVariableDeclaration1225 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_localMemberVariableDeclaration1228 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _localVariableDeclarationAssignment_in_localMemberVariableDeclaration1230 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _TYPE_in_localVariableDeclaration1268 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _localVariableDeclarationAssignment_in_localVariableDeclaration1270 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_localVariableDeclaration1273 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _localVariableDeclarationAssignment_in_localVariableDeclaration1275 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _IDENTIFIER_in_localVariableDeclarationAssignment1301 = new BitSet(new ulong[]{0x202UL});
-		public static readonly BitSet _ASSIGNMENT_in_localVariableDeclarationAssignment1304 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_localVariableDeclarationAssignment1306 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _primaryExpression_in_invocationExpression1357 = new BitSet(new ulong[]{0x200001000FFE02UL});
-		public static readonly BitSet _ASSIGNMENT_in_invocationExpression1368 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_invocationExpression1370 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ASSIGN_PLUS_in_invocationExpression1389 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_invocationExpression1391 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ASSIGN_MINUS_in_invocationExpression1417 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_invocationExpression1419 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ASSIGN_MUL_in_invocationExpression1445 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_invocationExpression1447 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ASSIGN_DIV_in_invocationExpression1473 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_invocationExpression1475 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ASSIGN_REM_in_invocationExpression1501 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_invocationExpression1503 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ASSIGN_AND_in_invocationExpression1529 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_invocationExpression1531 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ASSIGN_OR_in_invocationExpression1557 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_invocationExpression1559 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ASSIGN_REV_in_invocationExpression1585 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_invocationExpression1587 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ASSIGN_LSHIFT_in_invocationExpression1613 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_invocationExpression1615 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ASSIGN_RSHIFT_in_invocationExpression1640 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_invocationExpression1642 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _INCREMENT_in_invocationExpression1667 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _DECREMENT_in_invocationExpression1688 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _statementExpression_in_statementExpressionList1732 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_statementExpressionList1735 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000004408UL,0x224UL});
-		public static readonly BitSet _statementExpression_in_statementExpressionList1738 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _tag_in_expression1763 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _assignmentExpression_in_expression1769 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _EOF_in_expression1771 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _expression_in_expressionList1785 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _COMMA_in_expressionList1788 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_expressionList1791 = new BitSet(new ulong[]{0x4000002UL});
-		public static readonly BitSet _conditionalExpression_in_assignmentExpression1805 = new BitSet(new ulong[]{0x202UL});
-		public static readonly BitSet _ASSIGNMENT_in_assignmentExpression1808 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_assignmentExpression1811 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _conditionalOrExpression_in_conditionalExpression1825 = new BitSet(new ulong[]{0x10000002UL});
-		public static readonly BitSet _CONDITION_in_conditionalExpression1828 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_conditionalExpression1831 = new BitSet(new ulong[]{0x1000000UL});
-		public static readonly BitSet _COLON_in_conditionalExpression1833 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_conditionalExpression1836 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _conditionalAndExpression_in_conditionalOrExpression1849 = new BitSet(new ulong[]{0x2UL,0x4UL});
-		public static readonly BitSet _LOGICAL_OR_in_conditionalOrExpression1852 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _conditionalAndExpression_in_conditionalOrExpression1855 = new BitSet(new ulong[]{0x2UL,0x4UL});
-		public static readonly BitSet _inclusiveOrExpression_in_conditionalAndExpression1868 = new BitSet(new ulong[]{0x2UL,0x2UL});
-		public static readonly BitSet _LOGICAL_AND_in_conditionalAndExpression1871 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _inclusiveOrExpression_in_conditionalAndExpression1874 = new BitSet(new ulong[]{0x2UL,0x2UL});
-		public static readonly BitSet _exclusiveOrExpression_in_inclusiveOrExpression1889 = new BitSet(new ulong[]{0x2UL,0x10000UL});
-		public static readonly BitSet _OR_in_inclusiveOrExpression1892 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _exclusiveOrExpression_in_inclusiveOrExpression1895 = new BitSet(new ulong[]{0x2UL,0x10000UL});
-		public static readonly BitSet _andExpression_in_exclusiveOrExpression1909 = new BitSet(new ulong[]{0x2UL,0x100000000000000UL});
-		public static readonly BitSet _XOR_in_exclusiveOrExpression1912 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _andExpression_in_exclusiveOrExpression1915 = new BitSet(new ulong[]{0x2UL,0x100000000000000UL});
-		public static readonly BitSet _instanceOfExpression_in_andExpression1929 = new BitSet(new ulong[]{0x12UL});
-		public static readonly BitSet _AND_in_andExpression1932 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _instanceOfExpression_in_andExpression1935 = new BitSet(new ulong[]{0x12UL});
-		public static readonly BitSet _equalityExpression_in_instanceOfExpression1949 = new BitSet(new ulong[]{0x40000000000002UL});
-		public static readonly BitSet _INSTANCEOF_in_instanceOfExpression1952 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_instanceOfExpression1955 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _relationalExpression_in_equalityExpression1969 = new BitSet(new ulong[]{0x2000000002UL,0xC00002000UL});
-		public static readonly BitSet _set_in_equalityExpression1972 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _relationalExpression_in_equalityExpression1989 = new BitSet(new ulong[]{0x2000000002UL,0xC00002000UL});
-		public static readonly BitSet _shiftExpression_in_relationalExpression2004 = new BitSet(new ulong[]{0xC01800000000002UL});
-		public static readonly BitSet _set_in_relationalExpression2007 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _shiftExpression_in_relationalExpression2024 = new BitSet(new ulong[]{0xC01800000000002UL});
-		public static readonly BitSet _additiveExpression_in_shiftExpression2038 = new BitSet(new ulong[]{0x2UL,0x100000010UL});
-		public static readonly BitSet _set_in_shiftExpression2041 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _additiveExpression_in_shiftExpression2048 = new BitSet(new ulong[]{0x2UL,0x100000010UL});
-		public static readonly BitSet _multiplicativeExpression_in_additiveExpression2063 = new BitSet(new ulong[]{0x2UL,0x100080UL});
-		public static readonly BitSet _set_in_additiveExpression2066 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _multiplicativeExpression_in_additiveExpression2073 = new BitSet(new ulong[]{0x2UL,0x100080UL});
-		public static readonly BitSet _unaryExpression_in_multiplicativeExpression2087 = new BitSet(new ulong[]{0x400000002UL,0x300UL});
-		public static readonly BitSet _set_in_multiplicativeExpression2090 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _unaryExpression_in_multiplicativeExpression2103 = new BitSet(new ulong[]{0x400000002UL,0x300UL});
-		public static readonly BitSet _primaryExpression_in_unaryExpression2122 = new BitSet(new ulong[]{0x20000100000002UL});
-		public static readonly BitSet _INCREMENT_in_unaryExpression2132 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _DECREMENT_in_unaryExpression2154 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _INCREMENT_in_unaryExpression2192 = new BitSet(new ulong[]{0xE306000000100000UL,0x20401000004408UL,0x20UL});
-		public static readonly BitSet _primaryExpression_in_unaryExpression2194 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _DECREMENT_in_unaryExpression2211 = new BitSet(new ulong[]{0xE306000000100000UL,0x20401000004408UL,0x20UL});
-		public static readonly BitSet _primaryExpression_in_unaryExpression2213 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _137_in_unaryExpression2230 = new BitSet(new ulong[]{0xE306000000100000UL,0x20401000004408UL,0x20UL});
-		public static readonly BitSet _primaryExpression_in_unaryExpression2232 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _PLUS_in_unaryExpression2250 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _MINUS_in_unaryExpression2254 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _NOT_in_unaryExpression2258 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _145_in_unaryExpression2262 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _unaryExpression_in_unaryExpression2265 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _143_in_unaryExpression2286 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _unaryExpression_in_unaryExpression2288 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _variable_in_primaryExpression2315 = new BitSet(new ulong[]{0x300000800000002UL,0x8UL});
-		public static readonly BitSet _literal_in_primaryExpression2331 = new BitSet(new ulong[]{0x300000800000002UL,0x8UL});
-		public static readonly BitSet _array_literal_in_primaryExpression2348 = new BitSet(new ulong[]{0x300000800000002UL,0x8UL});
-		public static readonly BitSet _anonymous_function_define_in_primaryExpression2362 = new BitSet(new ulong[]{0x300000800000002UL,0x8UL});
-		public static readonly BitSet _LPAREN_in_primaryExpression2373 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_primaryExpression2375 = new BitSet(new ulong[]{0x0UL,0x80000000UL});
-		public static readonly BitSet _RPAREN_in_primaryExpression2377 = new BitSet(new ulong[]{0x300000800000002UL,0x8UL});
-		public static readonly BitSet _LPAREN_in_primaryExpression2393 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401080105488UL,0x28220UL});
-		public static readonly BitSet _RPAREN_in_primaryExpression2401 = new BitSet(new ulong[]{0x300000800000002UL,0x8UL});
-		public static readonly BitSet _expressionList_in_primaryExpression2420 = new BitSet(new ulong[]{0x0UL,0x80000000UL});
-		public static readonly BitSet _RPAREN_in_primaryExpression2422 = new BitSet(new ulong[]{0x300000800000002UL,0x8UL});
-		public static readonly BitSet _DOT_in_primaryExpression2454 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _IDENTIFIER_in_primaryExpression2456 = new BitSet(new ulong[]{0x300000800000002UL,0x8UL});
-		public static readonly BitSet _LBRACE_in_primaryExpression2476 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_primaryExpression2480 = new BitSet(new ulong[]{0x0UL,0x10000000UL});
-		public static readonly BitSet _RBRACE_in_primaryExpression2482 = new BitSet(new ulong[]{0x300000800000002UL,0x8UL});
-		public static readonly BitSet _object_literal_in_primaryExpression2503 = new BitSet(new ulong[]{0x300000800000002UL,0x8UL});
-		public static readonly BitSet _object_literal_in_primaryExpression2529 = new BitSet(new ulong[]{0x800000002UL});
-		public static readonly BitSet _DOT_in_primaryExpression2544 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _IDENTIFIER_in_primaryExpression2546 = new BitSet(new ulong[]{0x800000002UL});
-		public static readonly BitSet _LESS_THAN_in_tag2576 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _IDENTIFIER_in_tag2581 = new BitSet(new ulong[]{0x1000000UL});
-		public static readonly BitSet _COLON_in_tag2583 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _IDENTIFIER_in_tag2589 = new BitSet(new ulong[]{0x5000000000000UL,0x200000000000000UL});
-		public static readonly BitSet _tagAttr_in_tag2591 = new BitSet(new ulong[]{0x5000000000000UL,0x200000000000000UL});
-		public static readonly BitSet _GREAT_THAN_in_tag2601 = new BitSet(new ulong[]{0xEB26000100100000UL,0x942840100D004408UL,0x17EF5UL});
-		public static readonly BitSet _tagStmt_in_tag2605 = new BitSet(new ulong[]{0x0UL,0x400000000000000UL});
-		public static readonly BitSet _122_in_tag2608 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _IDENTIFIER_in_tag2611 = new BitSet(new ulong[]{0x1000000UL});
-		public static readonly BitSet _COLON_in_tag2613 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _IDENTIFIER_in_tag2617 = new BitSet(new ulong[]{0x1000000000000UL});
-		public static readonly BitSet _GREAT_THAN_in_tag2619 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _121_in_tag2625 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _statement_in_tagStmt2672 = new BitSet(new ulong[]{0xEB26000100100002UL,0x902840100D004408UL,0x17EF5UL});
-		public static readonly BitSet _tag_in_tagStmt2676 = new BitSet(new ulong[]{0xEB26000100100002UL,0x902840100D004408UL,0x17EF5UL});
-		public static readonly BitSet _IDENTIFIER_in_tagAttr2691 = new BitSet(new ulong[]{0x200UL});
-		public static readonly BitSet _ASSIGNMENT_in_tagAttr2693 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _unaryExpression_in_tagAttr2697 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _memberModifier_in_tagTemplateDefine2723 = new BitSet(new ulong[]{0x0UL,0x0UL,0x1000UL});
-		public static readonly BitSet _140_in_tagTemplateDefine2726 = new BitSet(new ulong[]{0x800000000000000UL});
-		public static readonly BitSet _LESS_THAN_in_tagTemplateDefine2728 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _IDENTIFIER_in_tagTemplateDefine2732 = new BitSet(new ulong[]{0x1000000000000UL});
-		public static readonly BitSet _GREAT_THAN_in_tagTemplateDefine2734 = new BitSet(new ulong[]{0x800000000000000UL,0x8UL});
-		public static readonly BitSet _LPAREN_in_tagTemplateDefine2738 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _parameterDeclarationList_in_tagTemplateDefine2742 = new BitSet(new ulong[]{0x0UL,0x80000000UL});
-		public static readonly BitSet _RPAREN_in_tagTemplateDefine2744 = new BitSet(new ulong[]{0x800000000000000UL});
-		public static readonly BitSet _tag_in_tagTemplateDefine2749 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IDENTIFIER_in_variable2781 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LBRACE_in_array_literal2792 = new BitSet(new ulong[]{0xEB26000104100000UL,0x20401010105488UL,0x28220UL});
-		public static readonly BitSet _expressionList_in_array_literal2794 = new BitSet(new ulong[]{0x4000000UL,0x10000000UL});
-		public static readonly BitSet _COMMA_in_array_literal2797 = new BitSet(new ulong[]{0x4000000UL,0x10000000UL});
-		public static readonly BitSet _RBRACE_in_array_literal2800 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LCURLY_in_object_literal2823 = new BitSet(new ulong[]{0x4000004000000UL,0x1020000000UL});
-		public static readonly BitSet _keypair_in_object_literal2825 = new BitSet(new ulong[]{0x4000000UL,0x20000000UL});
-		public static readonly BitSet _COMMA_in_object_literal2829 = new BitSet(new ulong[]{0x4000000000000UL,0x1000000000UL});
-		public static readonly BitSet _keypair_in_object_literal2831 = new BitSet(new ulong[]{0x4000000UL,0x20000000UL});
-		public static readonly BitSet _COMMA_in_object_literal2835 = new BitSet(new ulong[]{0x4000000UL,0x20000000UL});
-		public static readonly BitSet _RCURLY_in_object_literal2838 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _variable_in_keypair2863 = new BitSet(new ulong[]{0x1000000UL});
-		public static readonly BitSet _STRING_LITERATE_in_keypair2865 = new BitSet(new ulong[]{0x1000000UL});
-		public static readonly BitSet _COLON_in_keypair2868 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_keypair2871 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _LCURLY_in_jsonParse2887 = new BitSet(new ulong[]{0x4000004000000UL,0x1020000000UL});
-		public static readonly BitSet _jsonParse_keypair_in_jsonParse2889 = new BitSet(new ulong[]{0x4000000UL,0x20000000UL});
-		public static readonly BitSet _COMMA_in_jsonParse2894 = new BitSet(new ulong[]{0x4000000000000UL,0x1000000000UL});
-		public static readonly BitSet _jsonParse_keypair_in_jsonParse2896 = new BitSet(new ulong[]{0x4000000UL,0x20000000UL});
-		public static readonly BitSet _COMMA_in_jsonParse2901 = new BitSet(new ulong[]{0x4000000UL,0x20000000UL});
-		public static readonly BitSet _RCURLY_in_jsonParse2904 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _variable_in_jsonParse_keypair2919 = new BitSet(new ulong[]{0x1000000UL});
-		public static readonly BitSet _STRING_LITERATE_in_jsonParse_keypair2923 = new BitSet(new ulong[]{0x1000000UL});
-		public static readonly BitSet _COLON_in_jsonParse_keypair2926 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_jsonParse_keypair2931 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _134_in_ifelse2948 = new BitSet(new ulong[]{0x0UL,0x8UL});
-		public static readonly BitSet _LPAREN_in_ifelse2950 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _conditionalOrExpression_in_ifelse2952 = new BitSet(new ulong[]{0x0UL,0x80000000UL});
-		public static readonly BitSet _RPAREN_in_ifelse2954 = new BitSet(new ulong[]{0xE326000100100000UL,0x1020401000004408UL,0x16E75UL});
-		public static readonly BitSet _embeddedStatement_in_ifelse2958 = new BitSet(new ulong[]{0x1000000002UL});
-		public static readonly BitSet _ELSE_in_ifelse2961 = new BitSet(new ulong[]{0xE326000100100000UL,0x1020401000004408UL,0x16E75UL});
-		public static readonly BitSet _embeddedStatement_in_ifelse2965 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _132_in_forStatement2999 = new BitSet(new ulong[]{0x0UL,0x8UL});
-		public static readonly BitSet _LPAREN_in_forStatement3001 = new BitSet(new ulong[]{0xE326000100100000UL,0x28401200004408UL,0x224UL});
-		public static readonly BitSet _forInit_in_forStatement3003 = new BitSet(new ulong[]{0x0UL,0x200000000UL});
-		public static readonly BitSet _SEMI_in_forStatement3006 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401200105488UL,0x28220UL});
-		public static readonly BitSet _conditionalOrExpression_in_forStatement3008 = new BitSet(new ulong[]{0x0UL,0x200000000UL});
-		public static readonly BitSet _SEMI_in_forStatement3011 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401080004408UL,0x224UL});
-		public static readonly BitSet _statementExpressionList_in_forStatement3013 = new BitSet(new ulong[]{0x0UL,0x80000000UL});
-		public static readonly BitSet _RPAREN_in_forStatement3016 = new BitSet(new ulong[]{0xE326000100100000UL,0x1020401000004408UL,0x16E75UL});
-		public static readonly BitSet _embeddedStatement_in_forStatement3018 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _localVariableDeclaration_in_forInit3090 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _statementExpressionList_in_forInit3096 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _132_in_foreachStatement3108 = new BitSet(new ulong[]{0x0UL,0x8UL});
-		public static readonly BitSet _LPAREN_in_foreachStatement3110 = new BitSet(new ulong[]{0x4000000000000UL,0x8000000000000UL});
-		public static readonly BitSet _TYPE_in_foreachStatement3114 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _IDENTIFIER_in_foreachStatement3117 = new BitSet(new ulong[]{0x0UL,0x0UL,0x100UL});
-		public static readonly BitSet _136_in_foreachStatement3119 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_foreachStatement3121 = new BitSet(new ulong[]{0x0UL,0x80000000UL});
-		public static readonly BitSet _RPAREN_in_foreachStatement3123 = new BitSet(new ulong[]{0xE326000100100000UL,0x1020401000004408UL,0x16E75UL});
-		public static readonly BitSet _embeddedStatement_in_foreachStatement3125 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _144_in_whileStatement3154 = new BitSet(new ulong[]{0x0UL,0x8UL});
-		public static readonly BitSet _LPAREN_in_whileStatement3156 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _conditionalOrExpression_in_whileStatement3159 = new BitSet(new ulong[]{0x0UL,0x80000000UL});
-		public static readonly BitSet _RPAREN_in_whileStatement3162 = new BitSet(new ulong[]{0xE326000100100000UL,0x1020401000004408UL,0x16E75UL});
-		public static readonly BitSet _embeddedStatement_in_whileStatement3164 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _139_in_switchStatement3230 = new BitSet(new ulong[]{0x0UL,0x8UL});
-		public static readonly BitSet _LPAREN_in_switchStatement3232 = new BitSet(new ulong[]{0xE326000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _conditionalOrExpression_in_switchStatement3234 = new BitSet(new ulong[]{0x0UL,0x80000000UL});
-		public static readonly BitSet _RPAREN_in_switchStatement3236 = new BitSet(new ulong[]{0x200000000000000UL});
-		public static readonly BitSet _LCURLY_in_switchStatement3241 = new BitSet(new ulong[]{0xE326000100100000UL,0xB02840102D004408UL,0x17EF7UL});
-		public static readonly BitSet _switchCaseStatementList_in_switchStatement3243 = new BitSet(new ulong[]{0x0UL,0x20000000UL});
-		public static readonly BitSet _RCURLY_in_switchStatement3246 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _switchCaseCondition_in_switchCaseStatementList3272 = new BitSet(new ulong[]{0xE326000100100002UL,0xB02840100D004408UL,0x17EF7UL});
-		public static readonly BitSet _125_in_switchCaseCondition3290 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_switchCaseCondition3292 = new BitSet(new ulong[]{0x1000000UL});
-		public static readonly BitSet _COLON_in_switchCaseCondition3294 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _statement_in_switchCaseCondition3309 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _129_in_switchCaseCondition3323 = new BitSet(new ulong[]{0x1000000UL});
-		public static readonly BitSet _COLON_in_switchCaseCondition3325 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _142_in_tryCatchStatement3347 = new BitSet(new ulong[]{0x200000000000000UL});
-		public static readonly BitSet _block_in_tryCatchStatement3351 = new BitSet(new ulong[]{0x0UL,0x4000000000000000UL,0x8UL});
-		public static readonly BitSet _126_in_tryCatchStatement3356 = new BitSet(new ulong[]{0x200000000000000UL,0x8UL});
-		public static readonly BitSet _LPAREN_in_tryCatchStatement3359 = new BitSet(new ulong[]{0x4000000000000UL});
-		public static readonly BitSet _IDENTIFIER_in_tryCatchStatement3363 = new BitSet(new ulong[]{0x0UL,0x80000000UL});
-		public static readonly BitSet _RPAREN_in_tryCatchStatement3365 = new BitSet(new ulong[]{0x200000000000000UL});
-		public static readonly BitSet _block_in_tryCatchStatement3372 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _131_in_tryCatchStatement3378 = new BitSet(new ulong[]{0x200000000000000UL});
-		public static readonly BitSet _block_in_tryCatchStatement3382 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _141_in_tryCatchStatement3421 = new BitSet(new ulong[]{0xEB26000100100000UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_tryCatchStatement3423 = new BitSet(new ulong[]{0x0UL,0x200000000UL});
-		public static readonly BitSet _SEMI_in_tryCatchStatement3425 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _returnStatement_in_terminalStatement3449 = new BitSet(new ulong[]{0x0UL,0x200000000UL});
-		public static readonly BitSet _124_in_terminalStatement3458 = new BitSet(new ulong[]{0x0UL,0x200000000UL});
-		public static readonly BitSet _128_in_terminalStatement3466 = new BitSet(new ulong[]{0x0UL,0x200000000UL});
-		public static readonly BitSet _SEMI_in_terminalStatement3473 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _138_in_returnStatement3484 = new BitSet(new ulong[]{0xEB26000100100002UL,0x20401000105488UL,0x28220UL});
-		public static readonly BitSet _expression_in_returnStatement3486 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _statement_in_script544 = new BitSet(new ulong[]{0x1A98000200100002UL,0x205080201A022047UL,0x17EF5UL});
+		public static readonly BitSet _function_define_in_function_defines560 = new BitSet(new ulong[]{0x200000000000002UL,0x1A000000UL,0x20UL});
+		public static readonly BitSet _memberModifier_in_function_define576 = new BitSet(new ulong[]{0x0UL,0x0UL,0x20UL});
+		public static readonly BitSet _133_in_function_define579 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _IDENTIFIER_in_function_define583 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _LPAREN_in_function_define585 = new BitSet(new ulong[]{0x10000000000000UL,0x100000000UL});
+		public static readonly BitSet _parameterDeclarationList_in_function_define589 = new BitSet(new ulong[]{0x0UL,0x100000000UL});
+		public static readonly BitSet _RPAREN_in_function_define592 = new BitSet(new ulong[]{0x1000000000000000UL});
+		public static readonly BitSet _functionBody_in_function_define596 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _133_in_anonymous_function_define627 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _LPAREN_in_anonymous_function_define629 = new BitSet(new ulong[]{0x10000000000000UL,0x100000000UL});
+		public static readonly BitSet _parameterDeclarationList_in_anonymous_function_define633 = new BitSet(new ulong[]{0x0UL,0x100000000UL});
+		public static readonly BitSet _RPAREN_in_anonymous_function_define636 = new BitSet(new ulong[]{0x1000000000000000UL});
+		public static readonly BitSet _functionBody_in_anonymous_function_define640 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LPAREN_in_anonymous_function_define652 = new BitSet(new ulong[]{0x10000000000000UL,0x100000000UL});
+		public static readonly BitSet _parameterDeclarationList_in_anonymous_function_define656 = new BitSet(new ulong[]{0x0UL,0x100000000UL});
+		public static readonly BitSet _RPAREN_in_anonymous_function_define659 = new BitSet(new ulong[]{0x0UL,0x1000000000000000UL});
+		public static readonly BitSet _124_in_anonymous_function_define661 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _functionBody_in_anonymous_function_define671 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _assignmentExpression_in_anonymous_function_define689 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IDENTIFIER_in_anonymous_function_define708 = new BitSet(new ulong[]{0x0UL,0x1000000000000000UL});
+		public static readonly BitSet _124_in_anonymous_function_define710 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _functionBody_in_anonymous_function_define720 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _assignmentExpression_in_anonymous_function_define738 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IDENTIFIER_in_parameterDeclarationList761 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _COMMA_in_parameterDeclarationList764 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _IDENTIFIER_in_parameterDeclarationList767 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _LCURLY_in_block781 = new BitSet(new ulong[]{0x1A98000200100000UL,0x205080205A022047UL,0x17EF5UL});
+		public static readonly BitSet _statement_in_block783 = new BitSet(new ulong[]{0x1A98000200100000UL,0x205080205A022047UL,0x17EF5UL});
+		public static readonly BitSet _RCURLY_in_block786 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LCURLY_in_functionBody810 = new BitSet(new ulong[]{0x1A98000200100000UL,0x205080205A022047UL,0x17EF5UL});
+		public static readonly BitSet _statement_in_functionBody817 = new BitSet(new ulong[]{0x1A98000200100000UL,0x205080205A022047UL,0x17EF5UL});
+		public static readonly BitSet _RCURLY_in_functionBody824 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _importStatement_in_statement854 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _SEMI_in_statement856 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _localVariableDeclaration_in_statement862 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _SEMI_in_statement864 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _function_define_in_statement870 = new BitSet(new ulong[]{0x2UL,0x400000000UL});
+		public static readonly BitSet _SEMI_in_statement872 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _tagTemplateDefine_in_statement880 = new BitSet(new ulong[]{0x2UL,0x400000000UL});
+		public static readonly BitSet _SEMI_in_statement882 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _embeddedStatement_in_statement889 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _135_in_importStatement900 = new BitSet(new ulong[]{0x10000000000000UL,0x2000000000UL});
+		public static readonly BitSet _namespaceDeclare_in_importStatement911 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _STRING_LITERATE_in_importStatement926 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IDENTIFIER_in_namespaceDeclare951 = new BitSet(new ulong[]{0x1000000002UL});
+		public static readonly BitSet _DOT_in_namespaceDeclare954 = new BitSet(new ulong[]{0x10000000000000UL,0x1000UL});
+		public static readonly BitSet _set_in_namespaceDeclare956 = new BitSet(new ulong[]{0x1000000002UL});
+		public static readonly BitSet _block_in_embeddedStatement977 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _statementExpression_in_embeddedStatement982 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _SEMI_in_embeddedStatement984 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ifelse_in_embeddedStatement990 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _forStatement_in_embeddedStatement995 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _foreachStatement_in_embeddedStatement1000 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _whileStatement_in_embeddedStatement1005 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _switchStatement_in_embeddedStatement1010 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _terminalStatement_in_embeddedStatement1015 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _tryCatchStatement_in_embeddedStatement1020 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _invocationExpression_in_statementExpression1035 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _137_in_statementExpression1040 = new BitSet(new ulong[]{0x1818000000100000UL,0x40802000022047UL,0x20UL});
+		public static readonly BitSet _primaryExpression_in_statementExpression1042 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _130_in_statementExpression1057 = new BitSet(new ulong[]{0x1818000000100000UL,0x40802000022047UL,0x20UL});
+		public static readonly BitSet _primaryExpression_in_statementExpression1059 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _INCREMENT_in_statementExpression1075 = new BitSet(new ulong[]{0x1818000000100000UL,0x40802000022047UL,0x20UL});
+		public static readonly BitSet _primaryExpression_in_statementExpression1077 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _DECREMENT_in_statementExpression1094 = new BitSet(new ulong[]{0x1818000000100000UL,0x40802000022047UL,0x20UL});
+		public static readonly BitSet _primaryExpression_in_statementExpression1096 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _memberModifier_in_localMemberVariableDeclaration1119 = new BitSet(new ulong[]{0x0UL,0x10000000000000UL});
+		public static readonly BitSet _TYPE_in_localMemberVariableDeclaration1122 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _localVariableDeclarationAssignment_in_localMemberVariableDeclaration1124 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _COMMA_in_localMemberVariableDeclaration1127 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _localVariableDeclarationAssignment_in_localMemberVariableDeclaration1129 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _TYPE_in_localVariableDeclaration1166 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _localVariableDeclarationAssignment_in_localVariableDeclaration1168 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _COMMA_in_localVariableDeclaration1171 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _localVariableDeclarationAssignment_in_localVariableDeclaration1173 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _IDENTIFIER_in_localVariableDeclarationAssignment1201 = new BitSet(new ulong[]{0x202UL});
+		public static readonly BitSet _ASSIGNMENT_in_localVariableDeclarationAssignment1204 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_localVariableDeclarationAssignment1208 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _primaryExpression_in_invocationExpression1257 = new BitSet(new ulong[]{0x800002000FFE02UL});
+		public static readonly BitSet _ASSIGNMENT_in_invocationExpression1268 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_invocationExpression1270 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ASSIGN_PLUS_in_invocationExpression1289 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_invocationExpression1291 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ASSIGN_MINUS_in_invocationExpression1317 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_invocationExpression1319 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ASSIGN_MUL_in_invocationExpression1345 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_invocationExpression1347 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ASSIGN_DIV_in_invocationExpression1373 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_invocationExpression1375 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ASSIGN_REM_in_invocationExpression1401 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_invocationExpression1403 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ASSIGN_AND_in_invocationExpression1429 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_invocationExpression1431 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ASSIGN_OR_in_invocationExpression1457 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_invocationExpression1459 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ASSIGN_REV_in_invocationExpression1485 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_invocationExpression1487 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ASSIGN_LSHIFT_in_invocationExpression1513 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_invocationExpression1515 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ASSIGN_RSHIFT_in_invocationExpression1540 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_invocationExpression1542 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _INCREMENT_in_invocationExpression1567 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _DECREMENT_in_invocationExpression1588 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _statementExpression_in_statementExpressionList1632 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _COMMA_in_statementExpressionList1635 = new BitSet(new ulong[]{0x1898000200100000UL,0x40802000022047UL,0x224UL});
+		public static readonly BitSet _statementExpression_in_statementExpressionList1638 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _tag_in_expression1663 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _assignmentExpression_in_expression1669 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _EOF_in_expression1671 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _expression_in_expressionList1685 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _COMMA_in_expressionList1688 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_expressionList1691 = new BitSet(new ulong[]{0x4000002UL});
+		public static readonly BitSet _conditionalExpression_in_assignmentExpression1705 = new BitSet(new ulong[]{0x202UL});
+		public static readonly BitSet _ASSIGNMENT_in_assignmentExpression1708 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_assignmentExpression1711 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _conditionalOrExpression_in_conditionalExpression1725 = new BitSet(new ulong[]{0x10000002UL});
+		public static readonly BitSet _CONDITION_in_conditionalExpression1728 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_conditionalExpression1731 = new BitSet(new ulong[]{0x1000000UL});
+		public static readonly BitSet _COLON_in_conditionalExpression1733 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_conditionalExpression1736 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _conditionalAndExpression_in_conditionalOrExpression1749 = new BitSet(new ulong[]{0x2UL,0x20UL});
+		public static readonly BitSet _LOGICAL_OR_in_conditionalOrExpression1752 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _conditionalAndExpression_in_conditionalOrExpression1755 = new BitSet(new ulong[]{0x2UL,0x20UL});
+		public static readonly BitSet _inclusiveOrExpression_in_conditionalAndExpression1768 = new BitSet(new ulong[]{0x2UL,0x10UL});
+		public static readonly BitSet _LOGICAL_AND_in_conditionalAndExpression1771 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _inclusiveOrExpression_in_conditionalAndExpression1774 = new BitSet(new ulong[]{0x2UL,0x10UL});
+		public static readonly BitSet _exclusiveOrExpression_in_inclusiveOrExpression1789 = new BitSet(new ulong[]{0x2UL,0x80000UL});
+		public static readonly BitSet _OR_in_inclusiveOrExpression1792 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _exclusiveOrExpression_in_inclusiveOrExpression1795 = new BitSet(new ulong[]{0x2UL,0x80000UL});
+		public static readonly BitSet _andExpression_in_exclusiveOrExpression1809 = new BitSet(new ulong[]{0x2UL,0x200000000000000UL});
+		public static readonly BitSet _XOR_in_exclusiveOrExpression1812 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _andExpression_in_exclusiveOrExpression1815 = new BitSet(new ulong[]{0x2UL,0x200000000000000UL});
+		public static readonly BitSet _instanceOfExpression_in_andExpression1829 = new BitSet(new ulong[]{0x12UL});
+		public static readonly BitSet _AND_in_andExpression1832 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _instanceOfExpression_in_andExpression1835 = new BitSet(new ulong[]{0x12UL});
+		public static readonly BitSet _equalityExpression_in_instanceOfExpression1849 = new BitSet(new ulong[]{0x100000000000002UL});
+		public static readonly BitSet _INSTANCEOF_in_instanceOfExpression1852 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_instanceOfExpression1855 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _relationalExpression_in_equalityExpression1869 = new BitSet(new ulong[]{0x4000000002UL,0x1800010000UL});
+		public static readonly BitSet _set_in_equalityExpression1872 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _relationalExpression_in_equalityExpression1889 = new BitSet(new ulong[]{0x4000000002UL,0x1800010000UL});
+		public static readonly BitSet _shiftExpression_in_relationalExpression1904 = new BitSet(new ulong[]{0x6006000000000002UL});
+		public static readonly BitSet _set_in_relationalExpression1907 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _shiftExpression_in_relationalExpression1924 = new BitSet(new ulong[]{0x6006000000000002UL});
+		public static readonly BitSet _additiveExpression_in_shiftExpression1938 = new BitSet(new ulong[]{0x2UL,0x200000080UL});
+		public static readonly BitSet _set_in_shiftExpression1941 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _additiveExpression_in_shiftExpression1948 = new BitSet(new ulong[]{0x2UL,0x200000080UL});
+		public static readonly BitSet _multiplicativeExpression_in_additiveExpression1963 = new BitSet(new ulong[]{0x2UL,0x200400UL});
+		public static readonly BitSet _set_in_additiveExpression1966 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _multiplicativeExpression_in_additiveExpression1973 = new BitSet(new ulong[]{0x2UL,0x200400UL});
+		public static readonly BitSet _unaryExpression_in_multiplicativeExpression1987 = new BitSet(new ulong[]{0x800000002UL,0x1800UL});
+		public static readonly BitSet _set_in_multiplicativeExpression1990 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _unaryExpression_in_multiplicativeExpression2003 = new BitSet(new ulong[]{0x800000002UL,0x1800UL});
+		public static readonly BitSet _primaryExpression_in_unaryExpression2022 = new BitSet(new ulong[]{0x80000200000002UL});
+		public static readonly BitSet _INCREMENT_in_unaryExpression2032 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _DECREMENT_in_unaryExpression2054 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _INCREMENT_in_unaryExpression2092 = new BitSet(new ulong[]{0x1818000000100000UL,0x40802000022047UL,0x20UL});
+		public static readonly BitSet _primaryExpression_in_unaryExpression2094 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _DECREMENT_in_unaryExpression2111 = new BitSet(new ulong[]{0x1818000000100000UL,0x40802000022047UL,0x20UL});
+		public static readonly BitSet _primaryExpression_in_unaryExpression2113 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _137_in_unaryExpression2130 = new BitSet(new ulong[]{0x1818000000100000UL,0x40802000022047UL,0x20UL});
+		public static readonly BitSet _primaryExpression_in_unaryExpression2132 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _PLUS_in_unaryExpression2150 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _MINUS_in_unaryExpression2154 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _NOT_in_unaryExpression2158 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _145_in_unaryExpression2162 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _unaryExpression_in_unaryExpression2165 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _143_in_unaryExpression2186 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _unaryExpression_in_unaryExpression2188 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _variable_in_primaryExpression2215 = new BitSet(new ulong[]{0x1800001000000002UL,0x40UL});
+		public static readonly BitSet _literal_in_primaryExpression2231 = new BitSet(new ulong[]{0x1800001000000002UL,0x40UL});
+		public static readonly BitSet _constLiteral_in_primaryExpression2249 = new BitSet(new ulong[]{0x1800001000000002UL,0x40UL});
+		public static readonly BitSet _array_literal_in_primaryExpression2268 = new BitSet(new ulong[]{0x1800001000000002UL,0x40UL});
+		public static readonly BitSet _anonymous_function_define_in_primaryExpression2282 = new BitSet(new ulong[]{0x1800001000000002UL,0x40UL});
+		public static readonly BitSet _LPAREN_in_primaryExpression2293 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_primaryExpression2295 = new BitSet(new ulong[]{0x0UL,0x100000000UL});
+		public static readonly BitSet _RPAREN_in_primaryExpression2297 = new BitSet(new ulong[]{0x1800001000000002UL,0x40UL});
+		public static readonly BitSet _LPAREN_in_primaryExpression2313 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080210022A447UL,0x28220UL});
+		public static readonly BitSet _RPAREN_in_primaryExpression2321 = new BitSet(new ulong[]{0x1800001000000002UL,0x40UL});
+		public static readonly BitSet _expressionList_in_primaryExpression2340 = new BitSet(new ulong[]{0x0UL,0x100000000UL});
+		public static readonly BitSet _RPAREN_in_primaryExpression2342 = new BitSet(new ulong[]{0x1800001000000002UL,0x40UL});
+		public static readonly BitSet _DOT_in_primaryExpression2374 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _IDENTIFIER_in_primaryExpression2376 = new BitSet(new ulong[]{0x1800001000000002UL,0x40UL});
+		public static readonly BitSet _LBRACE_in_primaryExpression2396 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_primaryExpression2400 = new BitSet(new ulong[]{0x0UL,0x20000000UL});
+		public static readonly BitSet _RBRACE_in_primaryExpression2402 = new BitSet(new ulong[]{0x1800001000000002UL,0x40UL});
+		public static readonly BitSet _object_literal_in_primaryExpression2423 = new BitSet(new ulong[]{0x1800001000000002UL,0x40UL});
+		public static readonly BitSet _object_literal_in_primaryExpression2449 = new BitSet(new ulong[]{0x1000000002UL});
+		public static readonly BitSet _DOT_in_primaryExpression2464 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _IDENTIFIER_in_primaryExpression2466 = new BitSet(new ulong[]{0x1000000002UL});
+		public static readonly BitSet _LESS_THAN_in_tag2496 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _IDENTIFIER_in_tag2501 = new BitSet(new ulong[]{0x1000000UL});
+		public static readonly BitSet _COLON_in_tag2503 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _IDENTIFIER_in_tag2509 = new BitSet(new ulong[]{0x14000000000000UL,0x400000000000000UL});
+		public static readonly BitSet _tagAttr_in_tag2511 = new BitSet(new ulong[]{0x14000000000000UL,0x400000000000000UL});
+		public static readonly BitSet _GREAT_THAN_in_tag2521 = new BitSet(new ulong[]{0x5A98000200100000UL,0x285080201A022047UL,0x17EF5UL});
+		public static readonly BitSet _tagStmt_in_tag2525 = new BitSet(new ulong[]{0x0UL,0x800000000000000UL});
+		public static readonly BitSet _123_in_tag2528 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _IDENTIFIER_in_tag2531 = new BitSet(new ulong[]{0x1000000UL});
+		public static readonly BitSet _COLON_in_tag2533 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _IDENTIFIER_in_tag2537 = new BitSet(new ulong[]{0x4000000000000UL});
+		public static readonly BitSet _GREAT_THAN_in_tag2539 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _122_in_tag2545 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _statement_in_tagStmt2592 = new BitSet(new ulong[]{0x5A98000200100002UL,0x205080201A022047UL,0x17EF5UL});
+		public static readonly BitSet _tag_in_tagStmt2596 = new BitSet(new ulong[]{0x5A98000200100002UL,0x205080201A022047UL,0x17EF5UL});
+		public static readonly BitSet _IDENTIFIER_in_tagAttr2611 = new BitSet(new ulong[]{0x200UL});
+		public static readonly BitSet _ASSIGNMENT_in_tagAttr2613 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _unaryExpression_in_tagAttr2617 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _memberModifier_in_tagTemplateDefine2643 = new BitSet(new ulong[]{0x0UL,0x0UL,0x1000UL});
+		public static readonly BitSet _140_in_tagTemplateDefine2646 = new BitSet(new ulong[]{0x4000000000000000UL});
+		public static readonly BitSet _LESS_THAN_in_tagTemplateDefine2648 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _IDENTIFIER_in_tagTemplateDefine2652 = new BitSet(new ulong[]{0x4000000000000UL});
+		public static readonly BitSet _GREAT_THAN_in_tagTemplateDefine2654 = new BitSet(new ulong[]{0x4000000000000000UL,0x40UL});
+		public static readonly BitSet _LPAREN_in_tagTemplateDefine2658 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _parameterDeclarationList_in_tagTemplateDefine2662 = new BitSet(new ulong[]{0x0UL,0x100000000UL});
+		public static readonly BitSet _RPAREN_in_tagTemplateDefine2664 = new BitSet(new ulong[]{0x4000000000000000UL});
+		public static readonly BitSet _tag_in_tagTemplateDefine2669 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IDENTIFIER_in_variable2701 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LBRACE_in_array_literal2712 = new BitSet(new ulong[]{0x5898000204100000UL,0x4080202022A447UL,0x28220UL});
+		public static readonly BitSet _expressionList_in_array_literal2714 = new BitSet(new ulong[]{0x4000000UL,0x20000000UL});
+		public static readonly BitSet _COMMA_in_array_literal2717 = new BitSet(new ulong[]{0x4000000UL,0x20000000UL});
+		public static readonly BitSet _RBRACE_in_array_literal2720 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LCURLY_in_object_literal2743 = new BitSet(new ulong[]{0x10000004000000UL,0x2040000000UL});
+		public static readonly BitSet _keypair_in_object_literal2745 = new BitSet(new ulong[]{0x4000000UL,0x40000000UL});
+		public static readonly BitSet _COMMA_in_object_literal2749 = new BitSet(new ulong[]{0x10000000000000UL,0x2000000000UL});
+		public static readonly BitSet _keypair_in_object_literal2751 = new BitSet(new ulong[]{0x4000000UL,0x40000000UL});
+		public static readonly BitSet _COMMA_in_object_literal2755 = new BitSet(new ulong[]{0x4000000UL,0x40000000UL});
+		public static readonly BitSet _RCURLY_in_object_literal2758 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _variable_in_keypair2783 = new BitSet(new ulong[]{0x1000000UL});
+		public static readonly BitSet _STRING_LITERATE_in_keypair2785 = new BitSet(new ulong[]{0x1000000UL});
+		public static readonly BitSet _COLON_in_keypair2788 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_keypair2791 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _LCURLY_in_jsonParse2807 = new BitSet(new ulong[]{0x10000004000000UL,0x2040000000UL});
+		public static readonly BitSet _jsonParse_keypair_in_jsonParse2809 = new BitSet(new ulong[]{0x4000000UL,0x40000000UL});
+		public static readonly BitSet _COMMA_in_jsonParse2814 = new BitSet(new ulong[]{0x10000000000000UL,0x2000000000UL});
+		public static readonly BitSet _jsonParse_keypair_in_jsonParse2816 = new BitSet(new ulong[]{0x4000000UL,0x40000000UL});
+		public static readonly BitSet _COMMA_in_jsonParse2821 = new BitSet(new ulong[]{0x4000000UL,0x40000000UL});
+		public static readonly BitSet _RCURLY_in_jsonParse2824 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _variable_in_jsonParse_keypair2839 = new BitSet(new ulong[]{0x1000000UL});
+		public static readonly BitSet _STRING_LITERATE_in_jsonParse_keypair2843 = new BitSet(new ulong[]{0x1000000UL});
+		public static readonly BitSet _COLON_in_jsonParse_keypair2846 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_jsonParse_keypair2851 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _134_in_ifelse2868 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _LPAREN_in_ifelse2870 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _conditionalOrExpression_in_ifelse2872 = new BitSet(new ulong[]{0x0UL,0x100000000UL});
+		public static readonly BitSet _RPAREN_in_ifelse2874 = new BitSet(new ulong[]{0x1898000200100000UL,0x2040802000022047UL,0x16E75UL});
+		public static readonly BitSet _embeddedStatement_in_ifelse2878 = new BitSet(new ulong[]{0x2000000002UL});
+		public static readonly BitSet _ELSE_in_ifelse2881 = new BitSet(new ulong[]{0x1898000200100000UL,0x2040802000022047UL,0x16E75UL});
+		public static readonly BitSet _embeddedStatement_in_ifelse2885 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _132_in_forStatement2919 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _LPAREN_in_forStatement2921 = new BitSet(new ulong[]{0x1898000200100000UL,0x50802400022047UL,0x224UL});
+		public static readonly BitSet _forInit_in_forStatement2923 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _SEMI_in_forStatement2926 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080240022A447UL,0x28220UL});
+		public static readonly BitSet _conditionalOrExpression_in_forStatement2928 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _SEMI_in_forStatement2931 = new BitSet(new ulong[]{0x1898000200100000UL,0x40802100022047UL,0x224UL});
+		public static readonly BitSet _statementExpressionList_in_forStatement2933 = new BitSet(new ulong[]{0x0UL,0x100000000UL});
+		public static readonly BitSet _RPAREN_in_forStatement2936 = new BitSet(new ulong[]{0x1898000200100000UL,0x2040802000022047UL,0x16E75UL});
+		public static readonly BitSet _embeddedStatement_in_forStatement2938 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _localVariableDeclaration_in_forInit3010 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _statementExpressionList_in_forInit3016 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _132_in_foreachStatement3028 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _LPAREN_in_foreachStatement3030 = new BitSet(new ulong[]{0x10000000000000UL,0x10000000000000UL});
+		public static readonly BitSet _TYPE_in_foreachStatement3034 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _IDENTIFIER_in_foreachStatement3037 = new BitSet(new ulong[]{0x0UL,0x0UL,0x100UL});
+		public static readonly BitSet _136_in_foreachStatement3039 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_foreachStatement3041 = new BitSet(new ulong[]{0x0UL,0x100000000UL});
+		public static readonly BitSet _RPAREN_in_foreachStatement3043 = new BitSet(new ulong[]{0x1898000200100000UL,0x2040802000022047UL,0x16E75UL});
+		public static readonly BitSet _embeddedStatement_in_foreachStatement3045 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _144_in_whileStatement3074 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _LPAREN_in_whileStatement3076 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _conditionalOrExpression_in_whileStatement3079 = new BitSet(new ulong[]{0x0UL,0x100000000UL});
+		public static readonly BitSet _RPAREN_in_whileStatement3082 = new BitSet(new ulong[]{0x1898000200100000UL,0x2040802000022047UL,0x16E75UL});
+		public static readonly BitSet _embeddedStatement_in_whileStatement3084 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _139_in_switchStatement3150 = new BitSet(new ulong[]{0x0UL,0x40UL});
+		public static readonly BitSet _LPAREN_in_switchStatement3152 = new BitSet(new ulong[]{0x1898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _conditionalOrExpression_in_switchStatement3154 = new BitSet(new ulong[]{0x0UL,0x100000000UL});
+		public static readonly BitSet _RPAREN_in_switchStatement3156 = new BitSet(new ulong[]{0x1000000000000000UL});
+		public static readonly BitSet _LCURLY_in_switchStatement3161 = new BitSet(new ulong[]{0x1A98000200100000UL,0x605080205A022047UL,0x17EF7UL});
+		public static readonly BitSet _switchCaseStatementList_in_switchStatement3163 = new BitSet(new ulong[]{0x0UL,0x40000000UL});
+		public static readonly BitSet _RCURLY_in_switchStatement3166 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _switchCaseCondition_in_switchCaseStatementList3192 = new BitSet(new ulong[]{0x1A98000200100002UL,0x605080201A022047UL,0x17EF7UL});
+		public static readonly BitSet _126_in_switchCaseCondition3210 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_switchCaseCondition3212 = new BitSet(new ulong[]{0x1000000UL});
+		public static readonly BitSet _COLON_in_switchCaseCondition3214 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _statement_in_switchCaseCondition3229 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _129_in_switchCaseCondition3243 = new BitSet(new ulong[]{0x1000000UL});
+		public static readonly BitSet _COLON_in_switchCaseCondition3245 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _142_in_tryCatchStatement3267 = new BitSet(new ulong[]{0x1000000000000000UL});
+		public static readonly BitSet _block_in_tryCatchStatement3271 = new BitSet(new ulong[]{0x0UL,0x8000000000000000UL,0x8UL});
+		public static readonly BitSet _127_in_tryCatchStatement3276 = new BitSet(new ulong[]{0x1000000000000000UL,0x40UL});
+		public static readonly BitSet _LPAREN_in_tryCatchStatement3279 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _IDENTIFIER_in_tryCatchStatement3283 = new BitSet(new ulong[]{0x0UL,0x100000000UL});
+		public static readonly BitSet _RPAREN_in_tryCatchStatement3285 = new BitSet(new ulong[]{0x1000000000000000UL});
+		public static readonly BitSet _block_in_tryCatchStatement3292 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _131_in_tryCatchStatement3298 = new BitSet(new ulong[]{0x1000000000000000UL});
+		public static readonly BitSet _block_in_tryCatchStatement3302 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _141_in_tryCatchStatement3341 = new BitSet(new ulong[]{0x5898000200100000UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_tryCatchStatement3343 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _SEMI_in_tryCatchStatement3345 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _returnStatement_in_terminalStatement3369 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _125_in_terminalStatement3378 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _128_in_terminalStatement3386 = new BitSet(new ulong[]{0x0UL,0x400000000UL});
+		public static readonly BitSet _SEMI_in_terminalStatement3393 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _138_in_returnStatement3404 = new BitSet(new ulong[]{0x5898000200100002UL,0x4080200022A447UL,0x28220UL});
+		public static readonly BitSet _expression_in_returnStatement3406 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _THIS_in_literal3433 = new BitSet(new ulong[]{0x2UL});
 	}
 	#endregion Follow sets
 }
 
-} // namespace  Unvell.ReoScript 
+} // namespace Unvell.ReoScript

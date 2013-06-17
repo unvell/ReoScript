@@ -151,7 +151,7 @@
     <script>
       var t = debug.assert;
 
-      var a = function() { return a; }
+      var a = function() { return a; };
 
       t( a()()()()()()()()()()()() == a );
 
@@ -269,27 +269,39 @@
     </script>
   </test-case>
 
-  <test-case id="017" name="override by apply" disabled="true">
+  <test-case id="017" name="override by apply">
     <script>
       var t = debug.assert;
       
       t( Function.prototype.hasOwnProperty('apply') );
      
+      var a = 0;
+      
       function fun1() {
-        return 10;
+        a += 10;
       }
+      
+      fun1();
+      t(a, 10);
       
       fun1 = (function() {
         var cached_function = fun1;
 
         return function() {
           // code before override goings here
-
-          cached_function.apply(this, __args__);      // use .apply() to call it
+          a += 5;
+          
+          //t(cached_function != null);
+          
+          cached_function.apply(this, __args__);      // use .apply() to call origial function
 
           // code after override goings here
         };
       }());
+      
+      fun1();
+      
+      t(a, 25);
 
     </script>
   </test-case>
@@ -332,6 +344,7 @@
 
       try {
         inner();                   // error: Function is not defined: inner
+        t(false);
       } catch (e) {
         t(e.message, "Function is not defined: inner");
       }
@@ -340,28 +353,288 @@
 
       try {
         outer.inner();            // error
+        t(false);
       } catch(e) {
         t(e.message, "function outer() {...} has no method 'inner'");
       }
+      
+
+      function outside() {
+        function inside() { }
+      }
+      
+      t(typeof outside, 'function');
+      t(typeof inside, 'null');
     </script>
   </test-case>
-  
-  <test-case id="020" name="inner, call before define">
+
+  <test-case id="020" name="outer variable">
     <script>
       var t = debug.assert;
       
       function outer() {
+        var a = 10;
         
-        // FIXME: t(inner(), 10);
+        function inner() {
+          t(a, 10);
+          return a + 20;
+        };
+        
+        t(inner(), 30);
+      }
+
+      outer();
+    </script>
+  </test-case>
+
+  <test-case id="021" name="nested outer function" disabled="false">
+    <script>
+      var t = debug.assert;
+      
+      function outer() {
+        var a = 10;
+        
+        function inner() {
+          var c = 5;
+          
+          function inner2() {
+            t(a, 10);
+            t(c, 5);
+            
+            t(script.a, null);
+            t(script.c, null);
+          }
+          
+          inner2();
+        };
+        
+        inner();
+      }
+
+      outer();
+    </script>
+  </test-case>
+
+
+  <test-case id="022" name="nested outer anonymous" disabled="false">
+    <script>
+      var t = debug.assert;
+      
+      var outer = function() {
+        var a = 10;
+        
+        var inner = function() {
+          var c = 5;
+          
+          var inner2 = function() {
+            t(a, 10);
+            t(c, 5);
+            
+            t(script.a, null);
+            t(script.c, null);
+          };
+          
+          inner2();
+        };
+        
+        inner();
+      };
+
+      outer();
+    </script>
+  </test-case>
+
+
+  <test-case id="023" name="nested another outer" disabled="true">
+    <script>
+      var t = debug.assert;
+      
+      function outer() {
+        var a = 10;
+        
+        function inner() {
+          var c = 5;
+          
+          function inner2() {
+            t(a, 10);
+            t(c, 5);
+
+            t(script.a, null);
+            t(script.c, null);
+            
+            another_outer();
+            another_inner();
+          }
+          
+          inner2();
+        };
+        
+        inner();
+        
+        function another_inner() {
+          t(a, 10);
+          alert(c);                // FIXME: c should be null
+          t(c, null);
+            
+          t(script.a, null);
+          t(script.c, null);
+        }
+      }
+
+      outer();
+      
+      function another_outer(){
+        t(a, null);
+        t(c, null);
+            
+        t(script.a, null);
+        t(script.c, null);
+      }
+    </script>
+  </test-case>
+  
+  <test-case id="024" name="inner, call before define">
+    <script>
+      var t = debug.assert;
+      
+      function outer() {
+        t(inner(), 10);
         
         function inner() {
           return 10;
         };
-        
       };
       
       outer();
+    </script>
+  </test-case>
+
+  <test-case id="025" name="invisbile local variable">
+    <script>
+      var t = debug.assert;
+      
+      function a(){
+        t(b, null);
+      }
+
+      function c(){
+        var b = 10;
+        a();
+      }
+
+      c(); 
+      
+      function() {
+        function bb() {
+          t(aa_a, null);
+        }
+        
+        function aa() {
+          var aa_a = 0;
+          bb();
+        }
+      }();
+    </script>
+  </test-case>
+
+
+  <test-case id="026" name="object name">
+    <script>
+      var t = debug.assert;
+      
+      function f() {
+      };
+      
+      t(f, "function f() {...}");
       
     </script>
   </test-case>
+
+  <test-case id="027" name="prototype before define">
+    <script>
+      var t = debug.assert;
+
+      function() {
+
+        F.prototype.f = function() { return 10; };
+
+        function F() {
+        }
+      
+        var rs = new F().f();
+        t(rs, 10);
+      
+      }();
+      
+    </script>
+  </test-case>
+
+  <test-case id="028" name="access outer variable">
+    <script>
+      var t = debug.assert;
+
+      function() {
+
+        var a = 0;
+
+        function f() {
+          return a + 5;
+        }
+      
+        a = 10;
+        t(f(), 15);
+      
+      }();
+      
+    </script>
+  </test-case>
+
+  <test-case id="029" name="repeat create">
+    <script>
+      var t = debug.assert;
+
+      A.prototype.f = function() {};
+      
+      function A() {
+      }
+      
+      t(typeof A.prototype.f, 'function');
+      
+      function A() {
+      }
+      
+    </script>
+  </test-case>
+
+  <test-case id="030" name="conditional declaration">
+    <script>
+      // conditional declaration curerntly is not supported
+     
+      var t = debug.assert;
+
+      if (true) {
+        function fn() { }
+      } else {
+        function no_fn() { }
+      }
+      
+      t(typeof fn, 'function');
+      t(typeof no_fn, 'function');
+    </script>
+  </test-case>
+
+  <test-case id="031" name="call-stack overflow" disabled="true">
+    <script>
+      var t = debug.assert;
+
+      function a() { a(); }
+      
+      try {
+        a(); 
+      } catch(e) {
+        alert(e.dumpStack());
+      }
+    </script>
+  </test-case>
+
 </test-suite>

@@ -26,6 +26,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using Unvell.ReoScript.Editor.Properties;
+using Unvell.ReoScript.Diagnostics;
 
 namespace Unvell.ReoScript.Editor
 {
@@ -75,6 +76,9 @@ namespace Unvell.ReoScript.Editor
 				{
 					try
 					{
+						//string line = e.Text;
+						//if (!line.EndsWith(";")) line += ";";
+						
 						object val = srm.CalcExpression(e.Text);
 						LogValue(val);
 					}
@@ -105,6 +109,8 @@ namespace Unvell.ReoScript.Editor
 
 			stopToolStripButton.Click += (s, e) => ForceStop();
 			stopToolStripMenuItem.Click += (s, e) => ForceStop();
+
+			checkSyntaxStripButton.Click += (s, e) => srm.Compile(editor.Text, r => Log(r.Message));
 
 			Srm = new ScriptRunningMachine();
 		}
@@ -193,7 +199,9 @@ namespace Unvell.ReoScript.Editor
 
 			try
 			{
-				object v = srm.Run(editor.Text);
+				CompiledScript cs = srm.Compile(editor.Text);
+				object v = srm.RunCompiledScript(cs);
+
 				timer.Enabled = true;
 				//LogValue(v);
 			}

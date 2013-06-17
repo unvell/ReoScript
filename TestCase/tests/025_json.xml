@@ -27,7 +27,7 @@
       
       obj = JSON.parse(src); // converter is null
       
-      testParsedObject(obj,);
+      testParsedObject(obj);
       
       function testParsedObject(obj) {
         t( obj != null );

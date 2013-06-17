@@ -16,46 +16,457 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Reflection;
-using System.IO;
 using System.Collections;
 using System.Net;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Threading;
+using System.Collections.Generic;
 using System.Reflection.Emit;
 
 using Antlr.Runtime;
 using Antlr.Runtime.Tree;
 
 using Unvell.ReoScript.Properties;
+using Unvell.ReoScript.Runtime;
+using Unvell.ReoScript.Parsers;
+using Unvell.ReoScript.Reflection;
 
 namespace Unvell.ReoScript
 {
-	#region Lexer Extension
-	public partial class ReoScriptLexer
+	#region Lexer & Parser
+	sealed internal partial class ReoScriptLexer
 	{
 		public static readonly int HIDDEN = Hidden;
 
 		public const int MAX_TOKENS = 200;
 		public const int REPLACED_TREE = MAX_TOKENS - 1;
 	}
-	#endregion
 
-	#region Syntax Tree Return
-	public interface ISyntaxTreeReturn { }
-
-	#region Value
-	public abstract class Value : ISyntaxTreeReturn
+	sealed internal partial class ReoScriptParser
 	{
+		//internal Preinterpreter Preinterpreter { get; set; }
+
+		private CommonTree ConstLiteral(CommonTree t)
+		{
+			switch (t.Type)
+			{
+				case ReoScriptLexer.NUMBER_LITERATE:
+					return new ConstValueNode(t, Convert.ToDouble(t.Text), ReoScriptLexer.NUMBER_LITERATE);
+
+				case ReoScriptLexer.HEX_LITERATE:
+					return new ConstValueNode(t, (double)Convert.ToInt32(t.Text.Substring(2), 16), ReoScriptLexer.NUMBER_LITERATE);
+
+				case ReoScriptLexer.BINARY_LITERATE:
+					return new ConstValueNode(t, (double)Convert.ToInt32(t.Text.Substring(2), 2), ReoScriptLexer.NUMBER_LITERATE);
+
+				case ReoScriptLexer.STRING_LITERATE:
+					string str = t.ToString();
+					str = str.Substring(1, str.Length - 2);
+					return new ConstValueNode(t, ScriptRunningMachine.ConvertEscapeLiterals(str), ReoScriptLexer.STRING_LITERATE);
+
+				//case ReoScriptLexer.LIT_TRUE:
+				//  return new ConstValueNode(t, true);
+
+				//case ReoScriptLexer.LIT_FALSE:
+				//  return new ConstValueNode(t, false);
+
+				//case ReoScriptLexer.LIT_NULL:
+				//case ReoScriptLexer.UNDEFINED:
+				//  return new ConstValueNode(t, null);
+
+				//case ReoScriptLexer.NAN:
+				//  return new ConstValueNode(t, NaNValue.Value);
+			}
+
+			return t;
+		}
+
+		internal Action<ErrorObject> CompilingErrorHandler;
+
+		internal List<ErrorObject> CompilingErrors = new List<ErrorObject>();
+
+		public override void ReportError(RecognitionException re)
+		{
+			string msg = string.Format("syntax error at char {0} on line {1}", re.CharPositionInLine, re.Line);
+
+			if (re is MissingTokenException)
+			{
+				MissingTokenException mte = (MissingTokenException)re;
+				msg += string.Format(", missing {0}", ReoScriptParser.tokenNames[mte.MissingType]);
+			}
+			else if (re is MismatchedTokenException)
+			{
+				MismatchedTokenException mte = (MismatchedTokenException)re;
+				msg += string.Format(", expect {0}", ReoScriptParser.tokenNames[mte.Expecting]);
+			}
+			else if (re is NoViableAltException)
+			{
+				NoViableAltException nvae = (NoViableAltException)re;
+				msg += ", unexpected token " + nvae.Token.Text;
+			}
+
+			ErrorObject e = new ErrorObject();
+			e.Message = msg;
+			e.CharIndex = re.CharPositionInLine;
+			e.Line = re.Line;
+			
+			CompilingErrors.Add(e);
+
+			if (CompilingErrorHandler != null)
+			{
+				CompilingErrorHandler(e);
+			}
+		}
+
+		private Stack<StaticFunctionScope> localStack = new Stack<StaticFunctionScope>();
+
+		internal StaticFunctionScope CurrentStack { get; set; }
+
+		private void PushLocalStack()
+		{
+			localStack.Push(CurrentStack = new StaticFunctionScope());
+		}
+
+		private StaticFunctionScope lastLocalScope;
+
+		private void PopLocalStack()
+		{
+			if (localStack.Count > 1)
+				lastLocalScope = localStack.Pop();
+			
+			CurrentStack = localStack.Peek();
+		}
+
+		private FunctionDefineNode DefineLocalFunction(string name, CommonTree paramsTree, CommonTree body, 
+			int modifierToken, int line, int charIndex)
+		{
+			FunctionInfo fi = new FunctionInfo
+			{
+				Name = name,
+				IsInner = localStack.Count > 1,
+				Args = GetArgumentList(paramsTree),
+				IsAnonymous = false,
+				ScopeModifier = GetScopeModifier(modifierToken),
+				BodyTree = body,
+				CharIndex = charIndex,
+				Line = line,
+				InnerScope = lastLocalScope,
+				OuterScope = CurrentStack,
+			};
+
+			FunctionDefineNode fdn = new FunctionDefineNode
+			{
+				FunctionInfo = fi,
+			};
+
+			CurrentStack.Functions.Add(fi);
+
+			return fdn;
+		}
+
+		private AnonymousFunctionDefineNode DefineAnonymousFunction(string arg1, CommonTree argsTree, CommonTree body,
+			int modifierToken, int line, int charIndex)
+		{
+			FunctionInfo fi = new FunctionInfo
+			{
+				Name = "<anonymous>",
+				Args = arg1 == null ? GetArgumentList(argsTree) : new string[] { arg1 },
+				IsAnonymous = true,
+				ScopeModifier = MemberScopeModifier.Public,
+				BodyTree = body,
+				CharIndex = charIndex,
+				Line = line,
+				InnerScope = lastLocalScope,
+				OuterScope = CurrentStack,
+			};
+
+			AnonymousFunctionDefineNode afdn = new AnonymousFunctionDefineNode
+			{
+				FunctionInfo = fi,
+			};
+
+			CurrentStack.Functions.Add(fi);
+
+			return afdn;
+		}
+
+		private VariableDefineNode DefineLocalVariable(string name, CommonTree val/*, int modifierToken*/,
+			int line, int charIndex)
+		{
+			VariableInfo vi = new VariableInfo
+			{
+				Name = name,
+				HasInitialValue = val != null,
+				IsImplicitDeclaration = false,
+				IsLocal = true,
+				CharIndex = charIndex,
+				Line = line,
+				//TODO: ScopeModifier = GetScopeModifier(modifierToken),
+				InitialValueTree = val,
+			};
+
+			VariableDefineNode vdn = new VariableDefineNode
+			{
+				VariableInfo = vi
+			};
+
+			CurrentStack.Variables.Add(vi);
+
+			return vdn;
+		}
+
+		private static string[] GetArgumentList(CommonTree argsTree)
+		{
+			if (argsTree == null) return new string[0];
+
+			if (argsTree.ChildCount == 0)
+			{
+				return new string[] { argsTree.Text };
+			}
+			else
+			{
+				string[] identifiers = new string[argsTree.ChildCount];
+
+				for (int i = 0; i < identifiers.Length; i++)
+				{
+					identifiers[i] = argsTree.Children[i].ToString();
+				}
+
+				return identifiers;
+			}
+		}
+
+		private static MemberScopeModifier GetScopeModifier(int tokenType)
+		{
+			switch (tokenType)
+			{
+				default:
+				case ReoScriptLexer.PUBLIC:
+					return MemberScopeModifier.Public;
+				case ReoScriptLexer.INTERNAL:
+					return MemberScopeModifier.Internal;
+				case ReoScriptLexer.PROTECTED:
+					return MemberScopeModifier.Protected;
+				case ReoScriptLexer.PRIVATE:
+					return MemberScopeModifier.Private;
+			}
+		}
+	}
+
+	public class StaticFunctionScope
+	{
+		internal readonly List<FunctionInfo> Functions;
+		internal readonly List<VariableInfo> Variables;
+
+		internal protected StaticFunctionScope()
+		{
+			Functions = new List<FunctionInfo>();
+			Variables = new List<VariableInfo>();
+		}
+	}
+
+	internal class FunctionDefineNode : CommonTree
+	{
+		public FunctionInfo FunctionInfo { get; set; }
+
+		public FunctionDefineNode()
+			: base(new CommonToken(ReoScriptLexer.FUNCTION_DEFINE))
+		{
+		}
+	}
+
+	internal class AnonymousFunctionDefineNode : CommonTree
+	{
+		public FunctionInfo FunctionInfo { get; set; }
+
+		public AnonymousFunctionDefineNode()
+			: base(new CommonToken(ReoScriptLexer.ANONYMOUS_FUNCTION))
+		{
+		}
+	}
+
+	namespace Reflection
+	{
+		/// <summary>
+		/// ReoScript function information
+		/// </summary>
+		public class FunctionInfo
+		{
+			/// <summary>
+			/// Function name
+			/// </summary>
+			public string Name { get; set; }
+
+			/// <summary>
+			/// Argument name list
+			/// </summary>
+			public string[] Args { get; set; }
+
+			/// <summary>
+			/// Specifies whether is anonymous function.
+			/// </summary>
+			public bool IsAnonymous { get; set; }
+
+			/// <summary>
+			/// Specifies whether is nested function inside another function.
+			/// </summary>
+			public bool IsInner { get; set; }
+
+			/// <summary>
+			/// Specifies the modifier of function visibility scope.
+			/// </summary>
+			public MemberScopeModifier ScopeModifier { get; set; }
+
+			/// <summary>
+			/// Specifies the char position on line where function is defined.
+			/// </summary>
+			public int CharIndex { get; set; }
+
+			/// <summary>
+			/// Specifies the line number where function is defined.
+			/// </summary>
+			public int Line { get; set; }
+
+			internal CommonTree BodyTree { get; set; }
+			internal StaticFunctionScope InnerScope { get; set; }
+			internal StaticFunctionScope OuterScope { get; set; }
+
+			/// <summary>
+			/// Get string of function's body.
+			/// </summary>
+			/// <returns></returns>
+			public string GetBodyText()
+			{
+				return BodyTree.ToString();
+			}
+
+			/// <summary>
+			/// Get all inner functions defined in this function
+			/// </summary>
+			public List<FunctionInfo> DeclaredInnerFunctions
+			{
+				get
+				{
+					return InnerScope.Functions;
+				}
+			}
+
+			/// <summary>
+			/// Get local variables defined in this function
+			/// </summary>
+			public List<VariableInfo> DeclaredLocalVariables
+			{
+				get
+				{
+					return InnerScope.Variables;
+				}
+			}
+		}
+
+		/// <summary>
+		/// ReoScript variable information
+		/// </summary>
+		public class VariableInfo
+		{
+			/// <summary>
+			/// Variable name
+			/// </summary>
+			public string Name { get; set; }
+
+			/// <summary>
+			/// Specifies whether is local variable.
+			/// </summary>
+			public bool IsLocal { get; set; }
+
+			/// <summary>
+			/// Specifies whether the variable to be used without declaration.
+			/// </summary>
+			public bool IsImplicitDeclaration { get; set; }
+
+			/// <summary>
+			/// Specifies whether the variable has an initialize value.
+			/// </summary>
+			public bool HasInitialValue { get; set; }
+
+			/// <summary>
+			/// Specifies the modifier of variable visibility scope.
+			/// </summary>
+			public MemberScopeModifier ScopeModifier { get; set; }
+
+			/// <summary>
+			/// Specifies the char position on line where variable is defined.
+			/// </summary>
+			public int CharIndex { get; set; }
+
+			/// <summary>
+			/// Specifies the line number where variable is defined.
+			/// </summary>
+			public int Line { get; set; }
+
+			internal CommonTree InitialValueTree { get; set; }
+
+			/// <summary>
+			/// Get string of initial value expression.
+			/// </summary>
+			/// <returns></returns>
+			public string GetInitialValueExpression()
+			{
+				return InitialValueTree.ToString();
+			}
+		}
+	}
+
+	internal class VariableDefineNode : CommonTree
+	{
+		public VariableInfo VariableInfo { get; set; }
+
+		public VariableDefineNode()
+			: base(new CommonToken(ReoScriptLexer.LOCAL_DECLARE_ASSIGNMENT))
+		{
+		}
+	}
+
+	/// <summary>
+	/// Member scope modifier. (RESERVED FEATURE)
+	/// </summary>
+	public enum MemberScopeModifier
+	{
+		/// <summary>
+		/// Property or method visible to any scope
+		/// </summary>
+		Public,
+
+		/// <summary>
+		/// Property or method visible to other members defined in same file
+		/// </summary>
+		Internal,
+
+		/// <summary>
+		/// Property or method visible to other members belonging to same instance or prototype
+		/// </summary>
+		Protected,
+
+		/// <summary>
+		/// Property or method visible to other members belonging to same instance
+		/// </summary>
+		Private,
 	}
 	#endregion
+
+	#region Syntax Tree
+	internal interface ISyntaxTreeReturn { }
+
 	#region NaNValue
-	public sealed class NaNValue : Value
+	/// <summary>
+	/// Runtime NaN value.
+	/// </summary>
+	public sealed class NaNValue : ISyntaxTreeReturn
 	{
 		public static readonly NaNValue Value = new NaNValue();
 		private NaNValue() { }
@@ -64,7 +475,11 @@ namespace Unvell.ReoScript
 			return "NaN";
 		}
 	}
-	public sealed class InfinityValue : Value
+
+	/// <summary>
+	/// Runtime infinity value.
+	/// </summary>
+	public sealed class InfinityValue : ISyntaxTreeReturn
 	{
 		public static readonly InfinityValue Value = new InfinityValue();
 		private InfinityValue() { }
@@ -73,7 +488,11 @@ namespace Unvell.ReoScript
 			return "Infinity";
 		}
 	}
-	public sealed class MinusInfinityValue : Value
+
+	/// <summary>
+	/// Runtime -infinity value.
+	/// </summary>
+	public sealed class MinusInfinityValue : ISyntaxTreeReturn
 	{
 		public static readonly MinusInfinityValue Value = new MinusInfinityValue();
 		private MinusInfinityValue() { }
@@ -86,11 +505,15 @@ namespace Unvell.ReoScript
 	#region BreakNode
 	class BreakNode : ISyntaxTreeReturn
 	{
+		public static readonly BreakNode Value = new BreakNode();
+		private BreakNode() { }
 	}
 	#endregion
 	#region ContinueNode
 	class ContinueNode : ISyntaxTreeReturn
 	{
+		public static readonly ContinueNode Value = new ContinueNode();
+		private ContinueNode() { }
 	}
 	#endregion
 	#region ReturnNode
@@ -107,9 +530,16 @@ namespace Unvell.ReoScript
 
 	#endregion
 
+	#region Data Types
 	#region Object Value
-	public class ObjectValue : Value, IEnumerable
+	/// <summary>
+	/// Object instance of ReoScript
+	/// </summary>
+	public class ObjectValue : ISyntaxTreeReturn, IEnumerable
 	{
+		/// <summary>
+		/// Construct an object instance
+		/// </summary>
 		public ObjectValue()
 		{
 			Members = new Dictionary<string, object>();
@@ -117,17 +547,17 @@ namespace Unvell.ReoScript
 
 		private Dictionary<string, object> Members { get; set; }
 
+		/// <summary>
+		/// Get or set property
+		/// </summary>
+		/// <param name="identifier"></param>
+		/// <returns></returns>
 		public virtual object this[string identifier]
 		{
 			get
 			{
-				//if (identifier == ScriptRunningMachine.KEY_CONSTRUCTOR)
-				//{
-				//  return Members.ContainsKey(ScriptRunningMachine.KEY_CONSTRUCTOR) ? 
-				//    Members[ScriptRunningMachine.KEY_CONSTRUCTOR] : Constructor;
-				//}
-				//else
-					return Members.ContainsKey(identifier) ? Members[identifier] : null;
+				object v;
+				return Members.TryGetValue(identifier, out v) ? v : null;
 			}
 			set
 			{
@@ -135,6 +565,11 @@ namespace Unvell.ReoScript
 			}
 		}
 
+		/// <summary>
+		/// Check whether a property exists in object
+		/// </summary>
+		/// <param name="identifier"></param>
+		/// <returns></returns>
 		public bool HasOwnProperty(string identifier)
 		{
 			return Members.ContainsKey(identifier);
@@ -142,7 +577,7 @@ namespace Unvell.ReoScript
 
 		public object GetOwnProperty(string identifier)
 		{
-			return Members.ContainsKey(identifier) ? Members[identifier] : null;
+			return this[identifier];
 		}
 
 		public bool RemoveOwnProperty(string identifier)
@@ -158,7 +593,7 @@ namespace Unvell.ReoScript
 			}
 		}
 
-		public virtual string Name { get; set; }
+		public virtual string Name { get { return Constructor == null ? "Object" : Constructor.FunName; } }
 
 		public override string ToString()
 		{
@@ -171,7 +606,7 @@ namespace Unvell.ReoScript
 			if (Members.Count > 0)
 			{
 				StringBuilder sb = new StringBuilder();
-				if (this is ArrayObject /*|| this is StringValue*/ || this is NumberObject)
+				if (this is ArrayObject || this is StringObject || this is NumberObject || this is BooleanObject)
 				{
 					sb.AppendLine(string.Format("[object {0}: {1}]", Name, this.ToString()));
 				}
@@ -182,9 +617,11 @@ namespace Unvell.ReoScript
 
 				foreach (string name in Members.Keys)
 				{
+					if (name == ScriptRunningMachine.KEY___PROTO__) continue;
+
 					object val = Members[name];
 
-					sb.AppendLine(string.Format("  {0,-20}: {1}", name, Convert.ToString(val)));
+					sb.AppendLine(string.Format("  {0,-20}: {1}", name, (val == null ? "null" : Convert.ToString(val))));
 				}
 
 				return sb.ToString();
@@ -215,7 +652,19 @@ namespace Unvell.ReoScript
 
 		#endregion
 
-		public AbstractFunctionObject Constructor { get; set; }
+		internal AbstractFunctionObject Constructor { get; set; }
+
+		/// <summary>
+		/// Add properties given by IDictionary 
+		/// </summary>
+		/// <param name="properties"></param>
+		public void AddProperties(IDictionary<string, object> properties)
+		{
+			foreach (string key in properties.Keys)
+			{
+				Members[key] = properties[key];
+			}
+		}
 	}
 
 	class ObjectConstructorFunction : TypedNativeFunctionObject
@@ -305,6 +754,8 @@ namespace Unvell.ReoScript
 	#region DateTimeValue
 	public class DateObject : ObjectValue
 	{
+		public static readonly long StartTimeTicks = (new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).Ticks;
+		
 		public DateTime DateTime;
 
 		public DateObject(DateTime value)
@@ -326,6 +777,14 @@ namespace Unvell.ReoScript
 		{
 		}
 
+		public double Ticks
+		{
+			get
+			{
+				return (DateTime.ToUniversalTime().Ticks - StartTimeTicks) / 10000d;
+			}
+		}
+
 		public override string ToString()
 		{
 			return DateTime.ToLongDateString();
@@ -345,7 +804,7 @@ namespace Unvell.ReoScript
 		public StringObject(string text)
 		{
 			String = text;
-			this["length"] = new ExternalProperty(() => { return String.Length; }, (v) => { });
+			this["length"] = new ExternalProperty(() => String.Length, v => { });
 		}
 		public override bool Equals(object obj)
 		{
@@ -387,7 +846,7 @@ namespace Unvell.ReoScript
 	class StringConstructorFunction : TypedNativeFunctionObject
 	{
 		public StringConstructorFunction()
-			: base("String")
+			: base(typeof(StringObject), "String")
 		{
 		}
 
@@ -398,7 +857,7 @@ namespace Unvell.ReoScript
 
 		public override object CreateObject(ScriptContext context, object[] args)
 		{
-			return new StringObject(args == null || args.Length <= 0 ? string.Empty : Convert.ToString(args[0]));
+			return new StringObject((args == null || args.Length <= 0 ? string.Empty : ScriptRunningMachine.ConvertToString(args[0])));
 		}
 
 		public override object CreatePrototype(ScriptContext context)
@@ -602,6 +1061,140 @@ namespace Unvell.ReoScript
 		}
 	}
 	#endregion
+	#region ErrorObject
+
+	/// <summary>
+	/// Error object describes an error happening in script execution.
+	/// </summary>
+	public class ErrorObject : ObjectValue
+	{
+		/// <summary>
+		/// Execution context when error happened
+		/// </summary>
+		public ScriptContext Context { get; set; }
+
+		/// <summary>
+		/// Message of error content
+		/// </summary>
+		public string Message { get; set; }
+
+		internal List<CallScopeObject> CallStack { get; set; }
+
+		/// <summary>
+		/// Character index of line where error happening
+		/// </summary>
+		public int CharIndex { get; set; }
+
+		/// <summary>
+		/// Line number where error happening
+		/// </summary>
+		public int Line { get; set; }
+
+		/// <summary>
+		/// Construct an error without message content
+		/// </summary>
+		public ErrorObject() : this(string.Empty) { }
+
+		/// <summary>
+		/// Construct an error with a message content
+		/// </summary>
+		/// <param name="msg"></param>
+		public ErrorObject(string msg)
+		{
+			this.Message = msg;
+
+			this["message"] = new ExternalProperty(() => Message);
+			this["charIndex"] = new ExternalProperty(() => CharIndex);
+			this["line"] = new ExternalProperty(() => Line);
+			this["stack"] = new ExternalProperty(() => CallStack);
+		}
+
+		/// <summary>
+		/// Get entire information of error contains call-stack.
+		/// </summary>
+		/// <returns></returns>
+		public string GetFullErrorInfo()
+		{
+			if (CallStack == null || CallStack.Count == 0)
+			{
+				return Message;
+			}
+			else
+			{
+				StringBuilder sb = new StringBuilder();
+				sb.AppendLine(Message);
+				sb.Append(DumpCallStack());
+				return sb.ToString();
+			}
+		}
+
+		/// <summary>
+		/// Get call-stack inforamtion about error
+		/// </summary>
+		/// <returns></returns>
+		public string DumpCallStack()
+		{
+			if (CallStack == null) return string.Empty;
+
+			StringBuilder sb = new StringBuilder();
+
+			foreach (CallScopeObject scope in CallStack)
+			{
+				sb.AppendLine("    " + scope.ToString());
+			}
+
+			return sb.ToString();
+		}
+
+		/// <summary>
+		/// Customized error object can be thrown from script
+		/// </summary>
+		public object CustomeErrorObject { get; set; }
+	}
+
+	internal class CallScopeObject : ObjectValue
+	{
+		internal CallScope CallScope { get; set; }
+
+		internal CallScopeObject() { }
+
+		internal CallScopeObject(CallScope callScope)
+		{
+			this.CallScope = callScope;
+		}
+
+		public override string ToString()
+		{
+			return CallScope.ToString();
+		}
+	}
+
+	internal class ErrorConstructorFunction : TypedNativeFunctionObject
+	{
+		public ErrorConstructorFunction() : base(typeof(ErrorObject), "Error") {}
+
+		public override object CreateObject(ScriptContext context, object[] args)
+		{
+			return (args == null || args.Length <= 0 ? new ErrorObject() : new ErrorObject(ScriptRunningMachine.ConvertToString(args[0])));
+		}
+
+		public override object CreatePrototype(ScriptContext context)
+		{
+			object obj = base.CreatePrototype(context);
+			ObjectValue proto = obj as ObjectValue;
+			if (proto != null)
+			{
+				proto["dumpStack"] = new NativeFunctionObject("dumpStack", (ctx, owner, args) =>
+				{
+					if (!(owner is ErrorObject)) return string.Empty;
+					else return ((ErrorObject)owner).GetFullErrorInfo();
+				});
+			}
+			return obj;
+		}
+	}
+	#endregion
+	#endregion
 
 	#region Extension Object
 	/// <summary>
@@ -731,10 +1324,15 @@ namespace Unvell.ReoScript
 	//  object CreateObject(ScriptRunningMachine srm);
 	//  ObjectValue Prototype { get; set; }
 	//}
+	/// <summary>
+	/// Abstract of ReoScript executable function
+	/// </summary>
 	public abstract class AbstractFunctionObject : ObjectValue
 	{
 		public abstract string FunName { get; set; }
 		//public ObjectValue Prototype { get; set; }
+
+		internal AbstractFunctionObject() { }
 
 		public virtual object CreateObject(ScriptContext context, object[] args)
 		{
@@ -744,12 +1342,29 @@ namespace Unvell.ReoScript
 		{
 			return context.CreateNewObject(context.Srm.BuiltinConstructors.ObjectFunction, null) as ObjectValue;
 		}
+		
+		internal CallScope OuterCallScope { get; set; }
 	}
-	internal class FunctionObject : AbstractFunctionObject
+
+	/// <summary>
+	/// Executable function defined in script
+	/// </summary>
+	public class FunctionObject : AbstractFunctionObject
 	{
+		/// <summary>
+		/// Name of function
+		/// </summary>
 		public override string FunName { get; set; }
+
+		/// <summary>
+		/// Argument name list
+		/// </summary>
 		public string[] Args { get; set; }
-		public CommonTree Body { get; set; }
+
+		/// <summary>
+		/// Syntax Tree of function body
+		/// </summary>
+		internal CommonTree Body { get; set; }
 
 		public override string ToString()
 		{
@@ -757,37 +1372,70 @@ namespace Unvell.ReoScript
 				: "function " + FunName + "() {...}";
 		}
 
-		internal string DeclaredFilePath { get; set; }
-		internal int DeclaredLine { get; set; }
-		internal int DeclaredChar { get; set; }
+		/// <summary>
+		/// Function meta information
+		/// </summary>
+		public FunctionInfo FunctionInfo { get; set; }
 	}
+
+	/// <summary>
+	/// Executable function defined in .NET
+	/// </summary>
 	public class NativeFunctionObject : AbstractFunctionObject
 	{
+		/// <summary>
+		/// Name of function
+		/// </summary>
 		public override string FunName { get; set; }
 
 		public override string ToString()
 		{
-			return "function " + Name + "() { [native code] }";
+			return "function " + FunName + "() { [native code] }";
 		}
 
+		/// <summary>
+		/// Construct executable function with name
+		/// </summary>
+		/// <param name="name">name of function</param>
 		public NativeFunctionObject(string name)
 		{
-			this.Name = name;
+			//this.Name = name;
+			this.FunName = name;
 		}
 
+		/// <summary>
+		/// Construct executable function with name and body
+		/// </summary>
+		/// <param name="name">name of function</param>
+		/// <param name="body">body of function</param>
 		public NativeFunctionObject(string name, Func<ScriptContext, object, object[], object> body)
 		{
 			this.FunName = name;
 			this.Body = body;
 		}
 
+		/// <summary>
+		/// Invoke function
+		/// </summary>
+		/// <param name="context">Context of script execution</param>
+		/// <param name="owner">this object to call function</param>
+		/// <param name="args">argument list</param>
+		/// <returns></returns>
 		public virtual object Invoke(ScriptContext context, object owner, object[] args)
 		{
 			return (Body == null ? null : Body(context, owner, args));
 		}
 
+		/// <summary>
+		/// Body of function
+		/// </summary>
 		public Func<ScriptContext, object, object[], object> Body { get; set; }
 	}
+
+	/// <summary>
+	/// Executable typed constructor function. Typed function can create an instance of object
+	/// that is specified by user.
+	/// </summary>
 	public class TypedNativeFunctionObject : NativeFunctionObject
 	{
 		public Type Type { get; set; }
@@ -824,8 +1472,8 @@ namespace Unvell.ReoScript
 
 		public override object CreateObject(ScriptContext context, object[] args)
 		{
-			try
-			{
+			//try
+			//{
 				object[] cargs = null;
 
 				if (args != null && args.Length > 0)
@@ -834,7 +1482,7 @@ namespace Unvell.ReoScript
 
 					if (ci == null)
 					{
-						throw new ReoScriptRuntimeException(context, "Cannot create .Net object with incorrect parameters.");
+						throw new ReoScriptRuntimeException("Cannot to create .NET instance with incorrect parameters.");
 					}
 
 					cargs = new object[args.Length];
@@ -847,11 +1495,11 @@ namespace Unvell.ReoScript
 				}
 
 				return System.Activator.CreateInstance(this.Type, BindingFlags.Default, null, cargs, null);
-			}
-			catch (Exception ex)
-			{
-				throw new ReoScriptRuntimeException(context, "Error to create .Net instance: " + this.Type.ToString(), null, ex);
-			}
+			//}
+			//catch (Exception ex)
+			//{
+			//  throw new ReoScriptRuntimeException(context, "Error to create .Net instance: " + this.Type.ToString(), null, ex);
+			//}
 		}
 
 		public override object CreatePrototype(ScriptContext context)
@@ -868,17 +1516,34 @@ namespace Unvell.ReoScript
 			return obj;
 		}
 	}
+
+	/// <summary>
+	/// Generic typed constructor function.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public class TypedNativeFunctionObject<T> : TypedNativeFunctionObject
 	{
 		public TypedNativeFunctionObject()
-			: this(typeof(T).Name) { }
-
+			: this(typeof(T).Name) 
+		{
+			// this();
+		}
 		public TypedNativeFunctionObject(string name)
-			: base(typeof(T), name) { }
-
+			: this(name, null)
+		{
+			// this()
+		}
+		public TypedNativeFunctionObject(string name, Func<ScriptContext, object, object[], object> body)
+			: this(name, body, null)
+		{
+			// this()
+		}
 		public TypedNativeFunctionObject(string name, Func<ScriptContext, object, object[], object> body,
 			Action<ObjectValue> prototypeBuilder)
-			: base(typeof(T), name, body, prototypeBuilder) { }
+			: base(typeof(T), name, body, prototypeBuilder)
+		{
+			// base()
+		}
 	}
 	#endregion
 
@@ -996,7 +1661,7 @@ namespace Unvell.ReoScript
 
 		public WorldObject()
 		{
-			this.Name = "Script";
+			//this.Name = "Script";
 
 			// built-in native functions
 			this[__stdin__.FunName] = __stdin__;
@@ -1016,7 +1681,7 @@ namespace Unvell.ReoScript
 
 		public MathObject()
 		{
-			this.Name = "Object";
+			//this.Name = "Object";
 
 			this["random"] = new NativeFunctionObject("random", (ctx, owner, args) =>
 			{
@@ -1102,10 +1767,7 @@ namespace Unvell.ReoScript
 				() => { return this.Length; },
 				(v) =>
 				{
-					if (v is int || v is long || v is double)
-					{
-						this.Length = (int)(double)v;
-					}
+					this.Length = ScriptRunningMachine.GetIntValue(v, List.Count);
 				});
 		}
 
@@ -1125,9 +1787,11 @@ namespace Unvell.ReoScript
 				}
 				else
 				{
-					ArrayList newList = new ArrayList(len);
-					newList.AddRange(list);
-					list = newList;
+					object[] empty = new object[len - list.Count];
+					list.AddRange(empty);
+					//ArrayList newArr = new ArrayList(len+5);
+					//newArr.AddRange(list);
+					//list = newArr;
 				}
 			}
 		}
@@ -1142,7 +1806,7 @@ namespace Unvell.ReoScript
 			{
 				if (index >= list.Count)
 				{
-					this.Length = index;
+					this.Length = index+1;
 				}
 
 				this.list[index] = value;
@@ -1304,160 +1968,94 @@ namespace Unvell.ReoScript
 	#endregion
 	#endregion
 
-	#region Class
-	public abstract class XBClass : ISyntaxTreeReturn
-	{
-		private Dictionary<string, object> Members { get; set; }
-
-		public XBClass()
-		{
-			Members = new Dictionary<string, object>();
-		}
-
-		public virtual object this[string identifier]
-		{
-			get
-			{
-				return Members.ContainsKey(identifier) ? Members[identifier] : null;
-			}
-			set
-			{
-				Members[identifier] = value;
-			}
-		}
-
-		public abstract string TypeName { get; }
-	}
-	#endregion
-
 	#region Exceptions
-	#region AWDLException
+	/// <summary>
+	/// Base exception of all exceptions
+	/// </summary>
 	public class ReoScriptException : Exception
 	{
-		public ReoScriptException(string msg) : base(msg) { }
+		public ErrorObject ErrorObject { get; set; }
+		public ReoScriptException(string msg) : base(msg) { this.ErrorObject = new ErrorObject() { Message = msg }; }
+		public ReoScriptException(ErrorObject error) : this(error == null ? string.Empty : error.Message) { this.ErrorObject = error; }
+		public ReoScriptException(ErrorObject error, Exception inner) : base(inner == null ? string.Empty : inner.Message) { this.ErrorObject = error; }
 		public ReoScriptException(string msg, Exception inner) : base(msg, inner) { }
+
+		public string GetFullErrorInfo()
+		{
+			ErrorObject e = ErrorObject as ErrorObject;
+			if (e == null)
+			{
+				return this.Message;
+			}
+			else
+			{
+				return e.GetFullErrorInfo();
+			}
+		}
 	}
-	#endregion
-	
-	#region AWDLRuntimeException
+	/// <summary>
+	/// Runtime error exception
+	/// </summary>
 	public class ReoScriptRuntimeException : ReoScriptException
 	{
-		public ScriptContext Context { get; set; }
-		public RuntimePosition Position { get; set; }
-		public object ErrorObject { get; set; }
-
-		public ReoScriptRuntimeException(ScriptContext context, string msg, RuntimePosition position, Exception inner)
-			: this(context, msg, position, null, inner)
-		{
-		}
-		
-		public ReoScriptRuntimeException(ScriptContext context, string msg, RuntimePosition position, object errorObject)
-			: this(context, msg, position, errorObject, null)
-		{
-		}
-
-		public ReoScriptRuntimeException(ScriptContext context, string msg, RuntimePosition position) 
-			: this(context, msg, position, null) 
-		{ 
-		}
-
-		public ReoScriptRuntimeException(ScriptContext context, string msg)
-			: this(context, msg, null)
-		{
-		}
-
-		public ReoScriptRuntimeException(ScriptContext context, string msg, RuntimePosition position, object errorObject, Exception inner)
-			: base(msg, inner)
-		{
-			this.Context = context;
-			this.Position = position;
-
-			if (errorObject == null && context != null)
-			{
-				errorObject = context.CreateNewObject(context.Srm.BuiltinConstructors.ErrorFunction);
-				((ObjectValue)errorObject)["message"] = msg;
-			}
-			this.ErrorObject = errorObject;
-			this.Context = context;
-		}
-
+		public ReoScriptRuntimeException(string msg) : base(msg) { }
+		public ReoScriptRuntimeException(ErrorObject error) : base(error) { }
+		public ReoScriptRuntimeException(ErrorObject error, Exception inner) : base(error, inner) { }
 	}
-	#region RuntimePosition
 	/// <summary>
-	/// A position identifies where does the errors happened. Contains char index, line number and full path name. 
+	/// Compile-time error exception
 	/// </summary>
-	public class RuntimePosition
+	public class ReoScriptCompilingException : ReoScriptException
 	{
-		public RuntimePosition(CommonTree tree, ScriptContext context)
-		{
-			CallStack = new List<CallStackInfo>();
-
-			this.CharIndex = tree.CharPositionInLine;
-			this.Line = tree.Line;
-			this.FilePath = context.SourceFilePath;
-
-			//foreach (CallScope scope in context.CallStack)
-			//{
-			//  CallStack.Add(new CallStackInfo()
-			//  {
-			//    FilePath = scope.CurrentFunction.DeclaredFilePath,
-			//  });
-			//}
-		}
-
-		/// <summary>
-		/// Char index
-		/// </summary>
-		public int CharIndex { get; set; }
-
-		/// <summary>
-		/// Line number
-		/// </summary>
-		public int Line { get; set; }
-
-		/// <summary>
-		/// Full path name
-		/// </summary>
-		public string FilePath { get; set; }
-
-		public List<CallStackInfo> CallStack { get; set; }
-
-		public RuntimePosition(int charIndex, int line, string filePath)
-		{
-			this.CharIndex = charIndex;
-			this.Line = line;
-			this.FilePath = filePath;
-		}
+		public ReoScriptCompilingException(ErrorObject error) : base(error) { }
 	}
-	public class CallStackInfo
+	//public class ReoScriptSyntaxErrorException : ReoScriptCompilingException
+	//{
+	//  public ReoScriptSyntaxErrorException(ErrorObject error) : base(error) { }
+	//}
+	public enum SyntaxErrorType
 	{
-		public string FilePath { get; set; }
-		public string Line { get; set; }
+		ExpectToken,
+		UnexpectedToken,
+		MissingToken,
+		MistakeToken,
 	}
-	#endregion
-	#endregion AWDLRuntimeException
-	#region AWDLSyntaxErrorException
-	class ReoScriptSyntaxErrorException : ReoScriptRuntimeException
-	{
-		public ReoScriptSyntaxErrorException(ScriptContext context, string msg) : base(context, msg) { }
-		public ReoScriptSyntaxErrorException(ScriptContext context, string msg, Exception inner) : base(context, msg, null, inner) { }
-	}
-	#endregion
+
+	/// <summary>
+	/// Assertion failure exception. This exception thrown by debug.assert built-in function.
+	/// </summary>
 	public class ReoScriptAssertionException : ReoScriptRuntimeException
 	{
-		public ReoScriptAssertionException(ScriptContext context) : this(context, string.Empty) { }
-		public ReoScriptAssertionException(ScriptContext context, string msg) : base(context, msg) { }
-		public ReoScriptAssertionException(ScriptContext context, string caused, string excepted)
-			: base(context, string.Format("excepte {0} but {1}", excepted, caused)) { }
+		public ReoScriptAssertionException(string msg) : base(msg) { }
 	}
-	public class ClassNotFoundException : ReoScriptRuntimeException
+
+	/// <summary>
+	/// Call-stack overflow exception. This exception will be thrown if the call-stack reached the max limitation.
+	/// </summary>
+	public class CallStackOverflowException : ReoScriptRuntimeException
 	{
-		public ClassNotFoundException(ScriptContext context, string msg) : base(context, msg) { }
-		public ClassNotFoundException(ScriptContext context, string msg, Exception inner) : base(context, msg, null, inner) { }
+		public CallStackOverflowException(string msg) : base(msg) { }
 	}
+
+	/// <summary>
+	/// This exception will be thrown if script attempts to call an undefined function.
+	/// </summary>
+	public class FunctionNotDefinedException : ReoScriptRuntimeException
+	{
+		public FunctionNotDefinedException(ErrorObject error) : base(error) { }
+	}
+
+	//public class ClassNotFoundException : ReoScriptRuntimeException
+	//{
+	//  public ClassNotFoundException(ScriptContext context, string msg) : base(context, msg) { }
+	//  public ClassNotFoundException(ScriptContext context, string msg, Exception inner) : base(context, msg, null, inner) { }
+	//}
+
 	#endregion
 
-	#region Access
+	#region Accessor
+	// FIXME: Accessor mechanism should be removed in order to improve the execution speed
+	//[Obsolete("Accessor mechanism should be removed in order to improve the execution speed.")]
 	interface IAccess : ISyntaxTreeReturn
 	{
 		void Set(object value);
@@ -1496,14 +2094,38 @@ namespace Unvell.ReoScript
 			: base(srm, ctx)
 		{
 			this.identifier = identifier;
-			Scope = ctx.GetVariableScope(identifier);
 
-			if (Scope == null && ctx.GlobalObject[identifier] != null)
+			CallScope cs = ctx.CurrentCallScope;
+
+			if (cs != null)
+			{
+				if (cs.Variables.ContainsKey(identifier))
+				{
+					scope = cs;
+				}
+				else 
+				{
+					CallScope outerScope = cs.CurrentFunction.OuterCallScope;
+					while (outerScope != null)
+					{
+						if (outerScope.Variables.ContainsKey(identifier))
+						{
+							scope = outerScope;
+							break;
+						}
+
+						outerScope = outerScope.CurrentFunction.OuterCallScope;
+					}
+				}
+			}
+
+			if (scope == null && ctx.GlobalObject[identifier] != null)
 			{
 				GlobalObject = ctx.GlobalObject;
 			}
 		}
-		public CallScope Scope { get; set; }
+		private CallScope scope;
+		public CallScope Scope { get { return scope; } }
 		public ObjectValue GlobalObject { get; set; }
 		#region Access Members
 		public override void Set(object value)
@@ -1516,19 +2138,6 @@ namespace Unvell.ReoScript
 			{
 				Scope[identifier] = value;
 			}
-			//if (Scope != null)
-			//{
-			//  Scope[identifier] = value;
-			//}
-			//else if (GlobalObject != null)
-			//{
-			//  GlobalObject[identifier] = value;
-			//}
-			//else
-			//{
-			//  // new variable declare to global object 
-			//  srm.CurrentContext[identifier] = value;
-			//}
 		}
 		public override object Get()
 		{
@@ -1571,9 +2180,13 @@ namespace Unvell.ReoScript
 			{
 				((ArrayObject)array)[index] = value;
 			}
+			else if (array is IList)
+			{
+				((IList)array)[index] = value;
+			}
 			else if (array is string)
 			{
-				// FIXME: string can not be modified
+				// FIXME: string can not be modified (since v1.2.2)
 				string str = (string)array;
 				if (index < str.Length)
 				{
@@ -1585,13 +2198,7 @@ namespace Unvell.ReoScript
 					array = str;
 				}
 			}
-			else if (Srm.EnableDirectAccess && Srm.IsDirectAccessObject(array))
-			{
-				if (array is IList)
-				{
-					((IList)array)[index] = value;
-				}
-			}
+		
 		}
 		public override object Get()
 		{
@@ -1599,20 +2206,26 @@ namespace Unvell.ReoScript
 			{
 				return ((ArrayObject)array)[index];
 			}
+			else if (array is IList)
+			{
+				IList list = (IList)array;
+				return index >= list.Count ? null : list[index];
+			}
 			else if (array is string)
 			{
 				string str = Convert.ToString(array);
 				return index >= 0 && index < str.Length ? (str[index].ToString()) : string.Empty;
 			}
-			else if (Srm.EnableDirectAccess && Srm.IsDirectAccessObject(array))
-			{
-				if (array is IList)
-				{
-					return ((IList)array)[index];
-				}
-				else
-					return null;
-			}
+			//else if (Srm.EnableDirectAccess && Srm.IsDirectAccessObject(array))
+			//{
+			//  if (array is IList)
+			//  {
+			//    return ((IList)array)[index];
+			//  }
+
+			//  else
+			//    return null;
+			//}
 			else
 			{
 				return null;
@@ -1646,7 +2259,7 @@ namespace Unvell.ReoScript
 		#region Access Members
 		public override void Set(object value)
 		{
-			PropertyAccessHelper.SetProperty(Srm, Context, obj, identifier, value);
+			PropertyAccessHelper.SetProperty(Context, obj, identifier, value);
 		}
 		public override object Get()
 		{
@@ -1657,17 +2270,39 @@ namespace Unvell.ReoScript
 
 	sealed class PropertyAccessHelper
 	{
-		internal static void SetProperty(ScriptRunningMachine srm, ScriptContext context, object target, string identifier, object value)
+		internal static void SetProperty(ScriptContext context, object target, string identifier, object value)
 		{
+			ScriptRunningMachine srm = context.Srm;
+
 			// in DirectAccess mode and object is accessable directly
-			if (srm.EnableDirectAccess && srm.IsDirectAccessObject(target))
+			if (target is ObjectValue)
 			{
-				string memberName = ScriptRunningMachine.GetNativeIdentifierName(identifier);
+				ObjectValue objValue = (ObjectValue)target;
+
+				object val = objValue[identifier];
+
+				if (val is ExternalProperty)
+				{
+					((ExternalProperty)val).SetNativeValue(value);
+				}
+				else
+				{
+					objValue[identifier] = value;
+				}
+			}
+			else if (target is IDictionary<string, object>)
+			{
+				IDictionary<string, object> dict = (IDictionary<string, object>)target;
+				dict[identifier] = value;
+			}
+			else if (srm.AllowDirectAccess && !(target is ISyntaxTreeReturn))
+			{
+				string memberName = ScriptRunningMachine.GetNativeIdentifier(identifier);
 
 				// if value is anonymous function, try to attach CLR event
 				if (value is FunctionObject)
 				{
-					if (srm.EnableCLREvent)
+					if (srm.AllowCLREvent)
 					{
 						EventInfo ei = target.GetType().GetEvent(memberName);
 						if (ei != null)
@@ -1734,7 +2369,7 @@ namespace Unvell.ReoScript
 						else
 						{
 							// remove event if property value is set to null
-							if (value == null && srm.EnableCLREvent)
+							if (value == null && srm.AllowCLREvent)
 							{
 								EventInfo ei = target.GetType().GetEvent(memberName, BindingFlags.Instance | BindingFlags.Public);
 
@@ -1756,20 +2391,6 @@ namespace Unvell.ReoScript
 					}
 				}
 			}
-			else if (target is ObjectValue)
-			{
-				ObjectValue objValue = (ObjectValue)target;
-
-				object val = objValue[identifier];
-				if (val is ExternalProperty)
-				{
-					((ExternalProperty)val).SetNativeValue(value);
-				}
-				else
-				{
-					objValue[identifier] = value;
-				}
-			}
 			else
 			{
 				// unknown type, ignore it
@@ -1780,7 +2401,7 @@ namespace Unvell.ReoScript
 		{
 			if (target is string)
 			{
-				// FIXME: not very good to hard code to get property 'length'
+				// FIXME: not very good to get property 'length' in hard coding
 				if (identifier == "length")
 					return ((string)target).Length;
 				else
@@ -1796,6 +2417,15 @@ namespace Unvell.ReoScript
 			{
 				return PropertyAccessHelper.GetProperty(srm, srm.BuiltinConstructors.BooleanFunction[
 					ScriptRunningMachine.KEY_PROTOTYPE], identifier);
+			}
+			else if (target is IList)
+			{
+				// FIXME: not very good to get property 'length' in hard coding
+				if (identifier == "length")
+					return ((IList)target).Count;
+				else
+					return PropertyAccessHelper.GetProperty(srm, srm.BuiltinConstructors.ArrayFunction[
+						ScriptRunningMachine.KEY_PROTOTYPE], identifier);
 			}
 			else if (target is ObjectValue)
 			{
@@ -1819,9 +2449,18 @@ namespace Unvell.ReoScript
 					return propertyValue;
 				}
 			}
-			else if (srm.EnableDirectAccess && srm.IsDirectAccessObject(target))
+			else if (target is IDictionary<string, object>)
 			{
-				string memberName = ScriptRunningMachine.GetNativeIdentifierName(identifier);
+				IDictionary<string, object> dict = (IDictionary<string, object>)target;
+                object o = null;
+                dict.TryGetValue(identifier, out o);
+				return o;
+			}
+			else if (srm.AllowDirectAccess && !(target is ISyntaxTreeReturn))
+			{
+				string memberName = ((srm.WorkMode & MachineWorkMode.AutoUppercaseWhenCLRCalling)
+					== MachineWorkMode.AutoUppercaseWhenCLRCalling)
+					? ScriptRunningMachine.GetNativeIdentifier(identifier) : identifier;
 
 				PropertyInfo pi = target.GetType().GetProperty(memberName, BindingFlags.Public | BindingFlags.Instance);
 
@@ -1901,1996 +2540,2144 @@ namespace Unvell.ReoScript
 	#endregion
 
 	#region Parsers
-	#region Parser Interface
-	interface INodeParser
+	namespace Parsers
 	{
-		object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx);
-	}
-	#endregion
-
-	#region Import Statement
-	class ImportNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+		#region Parser Interface
+		interface INodeParser
 		{
-			if (t.Children[0].Type == ReoScriptLexer.STRING_LITERATE)
-			{
-				string codeFile = t.Children[0].ToString();
-				codeFile = codeFile.Substring(1, codeFile.Length - 2);
+			object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx);
+		}
+		#endregion
 
-				string path = Path.GetFullPath(Path.Combine(
-					string.IsNullOrEmpty(ctx.SourceFilePath) ? srm.WorkPath 
-					: Path.GetDirectoryName(ctx.SourceFilePath), codeFile));
+		#region Import Statement
+		class ImportNodeParser : INodeParser
+		{
+			#region INodeParser Members
 
-				srm.ImportCodeFile(path);
-			}
-			else if (srm.EnableImportTypeInScript)
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				StringBuilder sb = new StringBuilder();
-				for (int i = 0; i < t.ChildCount; i++)
+				if (t.Children[0].Type == ReoScriptLexer.STRING_LITERATE)
 				{
-					string ns = t.Children[i].ToString();
+					string codeFile = t.Children[0].ToString();
+					codeFile = codeFile.Substring(1, codeFile.Length - 2);
 
-					if (i == t.ChildCount - 1)
+					string path = Path.GetFullPath(Path.Combine(
+						string.IsNullOrEmpty(ctx.SourceFilePath) ? srm.WorkPath
+						: Path.GetDirectoryName(ctx.SourceFilePath), codeFile));
+
+					srm.ImportCodeFile(path);
+				}
+				else if (srm.AllowImportTypeInScript)
+				{
+					StringBuilder sb = new StringBuilder();
+					for (int i = 0; i < t.ChildCount; i++)
 					{
-						if (ns == "*")
-						{
-							srm.ImportNamespace(sb.ToString());
-							return null;
-						}
-						else
-						{
-							string name = sb.ToString();
-							if (name.EndsWith(".")) name = name.Substring(0, name.Length - 1);
+						string ns = t.Children[i].ToString();
 
-							Type type = srm.GetTypeFromAssembly(name, ns);
-							if (type != null)
+						if (i == t.ChildCount - 1)
+						{
+							if (ns == "*")
 							{
-								srm.ImportType(type);
-							}
-							return null;
-						}
-					}
-
-					sb.Append(ns);
-				}
-			}
-
-			return null;
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Local Variable Declaration
-	class DeclarationNodeParser : INodeParser
-	{
-		private AssignmentNodeParser assignmentParser = new AssignmentNodeParser();
-
-		#region INodeParser Members
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
-		{
-			object lastValue = null;
-			for (int i = 1; i < t.ChildCount; i++)
-			{
-				var identifier = t.Children[0].ToString();
-				var value = srm.ParseNode((CommonTree)t.Children[i], context);
-
-				if (value is IAccess) value = ((IAccess)value).Get();
-
-				// declare variable in current call stack
-				if (srm.IsInGlobalScope(context))
-				{
-					srm[identifier] = value;
-				}
-				else
-				{
-					context.GetCurrentCallScope()[identifier] = value;
-				}
-
-				lastValue = value;
-			}
-
-			return lastValue;
-		}
-		#endregion
-	}
-	#endregion
-	#region Assignment =
-	class AssignmentNodeParser : INodeParser
-	{
-		private static readonly ExprPlusNodeParser exprPlusNodeParser = new ExprPlusNodeParser();
-
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
-		{
-			if (t.ChildCount == 1)
-			{
-				return null;
-			}
-
-			IAccess access = srm.ParseNode((CommonTree)t.Children[0], context) as IAccess;
-			if (access == null)
-			{
-				if (srm.IsInGlobalScope(context))
-				{
-					access = new PropertyAccess(srm, context, srm.GlobalObject, t.Children[0].Text);
-				}
-			}
-
-			CommonTree expr = t.ChildCount > 1 ? (CommonTree)t.Children[1] : null;
-
-			object value = null;
-			if (expr != null)
-			{
-				value = srm.ParseNode(expr, context);
-			}
-
-			if (value is IAccess) value = ((IAccess)value).Get();
-
-			if (access != null)
-			{
-				access.Set(value);
-			}
-			else if (!srm.IsInGlobalScope(context))
-			{
-				context[t.Children[0].Text] = value;
-			}
-
-			return value;
-		}
-		#endregion
-	}
-	#endregion
-	#region Expresion Operator
-	abstract class ExpressionOperatorNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			object left = srm.ParseNode((CommonTree)t.Children[0], ctx);
-			if (left is IAccess) left = ((IAccess)left).Get();
-
-			object right = srm.ParseNode((CommonTree)t.Children[1], ctx);
-			if (right is IAccess) right = ((IAccess)right).Get();
-
-			return Calc(left, right, srm, ctx);
-		}
-
-		public abstract object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context);
-
-		#endregion
-	}
-	abstract class MathExpressionOperatorParser : ExpressionOperatorNodeParser
-	{
-		public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
-		{
-			if (left == NaNValue.Value || right == NaNValue.Value)
-				return NaNValue.Value;
-
-			try
-			{
-				return MathCalc(Convert.ToDouble(left), Convert.ToDouble(right));
-			}
-			catch
-			{
-				return NaNValue.Value;
-			}
-		}
-
-		public abstract object MathCalc(double left, double right);
-	}
-	#region Plus +
-	class ExprPlusNodeParser : ExpressionOperatorNodeParser
-	{
-		public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
-		{
-			if (left == null && right == null)
-				return null;
-
-			if (ScriptRunningMachine.IsNumber(left))
-			{
-				if (right == null)
-				{
-					return left;
-				}
-				else if (right == NaNValue.Value)
-				{
-					return NaNValue.Value;
-				}
-				else if (ScriptRunningMachine.IsNumber(right))
-				{
-					double val = Convert.ToDouble(left) + Convert.ToDouble(right);
-					return double.IsNaN(val) ? NaNValue.Value : (object)val;
-				}
-				else if (right is NumberObject)
-				{
-					return Convert.ToDouble(left) + ((NumberObject)right).Number;
-				}
-			}
-			else if (ScriptRunningMachine.IsNumber(right))
-			{
-				if (left == null)
-				{
-					return right;
-				}
-				else if (left == NaNValue.Value)
-				{
-					return NaNValue.Value;
-				}
-				else if (ScriptRunningMachine.IsNumber(left))
-				{
-					double val = Convert.ToDouble(left) + Convert.ToDouble(right);
-					return double.IsNaN(val) ? NaNValue.Value : (object)val;
-				}
-				else if (left is NumberObject)
-				{
-					return ((NumberObject)left).Number + Convert.ToDouble(right);
-				}
-			}
-
-			//if (left is string || right is string || left is StringObject || right is StringObject)
-			//{
-			//  return Convert.ToString(left) + Convert.ToString(right);
-			//}
-			//else 
-			if (left.GetType() == typeof(ObjectValue) && right.GetType() == typeof(ObjectValue))
-			{
-				ObjectValue obj = srm.CreateNewObject(context);
-				srm.CombineObject(context, obj, ((ObjectValue)left));
-				srm.CombineObject(context, obj, ((ObjectValue)right));
-				return obj;
-			}
-			else
-			{
-				return Convert.ToString(left) + Convert.ToString(right);
-
-				//try
-				//{
-				//  return Convert.ToDouble(left) + Convert.ToDouble(right);
-				//}
-				//catch (Exception)
-				//{
-				//  return string.Empty + left + right;
-				//}
-			}
-		}
-	}
-	#endregion
-	#region Minus -
-	class ExprMinusNodeParser : MathExpressionOperatorParser
-	{
-		public override object MathCalc(double left, double right)
-		{
-			double val = left - right;
-			return (double.IsNaN(val)) ? NaNValue.Value : (object)val;
-		}
-	}
-	#endregion
-	#region Mul *
-	class ExprMultiNodeParser : MathExpressionOperatorParser
-	{
-		public override object MathCalc(double left, double right)
-		{
-			double val = left * right;
-			return (double.IsNaN(val)) ? NaNValue.Value : (object)val;
-		}
-	}
-	#endregion
-	#region Div /
-	class ExprDivNodeParser : MathExpressionOperatorParser
-	{
-		public override object MathCalc(double left, double right)
-		{
-			double val = left / right;
-			return (double.IsNaN(val)) ? NaNValue.Value : (object)val;
-		}
-	}
-	#endregion
-	#region Mod %
-	class ExprModNodeParser : MathExpressionOperatorParser
-	{
-		#region INodeParser Members
-
-		public override object MathCalc(double left, double right)
-		{
-			return (left % right);
-		}
-
-		#endregion
-	}
-	#endregion
-	#region And &
-	class ExprAndNodeParser : ExpressionOperatorNodeParser
-	{
-		#region INodeParser Members
-
-		public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
-		{
-			if ((left is int || left is double || left is long || left is float)
-				&& (right is int || right is double || right is long || right is float))
-			{
-				return (Convert.ToInt64(left) & Convert.ToInt64(right));
-			}
-			else
-			{
-				return NaNValue.Value;
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Or |
-	class ExprOrNodeParser : ExpressionOperatorNodeParser
-	{
-		#region INodeParser Members
-
-		public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
-		{
-			if ((left is int || left is long || left is float || left is double)
-				&& (right is int || right is long || right is float || right is double))
-			{
-				return (Convert.ToInt64(left) | Convert.ToInt64(right));
-			}
-			else
-			{
-				return NaNValue.Value;
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Xor ^
-	class ExprXorNodeParser : ExpressionOperatorNodeParser
-	{
-		#region INodeParser Members
-
-		public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
-		{
-			if (left is long && right is long)
-			{
-				return ((long)left ^ (long)right);
-			}
-			else if (left is ObjectValue && right is ObjectValue)
-			{
-				ObjectValue leftObj = (ObjectValue)left;
-				ObjectValue rightObj = (ObjectValue)right;
-
-				ObjectValue resultObject = srm.CreateNewObject(context);
-
-				foreach (string key in leftObj)
-				{
-					if (rightObj.HasOwnProperty(key))
-					{
-						resultObject[key] = leftObj[key];
-					}
-				}
-
-				return resultObject;
-			}
-			else
-			{
-				return NaNValue.Value;
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Left Shift <<
-	class ExprLeftShiftNodeParser : ExpressionOperatorNodeParser
-	{
-		#region INodeParser Members
-
-		public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
-		{
-			try
-			{
-				int l = Convert.ToInt32(left);
-				int r = Convert.ToInt32(right);
-
-				return l << r;
-			}
-			catch
-			{
-				return 0;
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Right Shift >>
-	class ExprRightShiftNodeParser : ExpressionOperatorNodeParser
-	{
-		#region INodeParser Members
-
-		public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
-		{
-			try
-			{
-				int l = Convert.ToInt32(left);
-				int r = Convert.ToInt32(right);
-
-				return l >> r;
-			}
-			catch
-			{
-				return 0;
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#endregion
-	#region Unary for Primary Expression
-	class ExprUnaryNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			string oprt = t.Children[0].ToString();
-			object value = srm.ParseNode((CommonTree)t.Children[1], ctx);
-
-			// get value
-			while (value is IAccess) value = ((IAccess)value).Get();
-
-			if (value == null) return null;
-
-			switch (oprt)
-			{
-				default:
-				case "+":
-					return value;
-
-				case "-":
-					if (value is long)
-						return -((long)value);
-					else if (value is double)
-						return -((double)value);
-					else
-						return null;
-
-				case "!":
-					if (!(value is bool))
-					{
-						return null;
-					}
-					return !((bool)value);
-
-				case "~":
-					return (~(Convert.ToInt64(value)));
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Post Increment i++
-	class ExprPostIncrementNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			CommonTree target = (CommonTree)t.Children[0];
-			IAccess access = srm.ParseNode((CommonTree)t.Children[0], ctx) as IAccess;
-			if (access == null)
-			{
-				throw new ReoScriptRuntimeException(ctx, "only property, indexer, and variable can be used as increment or decrement statement.");
-			}
-
-			object oldValue = access.Get();
-			if (oldValue == null)
-			{
-				oldValue = 0;
-			}
-
-			if (!ScriptRunningMachine.IsNumber(oldValue))
-			{
-				throw new ReoScriptRuntimeException(ctx, "only interger can be used as increment or decrement statement.");
-			}
-
-			double value = Convert.ToDouble(oldValue);
-			double returnValue = value;
-			access.Set((value + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1)));
-			return returnValue;
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Pre Increment ++i
-	class ExprPreIncrementNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			CommonTree target = (CommonTree)t.Children[0];
-			IAccess access = srm.ParseNode((CommonTree)t.Children[0], ctx) as IAccess;
-			if (access == null)
-			{
-				throw new ReoScriptRuntimeException(ctx, "only property, indexer, and variable can be used as increment or decrement statement.");
-			}
-			object oldValue = access.Get();
-			if (oldValue == null)
-			{
-				oldValue = 0;
-			}
-
-			if (!ScriptRunningMachine.IsNumber(oldValue))
-			{
-				throw new ReoScriptRuntimeException(ctx, "only interger can be used as increment or decrement statement.");
-			}
-
-			double value = Convert.ToDouble(oldValue);
-
-			object v = (value + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1));
-			access.Set(v);
-			return v;
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Condition ? :
-	class ExprConditionNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			object value = srm.ParseNode((CommonTree)t.Children[0], ctx);
-			if (!(value is bool))
-			{
-				throw new ReoScriptRuntimeException(ctx, "only boolean expression can be used for conditional expression.");
-			}
-			bool condition = (bool)value;
-			return condition ? srm.ParseNode((CommonTree)t.Children[1], ctx)
-				: srm.ParseNode((CommonTree)t.Children[2], ctx);
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Relation Expression Operator
-	abstract class RelationExpressionOperatorNodeParser : ExpressionOperatorNodeParser
-	{
-		#region INodeParser Members
-		public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
-		{
-			return Compare(left, right, srm);
-		}
-
-		public abstract bool Compare(object left, object right, ScriptRunningMachine srm);
-		#endregion
-	}
-
-	#region Equals ==
-	class ExprEqualsNodeParser : RelationExpressionOperatorNodeParser
-	{
-		#region INodeParser Members
-
-		public override bool Compare(object left, object right, ScriptRunningMachine srm)
-		{
-			if (left == null && right == null) return true;
-			if (left == null || right == null) return false;
-			if (left == NaNValue.Value && right == NaNValue.Value) return true;
-			if (left == NaNValue.Value || right == NaNValue.Value) return false;
-
-			if (left is string || left is StringObject)
-			{
-				return Convert.ToString(left).Equals(Convert.ToString(right));
-			}
-			else if (right is string || right is StringObject)
-			{
-				return Convert.ToString(right).Equals(Convert.ToString(left));
-			}
-			else
-			{
-				if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
-				{
-					return Convert.ToDouble(left) == Convert.ToDouble(right);
-				}
-
-				else if (left is NumberObject && ScriptRunningMachine.IsNumber(right))
-				{
-					return ((NumberObject)left).Number == Convert.ToDouble(right);
-				}
-				else if (right is NumberObject && ScriptRunningMachine.IsNumber(left))
-				{
-					return Convert.ToDouble(left) == ((NumberObject)right).Number;
-				}
-				else if (left is NumberObject && right is NumberObject)
-				{
-					return ((NumberObject)left).Number == ((NumberObject)right).Number;
-				}
-
-				else if (left is BooleanObject && right is bool)
-				{
-					return ((BooleanObject)left).Boolean == (bool)right;
-				}
-				else if (right is BooleanObject && left is bool)
-				{
-					return ((BooleanObject)right).Boolean == (bool)left;
-				}
-				else if (left is BooleanObject && right is BooleanObject)
-				{
-					return ((BooleanObject)left).Boolean == ((BooleanObject)right).Boolean;
-				}
-				else
-				{
-					return left.Equals(right);
-				}
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Not Equals !=
-	class ExprNotEqualsNodeParser : RelationExpressionOperatorNodeParser
-	{
-		private static readonly ExprEqualsNodeParser equalsParser = new ExprEqualsNodeParser();
-		#region INodeParser Members
-
-		public override bool Compare(object left, object right, ScriptRunningMachine srm)
-		{
-			return !equalsParser.Compare(left, right, srm);
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Strict Equals ===
-	class ExprStrictEqualsNodeParser : RelationExpressionOperatorNodeParser
-	{
-		public override bool Compare(object left, object right, ScriptRunningMachine srm)
-		{
-			if (left == null && right == null) return true;
-			if (left == null || right == null) return false;
-
-			if ((ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
-				|| (left is string && right is string) || (left is bool && right is bool))
-			{
-				return left.Equals(right);
-			}
-			else
-			{
-				return left == right;
-			}
-		}
-	}
-	#endregion
-	#region Strict Not Equals !==
-	class ExprStrictNotEqualsNodeParser : RelationExpressionOperatorNodeParser
-	{
-		private ExprStrictEqualsNodeParser equalsParser = new ExprStrictEqualsNodeParser();
-
-		public override bool Compare(object left, object right, ScriptRunningMachine srm)
-		{
-			return !equalsParser.Compare(left, right, srm);
-			//return left != right;
-		}
-	}
-	#endregion
-
-	#region Greater Than >
-	class ExprGreaterThanNodeParser : RelationExpressionOperatorNodeParser
-	{
-		#region INodeParser Members
-
-		public override bool Compare(object left, object right, ScriptRunningMachine srm)
-		{
-			if ((left is int || left is long || left is float || left is double)
-			&& (right is int || right is long || right is float || right is double))
-			{
-				return Convert.ToDouble(left) > Convert.ToDouble(right);
-			}
-			else if (left is NumberObject
-					 && ScriptRunningMachine.IsNumber(right))
-			{
-				return ((NumberObject)left).Number > Convert.ToDouble(right);
-			}
-			else if (right is NumberObject
-				 && ScriptRunningMachine.IsNumber(left))
-			{
-				return Convert.ToDouble(left) > ((NumberObject)right).Number;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Greater Or Equals >=
-	class ExprGreaterOrEqualsNodeParser : RelationExpressionOperatorNodeParser
-	{
-		#region INodeParser Members
-
-		public override bool Compare(object left, object right, ScriptRunningMachine srm)
-		{
-			if (ScriptRunningMachine.IsNumber(left)
-			&& ScriptRunningMachine.IsNumber(right))
-			{
-				return Convert.ToDouble(left) >= Convert.ToDouble(right);
-			}
-			else if (left is NumberObject
-					 && ScriptRunningMachine.IsNumber(right))
-			{
-				return ((NumberObject)left).Number >= Convert.ToDouble(right);
-			}
-			else if (right is NumberObject
-					&& ScriptRunningMachine.IsNumber(left))
-			{
-				return Convert.ToDouble(left) >= ((NumberObject)right).Number;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Less Than <
-	class ExprLessThanNodeParser : RelationExpressionOperatorNodeParser
-	{
-		#region INodeParser Members
-
-		public override bool Compare(object left, object right, ScriptRunningMachine srm)
-		{
-			if (ScriptRunningMachine.IsNumber(left)
-				&& ScriptRunningMachine.IsNumber(right))
-			{
-				return Convert.ToDouble(left) < Convert.ToDouble(right);
-			}
-			else if (left is NumberObject
-					 && ScriptRunningMachine.IsNumber(right))
-			{
-				return ((NumberObject)left).Number < Convert.ToDouble(right);
-			}
-			else if (right is NumberObject
-					&& ScriptRunningMachine.IsNumber(left))
-			{
-				return Convert.ToDouble(left) < ((NumberObject)right).Number;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Less Or Equals <=
-	class ExprLessOrEqualsNodeParser : RelationExpressionOperatorNodeParser
-	{
-		#region INodeParser Members
-
-		public override bool Compare(object left, object right, ScriptRunningMachine srm)
-		{
-			if (ScriptRunningMachine.IsNumber(left)
-				&& ScriptRunningMachine.IsNumber(right))
-			{
-				return Convert.ToDouble(left) <= Convert.ToDouble(right);
-			}
-			else if (left is NumberObject
-					 && ScriptRunningMachine.IsNumber(right))
-			{
-				return ((NumberObject)left).Number <= Convert.ToDouble(right);
-			}
-			else if (right is NumberObject
-					&& ScriptRunningMachine.IsNumber(left))
-			{
-				return Convert.ToDouble(left) <= ((NumberObject)right).Number;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#endregion
-	#region Boolean &&
-	class BooleanAndNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			object left = srm.ParseNode((CommonTree)t.Children[0], ctx);
-			if (left is IAccess) left = ((IAccess)left).Get();
-
-			if (left == null || !(left is bool))
-				return false;
-
-			bool leftBool = (bool)left;
-			if (!leftBool) return false;
-
-			object right = srm.ParseNode((CommonTree)t.Children[1], ctx);
-			if (right is IAccess) right = ((IAccess)right).Get();
-
-			if (right == null || !(right is bool))
-				return false;
-
-			bool rightBool = (bool)right;
-			return rightBool;
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Boolean ||
-	class BooleanOrNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			object left = srm.ParseNode((CommonTree)t.Children[0], ctx);
-			if (left is IAccess) left = ((IAccess)left).Get();
-
-			if (left == null || !(left is bool))
-				return false;
-
-			bool leftBool = (bool)left;
-			if (leftBool) return true;
-
-			object right = srm.ParseNode((CommonTree)t.Children[1], ctx);
-			if (right is IAccess) right = ((IAccess)right).Get();
-
-			if (right == null || !(right is bool))
-				return false;
-
-			bool rightBool = (bool)right;
-			return rightBool;
-		}
-
-		#endregion
-	}
-	#endregion
-	#region If Else
-	class IfStatementNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			object value = srm.ParseNode((CommonTree)t.Children[0], ctx);
-			if (value is IAccess) value = ((IAccess)value).Get();
-
-			if (!(value is bool))
-			{
-				return false;
-				//throw new AWDLRuntimeException("only boolean expression can be used as test condition.");
-			}
-			bool condition = (bool)value;
-			if (condition)
-			{
-				return srm.ParseNode((CommonTree)t.Children[1], ctx);
-			}
-			else if (t.ChildCount == 3)
-			{
-				return srm.ParseNode((CommonTree)t.Children[2], ctx);
-			}
-			else
-				return null;
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Switch Case
-	class SwitchCaseStatementNodeParser : INodeParser
-	{
-		private ExprEqualsNodeParser equalsParser = new ExprEqualsNodeParser();
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			if (t.ChildCount == 0) return null;
-
-			object source = srm.ParseNode(t.Children[0] as CommonTree, ctx);
-			while (source is IAccess) source = ((IAccess)source).Get();
-
-			if (source == null) return null;
-
-			int defaultCaseLine = 0;
-			bool doParse = false;
-
-			int i = 1;
-
-		doDefault:
-			while (i < t.ChildCount)
-			{
-				CommonTree caseTree = t.Children[i] as CommonTree;
-
-				if (caseTree.Type == ReoScriptLexer.BREAK)
-				{
-					if (doParse) return null;
-				}
-				else if (caseTree.Type == ReoScriptLexer.RETURN)
-				{
-					if (doParse) return srm.ParseNode(caseTree, ctx);
-				}
-				else if (caseTree.Type == ReoScriptLexer.SWITCH_CASE_ELSE)
-				{
-					defaultCaseLine = i;
-				}
-				else if (caseTree.Type == ReoScriptLexer.SWITCH_CASE)
-				{
-					if (caseTree.ChildCount > 0)
-					{
-						object target = srm.ParseNode(caseTree.Children[0] as CommonTree, ctx);
-						if (target is IAccess) target = ((IAccess)target).Get();
-
-						if ((bool)equalsParser.Calc(source, target, srm, ctx))
-						{
-							doParse = true;
-						}
-					}
-				}
-				else if (doParse)
-				{
-					srm.ParseNode(caseTree, ctx);
-				}
-
-				i++;
-			}
-
-			if (defaultCaseLine > 0)
-			{
-				i = defaultCaseLine;
-				doParse = true;
-				goto doDefault;
-			}
-
-			return null;
-		}
-	}
-	#endregion
-	#region For
-	class ForStatementNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			CommonTree forInit = (CommonTree)t.Children[0];
-			srm.ParseChildNodes(forInit, ctx);
-
-			CommonTree condition = (CommonTree)t.Children[1];
-			CommonTree forIterator = (CommonTree)t.Children[2];
-			CommonTree body = (CommonTree)t.Children[3];
-
-			while (true)
-			{
-				object conditionValue = srm.ParseNode(condition, ctx) as object;
-				if (conditionValue != null)
-				{
-					bool? booleanValue = conditionValue as bool?;
-
-					if (booleanValue == null)
-					{
-						throw new ReoScriptRuntimeException(ctx, "only boolean expression can be used as test condition.");
-					}
-					else if (!((bool)booleanValue))
-					{
-						return null;
-					}
-				}
-
-				object result = srm.ParseNode(body, ctx);
-				if (result is BreakNode)
-				{
-					return null;
-				}
-				else if (result is ReturnNode)
-				{
-					return result;
-				}
-
-				srm.ParseNode(forIterator, ctx);
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Foreach
-	class ForEachStatementNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
-		{
-			string varName = t.Children[0].ToString();
-
-			CallScope scope = null;
-
-			if (t.ChildCount > 3 && t.Children[3].Type == ReoScriptLexer.TYPE
-				&& !srm.IsInGlobalScope(context))
-			{
-				scope = context.GetCurrentCallScope();
-			}
-
-			// retrieve target object
-			object nativeObj = srm.ParseNode(t.Children[1] as CommonTree, context);
-			if (nativeObj is IAccess) nativeObj = ((IAccess)nativeObj).Get();
-
-			if (nativeObj is IEnumerable)
-			{
-				IEnumerator iterator = ((IEnumerable)nativeObj).GetEnumerator();
-
-				while (iterator.MoveNext())
-				{
-					// prepare key
-					if (scope == null)
-					{
-						srm[varName] = iterator.Current;
-					}
-					else
-					{
-						scope[varName] = iterator.Current;
-					}
-
-					// prepare iterator
-					CommonTree body = t.Children[2] as CommonTree;
-
-					// call iterator and terminal loop if break
-					object result = srm.ParseNode(body, context);
-					if (result is BreakNode)
-					{
-						return null;
-					}
-					else if (result is ReturnNode)
-					{
-						return result;
-					}
-				}
-			}
-
-			return null;
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Break
-	class BreakNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			return new BreakNode();
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Continue
-	class ContinueNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			return new ContinueNode();
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Return
-	class ReturnNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			object v = null;
-
-			if (t.ChildCount > 0)
-			{
-				v = srm.ParseNode((CommonTree)t.Children[0], ctx);
-				if (v is IAccess) v = ((IAccess)v).Get();
-			}
-
-			// TODO: make ReturnNode single instance
-			return new ReturnNode(v);
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Try Catch
-	class TryCatchNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			CommonTree tryBody = t.Children[0] as CommonTree;
-
-			string errorObjIdentifier = null;
-
-			CommonTree catchNode = t.Children[1] as CommonTree;
-			CommonTree catchBody = catchNode.Children[0] as CommonTree;
-
-			if (catchNode.ChildCount > 1)
-			{
-				errorObjIdentifier = catchNode.Children[1].Text;
-			}
-
-			CommonTree finallyNode = t.Children[2] as CommonTree;
-			CommonTree finallyBody = finallyNode.ChildCount > 0 ? finallyNode.Children[0] as CommonTree : null;
-
-			object ret = null;
-
-			try
-			{
-				ret = srm.ParseNode(tryBody, ctx);
-			}
-			catch (ReoScriptRuntimeException ex)
-			{
-				if (catchBody != null)
-				{
-					if (!string.IsNullOrEmpty(errorObjIdentifier))
-					{
-						CallScope currentScope = ctx.GetCurrentCallScope();
-						CallScope scope = new CallScope(currentScope.ThisObject, currentScope.CurrentFunction);
-						scope.Variables[errorObjIdentifier] = ex.ErrorObject;
-
-						ctx.PushCallStack(scope);
-
-						try
-						{
-							ret = srm.ParseNode(catchBody, ctx);
-						}
-						finally
-						{
-							ctx.PopCallStack();
-						}
-					}
-					else
-					{
-						ret = srm.ParseNode(catchBody, ctx);
-					}
-				}
-			}
-			finally
-			{
-				if (finallyBody != null) ret = srm.ParseNode(finallyBody, ctx);
-			}
-
-			return ret;
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Throw
-	class ThrowNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			object obj = srm.ParseNode(t.Children[0] as CommonTree, ctx);
-			if (obj is IAccess) obj = ((IAccess)obj).Get();
-
-			throw new ReoScriptRuntimeException(ctx, string.Empty, null, obj);
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Function Define
-	class FunctionDefineNodeParser : INodeParser
-	{
-		private AssignmentNodeParser assignParser = new AssignmentNodeParser();
-
-		#region INodeParser Members
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
-		{
-			string funName = t.Children[0].Text;
-			CommonTree paramsTree = t.Children[1] as CommonTree;
-
-			AbstractFunctionObject fun = CreateAndInitFunction(context, funName, paramsTree,
-				t.Children[2] as CommonTree);
-
-			srm[fun.FunName] = fun;
-			return null;
-		}
-		#endregion
-
-		internal static FunctionObject CreateAndInitFunction(ScriptContext context,
-			string funName, CommonTree paramsTree, CommonTree body)
-		{
-			ScriptRunningMachine srm = context.Srm;
-
-			FunctionObject fun = srm.CreateNewObject(context,
-				srm.BuiltinConstructors.FunctionFunction) as FunctionObject;
-
-			if (fun == null) return null;
-
-			ObjectValue prototype = srm.CreateNewObject(context, srm.BuiltinConstructors.ObjectFunction) as ObjectValue;
-			prototype[ScriptRunningMachine.KEY___PROTO__] = fun[ScriptRunningMachine.KEY___PROTO__];
-
-			fun[ScriptRunningMachine.KEY_PROTOTYPE] = prototype;
-
-			string[] identifiers = new string[paramsTree.ChildCount];
-
-			for (int i = 0; i < identifiers.Length; i++)
-			{
-				identifiers[i] = paramsTree.Children[i].ToString();
-			}
-
-			fun.FunName = funName;
-			fun.Args = identifiers;
-			fun.Body = body;
-
-			//AbstractFunctionObject inFun = context.GetCurrentCallScope().CurrentFunction;
-			//if(inFun is FunctionObject){
-			//  FunctionObject calledInFunction = (FunctionObject)inFun;
-			//  fun.DeclaredFilePath = calledInFunction.DeclaredFilePath;
-			return fun;
-		}
-	}
-	#endregion
-	#region Anonymous Function
-	class AnonymousFunctionNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			return FunctionDefineNodeParser.CreateAndInitFunction(ctx, string.Empty,
-				((CommonTree)t.Children[0]), (CommonTree)t.Children[1]);
-		}
-
-		#endregion
-	}
-
-	#endregion
-	#region Function Call
-	class FunctionCallNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
-		{
-			object funObj = null;
-			object ownerObj = null;
-
-			// local-function call
-			if (t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
-			{
-				string funName = t.Children[0].ToString();
-				funObj = context[funName];
-			}
-			else
-			{
-				// other objects call
-				funObj = srm.ParseNode(t.Children[0] as CommonTree, context);
-
-				if (funObj is PropertyAccess)
-				{
-					ownerObj = ((PropertyAccess)funObj).Object;
-					string methodName = ((PropertyAccess)funObj).Identifier;
-
-					if (!srm.IsPrimitiveTypes(ownerObj) && srm.IsDirectAccessObject(ownerObj))
-					{
-						if (!srm.EnableDirectAccess)
-						{
-							// owner object is not ReoScript object and DirectAccess is disabled.
-							// there is nothing can do so just return undefined.
-							return null;
-						}
-						else
-						{
-							if (srm.EnableDirectAccess && srm.IsDirectAccessObject(ownerObj))
-							{
-								object[] args = srm.GetParameterList(
-										(t.ChildCount <= 1 ? null : t.Children[1] as CommonTree), context);
-
-								MethodInfo mi = ScriptRunningMachine.FindCLRMethodAmbiguous(ownerObj,
-									ScriptRunningMachine.GetNativeIdentifierName(methodName), args);
-
-								if (mi != null)
-								{
-									ParameterInfo[] paramTypeList = mi.GetParameters();
-
-									try
-									{
-										object[] convertedArgs = new object[args.Length];
-										for (int i = 0; i < convertedArgs.Length; i++)
-										{
-											convertedArgs[i] = srm.ConvertToCLRType(context, args[i], paramTypeList[i].ParameterType);
-										}
-										return mi.Invoke(ownerObj, convertedArgs);
-									}
-									catch (Exception ex)
-									{
-										if (srm.IgnoreCLRExceptions)
-										{
-											// call error, return undefined
-											return null;
-										}
-										else
-											throw ex;
-									}
-								}
-							}
-						}
-					}
-
-					funObj = ((IAccess)funObj).Get();
-
-					if (funObj == null)
-					{
-						throw new ReoScriptRuntimeException(context, string.Format("{0} has no method '{1}'", ownerObj, methodName));
-					}
-				}
-				else
-				{
-					while (funObj is IAccess) funObj = ((IAccess)funObj).Get();
-				}
-			}
-
-			if (funObj == null)
-			{
-				throw new ReoScriptRuntimeException(context, "Function is not defined: " + t.Children[0].ToString());
-			}
-
-			if (ownerObj == null) ownerObj = context.ThisObject;
-
-			if (!(funObj is AbstractFunctionObject))
-			{
-				throw new ReoScriptRuntimeException(context, "Object is not a function: " + Convert.ToString(funObj));
-			}
-
-			CommonTree argTree = t.ChildCount < 2 ? null : t.Children[1] as CommonTree;
-			return srm.InvokeFunction(context, ownerObj, ((AbstractFunctionObject)funObj), srm.GetParameterList(argTree, context));
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Create
-	class CreateObjectNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
-		{
-			// combiled construct
-			if (t.ChildCount > 0 && t.Children[0].Type == ReoScriptLexer.COMBINE_OBJECT)
-			{
-				CommonTree combileTree = ((CommonTree)t.Children[0]);
-				ObjectValue combileObj = srm.ParseNode(combileTree.Children[1] as CommonTree, context) as ObjectValue;
-
-				object createdObj = Parse(combileTree.Children[0] as CommonTree, srm, context);
-				srm.CombineObject(context, createdObj, combileObj);
-				return createdObj;
-			}
-
-			CommonTree tempTree = t.Children[0] as CommonTree;
-			CommonTree constructTree = t;
-
-			// need a depth variable to remember the depth of construct calling
-			int committedDepth = 0, depth = 0;
-
-			// find construct calling
-			while (tempTree != null && tempTree.Children != null)
-			{
-				if (tempTree.Type == ReoScriptLexer.FUNCTION_CALL)
-				{
-					constructTree = tempTree;
-					committedDepth += depth;
-				}
-
-				tempTree = tempTree.Children[0] as CommonTree;
-				depth++;
-			}
-
-			if (constructTree == null) throw new ReoScriptRuntimeException(context, "unexpected end in new operation.");
-
-			// get constructor if it is need to retrieve from other Accessors
-			object constructorValue = srm.ParseNode(constructTree.Children[0] as CommonTree, context);
-
-			// get identifier of constructor
-			string constructorName = constructTree.Children[0].Type == ReoScriptLexer.IDENTIFIER
-				? constructTree.Children[0].Text : ScriptRunningMachine.KEY_UNDEFINED;
-
-			if (constructorValue is IAccess) constructorValue = ((IAccess)constructorValue).Get();
-
-			if (constructorValue == null)
-			{
-				constructorValue = srm.GetClass(constructorName);
-			}
-
-			if (constructorValue == null && srm.EnableDirectAccess)
-			{
-				Type type = srm.GetImportedTypeFromNamespaces(constructorName);
-				if (type != null)
-				{
-					constructorValue = new TypedNativeFunctionObject(type, type.Name);
-				}
-			}
-
-			if (constructorValue == null)
-			{
-				throw new ReoScriptRuntimeException(context, "Constructor not found: " + constructorName);
-			}
-
-			if (!(constructorValue is AbstractFunctionObject))
-			{
-				throw new ReoScriptRuntimeException(context, "Constructor is not a function type: " + constructorName);
-			}
-			else
-			{
-				// call constructor
-				AbstractFunctionObject funObj = (AbstractFunctionObject)constructorValue;
-
-				CommonTree argTree = (constructTree == null || constructTree.ChildCount < 2) ? null : constructTree.Children[1] as CommonTree;
-				object[] args = srm.GetParameterList(argTree, context);
-
-				object obj = srm.CreateNewObject(context, funObj, args);
-
-				// committedDepth > 0 means there is some primaryExpressions are remaining.
-				// replace current construction tree and call srm to execute the remaining.
-				if (committedDepth > 0)
-				{
-					CommonTreeAdaptor ad = new CommonTreeAdaptor();
-					CommonTree newTree = ad.DupTree(t) as CommonTree;
-
-					int d = 0;
-					CommonTree ct = newTree.Children[0] as CommonTree;
-					while (d++ < committedDepth - 1)
-					{
-						ct = ct.Children[0] as CommonTree;
-					}
-
-					// replace construction tree with created object
-					ct.ReplaceChildren(0, 0, new ReplacedCommonTree(obj));
-
-					// drop the construction tree topmost node [CREATE]
-					newTree = newTree.Children[0] as CommonTree;
-
-					// execute remained nodes than construction tree
-					return srm.ParseNode(newTree, context);
-				}
-				else
-					return obj;
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#region ArrayAccess
-	class IndexAccessNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
-		{
-			object value = srm.ParseNode((CommonTree)t.Children[0], context);
-			if (value is IAccess) value = ((IAccess)value).Get();
-
-			if (value == null)
-			{
-				throw new ReoScriptRuntimeException(context, "Attempt to access an array or object is null or undefined.",
-					new RuntimePosition(t.CharPositionInLine, t.Line, context.SourceFilePath));
-			}
-
-			object indexValue = srm.ParseNode((CommonTree)t.Children[1], context);
-			if (indexValue is IAccess) indexValue = ((IAccess)indexValue).Get();
-
-			if (indexValue is string) // FIXME: StringObject
-			{
-				// index access for object
-				return new PropertyAccess(srm, context, value, (string)indexValue);
-			}
-			else
-			{
-				// index access for array
-				int index = ScriptRunningMachine.GetIntValue(indexValue);
-				return new ArrayAccess(srm, context, value, index);
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#region PropertyAccess
-	class PropertyAccessNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			object value = null;
-
-			value = srm.ParseNode((CommonTree)t.Children[0], ctx);
-			if (value is IAccess) value = ((IAccess)value).Get();
-
-			if (value == null) throw new ReoScriptRuntimeException(ctx, 
-				"Attempt to access property of null or undefined object" +
-				((t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
-				? (": " + t.Children[0].ToString()) : "."),
-				new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
-
-			string identifier = t.Children[1].Text;
-
-			if (ScriptRunningMachine.IsNumber(value) || value is string || value is bool)
-			{
-				// no check
-			}
-			else if (!(value is ObjectValue))
-			{
-				if (value is ISyntaxTreeReturn)
-				{
-					throw new ReoScriptRuntimeException(ctx, 
-						string.Format("Attempt to access an object '{0}' that is not of Object type.", value.ToString()),
-						new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
-				}
-				else if (!srm.EnableDirectAccess)
-				{
-					throw new ReoScriptRuntimeException(ctx, string.Format(
-						"Attempt to access an object '{0}' that is not of Object type. To access .Net object, set WorkMode to enable DirectAccess.",
-						value.ToString()),
-						new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
-				}
-			}
-
-			return new PropertyAccess(srm, ctx, value, identifier);
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Delete Property
-	class DeletePropertyNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			t = t.Children[0] as CommonTree;
-			if (t == null) return false;
-
-			if (t.Type == ReoScriptLexer.IDENTIFIER)
-			{
-				string identifier = t.Text;
-				if (ctx.GlobalObject.HasOwnProperty(identifier))
-				{
-					ctx.GlobalObject.RemoveOwnProperty(identifier);
-					return true;
-				}
-			}
-			else if (t.Type == ReoScriptLexer.PROPERTY_ACCESS)
-			{
-				if (t.Children[1].Type != ReoScriptLexer.IDENTIFIER)
-				{
-					throw new ReoScriptRuntimeException(ctx, "delete keyword requires an identifier to delete property from object.",
-						new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
-				}
-
-				object owner = srm.ParseNode(t.Children[0] as CommonTree, ctx);
-				if (owner is IAccess) owner = ((IAccess)owner).Get();
-
-				if (owner == null)
-				{
-					string msg = "Attmpt to delete property from null or undefined object";
-
-					if (t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
-					{
-						msg += ": " + t.Text;
-					}
-					else
-					{
-						msg += ".";
-					}
-
-					throw new ReoScriptRuntimeException(ctx, msg,
-						new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
-				}
-
-				ObjectValue ownerObject = (ObjectValue)owner;
-
-				if (ownerObject != null)
-				{
-					ownerObject.RemoveOwnProperty(t.Children[1].Text);
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		#endregion
-	}
-
-	#endregion
-	#region Typeof
-	class TypeofNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			object obj = srm.ParseNode(t.Children[0] as CommonTree, ctx);
-			if (obj is IAccess) obj = ((IAccess)obj).Get();
-
-			if (obj == null)
-			{
-				return srm.BuiltinConstructors.ObjectFunction.FunName.ToLower();
-			}
-			else if (obj is bool)
-			{
-				return srm.BuiltinConstructors.BooleanFunction.FunName.ToLower();
-			}
-			else if (obj is double || obj is int || obj is char || obj is byte
-				|| obj is short || obj is long || obj is float)
-			{
-				return srm.BuiltinConstructors.NumberFunction.FunName.ToLower();
-			}
-			/*else if (obj is StringObject)
-			{
-				return srm.BuiltinConstructors.ObjectFunction.FunName.ToLower();
-			}*/
-			else if (obj is string)
-			{
-				return srm.BuiltinConstructors.StringFunction.FunName.ToLower();
-			}
-			else if (obj is AbstractFunctionObject)
-			{
-				return srm.BuiltinConstructors.FunctionFunction.FunName.ToLower();
-			}
-			else if (obj is ObjectValue)
-			{
-				return srm.BuiltinConstructors.ObjectFunction.FunName.ToLower();
-			}
-			else if (obj is ISyntaxTreeReturn)
-			{
-				return srm.BuiltinConstructors.ObjectFunction.FunName.ToLower();
-			}
-			else
-			{
-				return obj.GetType().Name;
-			}
-		}
-
-		#endregion
-	}
-	#endregion
-	#region InstanceOf
-	class InstanceOfNodeParser : INodeParser
-	{
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			object obj = srm.ParseNode(t.Children[0] as CommonTree, ctx);
-			if (obj is IAccess) obj = ((IAccess)obj).Get();
-
-			object constructor = srm.ParseNode(t.Children[1] as CommonTree, ctx);
-			if (constructor is IAccess) constructor = ((IAccess)constructor).Get();
-
-			if(!(constructor is AbstractFunctionObject)) return false;
-			
-			if (obj is string)
-			{
-				return constructor == srm.BuiltinConstructors.StringFunction;
-			}
-			else if (ScriptRunningMachine.IsNumber(obj))
-			{
-				return constructor == srm.BuiltinConstructors.NumberFunction;
-			}
-			else if (obj is bool)
-			{
-				return constructor == srm.BuiltinConstructors.BooleanFunction;
-			}
-			else if ( !(obj is ObjectValue))
-			{
-				return false;
-			}
-
-			ObjectValue objValue = ((ObjectValue)obj);
-
-			while (objValue != null)
-			{
-				bool instanceof = objValue.Constructor == constructor;
-				if (instanceof) return true;
-
-				objValue = objValue[ScriptRunningMachine.KEY___PROTO__] as ObjectValue;
-			}
-
-			return false;
-		}
-	}
-
-	#endregion
-
-	#region Class
-	class ClassDefineNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			XBClass cls = default(XBClass);
-			return cls;
-		}
-
-		#endregion
-	}
-
-	class ClassMemberDefineNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			throw new NotImplementedException();
-		}
-
-		#endregion
-	}
-	#endregion
-	#region Tag
-	class TagNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
-		{
-			string tagName = ScriptRunningMachine.GetNativeIdentifierName(
-				(((CommonTree)t.Children[0]).Children[0].ToString()));
-
-			AbstractFunctionObject classConstructor = srm.GetClass(tagName) as AbstractFunctionObject;
-			if (classConstructor == null) throw
-				new ReoScriptRuntimeException(ctx, "Class not found: " + tagName,
-					new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
-
-			ObjectValue obj = srm.CreateNewObject(ctx, classConstructor) as ObjectValue;
-
-			if (obj != null)
-			{
-				if (classConstructor is TemplateConstructorObject)
-				{
-					// start of constructing tag from template
-
-					TemplateConstructorObject templateConstructor = classConstructor as TemplateConstructorObject;
-
-					Dictionary<string, object> mergedPropertes = new Dictionary<string, object>();
-
-					// instance property setter
-					CommonTree instAttrTree = t.Children[1] as CommonTree;
-
-					CallScope scope = null;
-
-					if (instAttrTree.ChildCount > 0)
-					{
-						scope = new CallScope(obj, classConstructor);
-
-						for (int i = 0; i < instAttrTree.ChildCount; i++)
-						{
-							CommonTree attr = instAttrTree.Children[i] as CommonTree;
-
-							object val = srm.ParseNode(attr.Children[1] as CommonTree, ctx);
-							if (val is IAccess) val = ((IAccess)val).Get();
-
-							string propertyName = attr.Children[0].ToString();
-							mergedPropertes[propertyName] = val;
-
-							if (templateConstructor.Args.Contains(propertyName))
-							{
-								scope[propertyName] = val;
-							}
-						}
-					}
-
-					// template default setter
-					CommonTree templateTagAttrTree = templateConstructor.TemplateTag.Children[1] as CommonTree;
-					for (int i = 0; i < templateTagAttrTree.ChildCount; i++)
-					{
-						CommonTree attr = templateTagAttrTree.Children[i] as CommonTree;
-
-						object val = srm.ParseNode(attr.Children[1] as CommonTree, ctx);
-						if (val is IAccess) val = ((IAccess)val).Get();
-
-						string propertyName = attr.Children[0].ToString();
-
-						// properties that not need to set if value be setted from user-side
-						if (!mergedPropertes.ContainsKey(propertyName))
-						{
-							mergedPropertes[propertyName] = val;
-						}
-					}
-
-					// copy values into object
-					foreach (string propertyName in mergedPropertes.Keys)
-					{
-						PropertyAccessHelper.SetProperty(srm, ctx, obj, propertyName, mergedPropertes[propertyName]);
-					}
-
-					if (scope == null && templateConstructor.TemplateTag.ChildCount > 2)
-					{
-						scope = new CallScope(obj, classConstructor);
-					}
-
-					if (scope != null)
-					{
-						ctx.PushCallStack(scope);
-
-						try
-						{
-							for (int i = 2; i < templateConstructor.TemplateTag.ChildCount; i++)
-							{
-								CommonTree tagStmt = templateConstructor.TemplateTag.Children[i] as CommonTree;
-
-								if (tagStmt.Type == ReoScriptLexer.TAG)
-								{
-									srm.InvokeFunctionIfExisted(obj, "appendChild", srm.ParseNode(tagStmt, ctx));
-								}
-								else
-								{
-									srm.ParseNode(tagStmt, ctx);
-								}
-							}
-						}
-						finally
-						{
-							ctx.PopCallStack();
-						}
-					}
-
-					// end of constructing tag from template
-				}
-				else
-				{
-					// start of constructing tag from class
-					CommonTree attrTree = t.Children[1] as CommonTree;
-					for (int i = 0; i < attrTree.ChildCount; i++)
-					{
-						CommonTree attr = attrTree.Children[i] as CommonTree;
-
-						object val = srm.ParseNode(attr.Children[1] as CommonTree, ctx);
-						if (val is IAccess) val = ((IAccess)val).Get();
-
-						PropertyAccessHelper.SetProperty(srm, ctx, obj, attr.Children[0].ToString(), val);
-					}
-					// end of constructing tag from class
-				}
-
-				if (t.ChildCount > 2)
-				{
-					CallScope scope = new CallScope(obj, classConstructor);
-					ctx.PushCallStack(scope);
-
-					try
-					{
-						for (int i = 2; i < t.ChildCount; i++)
-						{
-							CommonTree tagStmt = t.Children[i] as CommonTree;
-
-							if (tagStmt.Type == ReoScriptLexer.TAG)
-							{
-								srm.InvokeFunctionIfExisted(obj, "appendChild", srm.ParseNode(tagStmt, ctx));
+								srm.ImportNamespace(sb.ToString());
+								return null;
 							}
 							else
 							{
-								srm.ParseNode(tagStmt, ctx);
+								string name = sb.ToString();
+								if (name.EndsWith(".")) name = name.Substring(0, name.Length - 1);
+
+								Type type = srm.GetTypeFromAssembly(name, ns);
+								if (type != null)
+								{
+									srm.ImportType(type);
+								}
+								return null;
 							}
 						}
+
+						sb.Append(ns);
 					}
-					finally
+				}
+
+				return null;
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Local Variable Declaration
+		class DeclarationNodeParser : INodeParser
+		{
+			private AssignmentNodeParser assignmentParser = new AssignmentNodeParser();
+
+			#region INodeParser Members
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
+			{
+				//for (int i = 0; i < t.ChildCount; i++)
+				//{
+				VariableInfo vi = ((VariableDefineNode)t).VariableInfo;
+
+				string identifier = vi.Name;
+				object value = null;
+
+				if (vi.HasInitialValue)
+				{
+					value = ScriptRunningMachine.ParseNode(vi.InitialValueTree, context);
+					if (value is IAccess) value = ((IAccess)value).Get();
+				}
+
+				// declare variable in current call stack
+				context[identifier] = value;
+				//}
+				//for (int i = 1; i < t.ChildCount; i++)
+				//{
+				//  var identifier = t.Children[0].ToString();
+				//  var value = srm.ParseNode((CommonTree)t.Children[i], context);
+
+				//  if (value is IAccess) value = ((IAccess)value).Get();
+
+				//  // declare variable in current call stack
+				//  if (srm.IsInGlobalScope(context))
+				//  {
+				//    srm[identifier] = value;
+				//  }
+				//  else
+				//  {
+				//    context.GetCurrentCallScope()[identifier] = value;
+				//  }
+
+				//  lastValue = value;
+				//}
+
+				return value;
+			}
+			#endregion
+		}
+		#endregion
+		#region Assignment =
+		class AssignmentNodeParser : INodeParser
+		{
+			private static readonly ExprPlusNodeParser exprPlusNodeParser = new ExprPlusNodeParser();
+
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
+			{
+				if (t.ChildCount == 1)
+				{
+					return null;
+				}
+
+				IAccess access = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], context) as IAccess;
+
+				CommonTree expr = t.ChildCount > 1 ? (CommonTree)t.Children[1] : null;
+
+				object value = null;
+				if (expr != null)
+				{
+					value = ScriptRunningMachine.ParseNode(expr, context);
+				}
+
+				if (value is IAccess) value = ((IAccess)value).Get();
+
+				if (access != null)
+				{
+					access.Set(value);
+				}
+				else if (!srm.IsInGlobalScope(context))
+				{
+					context[t.Children[0].Text] = value;
+				}
+
+				return value;
+			}
+			#endregion
+		}
+		#endregion
+		#region Expresion Operator
+		abstract class ExpressionOperatorNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				object left = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
+				if (left is IAccess) left = ((IAccess)left).Get();
+
+				object right = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
+				if (right is IAccess) right = ((IAccess)right).Get();
+
+				return Calc(left, right, srm, ctx);
+			}
+
+			public abstract object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context);
+
+			#endregion
+		}
+		abstract class MathExpressionOperatorParser : ExpressionOperatorNodeParser
+		{
+			public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
+			{
+				if (left == NaNValue.Value || right == NaNValue.Value)
+					return NaNValue.Value;
+
+				if (!ScriptRunningMachine.IsNumber(left)) left = 0;
+				if (!ScriptRunningMachine.IsNumber(right)) right = 0;
+
+				return MathCalc(ScriptRunningMachine.GetDoubleValue(left),
+					ScriptRunningMachine.GetDoubleValue(right));
+			}
+
+			public abstract object MathCalc(double left, double right);
+		}
+		#region Plus +
+		class ExprPlusNodeParser : ExpressionOperatorNodeParser
+		{
+			public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
+			{
+				if (left == null && right == null) return null;
+
+				if (left == null) return right;
+				else if (right == null) return left;
+
+				if (left == NaNValue.Value && right == NaNValue.Value) return NaNValue.Value;
+
+				if (ScriptRunningMachine.IsNumber(left))
+				{
+					if (ScriptRunningMachine.IsNumber(right))
 					{
-						ctx.PopCallStack();
+						return Convert.ToDouble(left) + Convert.ToDouble(right);
+					}
+					else if (right == null)
+					{
+						return left;
+					}
+					else if (right == NaNValue.Value)
+					{
+						return NaNValue.Value;
+					}
+					else if (right is NumberObject)
+					{
+						return Convert.ToDouble(left) + ((NumberObject)right).Number;
+					}
+				}
+				else if (ScriptRunningMachine.IsNumber(right))
+				{
+					if (ScriptRunningMachine.IsNumber(left))
+					{
+						return Convert.ToDouble(left) + Convert.ToDouble(right);
+					}
+					else if (left == null)
+					{
+						return right;
+					}
+					else if (left == NaNValue.Value)
+					{
+						return NaNValue.Value;
+					}
+					else if (left is NumberObject)
+					{
+						return ((NumberObject)left).Number + Convert.ToDouble(right);
+					}
+				}
+
+				if (left.GetType() == typeof(ObjectValue) && right.GetType() == typeof(ObjectValue))
+				{
+					ObjectValue obj = srm.CreateNewObject(context);
+					srm.CombineObject(context, obj, ((ObjectValue)left));
+					srm.CombineObject(context, obj, ((ObjectValue)right));
+					return obj;
+				}
+				else
+				{
+					return Convert.ToString(left) + Convert.ToString(right);
+				}
+			}
+		}
+		#endregion
+		#region Minus -
+		class ExprMinusNodeParser : ExpressionOperatorNodeParser
+		{
+			public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
+			{
+				if (left == null && right == null)
+					return null;
+
+				if (left == null)
+					return right;
+				else if (right == null)
+					return left;
+
+				if (left == NaNValue.Value && right == NaNValue.Value) return NaNValue.Value;
+
+				if (ScriptRunningMachine.IsNumber(left))
+				{
+					if (right == null)
+					{
+						return left;
+					}
+					else if (right == NaNValue.Value)
+					{
+						return NaNValue.Value;
+					}
+					else if (ScriptRunningMachine.IsNumber(right))
+					{
+						return Convert.ToDouble(left) - Convert.ToDouble(right);
+					}
+					else if (right is NumberObject)
+					{
+						return Convert.ToDouble(left) - ((NumberObject)right).Number;
+					}
+					else if (right is DateObject)
+					{
+						return ((NumberObject)left).Number - ((DateObject)right).Ticks;
+					}
+				}
+				else if (ScriptRunningMachine.IsNumber(right))
+				{
+					if (left == null)
+					{
+						return right;
+					}
+					else if (left == NaNValue.Value)
+					{
+						return NaNValue.Value;
+					}
+					else if (ScriptRunningMachine.IsNumber(left))
+					{
+						return Convert.ToDouble(left) - Convert.ToDouble(right);
+					}
+					else if (left is NumberObject)
+					{
+						return ((NumberObject)left).Number - Convert.ToDouble(right);
+					}
+					else if (left is DateObject)
+					{
+						return ((DateObject)left).Ticks - Convert.ToDouble(right);
+					}
+				}
+				else if (left is DateObject && right is DateObject)
+				{
+					return (((DateObject)left).DateTime - ((DateObject)right).DateTime).TotalMilliseconds;
+				}
+
+				return double.NaN;
+			}
+		}
+		#endregion
+		#region Mul *
+		class ExprMultiNodeParser : MathExpressionOperatorParser
+		{
+			public override object MathCalc(double left, double right)
+			{
+				double val = left * right;
+				return (double.IsNaN(val)) ? NaNValue.Value : (object)val;
+			}
+		}
+		#endregion
+		#region Div /
+		class ExprDivNodeParser : MathExpressionOperatorParser
+		{
+			public override object MathCalc(double left, double right)
+			{
+				double val = left / right;
+				return (double.IsNaN(val)) ? NaNValue.Value : (object)val;
+			}
+		}
+		#endregion
+		#region Mod %
+		class ExprModNodeParser : MathExpressionOperatorParser
+		{
+			#region INodeParser Members
+
+			public override object MathCalc(double left, double right)
+			{
+				return (left % right);
+			}
+
+			#endregion
+		}
+		#endregion
+		#region And &
+		class ExprAndNodeParser : ExpressionOperatorNodeParser
+		{
+			#region INodeParser Members
+
+			public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
+			{
+				if ((left is int || left is double || left is long || left is float)
+					&& (right is int || right is double || right is long || right is float))
+				{
+					return (Convert.ToInt64(left) & Convert.ToInt64(right));
+				}
+				else
+				{
+					return NaNValue.Value;
+				}
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Or |
+		class ExprOrNodeParser : ExpressionOperatorNodeParser
+		{
+			#region INodeParser Members
+
+			public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
+			{
+				if ((left is int || left is long || left is float || left is double)
+					&& (right is int || right is long || right is float || right is double))
+				{
+					return (Convert.ToInt64(left) | Convert.ToInt64(right));
+				}
+				else
+				{
+					return NaNValue.Value;
+				}
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Xor ^
+		class ExprXorNodeParser : ExpressionOperatorNodeParser
+		{
+			#region INodeParser Members
+
+			public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
+			{
+				if (left is long && right is long)
+				{
+					return ((long)left ^ (long)right);
+				}
+				else if (left is ObjectValue && right is ObjectValue)
+				{
+					ObjectValue leftObj = (ObjectValue)left;
+					ObjectValue rightObj = (ObjectValue)right;
+
+					ObjectValue resultObject = srm.CreateNewObject(context);
+
+					foreach (string key in leftObj)
+					{
+						if (rightObj.HasOwnProperty(key))
+						{
+							resultObject[key] = leftObj[key];
+						}
+					}
+
+					return resultObject;
+				}
+				else
+				{
+					return NaNValue.Value;
+				}
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Left Shift <<
+		class ExprLeftShiftNodeParser : ExpressionOperatorNodeParser
+		{
+			#region INodeParser Members
+
+			public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
+			{
+				try
+				{
+					int l = Convert.ToInt32(left);
+					int r = Convert.ToInt32(right);
+
+					return l << r;
+				}
+				catch
+				{
+					return 0;
+				}
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Right Shift >>
+		class ExprRightShiftNodeParser : ExpressionOperatorNodeParser
+		{
+			#region INodeParser Members
+
+			public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
+			{
+				try
+				{
+					int l = Convert.ToInt32(left);
+					int r = Convert.ToInt32(right);
+
+					return l >> r;
+				}
+				catch
+				{
+					return 0;
+				}
+			}
+
+			#endregion
+		}
+		#endregion
+		#endregion
+		#region Unary for Primary Expression
+		class ExprUnaryNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				string oprt = t.Children[0].ToString();
+				object value = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
+
+				// get value
+				while (value is IAccess) value = ((IAccess)value).Get();
+
+				if (value == null) return null;
+
+				switch (oprt)
+				{
+					default:
+					case "+":
+						return value;
+
+					case "-":
+						if (value is long)
+							return -((long)value);
+						else if (value is double)
+							return -((double)value);
+						else
+							return null;
+
+					case "!":
+						if (!(value is bool))
+						{
+							return null;
+						}
+						return !((bool)value);
+
+					case "~":
+						return (~(Convert.ToInt64(value)));
+				}
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Post Increment i++
+		class ExprPostIncrementNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				CommonTree target = (CommonTree)t.Children[0];
+				IAccess access = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx) as IAccess;
+				if (access == null)
+				{
+					throw ctx.CreateRuntimeError(t, "only property, indexer, and variable can be used as increment or decrement statement.");
+				}
+
+				object oldValue = access.Get();
+				if (oldValue == null)
+				{
+					oldValue = 0;
+				}
+
+				if (!ScriptRunningMachine.IsNumber(oldValue))
+				{
+					throw ctx.CreateRuntimeError(t, "only number can be used as increment or decrement statement.");
+				}
+
+				double value = Convert.ToDouble(oldValue);
+				double returnValue = value;
+				access.Set((value + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1)));
+				return returnValue;
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Pre Increment ++i
+		class ExprPreIncrementNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				CommonTree target = (CommonTree)t.Children[0];
+				IAccess access = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx) as IAccess;
+				if (access == null)
+				{
+					throw ctx.CreateRuntimeError(t, "only property, indexer, and variable can be used as increment or decrement statement.");
+				}
+				object oldValue = access.Get();
+				if (oldValue == null)
+				{
+					oldValue = 0;
+				}
+
+				if (!ScriptRunningMachine.IsNumber(oldValue))
+				{
+					throw ctx.CreateRuntimeError(t, "only number can be used as increment or decrement statement.");
+				}
+
+				double value = Convert.ToDouble(oldValue);
+
+				object v = (value + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1));
+				access.Set(v);
+				return v;
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Condition ? :
+		class ExprConditionNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				object value = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
+				if (!(value is bool))
+				{
+					throw ctx.CreateRuntimeError(t, "only boolean expression can be used for conditional expression.");
+				}
+				bool condition = (bool)value;
+				return condition ? ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx)
+					: ScriptRunningMachine.ParseNode((CommonTree)t.Children[2], ctx);
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Relation Expression Operator
+		abstract class RelationExpressionOperatorNodeParser : ExpressionOperatorNodeParser
+		{
+			#region INodeParser Members
+			public override object Calc(object left, object right, ScriptRunningMachine srm, ScriptContext context)
+			{
+				return Compare(left, right, srm);
+			}
+
+			public abstract bool Compare(object left, object right, ScriptRunningMachine srm);
+			#endregion
+		}
+
+		#region Equals ==
+		class ExprEqualsNodeParser : RelationExpressionOperatorNodeParser
+		{
+			#region INodeParser Members
+
+			public override bool Compare(object left, object right, ScriptRunningMachine srm)
+			{
+				if (left == null && right == null) return true;
+				if (left == null || right == null) return false;
+				if (left == NaNValue.Value && right == NaNValue.Value) return true;
+				if (left == NaNValue.Value || right == NaNValue.Value) return false;
+
+				if (left is string || left is StringObject)
+				{
+					return Convert.ToString(left).Equals(Convert.ToString(right));
+				}
+				else if (right is string || right is StringObject)
+				{
+					return Convert.ToString(right).Equals(Convert.ToString(left));
+				}
+				else
+				{
+					if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+					{
+						if (left is float || right is float)
+						{
+							return Convert.ToSingle(left) == Convert.ToSingle(right);
+						}
+						else
+						{
+							return Convert.ToDouble(left) == Convert.ToDouble(right);
+						}
+					}
+
+					else if (left is NumberObject && ScriptRunningMachine.IsNumber(right))
+					{
+						return ((NumberObject)left).Number == Convert.ToDouble(right);
+					}
+					else if (right is NumberObject && ScriptRunningMachine.IsNumber(left))
+					{
+						return Convert.ToDouble(left) == ((NumberObject)right).Number;
+					}
+					else if (left is NumberObject && right is NumberObject)
+					{
+						return ((NumberObject)left).Number == ((NumberObject)right).Number;
+					}
+
+					else if (left is BooleanObject && right is bool)
+					{
+						return ((BooleanObject)left).Boolean == (bool)right;
+					}
+					else if (right is BooleanObject && left is bool)
+					{
+						return ((BooleanObject)right).Boolean == (bool)left;
+					}
+					else if (left is BooleanObject && right is BooleanObject)
+					{
+						return ((BooleanObject)left).Boolean == ((BooleanObject)right).Boolean;
+					}
+					else
+					{
+						return left.Equals(right);
 					}
 				}
 			}
 
-			return obj;
-		}
-
-		static void RunInTag(CommonTree tagTree, ScriptContext context)
-		{
-
+			#endregion
 		}
 		#endregion
-	}
-
-	class TemplateDefineNodeParser : INodeParser
-	{
-		#region INodeParser Members
-
-		public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+		#region Not Equals !=
+		class ExprNotEqualsNodeParser : RelationExpressionOperatorNodeParser
 		{
-			string typeName = t.Children[0].Text;
+			private static readonly ExprEqualsNodeParser equalsParser = new ExprEqualsNodeParser();
+			#region INodeParser Members
 
-			CommonTree paramsTree = t.Children[1] as CommonTree;
-			CommonTree rootTag = t.Children[2] as CommonTree;
-
-			string tagName = (rootTag.Children[0] as CommonTree).Children[0].Text;
-
-			TypedNativeFunctionObject typedConstructor = srm.GetClass(typeName) as TypedNativeFunctionObject;
-
-			if (typedConstructor == null)
-				throw new ReoScriptRuntimeException(ctx, "Class not found: " + typeName,
-					 new RuntimePosition(paramsTree.Parent.CharPositionInLine, paramsTree.Parent.Line, ctx.SourceFilePath));
-
-			TemplateConstructorObject templateDefine = new TemplateConstructorObject(tagName)
+			public override bool Compare(object left, object right, ScriptRunningMachine srm)
 			{
-				TemplateTag = rootTag,
-				TypedConstructor = typedConstructor,
-			};
-
-			CommonTree rootAttrTree = rootTag.Children[1] as CommonTree;
-
-			templateDefine[ScriptRunningMachine.KEY_PROTOTYPE] = templateDefine.CreatePrototype(
-				new ScriptContext(srm, ScriptRunningMachine.entryFunction));
-
-			string[] identifiers = new string[paramsTree.ChildCount];
-
-			for (int i = 0; i < identifiers.Length; i++)
-			{
-				identifiers[i] = paramsTree.Children[i].ToString();
+				return !equalsParser.Compare(left, right, srm);
 			}
 
-			templateDefine.Args = identifiers;
+			#endregion
+		}
+		#endregion
+		#region Strict Equals ===
+		class ExprStrictEqualsNodeParser : RelationExpressionOperatorNodeParser
+		{
+			public override bool Compare(object left, object right, ScriptRunningMachine srm)
+			{
+				if (left == null && right == null) return true;
+				if (left == null || right == null) return false;
 
-			srm.RegisterClass(templateDefine, tagName);
-			return null;
+				if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+				{
+					if (left is float || right is float)
+					{
+						return Convert.ToSingle(left) == Convert.ToSingle(right);
+					}
+					else
+					{
+						return Convert.ToDouble(left) == Convert.ToDouble(right);
+					}
+				}
+				else if ((left is string && right is string) || (left is bool && right is bool))
+				{
+					return left.Equals(right);
+				}
+				else
+				{
+					return left == right;
+				}
+			}
+		}
+		#endregion
+		#region Strict Not Equals !==
+		class ExprStrictNotEqualsNodeParser : RelationExpressionOperatorNodeParser
+		{
+			private ExprStrictEqualsNodeParser equalsParser = new ExprStrictEqualsNodeParser();
+
+			public override bool Compare(object left, object right, ScriptRunningMachine srm)
+			{
+				return !equalsParser.Compare(left, right, srm);
+				//return left != right;
+			}
+		}
+		#endregion
+
+		#region Greater Than >
+		class ExprGreaterThanNodeParser : RelationExpressionOperatorNodeParser
+		{
+			#region INodeParser Members
+
+			public override bool Compare(object left, object right, ScriptRunningMachine srm)
+			{
+				if (left is float || right is float)
+				{
+					return Convert.ToSingle(left) > Convert.ToSingle(right);
+				}
+				else if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+				{
+					return Convert.ToDouble(left) > Convert.ToDouble(right);
+				}
+				else if (left is NumberObject && ScriptRunningMachine.IsNumber(right))
+				{
+					return ((NumberObject)left).Number > Convert.ToDouble(right);
+				}
+				else if (right is NumberObject && ScriptRunningMachine.IsNumber(left))
+				{
+					return Convert.ToDouble(left) > ((NumberObject)right).Number;
+				}
+				else
+				{
+					return false;
+				}
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Greater Or Equals >=
+		class ExprGreaterOrEqualsNodeParser : RelationExpressionOperatorNodeParser
+		{
+			#region INodeParser Members
+
+			public override bool Compare(object left, object right, ScriptRunningMachine srm)
+			{
+				if (left is float || right is float)
+				{
+					return Convert.ToSingle(left) >= Convert.ToSingle(right);
+				}
+				else if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+				{
+					return Convert.ToDouble(left) >= Convert.ToDouble(right);
+				}
+				else if (left is NumberObject && ScriptRunningMachine.IsNumber(right))
+				{
+					return ((NumberObject)left).Number >= Convert.ToDouble(right);
+				}
+				else if (right is NumberObject && ScriptRunningMachine.IsNumber(left))
+				{
+					return Convert.ToDouble(left) >= ((NumberObject)right).Number;
+				}
+				else
+				{
+					return false;
+				}
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Less Than <
+		class ExprLessThanNodeParser : RelationExpressionOperatorNodeParser
+		{
+			#region INodeParser Members
+
+			public override bool Compare(object left, object right, ScriptRunningMachine srm)
+			{
+				if (ScriptRunningMachine.IsNumber(left))
+				{
+					if (ScriptRunningMachine.IsNumber(right))
+					{
+						if (left is float || right is float)
+						{
+							return Convert.ToSingle(left) < Convert.ToSingle(right);
+						}
+						else
+						{
+							return Convert.ToDouble(left) < Convert.ToDouble(right);
+						}
+					}
+					else if (right is NumberObject)
+					{
+						return Convert.ToDouble(left) < ((NumberObject)right).Number;
+					}
+					else if (right is string)
+					{
+						double d = 0;
+						if (double.TryParse(Convert.ToString(right), out d))
+							return Convert.ToDouble(left) < d;
+						else
+							return false;
+					}
+				}
+				else if (ScriptRunningMachine.IsNumber(right))
+				{
+					if (ScriptRunningMachine.IsNumber(left))
+					{
+						if (left is float || right is float)
+						{
+							return Convert.ToSingle(left) < Convert.ToSingle(right);
+						}
+						else
+						{
+							return Convert.ToDouble(left) < Convert.ToDouble(right);
+						}
+					}
+					else if (left is NumberObject)
+					{
+						return ((NumberObject)left).Number < Convert.ToDouble(right);
+					}
+					else if (left is string)
+					{
+						double d = 0;
+						if (double.TryParse(Convert.ToString(left), out d))
+							return d < Convert.ToDouble(right);
+						else
+							return false;
+					}
+				}
+
+				return false;
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Less Or Equals <=
+		class ExprLessOrEqualsNodeParser : RelationExpressionOperatorNodeParser
+		{
+			#region INodeParser Members
+
+			public override bool Compare(object left, object right, ScriptRunningMachine srm)
+			{
+				if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+				{
+					if (left is float || right is float)
+						return Convert.ToSingle(left) <= Convert.ToSingle(right);
+					else
+						return Convert.ToDouble(left) <= Convert.ToDouble(right);
+				}
+				else if (left is NumberObject
+						 && ScriptRunningMachine.IsNumber(right))
+				{
+					return ((NumberObject)left).Number <= Convert.ToDouble(right);
+				}
+				else if (right is NumberObject
+						&& ScriptRunningMachine.IsNumber(left))
+				{
+					return Convert.ToDouble(left) <= ((NumberObject)right).Number;
+				}
+				else
+				{
+					return false;
+				}
+			}
+
+			#endregion
+		}
+		#endregion
+		#endregion
+		#region Boolean &&
+		class BooleanAndNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				object left = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
+				if (left is IAccess) left = ((IAccess)left).Get();
+
+				if (left == null || !(left is bool))
+					return false;
+
+				bool leftBool = (bool)left;
+				if (!leftBool) return false;
+
+				object right = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
+				if (right is IAccess) right = ((IAccess)right).Get();
+
+				if (right == null || !(right is bool))
+					return false;
+
+				bool rightBool = (bool)right;
+				return rightBool;
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Boolean ||
+		class BooleanOrNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				object left = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
+				if (left is IAccess) left = ((IAccess)left).Get();
+
+				if (left == null || !(left is bool))
+					return false;
+
+				bool leftBool = (bool)left;
+				if (leftBool) return true;
+
+				object right = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
+				if (right is IAccess) right = ((IAccess)right).Get();
+
+				if (right == null || !(right is bool))
+					return false;
+
+				bool rightBool = (bool)right;
+				return rightBool;
+			}
+
+			#endregion
+		}
+		#endregion
+		#region If Else
+		class IfStatementNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				object value = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
+				if (value is IAccess) value = ((IAccess)value).Get();
+
+				if (!(value is bool))
+				{
+					return false;
+					//throw new AWDLRuntimeException("only boolean expression can be used as test condition.");
+				}
+				bool condition = (bool)value;
+				if (condition)
+				{
+					return ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
+				}
+				else if (t.ChildCount == 3)
+				{
+					return ScriptRunningMachine.ParseNode((CommonTree)t.Children[2], ctx);
+				}
+				else
+					return null;
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Switch Case
+		class SwitchCaseStatementNodeParser : INodeParser
+		{
+			private ExprEqualsNodeParser equalsParser = new ExprEqualsNodeParser();
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				if (t.ChildCount == 0) return null;
+
+				object source = ScriptRunningMachine.ParseNode((CommonTree)(t.Children[0]), ctx);
+				while (source is IAccess) source = ((IAccess)source).Get();
+
+				if (source == null) return null;
+
+				int defaultCaseLine = 0;
+				bool doParse = false;
+
+				int i = 1;
+
+			doDefault:
+				while (i < t.ChildCount)
+				{
+					CommonTree caseTree = t.Children[i] as CommonTree;
+
+					if (caseTree.Type == ReoScriptLexer.BREAK)
+					{
+						if (doParse) return null;
+					}
+					else if (caseTree.Type == ReoScriptLexer.RETURN)
+					{
+						if (doParse) return ScriptRunningMachine.ParseNode(caseTree, ctx);
+					}
+					else if (caseTree.Type == ReoScriptLexer.SWITCH_CASE_ELSE)
+					{
+						defaultCaseLine = i;
+					}
+					else if (caseTree.Type == ReoScriptLexer.SWITCH_CASE)
+					{
+						if (caseTree.ChildCount > 0)
+						{
+							object target = ScriptRunningMachine.ParseNode(caseTree.Children[0] as CommonTree, ctx);
+							if (target is IAccess) target = ((IAccess)target).Get();
+
+							if ((bool)equalsParser.Calc(source, target, srm, ctx))
+							{
+								doParse = true;
+							}
+						}
+					}
+					else if (doParse)
+					{
+						ScriptRunningMachine.ParseNode(caseTree, ctx);
+					}
+
+					i++;
+				}
+
+				if (defaultCaseLine > 0)
+				{
+					i = defaultCaseLine;
+					doParse = true;
+					goto doDefault;
+				}
+
+				return null;
+			}
+		}
+		#endregion
+		#region For
+		public class ForStatementNodeParser : INodeParser
+		{
+
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				CommonTree forInit = (CommonTree)t.Children[0];
+				ScriptRunningMachine.ParseChildNodes(forInit, ctx);
+
+				CommonTree conditionTree = ((CommonTree)t.Children[1]);
+				CommonTree condition = null;
+
+				if (conditionTree.ChildCount > 0)
+				{
+					condition = (CommonTree)(conditionTree.Children[0]);
+				}
+
+				CommonTree iteratorTree = ((CommonTree)t.Children[2]);
+				CommonTree body = (CommonTree)(((CommonTree)t.Children[3]).Children[0]);
+
+				bool hasCondition = condition != null && condition.ChildCount > 0;
+				bool hasBody = body.ChildCount > 0;
+
+				while (true)
+				{
+					if (hasCondition)
+					{
+						//object conditionValue = i++ < 500000;
+						//object conditionValue = i++ < (double)ScriptRunningMachine.ParseNode((CommonTree)(condition.Children[1]), ctx);
+
+						//object conditionValue = (double)ctx[condition.Children[0].Text] < 500000;
+						object conditionValue = ScriptRunningMachine.ParseNode(condition, ctx);
+
+						bool rs = false;
+
+						if (conditionValue is bool)
+						{
+							rs = (bool)conditionValue;
+						}
+						else if (conditionValue is BooleanObject)
+						{
+							rs = ((BooleanObject)conditionValue).Boolean;
+						}
+						else
+						{
+							throw ctx.CreateRuntimeError(t, "only boolean expression can be used as test condition.");
+						}
+
+						if (!rs) return null;
+					}
+
+					if (hasBody)
+					{
+						object result = ScriptRunningMachine.ParseNode(body, ctx);
+
+						if (result is BreakNode)
+						{
+							return null;
+						}
+						else if (result is ReturnNode)
+						{
+							return result;
+						}
+					}
+
+					ScriptRunningMachine.ParseChildNodes(iteratorTree, ctx);
+				}
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Foreach
+		class ForEachStatementNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				string varName = t.Children[0].ToString();
+
+				CallScope scope = null;
+
+				if (t.ChildCount > 3 && t.Children[3].Type == ReoScriptLexer.TYPE
+					&& !srm.IsInGlobalScope(ctx))
+				{
+					scope = ctx.CurrentCallScope;
+				}
+
+				CommonTree body = t.Children[2] as CommonTree;
+
+				// retrieve target object
+				object target = ScriptRunningMachine.ParseNode(t.Children[1] as CommonTree, ctx);
+				if (target is IAccess) target = ((IAccess)target).Get();
+
+				if (target is IDictionary<string, object>)
+				{
+					IDictionary<string, object> dict = (IDictionary<string, object>)target;
+
+					foreach (string key in dict.Keys)
+					{
+						if (scope == null)
+						{
+							srm[varName] = key;
+						}
+						else
+						{
+							scope[varName] = key;
+						}
+
+						// call iterator and terminal loop if break
+						object result = ScriptRunningMachine.ParseNode(body, ctx);
+						if (result is BreakNode)
+						{
+							return null;
+						}
+						else if (result is ReturnNode)
+						{
+							return result;
+						}
+					}
+				}
+				else if (target is IEnumerable)
+				{
+					IEnumerator iterator = ((IEnumerable)target).GetEnumerator();
+
+					while (iterator.MoveNext())
+					{
+						// prepare key
+						object value = iterator.Current;
+
+						if (scope == null)
+						{
+							ctx.Srm[varName] = value;
+						}
+						else
+						{
+							scope[varName] = value;
+						}
+
+						// call iterator and terminal loop if break
+						object result = ScriptRunningMachine.ParseNode(body, ctx);
+						if (result is BreakNode)
+						{
+							return null;
+						}
+						else if (result is ReturnNode)
+						{
+							return result;
+						}
+					}
+				}
+
+				return null;
+			}
+
+			#endregion
+
+		}
+		
+		#endregion
+		#region Return
+		class ReturnNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				object v = null;
+
+				if (t.ChildCount > 0)
+				{
+					v = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
+					if (v is IAccess) v = ((IAccess)v).Get();
+				}
+
+				// TODO: make ReturnNode single instance
+				return new ReturnNode(v);
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Try Catch
+		class TryCatchNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				CommonTree tryBody = t.Children[0] as CommonTree;
+
+				string errorObjIdentifier = null;
+
+				CommonTree catchNode = t.Children[1] as CommonTree;
+				CommonTree catchBody = catchNode.Children[0] as CommonTree;
+
+				if (catchNode.ChildCount > 1)
+				{
+					errorObjIdentifier = catchNode.Children[1].Text;
+				}
+
+				CommonTree finallyNode = t.Children[2] as CommonTree;
+				CommonTree finallyBody = finallyNode.ChildCount > 0 ? finallyNode.Children[0] as CommonTree : null;
+
+				object ret = null;
+
+				try
+				{
+					ret = ScriptRunningMachine.ParseNode(tryBody, ctx);
+				}
+				catch (ReoScriptException ex)
+				{
+					if (catchBody != null)
+					{
+						if (!string.IsNullOrEmpty(errorObjIdentifier))
+						{
+							ctx[errorObjIdentifier] = ex.ErrorObject.CustomeErrorObject == null ? ex.ErrorObject : ex.ErrorObject.CustomeErrorObject;
+
+							try
+							{
+								ret = ScriptRunningMachine.ParseNode(catchBody, ctx);
+							}
+							finally
+							{
+								ctx.RemoveVariable(errorObjIdentifier);
+							}
+						}
+						else
+						{
+							ret = ScriptRunningMachine.ParseNode(catchBody, ctx);
+						}
+					}
+				}
+				finally
+				{
+					if (finallyBody != null) ret = ScriptRunningMachine.ParseNode(finallyBody, ctx);
+				}
+
+				return ret;
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Throw
+		class ThrowNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				object obj = ScriptRunningMachine.ParseNode(t.Children[0] as CommonTree, ctx);
+				if (obj is IAccess) obj = ((IAccess)obj).Get();
+				
+				ErrorObject err = ctx.CreateErrorObject(t, Convert.ToString(obj));
+				err.CustomeErrorObject = obj;
+				throw new ReoScriptRuntimeException(err);
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Function Define
+		class FunctionDefineNodeParser : INodeParser
+		{
+			private AssignmentNodeParser assignParser = new AssignmentNodeParser();
+
+			#region INodeParser Members
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
+			{
+				FunctionObject fun = CreateAndInitFunction(context, ((FunctionDefineNode)t).FunctionInfo);
+				srm[fun.FunName] = fun;
+				return fun;
+			}
+			#endregion
+
+			internal static FunctionObject CreateAndInitFunction(ScriptContext context, FunctionInfo fi)
+			{
+				ScriptRunningMachine srm = context.Srm;
+
+				FunctionObject fun = srm.CreateNewObject(context,
+					srm.BuiltinConstructors.FunctionFunction) as FunctionObject;
+
+				if (fun == null) return null;
+
+				ObjectValue prototype = srm.CreateNewObject(context, srm.BuiltinConstructors.ObjectFunction) as ObjectValue;
+				prototype[ScriptRunningMachine.KEY___PROTO__] = fun[ScriptRunningMachine.KEY___PROTO__];
+
+				fun[ScriptRunningMachine.KEY_PROTOTYPE] = prototype;
+
+				if (!fi.IsAnonymous) fun.FunName = fi.Name;
+				fun.Args = fi.Args;
+				fun.Body = fi.BodyTree;
+				fun.FunctionInfo = fi;
+				//fun.OuterStack = context.GetCurrentCallScope();
+
+				//AbstractFunctionObject inFun = context.GetCurrentCallScope().CurrentFunction;
+				//if(inFun is FunctionObject){
+				//  FunctionObject calledInFunction = (FunctionObject)inFun;
+				//  fun.DeclaredFilePath = calledInFunction.DeclaredFilePath;
+				return fun;
+			}
+		}
+		#endregion
+		#region Anonymous Function
+		class AnonymousFunctionNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				FunctionObject fun = FunctionDefineNodeParser.CreateAndInitFunction(ctx,
+					((AnonymousFunctionDefineNode)t).FunctionInfo);
+				fun.OuterCallScope = ctx.CurrentCallScope;
+				return fun;
+			}
+
+			#endregion
+		}
+
+		#endregion
+		#region Function Call
+		class FunctionCallNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
+			{
+				object funObj = null;
+				object ownerObj = null;
+
+				// local function call
+				if (t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
+				{
+					string funName = t.Children[0].ToString();
+					funObj = context[funName];
+
+					if (funObj == null && context.CurrentCallScope != null)
+					{
+						CallScope outerScope = context.CurrentCallScope.CurrentFunction.OuterCallScope;
+						while (outerScope != null)
+						{
+							if (outerScope.Variables.TryGetValue(funName, out funObj))
+							{
+								break;
+							}
+
+							outerScope = outerScope.CurrentFunction.OuterCallScope;
+						}
+					}
+				}
+				else
+				{
+					// object method call
+					funObj = ScriptRunningMachine.ParseNode(t.Children[0] as CommonTree, context);
+
+					if (funObj is PropertyAccess)
+					{
+						ownerObj = ((PropertyAccess)funObj).Object;
+						string methodName = ((PropertyAccess)funObj).Identifier;
+
+						if (!ScriptRunningMachine.IsPrimitiveTypes(ownerObj) && !(ownerObj is ISyntaxTreeReturn))
+						{
+							if (!srm.AllowDirectAccess)
+							{
+								// owner object is not ReoScript object and DirectAccess is disabled.
+								// there is nothing can do so just return undefined.
+								return null;
+							}
+							else
+							{
+								if (srm.AllowDirectAccess && !(ownerObj is ISyntaxTreeReturn))
+								{
+									object[] args = srm.GetParameterList(
+											(t.ChildCount <= 1 ? null : t.Children[1] as CommonTree), context);
+
+									methodName = ((srm.WorkMode & MachineWorkMode.AutoUppercaseWhenCLRCalling)
+										== MachineWorkMode.AutoUppercaseWhenCLRCalling)
+										? ScriptRunningMachine.GetNativeIdentifier(methodName) : methodName;
+
+									MethodInfo mi = ScriptRunningMachine.FindCLRMethodAmbiguous(ownerObj, methodName, args);
+
+									if (mi != null)
+									{
+										ParameterInfo[] paramTypeList = mi.GetParameters();
+
+										try
+										{
+											object[] convertedArgs = new object[args.Length];
+											for (int i = 0; i < convertedArgs.Length; i++)
+											{
+												convertedArgs[i] = srm.ConvertToCLRType(context, args[i], paramTypeList[i].ParameterType);
+											}
+											return mi.Invoke(ownerObj, convertedArgs);
+										}
+										catch (Exception ex)
+										{
+											if (srm.IgnoreCLRExceptions)
+											{
+												// call error, return undefined
+												return null;
+											}
+											else
+												throw ex;
+										}
+									}
+								}
+							}
+						}
+
+						funObj = ((IAccess)funObj).Get();
+
+						if (funObj == null)
+						{
+							throw context.CreateRuntimeError(t, string.Format("{0} has no method '{1}'", ownerObj, methodName));
+						}
+					}
+					else
+					{
+						if (funObj is IAccess) funObj = ((IAccess)funObj).Get();
+					}
+				}
+
+				if (funObj == null)
+				{
+					throw context.CreateRuntimeError(t, "Function is not defined: " + t.Children[0].ToString());
+				}
+
+				AbstractFunctionObject fun = funObj as AbstractFunctionObject;
+
+				if (fun == null)
+				{
+					throw context.CreateRuntimeError(t, "Object is not a function: " + Convert.ToString(funObj));
+				}
+
+				if (ownerObj == null) ownerObj = context.ThisObject;
+
+				CommonTree argTree = t.ChildCount < 2 ? null : t.Children[1] as CommonTree;
+
+				try
+				{
+					return srm.InvokeFunction(context, ownerObj, fun, srm.GetParameterList(argTree, context), t.CharPositionInLine, t.Line);
+				}
+				catch (Exception ex)
+				{
+					ReoScriptException rex = ex as ReoScriptException;
+
+					if (rex != null && rex.ErrorObject == null)
+					{
+						rex.ErrorObject = context.CreateErrorObject(t, ex.Message);
+					}
+					else if (rex == null)
+					{
+						ex = new ReoScriptRuntimeException(context.CreateErrorObject(t, ex.Message), ex);
+					}
+
+					throw ex;
+				}
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Create
+		class CreateObjectNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
+			{
+				// combiled construct
+				if (t.ChildCount > 0 && t.Children[0].Type == ReoScriptLexer.COMBINE_OBJECT)
+				{
+					CommonTree combileTree = ((CommonTree)t.Children[0]);
+					ObjectValue combileObj = ScriptRunningMachine.ParseNode(combileTree.Children[1] as CommonTree, context) as ObjectValue;
+
+					object createdObj = Parse(combileTree.Children[0] as CommonTree, srm, context);
+					srm.CombineObject(context, createdObj, combileObj);
+					return createdObj;
+				}
+
+				CommonTree tempTree = t.Children[0] as CommonTree;
+				CommonTree constructTree = t;
+
+				// need a depth variable to remember the depth of construct calling
+				int committedDepth = 0, depth = 0;
+
+				// find construct calling
+				while (tempTree != null && tempTree.Children != null)
+				{
+					if (tempTree.Type == ReoScriptLexer.FUNCTION_CALL)
+					{
+						constructTree = tempTree;
+						committedDepth += depth;
+					}
+
+					tempTree = tempTree.Children[0] as CommonTree;
+					depth++;
+				}
+
+				if (constructTree == null) throw context.CreateRuntimeError(t, "unexpected end to new operator.");
+
+				// get constructor if it is need to retrieve from other Accessors
+				object constructorValue = ScriptRunningMachine.ParseNode((CommonTree)constructTree.Children[0], context);
+
+				// get identifier of constructor
+				string constructorName = constructTree.Children[0].Type == ReoScriptLexer.IDENTIFIER
+					? constructTree.Children[0].Text : ScriptRunningMachine.KEY_UNDEFINED;
+
+				if (constructorValue is IAccess) constructorValue = ((IAccess)constructorValue).Get();
+
+				if (constructorValue == null)
+				{
+					constructorValue = srm.GetClass(constructorName);
+				}
+
+				if (constructorValue == null && srm.AllowDirectAccess)
+				{
+					Type type = srm.GetImportedTypeFromNamespaces(constructorName);
+					if (type != null)
+					{
+						constructorValue = new TypedNativeFunctionObject(type, type.Name);
+					}
+				}
+
+				if (constructorValue == null)
+				{
+					throw context.CreateRuntimeError(t, "Constructor not found: " + constructorName);
+				}
+
+				if (!(constructorValue is AbstractFunctionObject))
+				{
+					throw context.CreateRuntimeError(t, "Constructor is not of function: " + constructorName);
+				}
+				else
+				{
+					// call constructor
+					AbstractFunctionObject funObj = (AbstractFunctionObject)constructorValue;
+
+					CommonTree argTree = (constructTree == null || constructTree.ChildCount < 2) ? null : constructTree.Children[1] as CommonTree;
+					object[] args = srm.GetParameterList(argTree, context);
+
+					object obj = srm.CreateNewObject(context, funObj, args);
+
+					// committedDepth > 0 means there is some primaryExpressions are remaining.
+					// replace current construction tree and call srm to execute the remaining.
+					if (committedDepth > 0)
+					{
+						CommonTreeAdaptor ad = new CommonTreeAdaptor();
+						CommonTree newTree = ad.DupTree(t) as CommonTree;
+
+						int d = 0;
+						CommonTree ct = newTree.Children[0] as CommonTree;
+						while (d++ < committedDepth - 1)
+						{
+							ct = ct.Children[0] as CommonTree;
+						}
+
+						// replace construction tree with created object
+						ct.ReplaceChildren(0, 0, new ReplacedCommonTree(obj));
+
+						// drop the construction tree topmost node [CREATE]
+						newTree = newTree.Children[0] as CommonTree;
+
+						// execute remained nodes than construction tree
+						return ScriptRunningMachine.ParseNode(newTree, context);
+					}
+					else
+						return obj;
+				}
+			}
+
+			#endregion
+		}
+		#endregion
+		#region ArrayAccess
+		class IndexAccessNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
+			{
+				object value = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], context);
+				if (value is IAccess) value = ((IAccess)value).Get();
+
+				if (value == null)
+				{
+					throw context.CreateRuntimeError(t, "Attempt to access an array or object that is null or undefined.");
+				}
+
+				object indexValue = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], context);
+				if (indexValue is IAccess) indexValue = ((IAccess)indexValue).Get();
+
+				if (indexValue is string) // FIXME: StringObject
+				{
+					// index access for object
+					return new PropertyAccess(srm, context, value, (string)indexValue);
+				}
+				else
+				{
+					// index access for array
+					int index = ScriptRunningMachine.GetIntValue(indexValue);
+					return new ArrayAccess(srm, context, value, index);
+				}
+			}
+
+			#endregion
+		}
+		#endregion
+		#region PropertyAccess
+		class PropertyAccessNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				object value = null;
+
+				value = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
+				if (value is IAccess) value = ((IAccess)value).Get();
+
+				if (value == null) throw ctx.CreateRuntimeError(t,
+					"Attempt to access property of null or undefined object" +
+					((t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
+					? (": " + t.Children[0].ToString()) : "."));
+
+				string identifier = t.Children[1].Text;
+
+				if (ScriptRunningMachine.IsNumber(value) || value is string || value is bool || value is IList)
+				{
+					// no need check
+				}
+				else if (!(value is ObjectValue))
+				{
+					if (value is ISyntaxTreeReturn)
+					{
+						throw ctx.CreateRuntimeError(t,
+							string.Format("Attempt to access an object '{0}' that is not of Object type.", value.ToString()));
+					}
+					else if (!srm.AllowDirectAccess)
+					{
+						throw ctx.CreateRuntimeError(t, string.Format(
+							"Attempt to access an object '{0}' that is not of Object type. To access .NET object, set the WorkMode to allow DirectAccess.",
+							value.ToString()));
+					}
+				}
+
+				return new PropertyAccess(srm, ctx, value, identifier);
+			}
+
+			#endregion
+		}
+		#endregion
+		#region Delete Property
+		class DeletePropertyNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				t = t.Children[0] as CommonTree;
+				if (t == null) return false;
+
+				if (t.Type == ReoScriptLexer.IDENTIFIER)
+				{
+					string identifier = t.Text;
+					if (ctx.GlobalObject.HasOwnProperty(identifier))
+					{
+						ctx.GlobalObject.RemoveOwnProperty(identifier);
+						return true;
+					}
+				}
+				else if (t.Type == ReoScriptLexer.PROPERTY_ACCESS)
+				{
+					if (t.Children[1].Type != ReoScriptLexer.IDENTIFIER)
+					{
+						throw ctx.CreateRuntimeError(t, "delete keyword requires an identifier to delete property from object.");
+					}
+
+					object owner = ScriptRunningMachine.ParseNode(t.Children[0] as CommonTree, ctx);
+					if (owner is IAccess) owner = ((IAccess)owner).Get();
+
+					if (owner == null)
+					{
+						string msg = "Attmpt to delete property from null or undefined object";
+
+						if (t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
+						{
+							msg += ": " + t.Text;
+						}
+						else
+						{
+							msg += ".";
+						}
+
+						throw ctx.CreateRuntimeError(t, msg);
+					}
+
+					ObjectValue ownerObject = (ObjectValue)owner;
+
+					if (ownerObject != null)
+					{
+						ownerObject.RemoveOwnProperty(t.Children[1].Text);
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			#endregion
+		}
+
+		#endregion
+		#region Typeof
+		class TypeofNodeParser : INodeParser
+		{
+			public static string Typeof(ScriptRunningMachine srm, object obj)
+			{
+				if (obj == null)
+				{
+					return "null";
+				}
+				else if (obj is bool)
+				{
+					return srm.BuiltinConstructors.BooleanFunction.FunName.ToLower();
+				}
+				else if (ScriptRunningMachine.IsNumber(obj)
+					|| obj == NaNValue.Value || obj == InfinityValue.Value || obj == MinusInfinityValue.Value)
+				{
+					return srm.BuiltinConstructors.NumberFunction.FunName.ToLower();
+				}
+				else if (obj is string)
+				{
+					return srm.BuiltinConstructors.StringFunction.FunName.ToLower();
+				}
+				else if (obj is AbstractFunctionObject)
+				{
+					return srm.BuiltinConstructors.FunctionFunction.FunName.ToLower();
+				}
+				else if (obj is ObjectValue)
+				{
+					return srm.BuiltinConstructors.ObjectFunction.FunName.ToLower();
+				}
+				else if ((srm.WorkMode & MachineWorkMode.AllowDirectAccess) == MachineWorkMode.AllowDirectAccess)
+				{
+					return "native object";
+				}
+				else
+				{
+					return "unknown";
+				}
+			}
+
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				object obj = ScriptRunningMachine.ParseNode(t.Children[0] as CommonTree, ctx);
+				if (obj is IAccess) obj = ((IAccess)obj).Get();
+				return Typeof(srm, obj);
+			}
+
+			#endregion
+		}
+		#endregion
+		#region InstanceOf
+		class InstanceOfNodeParser : INodeParser
+		{
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				object obj = ScriptRunningMachine.ParseNode(t.Children[0] as CommonTree, ctx);
+				if (obj is IAccess) obj = ((IAccess)obj).Get();
+
+				object constructor = ScriptRunningMachine.ParseNode(t.Children[1] as CommonTree, ctx);
+				if (constructor is IAccess) constructor = ((IAccess)constructor).Get();
+
+				if (!(constructor is AbstractFunctionObject)) return false;
+
+				if (obj is string)
+				{
+					return constructor == srm.BuiltinConstructors.StringFunction;
+				}
+				else if (ScriptRunningMachine.IsNumber(obj))
+				{
+					return constructor == srm.BuiltinConstructors.NumberFunction;
+				}
+				else if (obj is bool)
+				{
+					return constructor == srm.BuiltinConstructors.BooleanFunction;
+				}
+				else if (srm.AllowDirectAccess && !(obj is ISyntaxTreeReturn)
+					&& constructor is TypedNativeFunctionObject)
+				{
+					return obj.GetType().IsAssignableFrom(((TypedNativeFunctionObject)constructor).Type);
+				}
+
+				ObjectValue objValue = ((ObjectValue)obj);
+
+				while (objValue != null)
+				{
+					bool instanceof = objValue.Constructor == constructor;
+					if (instanceof) return true;
+
+					objValue = objValue[ScriptRunningMachine.KEY___PROTO__] as ObjectValue;
+				}
+
+				return false;
+			}
+		}
+
+		#endregion
+		#region Tag
+		class TagNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				string tagName = (((CommonTree)t.Children[0]).Children[0].ToString());
+
+				tagName = ((srm.WorkMode & MachineWorkMode.AutoUppercaseWhenCLRCalling)
+					== MachineWorkMode.AutoUppercaseWhenCLRCalling) 
+					? ScriptRunningMachine.GetNativeIdentifier(tagName) : tagName;
+
+				AbstractFunctionObject classConstructor = srm.GetClass(tagName) as AbstractFunctionObject;
+				if (classConstructor == null) throw ctx.CreateRuntimeError(t, "Class not found: " + tagName);
+
+				ObjectValue obj = srm.CreateNewObject(ctx, classConstructor) as ObjectValue;
+
+				if (obj != null)
+				{
+					if (classConstructor is TemplateConstructorObject)
+					{
+						// start of constructing tag from template
+
+						TemplateConstructorObject templateConstructor = classConstructor as TemplateConstructorObject;
+
+						Dictionary<string, object> mergedPropertes = new Dictionary<string, object>();
+
+						// instance property setter
+						CommonTree instAttrTree = t.Children[1] as CommonTree;
+
+						CallScope scope = null;
+
+						if (instAttrTree.ChildCount > 0)
+						{
+							scope = new CallScope(obj, classConstructor)
+							{
+								CharIndex = t.CharPositionInLine,
+								Line = t.Line,
+							};
+
+							for (int i = 0; i < instAttrTree.ChildCount; i++)
+							{
+								CommonTree attr = instAttrTree.Children[i] as CommonTree;
+
+								object val = ScriptRunningMachine.ParseNode(attr.Children[1] as CommonTree, ctx);
+								if (val is IAccess) val = ((IAccess)val).Get();
+
+								string propertyName = attr.Children[0].ToString();
+								mergedPropertes[propertyName] = val;
+
+								if (templateConstructor.Args.Contains(propertyName))
+								{
+									scope[propertyName] = val;
+								}
+							}
+						}
+
+						// template default setter
+						CommonTree templateTagAttrTree = templateConstructor.TemplateTag.Children[1] as CommonTree;
+						for (int i = 0; i < templateTagAttrTree.ChildCount; i++)
+						{
+							CommonTree attr = templateTagAttrTree.Children[i] as CommonTree;
+
+							object val = ScriptRunningMachine.ParseNode(attr.Children[1] as CommonTree, ctx);
+							if (val is IAccess) val = ((IAccess)val).Get();
+
+							string propertyName = attr.Children[0].ToString();
+
+							// properties that not need to set if value be setted from user-side
+							if (!mergedPropertes.ContainsKey(propertyName))
+							{
+								mergedPropertes[propertyName] = val;
+							}
+						}
+
+						// copy values into object
+						foreach (string propertyName in mergedPropertes.Keys)
+						{
+							PropertyAccessHelper.SetProperty(ctx, obj, propertyName, mergedPropertes[propertyName]);
+						}
+
+						if (scope == null && templateConstructor.TemplateTag.ChildCount > 2)
+						{
+							scope = new CallScope(obj, classConstructor)
+								{
+									CharIndex = t.CharPositionInLine,
+									Line = t.Line,
+								};
+						}
+
+						if (scope != null)
+						{
+							ctx.PushCallStack(scope, true);
+
+							try
+							{
+								for (int i = 2; i < templateConstructor.TemplateTag.ChildCount; i++)
+								{
+									CommonTree tagStmt = templateConstructor.TemplateTag.Children[i] as CommonTree;
+
+									if (tagStmt.Type == ReoScriptLexer.TAG)
+									{
+										srm.InvokeFunctionIfExisted(obj, "appendChild", ScriptRunningMachine.ParseNode(tagStmt, ctx));
+									}
+									else
+									{
+										ScriptRunningMachine.ParseNode(tagStmt, ctx);
+									}
+								}
+							}
+							finally
+							{
+								ctx.PopCallStack();
+							}
+						}
+
+						// end of constructing tag from template
+					}
+					else
+					{
+						// start of constructing tag from class
+						CommonTree attrTree = t.Children[1] as CommonTree;
+						for (int i = 0; i < attrTree.ChildCount; i++)
+						{
+							CommonTree attr = attrTree.Children[i] as CommonTree;
+
+							object val = ScriptRunningMachine.ParseNode(attr.Children[1] as CommonTree, ctx);
+							if (val is IAccess) val = ((IAccess)val).Get();
+
+							PropertyAccessHelper.SetProperty(ctx, obj, attr.Children[0].ToString(), val);
+						}
+						// end of constructing tag from class
+					}
+
+					if (t.ChildCount > 2)
+					{
+						CallScope scope = new CallScope(obj, classConstructor)
+						{
+							CharIndex = t.CharPositionInLine,
+							Line = t.Line,
+						};
+						ctx.PushCallStack(scope, true);
+
+						try
+						{
+							for (int i = 2; i < t.ChildCount; i++)
+							{
+								CommonTree tagStmt = t.Children[i] as CommonTree;
+
+								if (tagStmt.Type == ReoScriptLexer.TAG)
+								{
+									srm.InvokeFunctionIfExisted(obj, "appendChild", ScriptRunningMachine.ParseNode(tagStmt, ctx));
+								}
+								else
+								{
+									ScriptRunningMachine.ParseNode(tagStmt, ctx);
+								}
+							}
+						}
+						finally
+						{
+							ctx.PopCallStack();
+						}
+					}
+				}
+
+				return obj;
+			}
+
+			static void RunInTag(CommonTree tagTree, ScriptContext context)
+			{
+
+			}
+			#endregion
+		}
+
+		class TemplateDefineNodeParser : INodeParser
+		{
+			#region INodeParser Members
+
+			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				string typeName = t.Children[0].Text;
+
+				CommonTree paramsTree = t.Children[1] as CommonTree;
+				CommonTree rootTag = t.Children[2] as CommonTree;
+
+				string tagName = (rootTag.Children[0] as CommonTree).Children[0].Text;
+
+				TypedNativeFunctionObject typedConstructor = srm.GetClass(typeName) as TypedNativeFunctionObject;
+
+				if (typedConstructor == null)
+					throw ctx.CreateRuntimeError(t, "Class not found: " + typeName);
+
+				TemplateConstructorObject templateDefine = new TemplateConstructorObject(tagName)
+				{
+					TemplateTag = rootTag,
+					TypedConstructor = typedConstructor,
+				};
+
+				CommonTree rootAttrTree = rootTag.Children[1] as CommonTree;
+
+				templateDefine[ScriptRunningMachine.KEY_PROTOTYPE] = templateDefine.CreatePrototype(
+					new ScriptContext(srm, ScriptRunningMachine.entryFunction));
+
+				string[] identifiers = new string[paramsTree.ChildCount];
+
+				for (int i = 0; i < identifiers.Length; i++)
+				{
+					identifiers[i] = paramsTree.Children[i].ToString();
+				}
+
+				templateDefine.Args = identifiers;
+
+				srm.RegisterClass(templateDefine, tagName);
+				return null;
+			}
+			#endregion
+		}
+		class TemplateConstructorObject : TypedNativeFunctionObject
+		{
+			public TemplateConstructorObject(string name) : base(name) { }
+
+			public CommonTree TemplateTag { get; set; }
+
+			public string[] Args { get; set; }
+
+			public TypedNativeFunctionObject TypedConstructor { get; set; }
+
+			public override object CreateObject(ScriptContext context, object[] args)
+			{
+				return TypedConstructor.CreateObject(context, args);
+			}
+
+			public override object CreatePrototype(ScriptContext context)
+			{
+				return TypedConstructor.CreatePrototype(context);
+			}
+
+			public override object Invoke(ScriptContext context, object owner, object[] args)
+			{
+				return TypedConstructor.Invoke(context, owner, args);
+			}
 		}
 		#endregion
 	}
-	class TemplateConstructorObject : TypedNativeFunctionObject
-	{
-		public TemplateConstructorObject(string name) : base(name) { }
-
-		public CommonTree TemplateTag { get; set; }
-
-		public string[] Args { get; set; }
-
-		public TypedNativeFunctionObject TypedConstructor { get; set; }
-
-		public override object CreateObject(ScriptContext context, object[] args)
-		{
-			return TypedConstructor.CreateObject(context, args);
-		}
-
-		public override object CreatePrototype(ScriptContext context)
-		{
-			return TypedConstructor.CreatePrototype(context);
-		}
-
-		public override object Invoke(ScriptContext context, object owner, object[] args)
-		{
-			return TypedConstructor.Invoke(context, owner, args);
-		}
-	}	
-	#endregion
-
 	#endregion
 
 	#region Parser Adapter
@@ -3904,7 +4691,7 @@ namespace Unvell.ReoScript
 	#region AWDLDefaultParserAdapter
 	class AWDLLogicSyntaxParserAdapter : IParserAdapter
 	{
-		private static readonly INodeParser[] definedParser = new INodeParser[ReoScriptLexer.MAX_TOKENS];
+		internal static readonly INodeParser[] definedParser = new INodeParser[ReoScriptLexer.MAX_TOKENS];
 
 		static AWDLLogicSyntaxParserAdapter()
 		{
@@ -3917,10 +4704,10 @@ namespace Unvell.ReoScript
 			definedParser[ReoScriptLexer.FOREACH_STATEMENT] = new ForEachStatementNodeParser();
 			definedParser[ReoScriptLexer.SWITCH] = new SwitchCaseStatementNodeParser();
 			definedParser[ReoScriptLexer.FUNCTION_CALL] = new FunctionCallNodeParser();
-			definedParser[ReoScriptLexer.FUNCTION_DEFINE] = new FunctionDefineNodeParser();
+			//definedParser[ReoScriptLexer.FUNCTION_DEFINE] = new FunctionDefineNodeParser();
 			definedParser[ReoScriptLexer.ANONYMOUS_FUNCTION] = new AnonymousFunctionNodeParser();
-			definedParser[ReoScriptLexer.BREAK] = new BreakNodeParser();
-			definedParser[ReoScriptLexer.CONTINUE] = new ContinueNodeParser();
+			//definedParser[ReoScriptLexer.BREAK] = new BreakNodeParser();
+			//definedParser[ReoScriptLexer.CONTINUE] = new ContinueNodeParser();
 			definedParser[ReoScriptLexer.RETURN] = new ReturnNodeParser();
 			definedParser[ReoScriptLexer.CREATE] = new CreateObjectNodeParser();
 			definedParser[ReoScriptLexer.TRY_CATCH] = new TryCatchNodeParser();
@@ -3972,6 +4759,13 @@ namespace Unvell.ReoScript
 			#endregion
 		}
 
+		static object Parse(CommonTree t, ScriptContext ctx)
+		{
+			INodeParser parser = definedParser[t.Type];
+			return (parser!=null) ? parser.Parse(t, ctx.Srm, ctx) : null;
+		}
+
+
 		#region IParserAdapter Members
 
 		public virtual INodeParser MatchParser(CommonTree t)
@@ -3989,8 +4783,12 @@ namespace Unvell.ReoScript
 	/// <summary>
 	/// A script context used in multi-thread executing
 	/// </summary>
-	public class ScriptContext
+	public sealed class ScriptContext
 	{
+		internal static readonly int MAX_STACK = 50;
+
+		#region Context Constructor
+
 		/// <summary>
 		/// Path of file loaded by Load method of SRM
 		/// </summary>
@@ -4004,11 +4802,13 @@ namespace Unvell.ReoScript
 			Debug.Assert(srm.GlobalObject != null);
 			Debug.Assert(function != null);
 #endif
-			this.SourceFilePath = filePath;
 
+			this.SourceFilePath = filePath;
 			this.GlobalObject = srm.GlobalObject;
 			this.Srm = srm;
-			PushCallStack(new CallScope(this.GlobalObject, function));
+
+			FunctionStack = new Stack<CallScope>();
+			callStack.Push(new CallScope(this.GlobalObject, ScriptRunningMachine.entryFunction));
 		}
 
 		public string SourceFilePath { get; set; }
@@ -4020,13 +4820,17 @@ namespace Unvell.ReoScript
 		{
 			get
 			{
-				return callStack.Count == 0 ? null : callStack.Peek().ThisObject;
+				return CurrentCallScope == null ? GlobalObject : CurrentCallScope.ThisObject;
 			}
 			set
 			{
-				if (callStack.Count() > 0) callStack.Peek().ThisObject = value;
+				if (CurrentCallScope != null) CurrentCallScope.ThisObject = value;
 			}
 		}
+
+		#endregion
+
+		#region Attributes
 
 		/// <summary>
 		/// ScriptRunningMachine instance
@@ -4043,72 +4847,162 @@ namespace Unvell.ReoScript
 		/// </summary>
 		internal ObjectValue WithObject { get; set; }
 
-		#region Variable Stack
-		internal object this[string identifier]
+		/// <summary>
+		/// Get or set variable in current call-stack.
+		/// </summary>
+		/// <param name="identifier">name of variable</param>
+		/// <returns>value of variable</returns>
+		public object this[string identifier]
 		{
 			get
 			{
-				foreach (CallScope scope in callStack)
-				{
-					if (scope.Variables.ContainsKey(identifier))
-					{
-						return scope.Variables[identifier];
-					}
-				}
+				if (CurrentCallScope == null)
+					return GlobalObject[identifier];
 
-				return GlobalObject[identifier];
+				object obj = CurrentCallScope[identifier];
+
+				if (obj != null)
+					return obj;
+				else
+					return GlobalObject[identifier];
 			}
 			set
 			{
-				GetCurrentCallScope()[identifier] = value;
+				if (CurrentCallScope != null)
+					CurrentCallScope[identifier] = value;
+				else
+					GlobalObject[identifier] = value;
 			}
+		}
+
+		/// <summary>
+		/// Set variable by specified name into current call-stack. 
+		/// If does not exist, set variable into global object.
+		/// </summary>
+		/// <param name="identifier">name of variable</param>
+		/// <param name="value">value of variable</param>
+		/// <returns>value to be set</returns>
+		public object SetVariable(string identifier, object value)
+		{
+			if (CurrentCallScope != null)
+				CurrentCallScope[identifier] = value;
+			else
+				GlobalObject[identifier] = value;
+
+			return value;
+		}
+
+		/// <summary>
+		/// Get variable by specified name from current call-stack.
+		/// If does not exist, get variable from global object.
+		/// </summary>
+		/// <param name="identifier">name of variable</param>
+		/// <returns>value of specified variable</returns>
+		public object GetVariable(string identifier)
+		{
+			if (CurrentCallScope == null)
+				return GlobalObject[identifier];
+
+			object obj = CurrentCallScope[identifier];
+
+			if (obj != null)
+				return obj;
+			else
+				return GlobalObject[identifier];
+		}
+
+		/// <summary>
+		/// Remove specified variable from current call-stack.
+		/// If variable cannot be found in current call-stack, remove variable from global object.
+		/// </summary>
+		/// <param name="errorObjIdentifier">name of variable</param>
+		public void RemoveVariable(string identifier)
+		{
+			if (CurrentCallScope == null)
+				GlobalObject.RemoveOwnProperty(identifier);
+			else
+				CurrentCallScope.Variables.Remove(identifier);
 		}
 
 		private readonly Stack<CallScope> callStack = new Stack<CallScope>();
 
+		/// <summary>
+		/// Call-stack for function call.
+		/// </summary>
 		internal Stack<CallScope> CallStack { get { return callStack; } }
 
-		internal CallScope GetCurrentCallScope()
-		{
-			return callStack.Count > 0 ? callStack.Peek() : null;
-		}
+		internal Stack<CallScope> FunctionStack { get; set; }
 
-		internal CallScope GetVariableScope(string identifier)
+		/// <summary>
+		/// Current call-stack of function call.
+		/// </summary>
+		internal CallScope CurrentCallScope { get; set; }
+
+		/// <summary>
+		/// Push a call-scope into call-stack.
+		/// </summary>
+		/// <param name="scope">call-scope will be pushed into call-stack</param>
+		internal void PushCallStack(CallScope scope, bool innerCall)
 		{
-			foreach (CallScope scope in callStack)
+			if (callStack.Count >= MAX_STACK)
 			{
-				if (scope.Variables.ContainsKey(identifier))
-				{
-					return scope;
-				}
+				throw new CallStackOverflowException("Call stack overflow.");
 			}
-			return null;
-		}
 
-		internal void PushCallStack(CallScope scope)
-		{
+#if DEBUG
 			Debug.Assert(scope != null);
 			Debug.Assert(scope.ThisObject != null);
 			Debug.Assert(scope.CurrentFunction != null);
+#endif
 
 			callStack.Push(scope);
+
+			CurrentCallScope = scope;
 		}
 
 		internal void PopCallStack()
 		{
 			if (callStack.Count > 0) callStack.Pop();
+			CurrentCallScope = callStack.Count > 1 ? callStack.Peek() : null;
 		}
 		#endregion
 
+		#region Create Object
+		/// <summary>
+		/// Create an object instance.
+		/// </summary>
+		/// <returns></returns>
 		public ObjectValue CreateNewObject()
 		{
 			return Srm.CreateNewObject(this);
 		}
 
 		/// <summary>
-		/// Create an object using specified function constructor
+		/// Create an object instance and add initial properties.
 		/// </summary>
-		/// <param name="funObject">function constructor</param>
+		/// <param name="properties">properties will be added into created instance</param>
+		/// <returns>created object instance</returns>
+		public ObjectValue CreateNewObject(Dictionary<string, object> properties)
+		{
+			return CreateNewObject((obj) => obj.AddProperties(properties));
+		}
+
+		/// <summary>
+		/// Create an object instance and perform customized initialization.
+		/// </summary>
+		/// <param name="initializer">given initializer will be invoked after object is created</param>
+		/// <returns>created object instance</returns>
+		public ObjectValue CreateNewObject(Action<ObjectValue> initializer)
+		{
+			ObjectValue obj = CreateNewObject();
+			if (initializer != null) initializer(obj);
+			return obj;
+		}
+
+		/// <summary>
+		/// Create an object using specified constructor function.
+		/// </summary>
+		/// <param name="funObject">constructor function to be used to create instance</param>
 		/// <returns>created object</returns>
 		public object CreateNewObject(AbstractFunctionObject funObject)
 		{
@@ -4116,18 +5010,18 @@ namespace Unvell.ReoScript
 		}
 
 		/// <summary>
-		/// Create an object using specified function constructor without arguments specified
+		/// Create an object instance using specified constructor function without arguments specified.
 		/// </summary>
-		/// <param name="funObject">function constructor</param>
-		/// <param name="invokeConstructor">specifies whether allow to call constructor</param>
-		/// <returns>created object</returns>
+		/// <param name="funObject">constructor function to be used to create instance</param>
+		/// <param name="invokeConstructor">specifies whether allowed to call constructor</param>
+		/// <returns>created object instance</returns>
 		internal object CreateNewObject(AbstractFunctionObject funObject, bool invokeConstructor)
 		{
 			return Srm.CreateNewObject(this, funObject, invokeConstructor, null);
 		}
 
 		/// <summary>
-		/// Create an object using specified function constructor
+		/// Create an object instance using specified constructor function.
 		/// </summary>
 		/// <param name="funObject">function constructor</param>
 		/// <param name="args">arguments for calling constructor</param>
@@ -4172,41 +5066,66 @@ namespace Unvell.ReoScript
 			}
 			return arr;
 		}
+
+		internal ErrorObject CreateErrorObject(CommonTree t, string msg)
+		{
+			ErrorObject err = CreateNewObject(Srm.BuiltinConstructors.ErrorFunction) as ErrorObject;
+			err.Line = t.Line;
+			err.CharIndex = t.CharPositionInLine;
+			err.Message = msg;
+			err.CallStack = new List<CallScopeObject>();
+
+			CallScope sc = callStack.Peek();
+			sc.Line = t.Line;
+			sc.CharIndex = t.CharPositionInLine;
+
+			foreach (CallScope scope in callStack)
+			{
+				err.CallStack.Add(new CallScopeObject(scope));
+			}
+
+			//err.CallStack.Add(new CallScopeObject(new CallScope(GlobalObject, ScriptRunningMachine.entryFunction)
+			//{
+			//  CharIndex = t.CharPositionInLine,
+			//  Line = t.Line
+			//}));
+
+			return err;
+		}
 		
-		/// <summary>
-		/// Create an empty string object
-		/// </summary>
-		/// <returns>created string object</returns>
-		//public StringValue CreateString()
-		//{
-		//  return CreateString(string.Empty);
-		//}
+		internal ReoScriptRuntimeException CreateRuntimeError(CommonTree t, string msg)
+		{
+			return new ReoScriptRuntimeException(CreateErrorObject(t, msg));
+		}
+
+		#endregion
+
 
 		/// <summary>
-		/// Create a string object with initial text
+		/// Evaluate a property getting operation.
 		/// </summary>
-		/// <param name="str">primitive string in .Net</param>
-		/// <returns>created string object</returns>
-		//public StringValue CreateString(string str)
-		//{
-		//  return Srm.CreateNewString(str);
-		//}
+		/// <param name="obj">get specified property from this object</param>
+		/// <param name="identifier">name of property</param>
+		/// <returns>value of property</returns>
+		public object EvaluatePropertyGet(ObjectValue obj, string identifier)
+		{
+			return PropertyAccessHelper.GetProperty(this.Srm, obj, identifier);
+		}
 
 		/// <summary>
-		/// Create a wrapper object of string
+		/// Evaluate a property setting operation.
 		/// </summary>
-		/// <param name="str">primitive string in .Net</param>
-		/// <returns>created wrapper string object</returns>
-		//internal StringObject CreateStringWrapper(string str)
-		//{
-		//  return Srm.CreateNewObject(this, Srm.BuiltinConstructors.StringFunction, new object[] { str }) as StringObject;
-		//}
+		/// <param name="obj">set specified property into this object</param>
+		/// <param name="identifier">name of property</param>
+		/// <param name="value">value of property</param>
+		public void EvaluatePropertySet(ObjectValue obj, string identifier, object value)
+		{
+			PropertyAccessHelper.SetProperty(this, obj, identifier, value);
+		}
 	}
 
 	internal class CallScope
 	{
-		//TODO: entry char index, line, file path
-
 		public object ThisObject { get; set; }
 		public AbstractFunctionObject CurrentFunction { get; set; }
 
@@ -4227,22 +5146,45 @@ namespace Unvell.ReoScript
 		{
 			get
 			{
-				return variables.ContainsKey(identifier) ? variables[identifier] : null;
+				object o;
+				return (variables.TryGetValue(identifier, out o)) ? o : null;
 			}
 			set
 			{
 				variables[identifier] = value;
 			}
 		}
+
+		public bool IsInnerCall { get; set; }
+
+		public int CharIndex { get; set; }
+		public int Line { get; set; }
+
+		public override string ToString()
+		{
+			return string.Format("at {0} ({1}:{2})", GetFunctionName(CurrentFunction), Line, CharIndex);
+		}
+
+		private static string GetFunctionName(AbstractFunctionObject fun)
+		{
+			if (fun is FunctionObject)
+			{
+				FunctionObject funObj = ((FunctionObject)fun);
+
+				if (funObj.FunctionInfo != null && funObj.FunctionInfo.IsAnonymous)
+				{
+					return "<anonymous>";
+				}
+			}
+			
+			return fun.FunName;
+		}
 	}
 	#endregion
 
 	#region ScriptRunningMachine
 	/// <summary>
-	/// A virtual machine to execute ReoScript language.
-	/// 
-	/// Property value of the global object will not be removed after script is 
-	/// finished running, use multi-instance to solve this or invoke ResetContext.
+	/// A virtual machine to execute ReoScript language. 
 	/// </summary>
 	public sealed class ScriptRunningMachine
 	{
@@ -4275,7 +5217,7 @@ namespace Unvell.ReoScript
 
 		/// <summary>
 		/// Specifies what features can be supported by SRM.
-		/// After modify this value call the Reset method to apply changes.
+		/// After modify this value call Reset method to apply the changes.
 		/// </summary>
 		public CoreFeatures CoreFeatures { get; set; }
 
@@ -4329,32 +5271,35 @@ namespace Unvell.ReoScript
 		/// </summary>
 		public void Reset()
 		{
+			// force stop current executing
 			ForceStop();
 
+			// wait for current executing exiting
 			while (IsRunning)
 				Thread.Sleep(100);
 
 			// detach all attched CLR events
 			DetachAllEvents();
 
-			// reset imported
+			// reset imported namespace and types
 			ImportedNamespace.Clear();
 			ImportedTypes.Clear();
 
 			// reset machine status
 			isForceStop = false;
-			BuiltinConstructors = new BuiltinConstructors();
 
 			// renew global object
 			GlobalObject = new WorldObject();
 
-			// renew context
-			//ScriptContext sc = new ScriptContext(GlobalObject);
-			//sc.PushCallStack(new CallScope(GlobalObject, entryFunction));
+			// initialize built-in objects
+			BuiltinConstructors = new BuiltinConstructors();
+			BuiltinConstructors.ApplyToScriptRunningMachine(this);
 
 			// load core library
-			BuiltinConstructors.ApplyToScriptRunningMachine(this);
 			LoadCoreLibraries();
+
+			// initialize default context
+			defaultContext = new ScriptContext(this, entryFunction);
 
 			if (Resetted != null) Resetted(this, null);
 		}
@@ -4376,6 +5321,13 @@ namespace Unvell.ReoScript
 				}
 			}
 		}
+
+		private ScriptContext defaultContext;
+
+		/// <summary>
+		/// Default script context
+		/// </summary>
+		public ScriptContext DefaultContext { get { return defaultContext; } }
 
 		#endregion
 
@@ -4408,12 +5360,10 @@ namespace Unvell.ReoScript
 
 		/// <summary>
 		/// Get a property value from global object.
-		/// 
-		/// ### changed to internal because CalcExpression method can do samething
 		/// </summary>
 		/// <param name="identifier"></param>
 		/// <returns></returns>
-		internal object GetGlobalVariable(string identifier)
+		public object GetGlobalVariable(string identifier)
 		{
 			return GlobalObject[identifier];
 		}
@@ -4450,12 +5400,12 @@ namespace Unvell.ReoScript
 		/// </summary>
 		internal static readonly FunctionObject entryFunction = new FunctionObject()
 		{
-			Name = "__entry__",
+			FunName = "__entry__",
 		};
 
 		internal bool IsInGlobalScope(ScriptContext context)
 		{
-			return context.GetCurrentCallScope().CurrentFunction == entryFunction;
+			return context.CurrentCallScope == null;
 		}
 
 		#endregion
@@ -4471,11 +5421,23 @@ namespace Unvell.ReoScript
 			return CreateNewObject(new ScriptContext(this, entryFunction), BuiltinConstructors.ObjectFunction) as ObjectValue;
 		}
 
-		public ObjectValue CreateNewObject(string name)
+		//public ObjectValue CreateNewObject(string name)
+		//{
+		//  ObjectValue obj = CreateNewObject();
+		//  //obj.Name = name;
+		//  return obj;
+		//}
+
+		public ObjectValue CreateNewObject(Action<ObjectValue> initializer)
 		{
 			ObjectValue obj = CreateNewObject();
-			obj.Name = name;
+			initializer(obj);
 			return obj;
+		}
+
+		public ObjectValue CreateNewObject(Dictionary<string, object> properties)
+		{
+			return CreateNewObject((obj) => obj.AddProperties(properties));
 		}
 
 		internal ObjectValue CreateNewObject(ScriptContext context)
@@ -4513,8 +5475,8 @@ namespace Unvell.ReoScript
 			{
 				ObjectValue objValue = obj as ObjectValue;
 
-				objValue.Name = constructor.FunName == null ? 
-					constructor.Name : constructor.FunName;
+				//objValue.Name = constructor.FunName == null ? 
+				//  constructor.Name : constructor.FunName;
 
 				// point to constructor
 				//objValue[ScriptRunningMachine.KEY_CONSTRUCTOR] = constructor;
@@ -4587,9 +5549,9 @@ namespace Unvell.ReoScript
 		}
 
 		/// <summary>
-		/// Import a .Net type into script context. This method will creates a constructor function
-		/// which named by type's name and stored as property in global object. Note that if there 
-		/// is an object named type's name does exists in global object then it will be overwritten.
+		/// Import a .NET type into script context. This method will create a constructor function
+		/// by type's name and save it as property into global object. Note that if there 
+		/// is an object named type's name the object will be overwritten.
 		/// </summary>
 		/// <param name="type">type to be added into script context</param>
 		public void ImportType(Type type)
@@ -4597,6 +5559,13 @@ namespace Unvell.ReoScript
 			ImportType(type, type.Name);
 		}
 
+		/// <summary>
+		/// Import a .NET type into script context. This method will create a constrcutor function
+		/// by given alias name and save it as property into global object. Note that if there
+		/// is an object named type's name the object will be overwritten.
+		/// </summary>
+		/// <param name="type">type to be added into script context</param>
+		/// <param name="name">alias name to create constructor function in global object</param>
 		public void ImportType(Type type, string name)
 		{
 			if (ImportedTypes.Contains(type))
@@ -4662,7 +5631,8 @@ namespace Unvell.ReoScript
 			foreach (string key in source)
 			{
 				// FIXME: get member by PropertyAccessHelper.GetProperty?
-				PropertyAccessHelper.SetProperty(this, context, target, key, source[key]);
+				//        enumerated in only own members
+				PropertyAccessHelper.SetProperty(context, target, key, source[key]);
 			}
 		}
 
@@ -4908,39 +5878,88 @@ namespace Unvell.ReoScript
 		}
 
 		/// <summary>
-		/// Event fired when work mode has been changed. (default is Default).
+		/// Event fired when work mode has been changed.
 		/// </summary>
 		public event EventHandler WorkModeChanged;
 
 		/// <summary>
-		/// Allows to access .Net object, type, namespace, etc. directly. (default is false)
+		/// Get or set whether allowed to access .NET object, type, namespace, etc. directly. (default is false)
 		/// </summary>
-		internal bool EnableDirectAccess { get { return (workMode & MachineWorkMode.AllowDirectAccess) == MachineWorkMode.AllowDirectAccess; } }
+		public bool AllowDirectAccess { 
+			get { return (workMode & MachineWorkMode.AllowDirectAccess) == MachineWorkMode.AllowDirectAccess; }
+			set
+			{
+				if (value)
+					workMode |= MachineWorkMode.AllowDirectAccess;
+				else
+					workMode &= ~(MachineWorkMode.AllowDirectAccess);
+			}
+		}
 
 		/// <summary>
-		/// Ignore all exception in CLR invoking. (default is true)
+		/// Get or set whether allowed to ignore all exceptions that is happened from CLR calling. (default is true)
 		/// </summary>
-		internal bool IgnoreCLRExceptions { get { return (workMode & MachineWorkMode.IgnoreCLRExceptions) == MachineWorkMode.IgnoreCLRExceptions; } }
+		public bool IgnoreCLRExceptions
+		{
+			get { return (workMode & MachineWorkMode.IgnoreCLRExceptions) == MachineWorkMode.IgnoreCLRExceptions; }
+			set
+			{
+				if (value)
+					workMode |= MachineWorkMode.IgnoreCLRExceptions;
+				else
+					workMode &= ~(MachineWorkMode.IgnoreCLRExceptions);
+			}
+		}
 
 		/// <summary>
-		/// Allows ReoScript to auto-import the relation types what may used in other imported type. (default is true)
+		/// Get or set whether allowed to auto-import the associated types that is used in other imported types. (default is true)
 		/// </summary>
-		internal bool AutoImportRelationType { get { return (workMode & MachineWorkMode.AutoImportRelationType) == MachineWorkMode.AutoImportRelationType; } }
+		public bool AutoImportRelationType
+		{
+			get { return (workMode & MachineWorkMode.AutoImportRelationType) == MachineWorkMode.AutoImportRelationType; }
+			set
+			{
+				if (value)
+					workMode |= MachineWorkMode.AutoImportRelationType;
+				else
+					workMode &= ~(MachineWorkMode.AutoImportRelationType);
+			}
+		}
 
 		/// <summary>
-		/// Allows import .Net namespaces and classes in script using 'import' keyword. (default is fasle)
+		/// Get or set whether allowed to import .NET namespaces or classes using 'import' keyword from script. (default is fasle)
 		/// </summary>
-		internal bool EnableImportTypeInScript { get { return (workMode & MachineWorkMode.AllowImportTypeInScript) == MachineWorkMode.AllowImportTypeInScript; } }
+		public bool AllowImportTypeInScript
+		{
+			get { return (workMode & MachineWorkMode.AllowImportTypeInScript) == MachineWorkMode.AllowImportTypeInScript; }
+			set
+			{
+				if (value)
+					workMode |= MachineWorkMode.AllowImportTypeInScript;
+				else
+					workMode &= ~(MachineWorkMode.AllowImportTypeInScript);
+			}
+		}
 
 		/// <summary>
-		/// Allows to auto-bind CLR event. This option needs AllowDirectAccess. (default is false)
+		/// Get or set whether allowed to bind a CLR event. This option works only when AllowDirectAccess is enabled. (default is false)
 		/// </summary>
-		internal bool EnableCLREvent { get { return (workMode & MachineWorkMode.AllowCLREventBind) == MachineWorkMode.AllowCLREventBind; } }
+		public bool AllowCLREvent
+		{
+			get { return (workMode & MachineWorkMode.AllowCLREventBind) == MachineWorkMode.AllowCLREventBind; }
+			set
+			{
+				if (value)
+					workMode |= MachineWorkMode.AllowCLREventBind;
+				else
+					workMode &= ~(MachineWorkMode.AllowCLREventBind);
+			}
+		}
 
 		#endregion
 
 		#region Invoke Function
-		public object InvokeAbstractFunction(object ownerObject, AbstractFunctionObject funObject, object[] args)
+		internal object InvokeAbstractFunction(object ownerObject, AbstractFunctionObject funObject, object[] args)
 		{
 			ScriptContext context = new ScriptContext(this, entryFunction);
 			return InvokeFunction(context, ownerObject, funObject, args);
@@ -4948,21 +5967,45 @@ namespace Unvell.ReoScript
 
 		internal object InvokeFunction(ScriptContext context, object ownerObject, AbstractFunctionObject funObject, object[] args)
 		{
+			return InvokeFunction(context, ownerObject, funObject, args, 0, 0);
+		}
+
+		internal object InvokeFunction(ScriptContext context, object ownerObject, AbstractFunctionObject funObject, object[] args,
+			int charIndex, int line)
+		{
 			if (funObject is NativeFunctionObject)
 			{
 				NativeFunctionObject nativeFun = funObject as NativeFunctionObject;
-
 				return nativeFun.Invoke(context, ownerObject, args);
-				//return (nativeFun == null || nativeFun.BodyFull == null) ? null
-				//  : nativeFun.Invoke(this, context, ownerObject, args);
 			}
 			else if (funObject is FunctionObject)
 			{
 				FunctionObject fun = funObject as FunctionObject;
 
+				CallScope lastScope = context.CallStack.Peek();
+				if (lastScope != null)
+				{
+					lastScope.Line = line;
+					lastScope.CharIndex = charIndex;
+				}
+
 				CallScope newScope = new CallScope(ownerObject, fun);
 
-				if (args != null)
+				// create inner functions from static local scope
+				if (fun.FunctionInfo.InnerScope != null)
+				{
+					foreach (FunctionInfo fi in fun.FunctionInfo.InnerScope.Functions)
+					{
+						if (!fi.IsAnonymous)
+						{
+							Debug.Assert(!newScope.Variables.ContainsKey(fi.Name));
+							newScope[fi.Name] = FunctionDefineNodeParser.CreateAndInitFunction(context, fi);
+						}
+					}
+				}
+
+				// prepare arguments
+				if (args != null && fun.Args != null)
 				{
 					for (int i = 0; i < fun.Args.Length && i < args.Length; i++)
 					{
@@ -4971,14 +6014,18 @@ namespace Unvell.ReoScript
 					}
 				}
 
-				ArrayObject argumentArray = CreateNewObject(context, BuiltinConstructors.ArrayFunction) as ArrayObject;
-				if (argumentArray != null)
+				if (!fun.FunctionInfo.IsAnonymous // anonymous function's scope set by create-time
+					&& fun.FunctionInfo.IsInner     // only inner function need to set outer scope
+
+					// check whether the function will be called is inner function of current function
+					&& fun.FunctionInfo.OuterScope.Functions.Any(f => f == fun.FunctionInfo))
 				{
-					if (args != null) argumentArray.List.AddRange(args);
-					newScope[KEY___ARGS__] = argumentArray;
+					fun.OuterCallScope = context.CurrentCallScope;
 				}
 
-				context.PushCallStack(newScope);
+				newScope[KEY___ARGS__] = args;
+
+				context.PushCallStack(newScope, fun.FunctionInfo.IsInner || fun.FunctionInfo.IsAnonymous);
 
 				ReturnNode returnValue = null;
 
@@ -4989,27 +6036,41 @@ namespace Unvell.ReoScript
 				finally
 				{
 					context.PopCallStack();
+
+					// clear cached outer stack from current function
+					fun.OuterCallScope = null;
 				}
 
 				return returnValue != null ? returnValue.Value : null;
 			}
 			else
-				throw new ReoScriptRuntimeException(context, "Object is not a function: " + Convert.ToString(funObject));
+			  throw new ReoScriptRuntimeException(string.Format("{0} is not a function", Convert.ToString(funObject)));
 		}
 
 		/// <summary>
-		/// Call a function that existed in Global Object as a property.
-		/// This method equals the following script:
-		/// if (fun != undefined) fun();
+		/// Call a function in script specified by function name. 
+		/// The function object must can be retrieved from current context or global object.
+		/// 
+		/// This method equals the evaluation of expression: if (typeof fun == 'function') fun();
 		/// </summary>
 		/// <param name="funName">function name</param>
-		/// <param name="p">parameters if has</param>
-		/// <returns>return value of function</returns>
+		/// <param name="p">parameters if existed</param>
+		/// <returns>return from function call</returns>
 		public object InvokeFunctionIfExisted(string funName, params object[] p)
 		{
 			return InvokeFunctionIfExisted(GlobalObject, funName, p);
 		}
 
+		/// <summary>
+		/// Call a function in script specified by function name.
+		/// The function object must can be retrieved from speicifed owner object.
+		/// 
+		/// This method equals the evaluation of expression: if (obj != null && (typeof obj.fun == 'function')) obj.fun();
+		/// </summary>
+		/// <param name="owner">owner object (this object after be called)</param>
+		/// <param name="funName">function object to execute</param>
+		/// <param name="p">parameters if existed</param>
+		/// <returns>return from function call</returns>
 		public object InvokeFunctionIfExisted(object owner, string funName, params object[] p)
 		{
 			AbstractFunctionObject fun = PropertyAccessHelper.GetProperty(this, owner, funName)
@@ -5023,14 +6084,12 @@ namespace Unvell.ReoScript
 		private bool isForceStop = false;
 
 		/// <summary>
-		/// Flag to specify whether current executing is requesting to force stop
+		/// Indicate whether the current execution is forced to stop. To force stop execution call ForceStop method.
 		/// </summary>
 		public bool IsForceStop { get { return isForceStop; } }
 
 		/// <summary>
-		/// Indicate whether current machine is running. Return true if setTimeout and setInterval 
-		/// makes script be executed constantly, in this time, call ForceStop may interrupt the execution.
-		/// This property is readonly.
+		/// Indicate whether script is running. To force stop current execution call ForceStop method.
 		/// </summary>
 		public bool IsRunning
 		{
@@ -5150,7 +6209,7 @@ namespace Unvell.ReoScript
 							}
 							else if (code is CommonTree)
 							{
-								this.ParseNode(((CommonTree)code), bw.ScriptContext);
+								ScriptRunningMachine.ParseNode(((CommonTree)code), bw.ScriptContext);
 							}
 							else
 							{
@@ -5409,20 +6468,23 @@ namespace Unvell.ReoScript
 		#endregion
 
 		#region Load & Run
+		/// <summary>
+		/// Get or set WorkPath. WorkPath is used when importing an external script file or resource.
+		/// </summary>
 		public string WorkPath { get; set; }
 
 		/// <summary>
-		/// Load script library from given stream. 
+		/// Load script file from specified stream. 
 		/// </summary>
-		/// <remarks>setTimeout and setInterval function will be disabled when script load from stream, uri or file.</remarks>
+		/// <remarks>setTimeout and setInterval function will be disabled when loading script from external stream, uri or file.</remarks>
 		/// <param name="s">stream to load script</param>
 		public void Load(Stream s)
 		{
-			Load(new ANTLRInputStream(s));
+			Load(new ANTLRInputStream(s), null);
 		}
 
 		/// <summary>
-		/// Load script library from a specified uri, which may be a remote resource on Internet.
+		/// Load script library from a specified uri. Uri can be remote resource on Internet.
 		/// </summary>
 		/// <param name="uri">uri to load script</param>
 		public void Load(Uri uri)
@@ -5437,80 +6499,117 @@ namespace Unvell.ReoScript
 		}
 
 		/// <summary>
-		/// Load script library from a file specified with its fully path.
+		/// Load script from specified file with full path.
 		/// </summary>
-		/// <param name="path">file path to load script</param>
+		/// <param name="path">file to load script</param>
 		public void Load(string path)
 		{
 			FileInfo fi = new FileInfo(path);
 			if (!fi.Exists)
 			{
-				throw new ReoScriptRuntimeException(null, "File Not Found: " + fi.FullName);
+				throw new ReoScriptException("File not found: " + fi.FullName);
 			}
 
 			Load(new ANTLRFileStream(path), path);
 		}
 
-		private void Load(ICharStream stream)
-		{
-			Load(stream, null);
-		}
-
 		private void Load(ICharStream stream, string filepath)
 		{
-			ReoScriptLexer lex = new ReoScriptLexer(stream);
-			CommonTokenStream tokens = new CommonTokenStream(lex);
-			ReoScriptParser parser = new ReoScriptParser(tokens);
-
-			try
-			{
-				ParseNode(parser.script().Tree as CommonTree, new ScriptContext(this, entryFunction, filepath));
-			}
-			catch (RecognitionException ex)
-			{
-				throw new ReoScriptSyntaxErrorException(null, "syntax error near at " + ex.Character + "(" + ex.Line + ": " + ex.CharPositionInLine + ")");
-			}
+			Run(stream, filepath, true);
 		}
 
 		/// <summary>
-		/// Run specified ReoScript script. (Note that semicolon is required at end of line)
+		/// Run script from specified file and get the last value of execution.
 		/// </summary>
-		/// <param name="script">script to execute</param>
-		/// <returns>result of last exected statement</returns>
+		/// <param name="script">file to be executed</param>
+		/// <returns>last result returned from script</returns>
 		public object Run(FileInfo filePath)
 		{
-			using (StreamReader sr = new StreamReader(new FileStream(filePath.FullName, 
-				FileMode.Open, FileAccess.Read, FileShare.Read)))
-			{
-				return Run(sr.ReadToEnd(), filePath.FullName);
-			}
+			return Run(filePath, true);
 		}
+
+    /// <summary>
+    /// Run script from specified file and get the last value of execution.
+    /// </summary>
+    /// <param name="filePath">file to be executed</param>
+		/// <param name="ignoreSyntaxErrors">indicates whether allowed to ignore syntax check. (default is true)</param>
+    /// <returns>last result returned from script</returns>
+		public object Run(FileInfo filePath, bool ignoreSyntaxErrors)
+		{
+			return Run(new ANTLRFileStream(filePath.FullName), filePath.FullName, ignoreSyntaxErrors);
+		}
+
 		/// <summary>
-		/// Run specified ReoScript script. (Note that semicolon is required at end of line)
+		/// Run specified script in text and get the last value of execution.
 		/// </summary>
-		/// <param name="script">script to execute</param>
+		/// <param name="script">script to be executed</param>
 		/// <returns>result of last exected statement</returns>
 		public object Run(string script)
 		{
-			return Run(script, null);
+			if (!script.EndsWith(";")) script += ";";
+			return Run(script, true);
 		}
 
-		internal object Run(string script, string filePath)
+		/// <summary>
+		/// Run specified script in text and get the last value of execution.
+		/// </summary>
+		/// <param name="script">script to be executed</param>
+		/// <param name="ignoreSyntaxErrors">indicates whether allowed to ignore syntax check. (default is true)</param>
+		/// <returns>result of last exected statement</returns>
+		public object Run(string script, bool ignoreSyntaxErrors)
+		{
+			return Run(script, null, true);
+		}
+
+		internal object Run(string script, string filepath)
+		{
+			return Run(script, filepath, true);
+		}
+
+		internal object Run(string script, string filePath, bool ignoreSyntaxErrors)
+		{
+			return Run(new ANTLRStringStream(script), filePath, ignoreSyntaxErrors);
+		}
+
+		internal object Run(ICharStream stream, string filepath, bool ignoreSyntaxErrors)
+		{
+			return Run(stream, filepath, ignoreSyntaxErrors ? (Action<ErrorObject>)(e => { }) : null);
+		}
+
+		internal object Run(ICharStream stream, string filePath, Action<ErrorObject> compilingErrorHandler)
 		{
 			ScriptContext context = new ScriptContext(this, entryFunction, filePath);
-			return RunCompiledScript(Compile(script, context), context);
+			return RunCompiledScript(Compile(stream, compilingErrorHandler), context);
 		}
 
 		/// <summary>
 		/// Run compiled script
 		/// </summary>
-		/// <param name="script">compiled script object to execute</param>
-		/// <returns>result of last exected statement</returns>
+		/// <param name="cs">compiled script to run</param>
+		/// <returns>last return value from script</returns>
+		//public object Run(CompiledScript cs)
+		//{
+		//  return RunCompiledScript(cs);
+		//}
+
+		/// <summary>
+		/// Run compiled script. 
+		/// </summary>
+		/// <see cref="CompiledScript"/>
+		/// <param name="script">a compiled script will be executed</param>
+		/// <returns>return value from script</returns>
 		public object RunCompiledScript(CompiledScript script)
 		{
 			return RunCompiledScript(script, new ScriptContext(this, entryFunction));
 		}
 
+		/// <summary>
+		/// Run compiled script.
+		/// </summary>
+		/// <see cref="CompiledScript"/>
+		/// <param name="script">a compiled script will be executed</param>
+		/// <param name="context">current executing context</param>
+		/// <returns>return value from script</returns>
 		public object RunCompiledScript(CompiledScript script, ScriptContext context)
 		{
 			// clear ForceStop flag
@@ -5518,38 +6617,86 @@ namespace Unvell.ReoScript
 
 			if (script.RootNode == null) return null;
 
-			// parse syntax tree
-			object v = ParseNode(script.RootNode, context);
+			// define global functions 
+			if (script.RootScope != null)
+			{
+				foreach (FunctionInfo fi in script.RootScope.Functions.Where(fi => !fi.IsAnonymous && !fi.IsInner))
+				{
+					GlobalObject[fi.Name] = FunctionDefineNodeParser.CreateAndInitFunction(context, fi);
+				}
+			}
 
-			// retrieve value from accessor
-			if (v is IAccess) v = ((IAccess)v).Get();
-
-			// retrieve value from ReturnNode
-			if (v is ReturnNode) v = ((ReturnNode)v).Value;
-
-			return v;
+			// run syntax tree and return value
+			return UnboxAnything(ParseNode(script.RootNode, context));
 		}
 
 		/// <summary>
-		/// Calculate value of ReoScript expression. Only an expression can be properly 
-		/// calculated by this method, control statements like if, for, switch and etc.
-		/// could not be executed and runtime exception will be caused. To execute all of
-		/// statements you should use Run method.
+		/// Unbox anything from script return
+		/// </summary>
+		/// <param name="o">object returned from script</param>
+		/// <returns>object unboxed</returns>
+		public static object UnboxAnything(object o)
+		{
+			// retrieve value from accessor
+			if (o is IAccess) o = UnboxAnything(((IAccess)o).Get());
+
+			// retrieve value from ReturnNode
+			if (o is ReturnNode) o = UnboxAnything(((ReturnNode)o).Value);
+
+			// retrieve from const value
+			if (o is ConstValueNode) o = UnboxAnything(((ConstValueNode)o).ConstValue);
+
+			// unbox from wrapper object
+			if (o is ArrayObject) o = UnboxAnything(((ArrayObject)o).List);
+			if (o is StringObject) o = UnboxAnything(((StringObject)o).String);
+			if (o is NumberObject) o = UnboxAnything(((NumberObject)o).Number);
+			if (o is BooleanObject) o = UnboxAnything(((BooleanObject)o).Boolean);
+			if (o is DateObject) o = UnboxAnything(((DateObject)o).DateTime);
+
+			return o;
+		}
+
+		/// <summary>
+		/// Evaluate specified expression. Only an expression can be properly 
+		/// calculated by this method, control statements like if, for, switch, etc.
+		/// can not be executed. To execute the statements use Run method.
 		/// </summary>
 		/// <param name="expression">expression to be calculated</param>
 		/// <returns>value of expression</returns>
 		public object CalcExpression(string expression)
 		{
-			return CalcExpression(expression, new ScriptContext(this, entryFunction));
+			return CalcExpression(expression, true);
+		}
+
+		/// <summary>
+		/// Evaluate specified expression. Only an expression can be properly 
+		/// calculated by this method, control statements like if, for, switch, etc.
+		/// can not be executed. To execute the statements use Run method.
+		/// </summary>
+		/// <param name="expression">expression to be calculated</param>
+		/// <param name="ignoreErrors">whether allowed to ignore syntax error</param>
+		/// <returns>value of expression</returns>
+		public object CalcExpression(string expression, bool ignoreErrors)
+		{
+			return CalcExpression(expression, new ScriptContext(this, entryFunction), ignoreErrors);
 		}
 
 		internal object CalcExpression(string expression, ScriptContext context)
 		{
+			return CalcExpression(expression, context, false);
+		}
+
+		internal object CalcExpression(string expression, ScriptContext context, bool ignoreErrors)
+		{
 			ReoScriptLexer exprLex = new ReoScriptLexer(new ANTLRStringStream(expression));
 			CommonTokenStream exprTokens = new CommonTokenStream(exprLex);
 			ReoScriptParser exprParser = new ReoScriptParser(exprTokens);
-			CommonTree t = exprParser.expression().Tree as CommonTree;
+			if (!ignoreErrors)
+			{
+				exprParser.CompilingErrorHandler = e => { throw new ReoScriptCompilingException(e); };
+			}
 
+			CommonTree t = exprParser.expression().Tree as CommonTree;
 			isForceStop = false;
 			object v = ParseNode(t, context);
 			while (v is IAccess) v = ((IAccess)v).Get();
@@ -5560,40 +6707,106 @@ namespace Unvell.ReoScript
 		private FunctionDefineNodeParser globalFunctionDefineNodeParser = new FunctionDefineNodeParser();
 
 		/// <summary>
-		/// Compile script (Pre-parse script to improve executing speed). 
+		/// Pre-interpret specified script. Pre-interpreting parses the script and tires to construct a 
+		/// syntax-tree in memory. Syntax errors will be detected and thrown as ReoScriptCompilingException.
 		/// </summary>
-		/// <param name="script">script to compile</param>
-		/// <returns>A compiled script object</returns>
+		/// <param name="script">script to be compiled</param>
+		/// <returns>compiled script instance in memory</returns>
 		public CompiledScript Compile(string script)
 		{
-			return Compile(script, new ScriptContext(this, entryFunction));
+			return Compile(script, false);
 		}
 
-		internal CompiledScript Compile(string script, ScriptContext context)
+		/// <summary>
+		/// Pre-interpret script from specified file. 
+		/// Syntax errors will be detected and thrown as ReoScriptCompilingException.
+		/// </summary>
+		/// <param name="file">file to be compiled</param>
+		/// <returns>compiled script instance in memory</returns>
+		public CompiledScript Compile(FileInfo file)
 		{
-			ReoScriptLexer lex = new ReoScriptLexer(new ANTLRStringStream(script));
+			return Compile(file, false);
+		}
+
+		/// <summary>
+		/// Pre-interpret specified script in text. 
+		/// Syntax errors will be detected and stored in the error list of CompiledScript.
+		/// </summary>
+		/// <param name="script">script to be compiled</param>
+		/// <returns>compiled script instance in memory</returns>
+		public CompiledScript Compile(string script, bool compilingWithoutException)
+		{
+			return Compile(script, compilingWithoutException ? (Action<ErrorObject>)((e) => { }) : null);
+		}
+
+		/// <summary>
+		/// Pre-interpret script from specified file. 
+		/// Syntax errors will be detected and stored in the error list of CompiledScript.
+		/// </summary>
+		/// <param name="script">specified script to be compiled</param>
+		/// <returns>compiled script instance in memory</returns>
+		public CompiledScript Compile(FileInfo file, bool compilingWithoutException)
+		{
+			return Compile(file, compilingWithoutException ? (Action<ErrorObject>)((e) => { }) : null);
+		}
+
+		/// <summary>
+		/// Pre-interpret script from specified file. 
+		/// Syntax errors will be detected and passed into CompilingErrorHandler instantly. 
+		/// </summary>
+		/// <param name="file">file specified to compile</param>
+		/// <param name="compilingErrorHandler">error handler to receive a syntax error instantly</param>
+		/// <returns>compiled script instance in memory</returns>
+		public CompiledScript Compile(FileInfo file, Action<ErrorObject> compilingErrorHandler)
+		{
+			return Compile(new ANTLRFileStream(file.FullName), compilingErrorHandler);
+		}
+
+		/// <summary>
+		/// Pre-interpret specified script in text. 
+		/// Syntax errors will be detected and passed into CompilingErrorHandler instantly. 
+		/// </summary>
+		/// <param name="script">script specified to compile</param>
+		/// <param name="compilingErrorHandler">error handler to receive syntax error</param>
+		/// <returns>compiled script instance in memory</returns>
+		public CompiledScript Compile(string script, Action<ErrorObject> compilingErrorHandler)
+		{
+			return Compile(new ANTLRStringStream(script), compilingErrorHandler);
+		}
+
+		internal CompiledScript Compile(ICharStream stream, Action<ErrorObject> compilingErrorHandler)
+		{
+			ReoScriptLexer lex = new ReoScriptLexer(stream);
 			CommonTokenStream tokens = new CommonTokenStream(lex);
 			ReoScriptParser parser = new ReoScriptParser(tokens);
 
-			// read script and build ASTree
-			CommonTree t = parser.script().Tree;
-
-			if (t != null)
+			if (compilingErrorHandler == null)
 			{
-				// scan 1st level and define global functions
-				for (int i = 0; i < t.ChildCount; i++)
-				{
-					if (t.Children[i].Type == ReoScriptLexer.FUNCTION_DEFINE)
-					{
-						if (t.Children[i].ChildCount > 0 && t.Children[i] is CommonTree)
-						{
-							globalFunctionDefineNodeParser.Parse(t.Children[i] as CommonTree, this, context);
-						}
-					}
-				}
+				compilingErrorHandler = e => { throw new ReoScriptCompilingException(e); };
 			}
 
-			return new CompiledScript { RootNode = t };
+			parser.CompilingErrorHandler = compilingErrorHandler;
+
+			// parse script and build AST
+			CommonTree t = parser.script().Tree;
+
+			return new CompiledScript
+			{
+				RootNode = t,
+				CompilingErrors = parser.CompilingErrors,
+				RootScope = parser.CurrentStack,
+			};
+		}
+
+		internal static void IterateAST(CommonTree parent, Action<CommonTree> iterate)
+		{
+			if (parent != null && parent.ChildCount > 0)
+			{
+				foreach (CommonTree t in parent.Children)
+				{
+					iterate(t);
+				}
+			}
 		}
 
 		#endregion
@@ -5606,6 +6819,8 @@ namespace Unvell.ReoScript
 			get { return parserAdapter; }
 		}
 
+		private static readonly AWDLLogicSyntaxParserAdapter parseAdapter = new AWDLLogicSyntaxParserAdapter();
+
 		internal IParserAdapter SelectParserAdapter(IParserAdapter adapter)
 		{
 			IParserAdapter oldAdapter = this.parserAdapter;
@@ -5613,72 +6828,49 @@ namespace Unvell.ReoScript
 			return oldAdapter;
 		}
 
-		internal object ParseNode(CommonTree t, ScriptContext ctx)
+		internal static object ParseNode(CommonTree t, ScriptContext ctx)
 		{
-			if (t == null || IsForceStop)
+			if (t == null || ctx.Srm.IsForceStop)
 			{
 				return null;
 			}
 
-			if (t is CommonErrorNode)
-			{
-				CommonErrorNode errorNode = (CommonErrorNode)t;
-
-				string msg = null;
-
-				if (errorNode.trappedException != null)
-				{
-					RecognitionException re = (RecognitionException)errorNode.trappedException;
-
-					msg = string.Format("syntax error at {0} in line {1}", re.CharPositionInLine, re.Line);
-
-					if (re is MismatchedTokenException)
-					{
-						MismatchedTokenException mte = (MismatchedTokenException)re;
-						msg += string.Format(", expect {0}", mte.TokenNames[mte.Expecting]);
-					}
-					else if (re is NoViableAltException)
-					{
-						NoViableAltException nvae = (NoViableAltException)re;
-						msg += ", no viable alt";
-					}
-				}
-
-				if (msg == null)
-				{
-					msg = "syntax error";
-				}
-
-				throw new ReoScriptSyntaxErrorException(ctx, msg);
-			}
-
 			INodeParser parser = null;
-			if (this.parserAdapter != null && (parser = this.parserAdapter.MatchParser(t)) != null)
+			if ((parser = AWDLLogicSyntaxParserAdapter.definedParser[t.Type]) != null)
 			{
-				return parser.Parse(t, this, ctx);
+				return parser.Parse(t, ctx.Srm, ctx);
 			}
 			else
 			{
-				//Value v = null;
-
 				switch (t.Type)
 				{
+					case ReoScriptLexer.IDENTIFIER:
+						return new VariableAccess(ctx.Srm, ctx, t.Text);
+
 					case ReoScriptLexer.THIS:
-						return ctx.GetCurrentCallScope().ThisObject;
+						return ctx.ThisObject;
 
-					case ReoScriptLexer.NUMBER_LITERATE:
-						return Convert.ToDouble(t.Text);
+					case ReoScriptLexer.CONST_VALUE:
+						{
+							if (t.Children[0].Type == ReoScriptLexer.CONST_VALUE)
+								return ((ConstValueNode)t.Children[0]).ConstValue;
+							else
+								return ParseNode((CommonTree)t.Children[0], ctx);
+						}
 
-					case ReoScriptLexer.HEX_LITERATE:
-						return (double)Convert.ToInt32(t.Text.Substring(2), 16);
+					//case ReoScriptLexer.NUMBER_LITERATE:
+					//  return Convert.ToDouble(t.Text);
 
-					case ReoScriptLexer.BINARY_LITERATE:
-						return (double)Convert.ToInt32(t.Text.Substring(2), 2);
+					//case ReoScriptLexer.HEX_LITERATE:
+					//  return (double)Convert.ToInt32(t.Text.Substring(2), 16);
 
-					case ReoScriptLexer.STRING_LITERATE:
-						string str = t.ToString();
-						str = str.Substring(1, str.Length - 2);
-						return ConvertEscapeLiterals(str);
+					//case ReoScriptLexer.BINARY_LITERATE:
+					//  return (double)Convert.ToInt32(t.Text.Substring(2), 2);
+
+					//case ReoScriptLexer.STRING_LITERATE:
+					//  string str = t.ToString();
+					//  str = str.Substring(1, str.Length - 2);
+					//  return ConvertEscapeLiterals(str);
 
 					case ReoScriptLexer.LIT_TRUE:
 						return true;
@@ -5692,14 +6884,13 @@ namespace Unvell.ReoScript
 
 					case ReoScriptLexer.OBJECT_LITERAL:
 						if (t.ChildCount % 2 != 0)
-							throw new ReoScriptRuntimeException(ctx, "object literal should be key/value paired.",
-								new RuntimePosition(t.CharPositionInLine, t.Line, ctx.SourceFilePath));
+							throw ctx.CreateRuntimeError(t, "object literal should be key/value paired.");
 
-						ObjectValue val = CreateNewObject(ctx);
+						ObjectValue val = ctx.CreateNewObject();
 
 						for (int i = 0; i < t.ChildCount; i += 2)
 						{
-							object value = ParseNode(t.Children[i + 1] as CommonTree, ctx);
+							object value = ParseNode((CommonTree)t.Children[i + 1], ctx);
 							if (value is IAccess) value = ((IAccess)value).Get();
 
 							string identifier = t.Children[i].ToString();
@@ -5712,39 +6903,43 @@ namespace Unvell.ReoScript
 						return val;
 
 					case ReoScriptLexer.ARRAY_LITERAL:
-						ArrayObject arr = CreateNewObject(ctx, BuiltinConstructors.ArrayFunction) as ArrayObject;
+						ArrayObject arr = ctx.CreateNewObject(ctx.Srm.BuiltinConstructors.ArrayFunction) as ArrayObject;
 
 						if (arr == null) return arr;
 
 						for (int i = 0; i < t.ChildCount; i++)
 						{
-							object value = ParseNode(t.Children[i] as CommonTree, ctx);
+							object value = ParseNode((CommonTree)t.Children[i], ctx);
 							if (value is IAccess) value = ((IAccess)value).Get();
 							arr.List.Add(value);
 						}
 						return arr;
-
-					case ReoScriptLexer.IDENTIFIER:
-						return new VariableAccess(this, ctx, t.Text);
 
 					case ReoScriptLexer.REPLACED_TREE:
 						return ((ReplacedCommonTree)t).Object;
 
 					case ReoScriptLexer.NAN:
 						return NaNValue.Value;
+
+					case ReoScriptLexer.BREAK:
+						return BreakNode.Value;
+
+					case ReoScriptLexer.CONTINUE:
+						return ContinueNode.Value;
 				}
 
 				return ParseChildNodes(t, ctx);
 			}
 		}
-		internal object ParseChildNodes(CommonTree t, ScriptContext ctx)
+		internal static object ParseChildNodes(CommonTree t, ScriptContext ctx)
 		{
 			object childValue = null;
 			if (t.ChildCount > 0)
 			{
-				foreach (CommonTree child in t.Children)
+				//foreach (CommonTree child in t.Children)
+				for(int i=0;i<t.ChildCount;i++)
 				{
-					childValue = ParseNode(child, ctx);
+					childValue = ParseNode((CommonTree)t.Children[i], ctx);
 
 					if (childValue is BreakNode || childValue is ContinueNode || childValue is ReturnNode)
 						return childValue;
@@ -5754,7 +6949,7 @@ namespace Unvell.ReoScript
 		}
 		#endregion
 
-		#region Parser Helper
+		#region Utility
 		internal static string ConvertEscapeLiterals(string instr)
 		{
 			return instr.Replace("\\n", new string(new char[] { '\n' }))
@@ -5781,22 +6976,24 @@ namespace Unvell.ReoScript
 			return args;
 		}
 
-		internal decimal GetNumericParameter(CommonTree t, ScriptContext ctx)
-		{
-			object value = ParseNode(t, ctx);
-			while (value is IAccess) value = ((IAccess)value);
-			if (!(value is decimal))
-			{
-				throw new ReoScriptRuntimeException(ctx, "parameter must be numeric.");
-			}
-			return (decimal)value;
-		}
-
+		#region Get primitive data
+		/// <summary>
+		/// Convert object into integer value.
+		/// </summary>
+		/// <param name="obj">object to be converted</param>
+		/// <returns>converted integer value</returns>
 		public static int GetIntValue(object obj)
 		{
 			return GetIntValue(obj, 0);
 		}
 
+		/// <summary>
+		/// Convert object into integer value from argument array.
+		/// </summary>
+		/// <param name="args">argument array to get integer value</param>
+		/// <param name="index">zero-based index to get integer value from argument array</param>
+		/// <param name="def">default value will be return if converting is failed</param>
+		/// <returns>converted integer value</returns>
 		public static int GetIntParam(object[] args, int index, int def)
 		{
 			if (args.Length <= index)
@@ -5805,34 +7002,53 @@ namespace Unvell.ReoScript
 				return GetIntValue(args[index], def);
 		}
 
+		/// <summary>
+		/// Convert object into integer value. If converting is failed, a specified default value will be returned.
+		/// </summary>
+		/// <param name="obj">object to be converted</param>
+		/// <param name="def">default value will be return if converting is failed</param>
+		/// <returns>converted integer value</returns>
 		public static int GetIntValue(object obj, int def)
 		{
 			if (obj is int || obj is long)
+			{
 				return (int)obj;
-			else if (obj is double)
+			}
+			else if (obj is double || ScriptRunningMachine.IsNumber(obj))
+			{
 				return (int)(double)obj;
-			else if (obj is ISyntaxTreeReturn)
+			}
+			else if (obj is string || obj is StringObject)
 			{
 				double v = def;
-				if (obj is string)
-				{
-					double.TryParse((string)obj, out v);
-				}
-				else if (obj is NumberObject)
-				{
-					v = ((NumberObject)obj).Number;
-				}
-				return (int)(double)v;
+				double.TryParse(Convert.ToString(obj), out v);
+				return (int)v;
+			}
+			else if (obj is NumberObject)
+			{
+				return (int)((NumberObject)obj).Number;
 			}
 			else
 				return def;
 		}
 
+		/// <summary>
+		/// Convert object into long integer value.
+		/// </summary>
+		/// <param name="obj">object to be converted</param>
+		/// <returns>converted long integer value</returns>
 		public static long GetLongValue(object obj)
 		{
 			return GetLongValue(obj, 0);
 		}
 
+		/// <summary>
+		/// Convert object into long integer value from argument array.
+		/// </summary>
+		/// <param name="args">argument array to get long integer value</param>
+		/// <param name="index">zero-based index to get long integer value from argument array</param>
+		/// <param name="def">default value will be return if converting is failed</param>
+		/// <returns>converted long integer value</returns>
 		public static long GetLongParam(object[] args, int index, long def)
 		{
 			if (args.Length <= index)
@@ -5841,24 +7057,32 @@ namespace Unvell.ReoScript
 				return GetLongValue(args[index], def);
 		}
 
+		/// <summary>
+		/// Convert object into long integer value. If converting is failed, 
+		/// a specified default value will be returned.
+		/// </summary>
+		/// <param name="obj">object to be converted</param>
+		/// <param name="def">default value will be return if converting is failed</param>
+		/// <returns>converted long integer value</returns>
 		public static long GetLongValue(object obj, long def)
 		{
 			if (obj is int || obj is long)
-				return (long)obj;
-			else if (obj is double)
-				return (long)(double)obj;
-			else if (obj is ISyntaxTreeReturn)
 			{
-				long v = def;
-				if (obj is string)
-				{
-					long.TryParse((string)obj, out v);
-				}
-				else if (obj is NumberObject)
-				{
-					v = (long)((NumberObject)obj).Number;
-				}
-				return v;
+				return (long)obj;
+			}
+			else if (obj is double || ScriptRunningMachine.IsNumber(obj))
+			{
+				return (long)(double)obj;
+			}
+			else if (obj is string || obj is StringObject)
+			{
+				double v = def;
+				double.TryParse(Convert.ToString(obj), out v);
+				return (long)v;
+			}
+			else if (obj is NumberObject)
+			{
+				return (long)((NumberObject)obj).Number;
 			}
 			else
 				return def;
@@ -5869,31 +7093,53 @@ namespace Unvell.ReoScript
 			return GetFloatValue(obj, 0);
 		}
 
+		/// <summary>
+		/// Convert object into float value. If converting is failed, a specified default value will be returned.
+		/// </summary>
+		/// <param name="obj">object to be converted</param>
+		/// <param name="def">default value will be return if converting is failed</param>
+		/// <returns>converted float value</returns>
 		public static float GetFloatValue(object obj, float def)
 		{
-			if (obj is float)
-				return (float)obj;
-			else if (obj is int)
-				return (float)(int)obj;
-			else if (obj is long)
-				return (float)(long)obj;
-			else if (obj is double)
-				return (float)(double)obj;
-			else if (obj is ISyntaxTreeReturn)
+			if (obj is double)
 			{
-				float v = def;
-				if (obj is string)
-				{
-					float.TryParse((string)obj, out v);
-				}
-				else if (obj is NumberObject)
-				{
-					v = (float)((NumberObject)obj).Number;
-				}
-				return v;
+				return (float)(double)obj;
+			}
+			else if (obj is float)
+			{
+				return (float)obj;
+			}
+			else if (ScriptRunningMachine.IsNumber(obj))
+			{
+				return (float)(double)obj;
+			}
+			else if (obj is string || obj is StringObject)
+			{
+				double v = def;
+				double.TryParse(Convert.ToString(obj), out v);
+				return (float)v;
+			}
+			else if (obj is NumberObject)
+			{
+				return (float)((NumberObject)obj).Number;
 			}
 			else
 				return def;
+		}
+
+		/// <summary>
+		/// Convert object into float value from argument array.
+		/// </summary>
+		/// <param name="args">argument array to get float value</param>
+		/// <param name="index">zero-based index to get float value from argument array</param>
+		/// <param name="def">default value will be return if converting is failed</param>
+		/// <returns>converted float value</returns>
+		public static float GetFloatParam(object[] args, int index, float def)
+		{
+			if (args.Length <= index)
+				return def;
+			else
+				return GetFloatValue(args[index], def);
 		}
 
 		public static double GetDoubleValue(object obj)
@@ -5902,51 +7148,51 @@ namespace Unvell.ReoScript
 		}
 
 		/// <summary>
-		/// 
+		/// Convert object into double value. If converting is failed, a specified default value will be returned.
 		/// </summary>
-		/// <param name="obj"></param>
-		/// <param name="def"></param>
-		/// <returns></returns>
+		/// <param name="obj">object to be converted</param>
+		/// <param name="def">default value will be return if converting is failed</param>
+		/// <returns>converted double value</returns>
 		public static double GetDoubleValue(object obj, double def)
 		{
 			if (obj is double)
+			{
 				return (double)obj;
+			}
+			else if (ScriptRunningMachine.IsNumber(obj))
+			{
+				return Convert.ToDouble(obj);
+			}
+			
+			else if (obj is string || obj is StringObject)
+			{
+				double v = def;
+				double.TryParse(Convert.ToString(obj), out v);
+				return v;
+			}
 			else if (obj is NumberObject)
 			{
 				return ((NumberObject)obj).Number;
-			}
-			else if (obj is int || obj is long || obj is float)
-			{
-				return (double)(float)obj;
-			}
-			else if (obj is ISyntaxTreeReturn)
-			{
-				double v = def;
-				if (obj is string)
-				{
-					double.TryParse((string)obj, out v);
-				}
-				return v;
 			}
 			else
 				return def;
 		}
 
 		/// <summary>
-		/// Retrieve a boolean value from specified object.
+		/// Convert object into boolean value. If converting is failed, false will be returned.
 		/// </summary>
-		/// <param name="obj">object will be converted</param>
-		/// <returns>converted boolean value. Return false if given object is not in boolean type.</returns>
+		/// <param name="obj">object to be converted</param>
+		/// <returns>converted boolean value</returns>
 		public static bool GetBoolValue(object obj)
 		{
-			return (obj is bool) && ((bool)obj);
+			return ((obj is bool) && ((bool)obj)) || (( obj is BooleanObject) && (((BooleanObject)obj).Boolean));
 		}
 
 		/// <summary>
-		/// Convert an object to string
+		/// Convert an object into string.
 		/// </summary>
 		/// <param name="v">object will be converted</param>
-		/// <returns>convert result</returns>
+		/// <returns>converted string</returns>
 		public static string ConvertToString(object v)
 		{
 			if (v == null)
@@ -5962,8 +7208,9 @@ namespace Unvell.ReoScript
 				return Convert.ToString(v);
 			}
 		}
+		#endregion
 
-		internal static string GetNativeIdentifierName(string identifier)
+		internal static string GetNativeIdentifier(string identifier)
 		{
 			return string.IsNullOrEmpty(identifier) ? string.Empty :
 				(identifier.Substring(0, 1).ToUpper() + identifier.Substring(1));
@@ -6010,7 +7257,7 @@ namespace Unvell.ReoScript
 				{
 					return value;
 				}
-				else if (EnableDirectAccess)
+				else if (AllowDirectAccess)
 				{
 					object obj;
 
@@ -6043,7 +7290,7 @@ namespace Unvell.ReoScript
 						}
 						catch (Exception ex)
 						{
-							throw new ReoScriptException("cannot convert to .Net object from value: " + value, ex);
+							throw new ReoScriptException("cannot convert to .NET object from value: " + value, ex);
 						}
 
 						CombineObject(context, obj, (ObjectValue)value);
@@ -6059,43 +7306,21 @@ namespace Unvell.ReoScript
 			}
 		}
 
+		/// <summary>
+		/// Check whether a specified object is of number type.
+		/// </summary>
+		/// <param name="target">object will be checked</param>
+		/// <returns>true if specified object is of number type.</returns>
 		public static bool IsNumber(object target)
 		{
 			return target is double || target is int || target is float || target is char || target is byte 
 				|| target is short || target is long;
 		}
 
-		internal bool IsPrimitiveTypes(object obj)
+		internal static bool IsPrimitiveTypes(object obj)
 		{
-			return obj is bool || obj is string || IsNumber(obj);
+			return obj == null || obj is bool || obj is string || IsNumber(obj);
 		}
-
-		internal bool IsDirectAccessObject(object obj)
-		{
-			return !(obj is ISyntaxTreeReturn);
-
-			//var t = CurrentContext.ImportedTypes.FirstOrDefault(it => obj.GetType().Equals(it));
-
-			//if (t != null) return true;
-
-			//if (obj is IDirectAccess) return true;
-
-			//DirectAccessAttribute[] attrs = obj.GetType().GetCustomAttributes(typeof(DirectAccessAttribute), true)
-			//  as DirectAccessAttribute[];
-
-			//if (attrs.Length > 0)
-			//{
-			//  return true;
-			//}
-
-			//return false;
-		}
-
-		//internal static string GetStringParameter(CommonTree t, ScriptRunningMachine srm)
-		//{
-		//  Value value = srm.ParseNode(t) as Value;
-		//  return value.GetNativeValue().ToString();
-		//}
 
 		internal static MethodInfo FindCLRMethodAmbiguous(object obj, string methodName, object[] args)
 		{
@@ -6129,12 +7354,13 @@ namespace Unvell.ReoScript
 			return q == null || q.Count() == 0 ? null : q.First();
 		}
 
+		#region JSON Converation
 		/// <summary>
-		/// Convert an object to JSON string
+		/// Convert an object into JSON string
 		/// </summary>
 		/// <param name="obj">object will be converted</param>
-		/// <param name="handler">key/value paired handler</param>
-		/// <returns>result to JSON string</returns>
+		/// <param name="handler">handler to process every properties. This parameter can be null.</param>
+		/// <returns>converted JSON string</returns>
 		public static string ConvertToJSONString(object obj, Func<string, object, object> handler)
 		{
 			return ConvertToJSONString(obj, handler, true);
@@ -6152,61 +7378,71 @@ namespace Unvell.ReoScript
 					foreach (string key in objVal)
 					{
 						if (sb.Length > 1) sb.Append(',');
-
-						sb.Append(key);
-						sb.Append(':');
-
-						object value = objVal[key];
-
-						if (handler != null) value = handler(key, value);
-
-						if (value == null)
-						{
-							sb.Append("null");
-						}
-						else if (value is string)
-						{
-							string valStr = "\"" + Convert.ToString(value) + "\"";
-							//valStr = valStr.Replace("\"", "\\\"");
-							sb.Append(valStr);
-						}
-						else if (value is double || value is int || value is char
-							|| value is byte || value is short || value is long
-							|| value is NumberObject)
-						{
-							sb.Append(Convert.ToString(value));
-						}
-						else
-						{
-							sb.Append(Convert.ToString(value));
-						}
+						ConvertPropertyToJSONString(sb, key, objVal[key], handler);
 					}
 				}
-			} 
+			}
+			else if (obj is IDictionary<string, object>)
+			{
+				IDictionary<string, object> objVal = (IDictionary<string, object>)obj;
+				foreach (string key in objVal.Keys)
+				{
+					if (sb.Length > 1) sb.Append(',');
+					ConvertPropertyToJSONString(sb, key, objVal[key], handler);
+				}
+			}
+			else if (obj is KeyValuePair<string, object>)
+			{
+				KeyValuePair<string, object> objVal = (KeyValuePair<string, object>)obj;
+				ConvertPropertyToJSONString(sb, objVal.Key, objVal.Value, handler);
+			}
 			else if (allowDotNetObjects)
 			{
 				PropertyInfo[] pis = obj.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
 				foreach (PropertyInfo pi in pis)
 				{
 					if (sb.Length > 1) sb.Append(',');
-
-					object value = pi.GetValue(obj, null);
-					if (handler != null) value = handler(pi.Name, value);
-
-					sb.Append(pi.Name);
-					sb.Append(':');
-					sb.Append(value);
+					ConvertPropertyToJSONString(sb, pi.Name, pi.GetValue(obj, null), handler);
 				}
 			}
 
 			sb.Append('}');
 			return sb.ToString();
 		}
+
+		private static void ConvertPropertyToJSONString(StringBuilder sb, string key, object value, Func<string, object, object> handler)
+		{
+			sb.Append(key);
+			sb.Append(':');
+
+			if (handler != null) value = handler(key, value);
+
+			if (value == null)
+			{
+				sb.Append("null");
+			}
+			else if (value is string || value is StringObject)
+			{
+				string str = Convert.ToString(value);
+				str = str.IndexOf('\"') < 0 ? ("\"" + str + "\"") : ("'" + str + "'");
+				sb.Append(str);
+			}
+			else
+			{
+				sb.Append(Convert.ToString(value));
+			}
+		}
+		#endregion
+
 		#endregion
 
 		#region Events
 		internal event EventHandler<ReoScriptObjectEventArgs> NewObjectCreated;
 		//internal event EventHandler<ReoScriptObjectEventArgs> PropertyDeleted;
+
+		/// <summary>
+		/// Event fired when script running machine is resetted.
+		/// </summary>
 		public event EventHandler Resetted;
 		#endregion
 
@@ -6214,28 +7450,40 @@ namespace Unvell.ReoScript
 		private readonly Dictionary<string, AbstractFunctionObject> classDefines
 			= new Dictionary<string, AbstractFunctionObject>();
 
+		/// <summary>
+		/// Check whether specified class has been registered into script context.
+		/// </summary>
+		/// <param name="name">class name to be checked</param>
+		/// <returns>true if specified class has been registered</returns>
 		public bool HasClassRegistered(string name)
 		{
-			return classDefines.ContainsKey(ScriptRunningMachine.GetNativeIdentifierName(name));
+			return classDefines.ContainsKey(name);
 		}
 
 		internal AbstractFunctionObject GetClass(string name)
 		{
-			string upperName = ScriptRunningMachine.GetNativeIdentifierName(name);
-
-			if (classDefines.ContainsKey(upperName))
-				return classDefines[upperName];
-			if (this.GlobalObject[upperName] is AbstractFunctionObject)
-			  return this[upperName] as AbstractFunctionObject;
+			if (classDefines.ContainsKey(name))
+				return classDefines[name];
+			if (this.GlobalObject[name] is AbstractFunctionObject)
+				return this[name] as AbstractFunctionObject;
 			else
 				return null;
 		}
 
+		/// <summary>
+		/// Register a class into script running machine.
+		/// </summary>
+		/// <param name="constructor">constructor of class to be registered</param>
 		public void RegisterClass(AbstractFunctionObject constructor)
 		{
 			RegisterClass(constructor, constructor.FunName);
 		}
 
+		/// <summary>
+		/// Register a class into script running machine.
+		/// </summary>
+		/// <param name="constructor">constructor of class to be registered</param>
+		/// <param name="name"></param>
 		public void RegisterClass(AbstractFunctionObject constructor, string name)
 		{
 			if (string.IsNullOrEmpty(name))
@@ -6257,7 +7505,7 @@ namespace Unvell.ReoScript
 				constructor[KEY_PROTOTYPE] = constructor.CreatePrototype(new ScriptContext(this, entryFunction));
 			}
 
-			constructor.Name = name;
+			constructor.FunName = name;
 			classDefines[name] = constructor;
 		}
 
@@ -6278,9 +7526,64 @@ namespace Unvell.ReoScript
 
 	#region CompiledScript
 
+	/// <summary>
+	/// Compiled script instance in memory. Script in text will be pre-interpreted and converted into a syntax-tree. 
+	/// </summary>
 	public class CompiledScript
 	{
 		internal CommonTree RootNode { get; set; }
+
+		/// <summary>
+		/// Errors happened at compiling-time
+		/// </summary>
+		public List<ErrorObject> CompilingErrors { get; set; }
+
+		internal StaticFunctionScope RootScope { get; set; }
+
+		internal CompiledScript()
+		{
+		}
+
+		/// <summary>
+		/// Get all global functions defined in global object.
+		/// </summary>
+		public List<FunctionInfo> DeclaredFunctions
+		{
+			get
+			{
+				return RootScope.Functions;
+			}
+		}
+
+		/// <summary>
+		/// Get all local variables defined in global object.
+		/// </summary>
+		public List<VariableInfo> DeclaredVariables
+		{
+			get
+			{
+				return RootScope.Variables;
+			}
+		}
+
+		internal static IEnumerable IterateAST(CommonTree node)
+		{
+			if (node != null && node.ChildCount > 0)
+			{
+				foreach (CommonTree t in node.Children)
+				{
+					if (t.ChildCount > 0) 
+						yield return IterateAST(node);
+					else
+						yield return t;
+				}
+			}
+		}
+
+		//public void IterateProperties(Action<string, string> iterate)
+		//{
+			
+		//}
 	}
 
 	#endregion
@@ -6294,7 +7597,7 @@ namespace Unvell.ReoScript
 		internal TypedNativeFunctionObject FunctionFunction;
 		internal TypedNativeFunctionObject NumberFunction;
 		internal TypedNativeFunctionObject DateFunction;
-		internal NativeFunctionObject ErrorFunction;
+		internal ErrorConstructorFunction ErrorFunction;
 		internal NativeFunctionObject BooleanFunction;
 
 		public BuiltinConstructors()
@@ -6396,7 +7699,7 @@ namespace Unvell.ReoScript
 						}
 						catch
 						{
-							throw new ReoScriptRuntimeException(ctx, "Number.toString radix argument must be	2 and 36");
+							throw new ReoScriptRuntimeException("Number.toString radix argument must between 2 and 36.");
 						}
 					});
 				});
@@ -6430,19 +7733,7 @@ namespace Unvell.ReoScript
 			#endregion
 
 			#region Error
-			ErrorFunction = new NativeFunctionObject("Error", (ctx, owner, args) =>
-			{
-				if (owner is ObjectValue && args != null && args.Length > 0)
-				{
-					ObjectValue errorObj = (ObjectValue)owner;
-
-					if (args.Length == 1)
-					{
-						errorObj["message"] = args[0];
-					}
-				}
-				return owner;
-			});
+			ErrorFunction = new ErrorConstructorFunction();
 			#endregion
 
 			#region Boolean
@@ -6561,7 +7852,7 @@ namespace Unvell.ReoScript
 				srm.SetGlobalVariable("Math", new MathObject());
 
 				if ((srm.CoreFeatures & CoreFeatures.Console) == CoreFeatures.Console)
-					srm.GlobalObject["console"] = srm.CreateNewObject("console");
+					srm.GlobalObject["console"] = srm.CreateNewObject();
 
 				if ((srm.CoreFeatures & CoreFeatures.Eval) == CoreFeatures.Eval)
 					srm.GlobalObject[__eval__.FunName] = __eval__;
@@ -6588,7 +7879,7 @@ namespace Unvell.ReoScript
 				if ((srm.CoreFeatures & CoreFeatures.JSON) == CoreFeatures.JSON)
 				{
 					ObjectValue json = new ObjectValue(){
-						Name = "JSON",
+						//Name = "JSON",
 					};
 
 					json["parse"] = new NativeFunctionObject("parse", (ctx, owner, args) =>
@@ -6635,7 +7926,7 @@ namespace Unvell.ReoScript
 						return ScriptRunningMachine.ConvertToJSONString(args[0], (key, value) =>
 						{
 							return func == null ? value : srm.InvokeAbstractFunction(ctx.ThisObject, func, new object[] { key, value });
-						}, srm.EnableDirectAccess);
+						}, srm.AllowDirectAccess);
 					});
 
 					srm.SetGlobalVariable("JSON", json);
@@ -6648,27 +7939,28 @@ namespace Unvell.ReoScript
 
 	#region WorkMode & CoreLibrary
 	/// <summary>
-	/// Defines and represents the working mode of ScriptRunningMachine
+	/// Defines and represents the working mode of script running machine
 	/// </summary>
 	public enum MachineWorkMode
 	{
 		/// <summary>
 		/// Default working mode
 		/// </summary>
-		Default = 0 | MachineWorkMode.IgnoreCLRExceptions | MachineWorkMode.AutoImportRelationType,
+		Default = 0 | MachineWorkMode.IgnoreCLRExceptions | MachineWorkMode.AutoImportRelationType |
+			MachineWorkMode.AutoUppercaseWhenCLRCalling,
 
 		/// <summary>
-		/// Allows to access .Net object, type, namespace, etc. directly.
+		/// Allows to access .NET object, type, namespace, etc. directly.
 		/// </summary>
 		AllowDirectAccess = 0x1,
 
 		/// <summary>
-		/// Allows to auto-bind CLR event. This option needs AllowDirectAccess.
+		/// Allows to auto-bind CLR event. This option works with AllowDirectAccess.
 		/// </summary>
 		AllowCLREventBind = 0x2,
 
 		/// <summary>
-		/// Allows import .Net namespaces and classes in script using 'import' keyword.
+		/// Allows import .NET namespaces and classes in script using 'import' keyword.
 		/// </summary>
 		AllowImportTypeInScript = 0x4,
 
@@ -6681,6 +7973,11 @@ namespace Unvell.ReoScript
 		/// Allows ReoScript to auto-import the relation types that may used in other imported type.
 		/// </summary>
 		AutoImportRelationType = 0x10,
+
+		/// <summary>
+		/// Allows to auto-convert the name into uppercase to find member or property during CLR calling.
+		/// </summary>
+		AutoUppercaseWhenCLRCalling = 0x20,
 	}
 
 	/// <summary>
@@ -6695,7 +7992,7 @@ namespace Unvell.ReoScript
 
 		/// <summary>
 		/// A set of standard features will be supported. (Compatible with ECMAScript)
-		/// Contains the alert, eval, setTimeout, setInterval functions and console object.
+		/// Contains the alert, eval, setTimeout, setInterval and console object.
 		/// </summary>
 		StandardFeatures = Alert | Console | Eval | AsyncCalling | JSON,
 
@@ -6725,7 +8022,7 @@ namespace Unvell.ReoScript
 		Console = 0x8,
 
 		/// <summary>
-		/// JSON object with 'parse' method to provide script can parse json literal
+		/// JSON object with 'parse' and 'stringify' method will be provided for script
 		/// </summary>
 		JSON = 0x10,
 
@@ -6756,6 +8053,31 @@ namespace Unvell.ReoScript
 			this.Object = obj;
 		}
 	}
+	class ConstValueNode : CommonTree
+	{
+		public object ConstValue { get; set; }
+
+		public ConstValueNode(CommonTree t, object constValue, int tokenType)
+			: base(t)
+		{
+			this.ConstValue = constValue;
+			this.Token = new CommonToken(ReoScriptLexer.CONST_VALUE);
+			this.TokenType = tokenType;
+		}
+
+		public int TokenType { get; set; }
+
+		//public override int Type
+		//{
+		//  get { return ReoScriptLexer.CONST_VALUE; }
+		//  set { base.Type = value; }
+		//}
+
+		//public override bool IsNil
+		//{
+		//  get { return false; }
+		//}
+	}
 	#endregion
 
 	#endregion
@@ -6763,20 +8085,20 @@ namespace Unvell.ReoScript
 	#region Standard I/O
 
 	/// <summary>
-	/// An interface to provide standard input data for script. 
-	/// The method of implementation of this interface will be invoked when data redirected 
-	/// by __stdout__ and __stdoutln__ built-in functions in script.
+	/// Interface to provide standard input data for script. 
+	/// The method of implementation of this interface will be invoked when data is requested 
+	/// to input from script by __stdout__ and __stdoutln__ built-in functions.
 	/// </summary>
 	public interface IStandardInputProvider
 	{
 		/// <summary>
-		/// Read a byte from provider
+		/// Read a byte from provider.
 		/// </summary>
 		/// <returns>byte be read</returns>
 		byte Read();
 
 		/// <summary>
-		/// Read a whole line string from provider
+		/// Read a whole line string from provider.
 		/// </summary>
 		/// <returns>string line</returns>
 		string ReadLine();
@@ -6789,29 +8111,33 @@ namespace Unvell.ReoScript
 	public interface IStandardOutputListener
 	{
 		/// <summary>
-		/// Write a byte array to listener
+		/// Write a byte array to listener.
 		/// </summary>
-		/// <param name="buf">buffer to save byte array</param>
+		/// <param name="buf">buffer where the byte array is saved</param>
 		/// <param name="index">index in buffer read from</param>
 		/// <param name="count">count in buffer to read</param>
 		void Write(byte[] buf, int index, int count);
 
 		/// <summary>
-		/// 
+		/// Write a line to listener.
 		/// </summary>
-		/// <param name="line"></param>
+		/// <param name="line">line to be output</param>
 		void WriteLine(string line);
 
+		/// <summary>
+		/// write a object to listener.
+		/// </summary>
+		/// <param name="obj">object to be output</param>
 		void Write(object obj);
 	}
 
 	/// <summary>
-	/// Default built-in console input provider for Standard I/O Interface
+	/// Default built-in console input provider for Standard I/O Interface.
 	/// </summary>
 	public class BuiltinConsoleInputProvider : IStandardInputProvider
 	{
 		/// <summary>
-		/// Read a byte from console
+		/// Read a byte from console.
 		/// </summary>
 		/// <returns></returns>
 		public byte Read()
@@ -6820,7 +8146,7 @@ namespace Unvell.ReoScript
 		}
 
 		/// <summary>
-		/// Read a string line from console
+		/// Read a string line from console.
 		/// </summary>
 		/// <returns></returns>
 		public string ReadLine()
@@ -6835,9 +8161,9 @@ namespace Unvell.ReoScript
 	public class BuiltinConsoleOutputListener : IStandardOutputListener
 	{
 		/// <summary>
-		/// Print byte array in console
+		/// Print byte array in console.
 		/// </summary>
-		/// <param name="buf">buffer to save byte array</param>
+		/// <param name="buf">buffer where the byte array saved</param>
 		/// <param name="index">byte index from array</param>
 		/// <param name="count">byte count in array</param>
 		public void Write(byte[] buf, int index, int count)
@@ -6846,7 +8172,7 @@ namespace Unvell.ReoScript
 		}
 
 		/// <summary>
-		/// Output string line in console
+		/// Output string line passed from script.
 		/// </summary>
 		/// <param name="line">string line</param>
 		public void WriteLine(string line)
@@ -6855,7 +8181,7 @@ namespace Unvell.ReoScript
 		}
 
 		/// <summary>
-		/// Output serialized string of an object in console
+		/// Output serialized string of specified object from script.
 		/// </summary>
 		/// <param name="obj">the object to output</param>
 		public void Write(object obj)
@@ -6880,131 +8206,824 @@ namespace Unvell.ReoScript
 		}
 	}
 
-	/// <summary>
-	/// Provides debug ability for ScriptRunningMachine 
-	/// </summary>
-	public sealed class ScriptDebugger
+	namespace Diagnostics
 	{
-		protected static readonly string DEBUG_OBJECT_NAME = "debug";
-
-		private ObjectValue debugObject;
-
 		/// <summary>
-		/// Debug object named 'debug' will be added into script context
+		/// Provides ability to debug script
 		/// </summary>
-		public ObjectValue DebugObject { get { return debugObject; } }
-
-		/// <summary>
-		/// Current SRM instance to be monitored
-		/// </summary>
-		public ScriptRunningMachine Srm { get; set; }
-
-		/// <summary>
-		/// Current context used to script executing
-		/// </summary>
-		public ScriptContext Context { get; set; }
-
-		private int totalObjectCreated = 0;
-
-		/// <summary>
-		/// Total counter of object created in script
-		/// </summary>
-		public int TotalObjectCreated
+		public sealed class ScriptDebugger
 		{
-			get { return totalObjectCreated; }
-			set { totalObjectCreated = value; }
-		}
+			public static readonly string DEBUG_OBJECT_NAME = "debug";
 
-		ExprEqualsNodeParser comparer = new ExprEqualsNodeParser();
+			private ObjectValue debugObject;
 
-		/// <summary>
-		/// Construct debugger to monitor specified SRM 
-		/// </summary>
-		/// <param name="srm">SRM instance</param>
-		public ScriptDebugger(ScriptRunningMachine srm)
-		{
-			this.Srm = srm;
-			this.Context = new ScriptContext(srm, ScriptRunningMachine.entryFunction);
+			/// <summary>
+			/// Debug object named 'debug' will be added into script context
+			/// </summary>
+			public ObjectValue DebugObject { get { return debugObject; } }
 
-			srm.NewObjectCreated += new EventHandler<ReoScriptObjectEventArgs>(srm_NewObjectCreated);
-			srm.Resetted += (s, e) => RestoreDebugger();
+			/// <summary>
+			/// Current SRM instance to be monitored
+			/// </summary>
+			public ScriptRunningMachine Srm { get; set; }
 
-			debugObject = srm.CreateNewObject(Context) as ObjectValue;
+			/// <summary>
+			/// Current context used to script executing
+			/// </summary>
+			public ScriptContext Context { get; set; }
 
-			if (DebugObject != null)
+			private int totalObjectCreated = 0;
+
+			/// <summary>
+			/// Total counter of object created in script
+			/// </summary>
+			public int TotalObjectCreated
 			{
-				DebugObject["assert"] = new NativeFunctionObject("assert", (ctx, owner, args) =>
+				get { return totalObjectCreated; }
+				set { totalObjectCreated = value; }
+			}
+
+			ExprEqualsNodeParser comparer = new ExprEqualsNodeParser();
+
+			/// <summary>
+			/// Construct debugger to monitor specified script running machine 
+			/// </summary>
+			/// <param name="srm">instance of script running machine</param>
+			public ScriptDebugger(ScriptRunningMachine srm)
+			{
+				this.Srm = srm;
+				this.Context = new ScriptContext(srm, ScriptRunningMachine.entryFunction);
+
+				srm.NewObjectCreated += new EventHandler<ReoScriptObjectEventArgs>(srm_NewObjectCreated);
+				srm.Resetted += (s, e) => RestoreDebugger();
+
+				debugObject = srm.CreateNewObject(Context) as ObjectValue;
+
+				if (DebugObject != null)
 				{
-					if (args.Length == 0)
+					DebugObject["assert"] = new NativeFunctionObject("assert", (ctx, owner, args) =>
 					{
-						throw new ReoScriptAssertionException(ctx);
-					}
-					else if (args.Length == 1)
-					{
-						if (!ScriptRunningMachine.GetBoolValue(args[0]))
-							throw new ReoScriptAssertionException(ctx);
-					}
-					else if (args.Length == 2)
-					{
-						if (!comparer.Compare(args[0], args[1], srm))
-							throw new ReoScriptAssertionException(ctx, string.Format("expect '{0}' but '{1}'",
-								ScriptRunningMachine.ConvertToString(args[1]),
-								ScriptRunningMachine.ConvertToString(args[0])));
-					}
-					return null;
-				});
+						if (args.Length == 0)
+						{
+							throw new ReoScriptAssertionException("assertion failed.");
+						}
+						else if (args.Length == 1)
+						{
+							if (!ScriptRunningMachine.GetBoolValue(args[0]))
+								throw new ReoScriptAssertionException("assertion failed.");
+						}
+						else if (args.Length == 2)
+						{
+							if (!comparer.Compare(args[0], args[1], srm))
+								throw new ReoScriptAssertionException(string.Format("expect '{0}' but '{1}'",
+									ScriptRunningMachine.ConvertToString(args[1]),
+									ScriptRunningMachine.ConvertToString(args[0])));
+						}
+						return null;
+					});
 
-				DebugObject["total_created_objects"] = new ExternalProperty(
-					() => { return totalObjectCreated; }, null);
+					DebugObject["total_created_objects"] = new ExternalProperty(
+						() => { return totalObjectCreated; }, null);
+				}
+
+				RestoreDebugger();
 			}
 
-			RestoreDebugger();
+			/// <summary>
+			/// Restore a debugger after monitoring SRM resetting
+			/// </summary>
+			public void RestoreDebugger()
+			{
+				if (DebugObject != null)
+				{
+					Srm[DEBUG_OBJECT_NAME] = DebugObject;
+				}
+
+				// debug script library
+				using (MemoryStream ms = new MemoryStream(Resources.lib_debug))
+				{
+					Srm.Load(ms);
+				}
+			}
+
+			void srm_NewObjectCreated(object sender, ReoScriptObjectEventArgs e)
+			{
+				totalObjectCreated++;
+			}
+
+			private List<Breakpoint> breakpoints = new List<Breakpoint>();
+
+			/// <summary>
+			/// Add a breakpoint at specified position. (NOT AVAILABLE YET!)
+			/// </summary>
+			/// <param name="breakpoint"></param>
+			public void AddBreakpoint(Breakpoint breakpoint)
+			{
+				this.breakpoints.Add(breakpoint);
+			}
 		}
 
 		/// <summary>
-		/// Restore a debugger if the monitered SRM instance to be resetted
+		/// Breakpoint to add at specified position.
 		/// </summary>
-		public void RestoreDebugger()
+		public class Breakpoint
 		{
-			if (DebugObject != null)
-			{
-				Srm[DEBUG_OBJECT_NAME] = DebugObject;
-			}
-			
-			// debug script library
-			using (MemoryStream ms = new MemoryStream(Resources.lib_debug))
-			{
-				Srm.Load(ms);
-			}
+			public string FilePath { get; set; }
+			public int Line { get; set; }
+			public int Index { get; set; }
+			public int Length { get; set; }
+			public string TestCode { get; set; }
 		}
 
-		void srm_NewObjectCreated(object sender, ReoScriptObjectEventArgs e)
-		{
-			totalObjectCreated++;
-
-			//if (DebugObject != null)
-			//{
-			//  // FIXME: causes StackOverflowException
-			//  Srm.InvokeFunctionIfExisted(DebugObject, "onObjectCreated", e.Object);
-			//}
-		}
-
-		private List<Breakpoint> breakpoints = new List<Breakpoint>();
-
-		public void AddBreakpoint(Breakpoint breakpoint)
-		{
-			this.breakpoints.Add(breakpoint);
-		}
 	}
 
-	public class Breakpoint
+	#endregion
+
+	#region Compiler
+	#region NOT AVAILABLE YET !
+	namespace Compiler
 	{
-		public string FilePath { get; set; }
-		public int Line { get; set; }
-		public int Index { get; set; }
-		public int Length { get; set; }
-		public string TestCode { get; set; }
+
+		/// <summary>
+		/// Compile ReoScript into .NET assembly. (NOT AVAILABLE YET!)
+		/// </summary>
+		public sealed class ReoScriptCompiler
+		{
+			public delegate object EntryFunction(ScriptContext ctx);
+
+			public static object Run(string script)
+			{
+				EntryFunction fun = Compile(script);
+
+				ScriptRunningMachine srm = new ScriptRunningMachine();
+				ScriptContext ctx = new ScriptContext(srm, ScriptRunningMachine.entryFunction);
+				ctx.GlobalObject["a"] = 1;
+
+				Console.Write("Run... ");
+
+				Stopwatch sw = Stopwatch.StartNew();
+
+				object rs = fun(ctx);
+
+				sw.Stop();
+				Console.WriteLine("Done. {0} ms.", sw.ElapsedMilliseconds);
+
+				return ScriptRunningMachine.UnboxAnything(rs);
+			}
+
+			public static EntryFunction Compile(string text)
+			{
+				return Compile(text, "rs");
+			}
+
+			public static EntryFunction Compile(string text, string filename)
+			{
+				ReoScriptLexer lex = new ReoScriptLexer(new ANTLRStringStream(text));
+				CommonTokenStream tokens = new CommonTokenStream(lex);
+				ReoScriptParser parser = new ReoScriptParser(tokens);
+
+				Console.Write("Parsing... ");
+				Stopwatch sw = Stopwatch.StartNew();
+				CommonTree t = parser.script().Tree;
+				sw.Stop();
+				Console.WriteLine("Done. {0} ms.", sw.ElapsedMilliseconds);
+
+				Console.Write("Compiling... ");
+				sw.Reset();
+				sw.Start();
+
+				AssemblyName name = new AssemblyName(filename);
+				AssemblyBuilder ab = AppDomain.CurrentDomain.DefineDynamicAssembly(name, AssemblyBuilderAccess.Save);
+				ModuleBuilder mb = ab.DefineDynamicModule(name.Name, name.Name + ".dll");
+				TypeBuilder tb = mb.DefineType("T1");
+
+				ILGenerator il;
+
+				CompilerContext cc = new CompilerContext(tb);
+
+				// functions
+				StaticFunctionScope slc = parser.CurrentStack;
+				CompileFunction(cc, slc);
+
+				MethodBuilder globalFun = tb.DefineMethod("__entry__", MethodAttributes.Static | MethodAttributes.Public,
+					typeof(object), new Type[] { typeof(ScriptContext) });
+
+				il = globalFun.GetILGenerator();
+				DumpTree(cc, il, t);
+
+				il.Emit(OpCodes.Ret);
+
+				Type typ = tb.CreateType();
+
+				EntryFunction fun = (EntryFunction)Delegate.CreateDelegate(typeof(EntryFunction), typ.GetMethod("__entry__"));
+
+				ab.Save(name.Name + ".dll");
+
+				sw.Stop();
+				Console.WriteLine("Done. {0} ms.", sw.ElapsedMilliseconds);
+
+				return fun;
+			}
+
+			private static void CompileFunction(CompilerContext cc, StaticFunctionScope slc)
+			{
+				foreach (FunctionInfo fi in slc.Functions)
+				{
+					ILGenerator il = cc.EnterFunction(fi);
+					DumpTree(cc, il, fi.BodyTree);
+					CompiledFunction cm = cc.ExitFunction();
+
+					if (fi.InnerScope != null)
+					{
+						CompileFunction(cc, fi.InnerScope);
+					}
+				}
+			}
+
+			private static void DumpTree(CompilerContext cc, ILGenerator il, CommonTree t)
+			{
+				switch (t.Type)
+				{
+					case ReoScriptLexer.DECLARATION:
+						for (int i = 1; i < t.ChildCount; i++)
+							DumpTree(cc, il, ((CommonTree)t.Children[i]));
+						break;
+
+					case ReoScriptLexer.LOCAL_DECLARE_ASSIGNMENT:
+						VariableInfo vi = ((VariableDefineNode)t).VariableInfo;
+
+						if (vi.HasInitialValue)
+						{
+							// get
+							il.Emit(OpCodes.Ldarg_0); // ctx
+							il.Emit(OpCodes.Ldstr, vi.Name); // id
+							DumpTree(cc, il, vi.InitialValueTree); // value
+
+							// set
+							il.Emit(OpCodes.Callvirt, _Context_SetVariable); // set
+						}
+						break;
+
+					case ReoScriptLexer.ASSIGNMENT:
+						{
+							switch (t.Children[0].Type)
+							{
+								case ReoScriptLexer.IDENTIFIER:
+									{
+										// get
+										il.Emit(OpCodes.Ldarg_0); // ctx
+										il.Emit(OpCodes.Ldstr, t.Children[0].Text); // id
+										DumpTree(cc, il, (CommonTree)t.Children[1]); // value
+
+										// set
+										il.Emit(OpCodes.Callvirt, _Context_SetVariable); // set
+									}
+									break;
+
+								case ReoScriptLexer.PROPERTY_ACCESS:
+									{
+										il.Emit(OpCodes.Ldarg_0);
+										DumpTree(cc, il, (CommonTree)((CommonTree)t.Children[0]).Children[0]);
+										il.Emit(OpCodes.Ldstr, ((CommonTree)((CommonTree)t.Children[0]).Children[1]).Text);
+										DumpTree(cc, il, (CommonTree)t.Children[1]);
+										il.Emit(OpCodes.Call, _SetProperty);
+									}
+									break;
+
+								case ReoScriptLexer.ARRAY_ACCESS:
+									break;
+
+								default:
+									throw CreateCompilingException(t, "only variable, index and property can be used in left-hand.");
+							}
+						}
+						break;
+
+					#region For
+					case ReoScriptLexer.FOR_STATEMENT:
+						{
+							CommonTree forInit = (CommonTree)t.Children[0];
+
+							for (int i = 0; i < forInit.ChildCount; i++)
+							{
+								DumpTree(cc, il, (CommonTree)forInit.Children[i]);
+								il.Emit(OpCodes.Pop);
+							}
+
+							System.Reflection.Emit.Label start = il.DefineLabel();
+							System.Reflection.Emit.Label end = il.DefineLabel();
+
+							il.MarkLabel(start);
+
+							CommonTree condition = ((CommonTree)t.Children[1]);
+							DumpTree(cc, il, (CommonTree)(condition.Children[0]));
+							il.Emit(OpCodes.Unbox_Any, typeof(bool));
+							il.Emit(OpCodes.Brfalse_S, end);
+
+							CommonTree body = (CommonTree)(((CommonTree)t.Children[3]).Children[0]);
+
+							for (int i = 0; i < body.ChildCount; i++)
+							{
+								DumpTree(cc, il, (CommonTree)body.Children[i]);
+								il.Emit(OpCodes.Pop);
+							}
+
+							CommonTree iterators = ((CommonTree)t.Children[2]);
+							for (int i = 0; i < iterators.ChildCount; i++)
+							{
+								DumpTree(cc, il, (CommonTree)iterators.Children[i]);
+								il.Emit(OpCodes.Pop);
+							}
+
+							il.Emit(OpCodes.Br_S, start);
+							il.MarkLabel(end);
+
+							il.Emit(OpCodes.Ldnull);
+						}
+						break;
+					#endregion
+
+					#region Primary Expressions
+					#region Const
+					case ReoScriptLexer.CONST_VALUE:
+						{
+							switch (t.Children[0].Type)
+							{
+								case ReoScriptLexer.CONST_VALUE:
+									{
+										ConstValueNode constNode = ((ConstValueNode)t.Children[0]);
+										switch (constNode.TokenType)
+										{
+											case ReoScriptLexer.NUMBER_LITERATE:
+												il.Emit(OpCodes.Ldc_R8, (double)constNode.ConstValue);
+												il.Emit(OpCodes.Box, typeof(double));
+												break;
+
+											case ReoScriptLexer.STRING_LITERATE:
+												il.Emit(OpCodes.Ldstr, (string)constNode.ConstValue);
+												break;
+										}
+									}
+									break;
+
+								case ReoScriptLexer.LIT_TRUE:
+									il.Emit(OpCodes.Ldc_I4_S, 1);
+									il.Emit(OpCodes.Box, typeof(bool));
+									break;
+
+								case ReoScriptLexer.LIT_FALSE:
+									il.Emit(OpCodes.Ldc_I4_S, 0);
+									il.Emit(OpCodes.Box, typeof(bool));
+									break;
+
+								case ReoScriptLexer.LIT_NULL:
+									il.Emit(OpCodes.Ldnull);
+									break;
+
+
+
+								case ReoScriptLexer.ARRAY_LITERAL:
+								case ReoScriptLexer.OBJECT_LITERAL:
+									break;
+							}
+						}
+						break;
+
+					case ReoScriptLexer.THIS:
+						il.Emit(OpCodes.Ldarg_0);
+						il.Emit(OpCodes.Call, _GetThisObject);
+						break;
+					#endregion
+
+					case ReoScriptLexer.IDENTIFIER:
+						GetVariable(il, t);
+						break;
+
+					case ReoScriptLexer.OBJECT_LITERAL:
+						if (t.ChildCount % 2 != 0)
+						{
+							throw CreateCompilingException(t, "object literal must be a key/value paired list.");
+						}
+
+						il.Emit(OpCodes.Ldarg_0);
+						il.Emit(OpCodes.Callvirt, _CreateNewObject);
+
+						for (int i = 0; i < t.ChildCount; i += 2)
+						{
+							il.Emit(OpCodes.Dup); // obj
+							il.Emit(OpCodes.Ldstr, t.Children[i].Text); // key
+							DumpTree(cc, il, (CommonTree)t.Children[i + 1]); // value
+							il.Emit(OpCodes.Callvirt, _ObjectValue_SetItem);
+						}
+						break;
+
+					case ReoScriptLexer.ARRAY_LITERAL:
+						il.Emit(OpCodes.Ldarg_0);
+						il.Emit(OpCodes.Callvirt, _CreateNewArray);
+						break;
+
+					case ReoScriptLexer.ANONYMOUS_FUNCTION:
+						FunctionInfo fi = ((AnonymousFunctionDefineNode)t).FunctionInfo;
+						MethodBuilder mb = DumpFunctionTree(cc, fi).MethodBuilder;
+						il.Emit(OpCodes.Ldftn, mb);
+						il.Emit(OpCodes.Box, typeof(IntPtr));
+						break;
+
+					#endregion
+
+					case ReoScriptLexer.PROPERTY_ACCESS:
+						il.Emit(OpCodes.Ldarg_0); // ctx
+						DumpTree(cc, il, (CommonTree)t.Children[0]);
+						il.Emit(OpCodes.Ldstr, t.Children[1].Text);
+						il.Emit(OpCodes.Call, _GetProperty);
+						break;
+
+					case ReoScriptLexer.PLUS:
+						GenerateTreeCall(cc, il, t, _Plus);
+						break;
+
+					case ReoScriptLexer.LESS_THAN:
+						GenerateTreeCall(cc, il, t, _LessThan);
+						il.Emit(OpCodes.Box, typeof(bool));
+						break;
+
+					case ReoScriptLexer.LESS_EQUALS:
+						GenerateTreeCall(cc, il, t, _LessEquals);
+						il.Emit(OpCodes.Box, typeof(bool));
+						break;
+
+					case ReoScriptLexer.POST_UNARY_STEP:
+						// prepare to set
+						il.Emit(OpCodes.Ldarg_0);
+						il.Emit(OpCodes.Ldstr, t.Children[0].Text);
+
+						// get
+						il.Emit(OpCodes.Ldarg_0);
+						il.Emit(OpCodes.Ldstr, t.Children[0].Text);
+						il.Emit(OpCodes.Callvirt, _Context_GetVariable);
+
+						// add
+						UnboxDouble(il);
+						il.Emit(OpCodes.Ldc_I4, 1);
+						il.Emit(OpCodes.Add);
+						il.Emit(OpCodes.Box, typeof(double));
+
+						// set
+						il.Emit(OpCodes.Callvirt, _Context_SetVariable);
+						break;
+
+					case ReoScriptLexer.FUNCTION_CALL:
+						// local call
+						if (t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
+						{
+							bool hasArgs = t.ChildCount > 1 && t.Children[1].ChildCount > 0;
+							LocalBuilder args = null;
+
+							if (hasArgs)
+							{
+								args = il.DeclareLocal(typeof(object[]));
+
+								// get fun ref
+								MakeCallArguments(cc, il, (CommonTree)t.Children[1]);
+								il.Emit(OpCodes.Stloc, args);
+							}
+
+							System.Reflection.Emit.Label expCall = il.DefineLabel();
+							System.Reflection.Emit.Label end = il.DefineLabel();
+
+							il.Emit(OpCodes.Ldarg_0); // ctx
+
+							if (hasArgs)
+								il.Emit(OpCodes.Ldloc, args);
+							else
+								il.Emit(OpCodes.Ldnull); // args
+
+							GetVariable(il, (CommonTree)t.Children[0]);
+
+							// check 
+							il.Emit(OpCodes.Dup);
+							il.Emit(OpCodes.Isinst, typeof(IntPtr));
+							il.Emit(OpCodes.Brfalse_S, expCall);
+
+							// true:
+							il.Emit(OpCodes.Unbox_Any, typeof(IntPtr));
+							// call						
+							il.EmitCalli(OpCodes.Calli, CallingConventions.Standard,
+								typeof(object), new Type[] { typeof(ScriptContext), typeof(object[]) }, null);
+							il.Emit(OpCodes.Br_S, end);
+
+							// false
+							il.MarkLabel(expCall);
+
+							il.Emit(OpCodes.Pop); // fd
+							il.Emit(OpCodes.Pop); // args
+							il.Emit(OpCodes.Pop); // ctx
+							il.Emit(OpCodes.Ldnull);
+
+							//il.Emit(OpCodes.Ldarg_0); // ctx
+
+							//// this
+							//il.Emit(OpCodes.Ldarg_0);
+							//il.Emit(OpCodes.Call, _GetThisObject);
+
+							//GetVariable(il, (CommonTree)t.Children[0]);
+
+							//il.Emit(OpCodes.Call, _CallFunction);
+							il.MarkLabel(end);
+						}
+						else if (t.Children[0].Type == ReoScriptLexer.PROPERTY_ACCESS)
+						{
+							il.Emit(OpCodes.Ldnull);
+						}
+						else
+						{
+							throw CreateCompilingException(t, "invalid function call expression.");
+						}
+						break;
+
+					case ReoScriptLexer.RETURN:
+						DumpTree(cc, il, (CommonTree)t.Children[0]);
+						il.Emit(OpCodes.Ret);
+						break;
+
+					default:
+						if (t.ChildCount > 0)
+						{
+							for (int i = 0; i < t.ChildCount; i++)
+							{
+								if (t.Children[i].ChildCount > 0)
+								{
+									DumpTree(cc, il, (CommonTree)t.Children[i]);
+									if (i < t.ChildCount - 1) il.Emit(OpCodes.Pop); // pop if not last
+								}
+							}
+						}
+						else
+						{
+							il.Emit(OpCodes.Ldnull);
+						}
+
+						break;
+				}
+			}
+
+			private static void UnboxDouble(ILGenerator il)
+			{
+				System.Reflection.Emit.Label cvt = il.DefineLabel();
+				System.Reflection.Emit.Label ret = il.DefineLabel();
+
+				il.Emit(OpCodes.Dup);
+
+				il.Emit(OpCodes.Isinst, typeof(double));
+				il.Emit(OpCodes.Brfalse_S, cvt);
+
+				//true:
+				il.Emit(OpCodes.Unbox_Any, typeof(double));
+				il.Emit(OpCodes.Br_S, ret);
+
+				//false:
+				il.MarkLabel(cvt);
+
+				il.Emit(OpCodes.Call, _GetDoubleValue);
+
+				//ret:
+				il.MarkLabel(ret);
+			}
+
+			private static void GenerateTreeCall(CompilerContext cc, ILGenerator il, CommonTree t, MethodInfo mi)
+			{
+				il.Emit(OpCodes.Ldarg_0);
+				DumpTree(cc, il, (CommonTree)t.Children[0]); // left
+				DumpTree(cc, il, (CommonTree)t.Children[1]); // right
+				il.Emit(OpCodes.Call, mi);
+			}
+
+			private static void GetVariable(ILGenerator il, CommonTree t)
+			{
+				il.Emit(OpCodes.Ldarg_0);
+				il.Emit(OpCodes.Ldstr, t.Text);
+				il.Emit(OpCodes.Callvirt, _Context_GetVariable);
+			}
+
+			private static void SetVariable(CompilerContext cc, ILGenerator il, CommonTree t1, CommonTree t2)
+			{
+				il.Emit(OpCodes.Ldarg_0);
+				il.Emit(OpCodes.Ldstr, t1.Text);
+				DumpTree(cc, il, t2);
+				il.Emit(OpCodes.Callvirt, _Context_SetVariable);
+			}
+
+			private static CompiledFunction DumpFunctionTree(CompilerContext cc, FunctionInfo fi)
+			{
+				ILGenerator il = cc.EnterFunction(fi);
+				DumpTree(cc, il, fi.BodyTree);
+				return cc.ExitFunction();
+			}
+
+			private static void MakeCallArguments(CompilerContext cc, ILGenerator il, CommonTree argTree)
+			{
+				il.Emit(OpCodes.Ldc_I4, argTree.ChildCount);
+				il.Emit(OpCodes.Newarr, typeof(object));
+
+				for (int i = 0; i < argTree.ChildCount; i++)
+				{
+					il.Emit(OpCodes.Dup);
+					il.Emit(OpCodes.Ldc_I4, i);
+					DumpTree(cc, il, (CommonTree)argTree.Children[i]);
+					il.Emit(OpCodes.Stelem_Ref);
+				}
+			}
+
+			private static ReoScriptCompilingException CreateCompilingException(CommonTree t, string msg)
+			{
+				return new ReoScriptCompilingException(new ErrorObject(msg)
+				{
+					CharIndex = t.CharPositionInLine,
+					Line = t.Line,
+				});
+			}
+
+			#region Runtime Methods
+			//private static MethodInfo _SetVariable = typeof(ReoScriptCompiler).GetMethod("SetVariable");
+			//public static object SetVariable(ScriptContext ctx, string identifier, object value)
+			//{
+			//  ctx[identifier] = value;
+			//  return value;
+			//}
+
+			//private static MethodInfo _GetVariable = typeof(ReoScriptCompiler).GetMethod("GetVariable");
+			//public static object GetVariable(ScriptContext ctx, string identifier)
+			//{
+			//  return ctx[identifier];
+			//}
+
+			private static MethodInfo _GetProperty = typeof(ReoScriptCompiler).GetMethod("GetProperty");
+
+			private static MethodInfo _SetProperty = typeof(ReoScriptCompiler).GetMethod("SetProperty");
+
+
+			//private static MethodInfo _GetThisObject = typeof(RSRuntimeInterface).GetMethod("GetThisObject");
+			private static MethodInfo _GetThisObject = typeof(ScriptContext).GetMethod("get_ThisObject");
+
+			private static MethodInfo _CreateNewObject = typeof(ScriptContext).GetMethod("CreateNewObject", Type.EmptyTypes);
+			private static MethodInfo _CreateNewArray = typeof(ScriptContext).GetMethod("CreateNewArray", Type.EmptyTypes);
+			private static MethodInfo _ObjectValue_SetItem = typeof(ObjectValue).GetMethod("set_Item", new Type[] { typeof(string), typeof(object) });
+
+			private static MethodInfo _Context_SetVariable = typeof(ScriptContext).GetMethod("SetVariable", new Type[] { typeof(string), typeof(object) });
+			private static MethodInfo _Context_GetVariable = typeof(ScriptContext).GetMethod("GetVariable", new Type[] { typeof(string) });
+
+			//private static MethodInfo _CreateFunction = typeof(FunctionDefineNodeParser).GetMethod("CreateAndInitFunction");
+
+			private static MethodInfo _CallFunction = typeof(RSRuntimeInterface).GetMethod("CallFunction");
+
+			private static readonly MethodInfo _Plus = typeof(RSRuntimeInterface).GetMethod("Plus");
+			private static readonly MethodInfo _LessThan = typeof(RSRuntimeInterface).GetMethod("LessThan");
+			private static readonly MethodInfo _LessEquals = typeof(RSRuntimeInterface).GetMethod("LessEquals");
+
+			private static readonly MethodInfo _GetDoubleValue = typeof(ScriptRunningMachine).GetMethod("GetDoubleValue", new Type[] { typeof(object) });
+			//private static readonly MethodInfo _IsNumber = typeof(ScriptRunningMachine).GetMethod("IsNumber");
+			//private static readonly MethodInfo _DoubleTryParse = typeof(System.Double).GetMethod("TryParse");
+			//private static readonly MethodInfo _ConvertToDouble = typeof(Convert).GetMethod("ToDouble", new Type[] { typeof(object) });
+
+			#endregion
+		}
+
+		internal class CompilerContext
+		{
+			internal Dictionary<FunctionInfo, CompiledFunction> CompiledMethods { get; set; }
+			internal Stack<FunctionInfo> FunctionScopeStack { get; set; }
+
+			public CompilerContext(TypeBuilder typeBuilder)
+			{
+				TypeBuilder = typeBuilder;
+				CompiledMethods = new Dictionary<FunctionInfo, CompiledFunction>();
+				FunctionScopeStack = new Stack<FunctionInfo>();
+			}
+
+			public TypeBuilder TypeBuilder { get; set; }
+			private MethodBuilder CurrentMethod { get; set; }
+
+			public ILGenerator EnterFunction(FunctionInfo fi)
+			{
+				CompiledFunction cm = new CompiledFunction { FunctionInfo = fi };
+
+				cm.FunId = CompiledMethods.Count;
+				string funId = cm.FunId.ToString("000000");
+
+				string prefix = DumpFunctionStackPath();
+
+				if (fi.IsAnonymous)
+				{
+					CurrentMethod = TypeBuilder.DefineMethod(prefix + string.Format("__af{0}", funId),
+						MethodAttributes.Private | MethodAttributes.Static, typeof(object),
+						new Type[] { typeof(ScriptContext), typeof(object[]) });
+
+					//cm.FieldBuilder = TypeBuilder.DefineField(string.Format("__cf{0}", funId), typeof(Func<ScriptContext, object[]>),
+					//  FieldAttributes.Static | FieldAttributes.Private);
+				}
+				else
+				{
+					CurrentMethod = TypeBuilder.DefineMethod(prefix + fi.Name,
+						MethodAttributes.Private | MethodAttributes.Static, typeof(object),
+						new Type[] { typeof(ScriptContext), typeof(object[]) });
+				}
+
+				cm.ArgNameField = TypeBuilder.DefineField(
+					fi.IsAnonymous ? ("__ma" + cm.FunId.ToString("000000"))
+					: (prefix + fi.Name),
+					typeof(string[]), FieldAttributes.Static | FieldAttributes.Private | FieldAttributes.InitOnly);
+
+				cm.MethodBuilder = CurrentMethod;
+
+				FunctionScopeStack.Push(fi);
+				CompiledMethods[fi] = cm;
+
+				return CurrentMethod.GetILGenerator();
+			}
+
+			private string DumpFunctionStackPath()
+			{
+				StringBuilder sb = new StringBuilder();
+				foreach (FunctionInfo fi in FunctionScopeStack)
+				{
+					sb.Append(fi.Name);
+					sb.Append("$");
+				}
+				return sb.ToString();
+			}
+
+			public CompiledFunction ExitFunction()
+			{
+				FunctionInfo fi = FunctionScopeStack.Pop();
+				CurrentMethod.GetILGenerator().Emit(OpCodes.Ret);
+
+				CompiledFunction cm = new CompiledFunction { FunctionInfo = fi, MethodBuilder = CurrentMethod };
+				CompiledMethods[fi] = cm;
+				return cm;
+			}
+		}
+
+		internal class CompiledFunction
+		{
+			internal FunctionInfo FunctionInfo { get; set; }
+			internal int FunId { get; set; }
+			internal MethodBuilder MethodBuilder { get; set; }
+			internal FieldBuilder CachedFunctionFieldBuilder { get; set; }
+			internal FieldBuilder ArgNameField { get; set; }
+		}
 	}
 
+	namespace Runtime
+	{
+		public static class RSRuntimeInterface
+		{
+			public static object GetProperty(ScriptContext ctx, object owner, string identifier)
+			{
+				return PropertyAccessHelper.GetProperty(ctx.Srm, owner, identifier);
+			}
+			public static object SetProperty(ScriptContext ctx, object owner, string identifier, object value)
+			{
+				PropertyAccessHelper.SetProperty(ctx, owner, identifier, value);
+				return value;
+			}
+			public static object GetThisObject(ScriptContext ctx)
+			{
+				return ctx.ThisObject;
+			}
+			public static object Plus(ScriptContext ctx, object left, object right)
+			{
+				return ((ExprPlusNodeParser)AWDLLogicSyntaxParserAdapter.definedParser[ReoScriptLexer.PLUS]).Calc(left, right, ctx.Srm, ctx);
+			}
+			public static bool LessThan(ScriptContext ctx, object left, object right)
+			{
+				return ((ExprLessThanNodeParser)AWDLLogicSyntaxParserAdapter.definedParser[ReoScriptLexer.LESS_THAN]).Compare(left, right, ctx.Srm);
+			}
+			public static bool LessEquals(ScriptContext ctx, object left, object right)
+			{
+				return ((ExprLessOrEqualsNodeParser)AWDLLogicSyntaxParserAdapter.definedParser[ReoScriptLexer.LESS_EQUALS]).Compare(left, right, ctx.Srm);
+			}
+			public static object CallFunction(ScriptContext ctx, object owner, object funObj, object[] args)
+			{
+				AbstractFunctionObject fun = funObj as AbstractFunctionObject;
+
+				if (fun == null)
+				{
+					// FIXME: throw an error info object
+					throw new ReoScriptRuntimeException("Object is not of function.");
+				}
+
+				if (owner == null) owner = ctx.ThisObject;
+
+				return ctx.Srm.InvokeAbstractFunction(owner, fun, args);
+			}
+		}
+
+		public class RuntimeContext
+		{
+
+		}
+	}
+
+	#endregion
 	#endregion
 }

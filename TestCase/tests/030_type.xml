@@ -15,10 +15,8 @@
       t( typeof Function, 'function' );
       t( typeof function(){}, 'function' );
       
-      t( typeof null, 'object' );
-      t( typeof undefined, 'object' );
-      t( typeof null, 'object' );
-      t( typeof undefined, 'object' );
+      t( typeof null, 'null' );
+      t( typeof undefined, 'null' );
       
     </script>
   </test-case>

@@ -174,7 +174,7 @@
       t( n.equals( ['How', 'are', 'you', 'doing', 'today?'] ) );
 
       n = str.split();
-      t( n.equals( ["How are you doing today?"] );
+      t( n.equals( ["How are you doing today?"] ) );
 
       n = str.split(' ', 3);
       t( n.equals( ['How', 'are', 'you'] ) );

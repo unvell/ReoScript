@@ -1,20 +1,36 @@
-v1.2.2 
+v1.3  6/17/2013
+ - New: Performance improving
+ - New: New error handling method
+ - New: Handle or throw syntax errors at pre-interpret-time
+ - New: Handle const values at pre-interpret-time
+ - New: Inner function can cache its outer call-scope
+ - New: Inner function can be pre-interpreted (call before define is available)
+ - New: Max call-stack detection added
+ - New: Minus operator can be used to calculate elapsed milliseconds with two date objects
+ - New: IDirectory<string, object> interface is available to property access and enumeration
+ - New: Information about functions and variables is available after compiling
+ - Fixed: Function scope and call-scope has been fixed
+ - Fixed: Exception caused when array resizing has been fixed
+ - Changed: .NET IList interface can be accessed directly (DirectAccess mode is unnecessary)
+ - Changed: Reform library namespaces
+
+v1.2.2  6/3/2013
  - New: Performance improving
  - New: DirectAccess test cases added
  - New: Add 'apply' method to prototype of Function
  - New: Add 'join' method to prototype of Array
  - New: Wrapper objects (String, Number and Boolean) is fully supported
  - Fixed: 'return' in 'for' does not work
- - Fixed: string.split method with length limit argument returns unexpected result
- - Change: Using .Net primitive types of string instead of StringObject
- - Change: Index of array to modify a string is no longer supported 
- - Change: ScriptEditor enable debug-mode by default
+ - Fixed: string.split method returns unexpected result when limit argument
+ - Changed: Using .NET primitive type of string instead of StringObject
+ - Changed: Index of array to modify a string is no longer supported 
+ - Changed: ScriptEditor enable debug-mode by default
  
 v1.2  5/15/2013
  - New: Error handling supported (Error object and try/catch/finally/throw)
  - New: Add 'Boolean' internal function
  - New: Add 'instanceof' keyword, check whether object is instance of a constructor function
- - New: Add '===' and '!==' operators (strict compared by C# Runtime)
+ - New: Add '===' and '!==' operators (strict compared by data and type)
  - New: Add Array constructor to support elements
  - New: Add Array method 'indexOf' to prototype
  - New: Add Array Extension Library (Linq-like operations available with CoreFeatures.FullFeatures)
