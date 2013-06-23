@@ -40,11 +40,108 @@ ReoScript provides a simple script Editor it can be used to write and execute sc
 
     (semicolons at end of line in ReoScript are required)
 
+
+## Language Feature
+
+### More simpler inheriting based on prototype mechanism 
+
+**This feature is planned to implement in next release**.
+
+    function A() {
+      this.a = 10;
+    }
+
+    function B() : A() {
+      this.b = 20;
+    }
+
+    var b = new B;
+    console.log(b.a + b.a);
+
+The output is:
+   
+    30
+
+### Lambda Expression and Enhanced Collection Operations
+
+Lambda based where, sum, min, max and etc. are available in Array operations.
+
+    var arr = [1, 5, 7, 8, 10, 13, 20, 24, 26];
+    var result = arr.where(n => n < 10).sum();
+
+The result is:
+
+    21
+
+See [[Lambda Expression]].
+
+### setTimeout and setInterval supported to pass arguments
+
+    function check_alive(user) {
+        if (...) {
+            return 'ok';
+        } else {
+            setTimeout(check_alive, 1000, user);
+        }
+    }
+
+    var user = getCurrentUser();
+    setTimeout(check_alive, 1000, user);
+
+See [[Enhanced Async-Calling]].
+
+### Import script file into current script context
+
+common.rs:
+
+    function check_login(usr, pwd) {
+        return (usr.password == hashed(pwd));
+    }
+
+login.rs:
+
+    import "common.rs";
+
+    var usr = getCurrentUser();
+    check_login(usr, getInputtedPwd());
+
+See [[import keyword]].
+
+### Using CLR
+
+The classes in .NET Common Language Runtime are available to script by using [[DirectAccess]].
+
+### Initailizer
+
+Initializer used to simplify the code by merging construction and property setting:
+
+    var newApple = new Apple() {
+        color : 'red',
+    };
+        
+It is same as:
+
+    var newApple = new Apple();
+    newApple.color = 'red';
+
+See [[Constructor and Initializer]].
+
+### Binary literal supported (e.g. 0b1010)
+
+    var num = 0b1010;
+    console.log(num);
+
+The output is:
+
+    10
+
 ## Development Documents
 
+   Development Documents are available at:
    https://github.com/unvell/ReoScript/wiki
 
 ## Offical Website
+
    Find more Sample programs and Documents at:
    http://www.unvell.com/ReoScript
 
