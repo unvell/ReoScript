@@ -1,0 +1,65 @@
+﻿// ReoScript v1.2
+//
+// copyright(c) unvell 2013 all rights reserved.
+//
+
+Array.prototype.sum = function(s) {
+  var total = 0;
+  
+  for (e in this)
+    total += (s == null ? e : s(e));
+  
+  return total;
+};
+
+Array.prototype.avg = function(s) {
+  return this.length == 0 ? 0 : (this.sum(s) / this.length);
+};
+
+Array.prototype.min = function(s) {
+  var min = 0;
+  
+  for(e in this) {
+    var v = (s==null ? e : s(e));
+    if (min>v) min=v;
+  }
+  
+  return min;
+};
+
+Array.prototype.max = function(s) {
+  var max = 0;
+  
+  for(e in this) {
+    var v = (s == null ? e : s(e));
+    if (max<v) max=v;
+  }
+  
+  return max;
+};
+
+Array.prototype.join = function(s, sp) {
+  var rs = '';
+  
+  for (e in this) {
+    var v = (s == null ? e : s(e));
+    if (rs.length > 0 && sp != null) rs += sp;
+    rs += v;
+  }
+  
+  return rs;
+};
+
+var arr = [];
+
+for (var i = 0; i < 100; i++) arr.push(Math.random() * i));
+
+var o = [
+  'len: ' + arr.length,
+  'sum: ' + arr.sum(),
+  'avg: ' + arr.avg(),
+  'min: ' + arr.min(),
+  'max: ' + arr.max(),
+];
+
+console.log(o.join(null, '\n'));
