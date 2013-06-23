@@ -73,8 +73,6 @@ The result is:
 
     21
 
-See [[Lambda Expression]].
-
 ### setTimeout and setInterval supported to pass arguments
 
     function check_alive(user) {
@@ -87,8 +85,6 @@ See [[Lambda Expression]].
 
     var user = getCurrentUser();
     setTimeout(check_alive, 1000, user);
-
-See [[Enhanced Async-Calling]].
 
 ### Import script file into current script context
 
@@ -105,11 +101,9 @@ login.rs:
     var usr = getCurrentUser();
     check_login(usr, getInputtedPwd());
 
-See [[import keyword]].
-
 ### Using CLR
 
-The classes in .NET Common Language Runtime are available to script by using [[DirectAccess]].
+Supported to access .NET objects directly (DirectAccess mode).
 
 ### Initailizer
 
@@ -123,8 +117,6 @@ It is same as:
 
     var newApple = new Apple();
     newApple.color = 'red';
-
-See [[Constructor and Initializer]].
 
 ### Binary literal supported (e.g. 0b1010)
 
