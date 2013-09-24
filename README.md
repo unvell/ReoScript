@@ -134,12 +134,9 @@ The output is:
 
 ## Offical Website
 
-   Find more Sample programs and Documents at:
+   More information available at:
    http://www.unvell.com/ReoScript
 
-   Language Specification see the test-cases:
-   https://github.com/unvell/ReoScript/tree/master/TestCase/tests
-   
 ## Change Log
 
    https://github.com/unvell/ReoScript/wiki/Change-Log
