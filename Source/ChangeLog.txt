@@ -1,3 +1,13 @@
+
+v1.3.1  10/21/2013
+ - New: Global Variable Getter/Setter
+ - New: Date constructor function supports overload constructor parameters
+ - New: SRM new method: CreateContext
+ - New: ScriptEditor add events: ScriptExecuted, ScriptCompiled 
+ - Changed: change ReoScript extension name from '.rs' to '.reo'
+ - Changed: scope of Run method with 'ScriptContext' changed to 'public'
+ - Changed: scope of CalcExpression method with 'ScriptContext' changed to 'public'
+ 
 v1.3  6/17/2013
  - New: Performance improving
  - New: New error handling method
@@ -6,7 +16,7 @@ v1.3  6/17/2013
  - New: Inner function can cache its outer call-scope
  - New: Inner function can be pre-interpreted (call before define is available)
  - New: Max call-stack detection added
- - New: Minus operator can be used to calculate elapsed milliseconds with two date objects
+ - New: Minus operator can be used to calculate elapsed milliseconds of two date objects
  - New: IDirectory<string, object> interface is available to property access and enumeration
  - New: Information about functions and variables is available after compiling
  - Fixed: Function scope and call-scope has been fixed

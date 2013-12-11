@@ -56,9 +56,9 @@
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(20, 38);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(259, 14);
+			this.label1.Size = new System.Drawing.Size(266, 14);
 			this.label1.TabIndex = 0;
-			this.label1.Text = "Input an expression: (ex. 1 + 2 * 3)";
+			this.label1.Text = "Calculate expression: (ex. 1 + 2 * 3)";
 			// 
 			// txtExpr1
 			// 
@@ -90,7 +90,7 @@
 			this.groupBox1.Size = new System.Drawing.Size(377, 229);
 			this.groupBox1.TabIndex = 4;
 			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Simplest";
+			this.groupBox1.Text = "Expression Calc";
 			// 
 			// label7
 			// 
@@ -127,7 +127,7 @@
 			this.groupBox2.Size = new System.Drawing.Size(377, 321);
 			this.groupBox2.TabIndex = 5;
 			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Using Variables";
+			this.groupBox2.Text = "Using variables in expression";
 			// 
 			// label8
 			// 
@@ -210,9 +210,9 @@
 			this.label2.AutoSize = true;
 			this.label2.Location = new System.Drawing.Point(16, 143);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(315, 14);
+			this.label2.Size = new System.Drawing.Size(301, 14);
 			this.label2.TabIndex = 0;
-			this.label2.Text = "Input an expression that contains variable: ";
+			this.label2.Text = "Expression that contains variables above: ";
 			// 
 			// btnCalc2
 			// 
@@ -226,7 +226,7 @@
 			// 
 			// txtExpr2
 			// 
-			this.txtExpr2.Location = new System.Drawing.Point(20, 175);
+			this.txtExpr2.Location = new System.Drawing.Point(19, 165);
 			this.txtExpr2.Name = "txtExpr2";
 			this.txtExpr2.Size = new System.Drawing.Size(325, 22);
 			this.txtExpr2.TabIndex = 1;

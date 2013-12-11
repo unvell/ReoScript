@@ -1,21 +1,20 @@
-﻿///////////////////////////////////////////////////////////////////////////////
-// 
-// ReoScript 
-// 
-// HP: http://www.unvell.com/ReoScript
-// 
-// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
-// KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
-// PURPOSE.
-//
-// License: GNU Lesser General Public License (LGPLv3)
-//
-// Email: lujing@unvell.com
-//
-// Copyright (C) unvell, 2012-2013. All Rights Reserved
-//
-///////////////////////////////////////////////////////////////////////////////
+﻿/*****************************************************************************
+ * 
+ * ReoScript - .NET Script Language Engine
+ * 
+ * http://www.unvell.com/ReoScript
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+ * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ *
+ * This software released under LGPLv3 license.
+ * Author: Jing Lu <dujid0@gmail.com>
+ * 
+ * Copyright (c) 2012-2013 unvell.com, all rights reserved.
+ * 
+ ****************************************************************************/
 
 using System;
 using System.Collections.Generic;
@@ -42,8 +41,9 @@ namespace Unvell.ReoScript.Editor
 			openToolStripButton.Click += (s, e) => LoadFile();
 			openToolStripMenuItem.Click += (s, e) => LoadFile();
 
-			saveToolStripButton.Click += (s, e) => SaveFile();
-			saveToolStripMenuItem.Click += (s, e) => SaveFile();
+			saveToolStripButton.Click += (s, e) => SaveFile(false);
+			saveToolStripMenuItem.Click += (s, e) => SaveFile(false);
+			saveAsToolStripMenuItem.Click += (s, e) => SaveFile(true);
 
 			runToolStripButton.Click += (s, e) => RunScript();
 			runToolStripMenuItem.Click += (s, e) => RunScript();
@@ -110,7 +110,23 @@ namespace Unvell.ReoScript.Editor
 			stopToolStripButton.Click += (s, e) => ForceStop();
 			stopToolStripMenuItem.Click += (s, e) => ForceStop();
 
-			checkSyntaxStripButton.Click += (s, e) => srm.Compile(editor.Text, r => Log(r.Message));
+			checkSyntaxStripButton.Click += (s, e) =>
+			{
+				srm.Compile(editor.Text, r => Log(r.Message));
+
+				if (ScriptCompiled != null)
+				{
+					ScriptCompiled(this, null);
+				}
+			};
+
+			editor.TextChanged += (s, e) =>
+			{
+				if (ScriptChanged != null)
+				{
+					ScriptChanged(this, e);
+				}
+			};
 
 			Srm = new ScriptRunningMachine();
 		}
@@ -130,40 +146,85 @@ namespace Unvell.ReoScript.Editor
 		private void NewFile()
 		{
 			Script = string.Empty;
+			CurrentFilePath = string.Empty;
 			ResetMachine();
+		}
+
+		private string currentFilePath = null;
+
+		public string CurrentFilePath
+		{
+			get
+			{
+				return currentFilePath;
+			}
+			set
+			{
+				currentFilePath = value;
+
+				UpdateFormTitle();
+			}
+		}
+
+		private void UpdateFormTitle()
+		{
+			this.Text = (string.IsNullOrEmpty(currentFilePath) ? "Untitled"
+				: Path.GetFileNameWithoutExtension(currentFilePath)) + " - ReoScript";
 		}
 
 		public void LoadFile()
 		{
 			using (OpenFileDialog ofd = new OpenFileDialog())
 			{
-				ofd.Filter = "ReoScript(*.rs)|*.rs|All Files(*.*)|*.*";
+				ofd.Filter = "ReoScript(*.reo)|*.reo|All Files(*.*)|*.*";
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					using (StreamReader sr = new StreamReader(new FileStream(ofd.FileName, FileMode.Open)))
 					{
 						editor.Text = sr.ReadToEnd();
 					}
+
+					CurrentFilePath = ofd.FileName;
 				}
 			}
 
 			ResetMachine();
 		}
 
-		public void SaveFile()
+		public bool SaveFile( bool saveAs)
 		{
-			using (SaveFileDialog sfd = new SaveFileDialog())
+			string filepath = null;
+
+			if (string.IsNullOrEmpty(CurrentFilePath) || saveAs)
 			{
-				sfd.Filter = "ReoScript(*.rs)|*.rs|All Files(*.*)|*.*";
-				if (sfd.ShowDialog() == DialogResult.OK)
+				using (SaveFileDialog sfd = new SaveFileDialog())
 				{
-					using (StreamWriter sw = new StreamWriter(new FileStream(sfd.FileName, FileMode.Create)))
+					sfd.Filter = "ReoScript(*.reo)|*.reo|All Files(*.*)|*.*";
+					
+					if (sfd.ShowDialog() == DialogResult.OK)
 					{
-						sw.Write(editor.Text);
+						filepath = sfd.FileName;
 					}
+					else
+						return false;
 				}
 			}
+
+			if (string.IsNullOrEmpty(filepath)) return false;
+
+			using (StreamWriter sw = new StreamWriter(new FileStream(filepath, FileMode.Create)))
+			{
+				sw.Write(editor.Text);
+			}
+
+			CurrentFilePath = filepath;
+
+			return true;
 		}
+
+		public event EventHandler ScriptChanged;
+		public event EventHandler ScriptCompiled;
+		public event EventHandler ScriptExecuted;
 
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -201,6 +262,11 @@ namespace Unvell.ReoScript.Editor
 			{
 				CompiledScript cs = srm.Compile(editor.Text);
 				object v = srm.RunCompiledScript(cs);
+
+				if (ScriptExecuted != null)
+				{
+					ScriptExecuted(this, null);
+				}
 
 				timer.Enabled = true;
 				//LogValue(v);
@@ -285,6 +351,10 @@ namespace Unvell.ReoScript.Editor
 			enableImportNamespacesAndClassesToolStripMenuItem.Click += (ss, ee) => SetMachineSwitches();
 			enableAutoImportDependencyTypeToolStripMenuItem.Click += (ss, ee) => SetMachineSwitches();
 			enableEventBindingToolStripMenuItem.Click += (ss, ee) => SetMachineSwitches();
+
+			timer.Enabled = srm != null && srm.IsRunning;
+
+			UpdateFormTitle();
 		}
 
 		private void ResetMachine()
@@ -302,6 +372,7 @@ namespace Unvell.ReoScript.Editor
 			}
 		}
 
+		#region Machine WorkMode
 		private void GetMachineSwitches()
 		{
 			enableDirectAccessToolStripMenuItem.Checked =
@@ -337,6 +408,26 @@ namespace Unvell.ReoScript.Editor
 
 			srm.WorkMode = mode;
 		}
+		#endregion
 	}
 
+	public class ScriptCompiledEventArgs : EventArgs
+	{
+		public CompiledScript CompiledScript { get; set; }
+
+		public ScriptCompiledEventArgs(CompiledScript compiledScript)
+		{
+			this.CompiledScript = compiledScript;
+		}
+	}
+
+	public class ScriptExecutedEventArgs : EventArgs
+	{
+		public object Result { get; set; }
+
+		public ScriptExecutedEventArgs(object result)
+		{
+			this.Result = result;
+		}
+	}
 }

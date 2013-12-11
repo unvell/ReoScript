@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*****************************************************************************
+ * 
+ * ReoScript - .NET Script Language Engine
+ * 
+ * http://www.unvell.com/ReoScript
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+ * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ *
+ * This software released under LGPLv3 license.
+ * Author: Jing Lu <dujid0@gmail.com>
+ * 
+ * Copyright (c) 2012-2013 unvell.com, all rights reserved.
+ * 
+ ****************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -106,14 +124,14 @@ Usage: ReoScript.exe [filename|-workpath|-debug|-exec|-console]");
 			}
 
 			// for test!
-			//if (compileMode)
-			//{
-			//  using (StreamReader sr = new StreamReader(new FileStream(args[0], FileMode.Open, FileAccess.Read, FileShare.Read)))
-			//  {
-			//    Console.WriteLine(ReoScriptCompiler.Run(sr.ReadToEnd()));
-			//  }
-			//  return;
-			//}
+			if (compileMode)
+			{
+			  using (StreamReader sr = new StreamReader(new FileStream(args[0], FileMode.Open, FileAccess.Read, FileShare.Read)))
+			  {
+			    Console.WriteLine(Unvell.ReoScript.Compiler.ReoScriptCompiler.Run(sr.ReadToEnd()));
+			  }
+			  return;
+			}
 
 			// create SRM
 			ScriptRunningMachine srm = new ScriptRunningMachine(CoreFeatures.FullFeatures);

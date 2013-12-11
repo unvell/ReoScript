@@ -38,9 +38,12 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.txtDetachScript = new System.Windows.Forms.TextBox();
 			this.btnDetachRun = new System.Windows.Forms.Button();
+			this.label3 = new System.Windows.Forms.Label();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
+			this.groupBox4.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btnAttachRun
@@ -58,12 +61,12 @@
 			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Controls.Add(this.txtAttachScript);
 			this.groupBox1.Controls.Add(this.btnAttachRun);
-			this.groupBox1.Location = new System.Drawing.Point(12, 12);
+			this.groupBox1.Location = new System.Drawing.Point(12, 151);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(314, 246);
 			this.groupBox1.TabIndex = 2;
 			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "1. Run and attach event";
+			this.groupBox1.Text = "2. Run script to attach event";
 			// 
 			// label1
 			// 
@@ -71,7 +74,7 @@
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(290, 31);
 			this.label1.TabIndex = 3;
-			this.label1.Text = "link is predefined object associated with LinkLabel in C#.";
+			this.label1.Text = "Run following script to attach event to \'link\' object.";
 			// 
 			// txtAttachScript
 			// 
@@ -84,12 +87,12 @@
 			// groupBox2
 			// 
 			this.groupBox2.Controls.Add(this.link);
-			this.groupBox2.Location = new System.Drawing.Point(340, 13);
+			this.groupBox2.Location = new System.Drawing.Point(340, 152);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(164, 245);
 			this.groupBox2.TabIndex = 3;
 			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "2. Fire event";
+			this.groupBox2.Text = "3. Fire event";
 			// 
 			// link
 			// 
@@ -106,12 +109,12 @@
 			this.groupBox3.Controls.Add(this.label2);
 			this.groupBox3.Controls.Add(this.txtDetachScript);
 			this.groupBox3.Controls.Add(this.btnDetachRun);
-			this.groupBox3.Location = new System.Drawing.Point(518, 13);
+			this.groupBox3.Location = new System.Drawing.Point(518, 152);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(293, 245);
 			this.groupBox3.TabIndex = 4;
 			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "3. Try remove event";
+			this.groupBox3.Text = "4. Remove event";
 			// 
 			// label2
 			// 
@@ -139,11 +142,32 @@
 			this.btnDetachRun.UseVisualStyleBackColor = true;
 			this.btnDetachRun.Click += new System.EventHandler(this.btnDetachRun_Click);
 			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(27, 31);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(595, 42);
+			this.label3.TabIndex = 5;
+			this.label3.Text = "\t\t\tThe following C# code used to add the instance of link at below into script co" +
+    "ntext.\r\n\r\n\t\t\tsrm.SetGlobalVariable(\"link\", link);";
+			// 
+			// groupBox4
+			// 
+			this.groupBox4.Controls.Add(this.label3);
+			this.groupBox4.Location = new System.Drawing.Point(12, 19);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(660, 99);
+			this.groupBox4.TabIndex = 6;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "1. Add C# instance into script context";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(841, 274);
+			this.ClientSize = new System.Drawing.Size(841, 409);
+			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
@@ -157,6 +181,8 @@
 			this.groupBox2.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
+			this.groupBox4.ResumeLayout(false);
+			this.groupBox4.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -173,6 +199,8 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TextBox txtDetachScript;
 		private System.Windows.Forms.Button btnDetachRun;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.GroupBox groupBox4;
 
 	}
 }

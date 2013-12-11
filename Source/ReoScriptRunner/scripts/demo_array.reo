@@ -1,5 +1,6 @@
 ﻿
-// Demo Array
+// Demo Console input and Array usage
+
 var log = console.log;
 var write = console.write;
 

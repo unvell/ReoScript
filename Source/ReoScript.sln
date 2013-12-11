@@ -1,16 +1,16 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B31E531C-7554-4897-AF6E-9A59D03ED1A0}"
+	ProjectSection(SolutionItems) = preProject
+		ChangeLog.txt = ChangeLog.txt
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReoScript", "ReoScript\ReoScript.csproj", "{544005E7-F55A-42E2-8DDB-B43F95F27C69}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReoScriptEditor", "ReoScriptEditor\ReoScriptEditor.csproj", "{0802DFE2-D172-4099-8538-DC2C114152D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCase", "TestCase\TestCase.csproj", "{561F035D-EFC9-4F28-99AD-1F363438E89C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B31E531C-7554-4897-AF6E-9A59D03ED1A0}"
-	ProjectSection(SolutionItems) = preProject
-		ChangeLog.txt = ChangeLog.txt
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReoScriptRunner", "ReoScriptRunner\ReoScriptRunner.csproj", "{7DE6506B-AB2D-477D-A075-44AAC1742D6C}"
 EndProject

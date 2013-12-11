@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DirectAccessForm));
 			this.button1 = new System.Windows.Forms.Button();
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
@@ -58,9 +59,7 @@
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(457, 155);
 			this.label1.TabIndex = 2;
-			this.label1.Text = "DirectAccess makes script to access property, call method from .NET object direct" +
-					"ly.\r\n\r\nTo enable DirectAccess:\r\n\r\nsrm.WorkMode |= MachineWorkMode.AllowDirectAcc" +
-					"ess;";
+			this.label1.Text = resources.GetString("label1.Text");
 			// 
 			// DirectAccessForm
 			// 

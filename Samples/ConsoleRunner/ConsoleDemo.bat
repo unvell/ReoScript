@@ -1,9 +1,8 @@
 @echo off
 cls
 
-ConsoleRunner.exe Scripts\main.rs
+ConsoleRunner.exe Script\main.reo
 
-echo.
 echo.
 
 pause

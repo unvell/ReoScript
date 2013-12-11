@@ -52,7 +52,7 @@ Array.prototype.join = function(s, sp) {
 
 var arr = [];
 
-for (var i = 0; i < 100; i++) arr.push(Math.random() * i));
+for (var i = 0; i < 100; i++) arr.push(Math.random() * i);
 
 var o = [
   'len: ' + arr.length,
@@ -62,4 +62,4 @@ var o = [
   'max: ' + arr.max(),
 ];
 
-console.log(o.join(null, '\n'));
+console.log('\n' + o.join(null, '\n'));
