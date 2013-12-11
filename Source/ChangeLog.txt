@@ -1,5 +1,5 @@
 
-v1.3.1  10/21/2013
+v1.3.1  12/12/2013
  - New: Global Variable Getter/Setter
  - New: Date constructor function supports overload constructor parameters
  - New: SRM new method: CreateContext
