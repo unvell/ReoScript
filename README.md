@@ -88,15 +88,15 @@ The result is:
 
 ### Import script file into current script context
 
-common.rs:
+common.reo:
 
     function check_login(usr, pwd) {
         return (usr.password == hashed(pwd));
     }
 
-login.rs:
+login.reo:
 
-    import "common.rs";
+    import "common.reo";
 
     var usr = getCurrentUser();
     check_login(usr, getInputtedPwd());
@@ -152,6 +152,6 @@ The following softwares may be included in this product:
 
 ReoScript and ReoScript Editor released under GNU Lesser General Public License (LGPLv3).
 
-Jing, Lu (lujing@unvell.com)
+Author: Jing Lu (lujing@unvell.com)
 
 copyright (c) unvell.com 2012-2013 all rights reserved.
