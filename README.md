@@ -2,7 +2,7 @@ ReoScript
 =========
 **Script language engine for .Net programs**
 
-ReoScript is ECMAScript-like script language engine for .NET Application. It makes your Application can run macro and script. All library written in C# and no no dependencies other language like C/C++.
+ReoScript is ECMAScript-like script language engine for .NET Application. It makes your Application can run macro and script. All modules are written in C# and no dependencies other languages like C/C++.
 
 Usage documents available at:
 http://reoscript.codeplex.com
