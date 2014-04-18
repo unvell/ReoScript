@@ -7,7 +7,7 @@ ReoScript is ECMAScript-like script language engine for .NET Application. It mak
 Usage documents available at:
 http://reoscript.codeplex.com
 
-## Offical Website
+## Official Website
 
 Getting technical support service and more available information at:
 http://www.unvell.com/ReoScript
