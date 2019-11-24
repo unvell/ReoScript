@@ -131,7 +131,13 @@ namespace Unvell.ReoScript.TestCase
 				{
 					string caseId = string.Format("{0,3}-{1,3}", suite.Id, t.Id);
 
-					if (t.Disabled || string.IsNullOrEmpty(t.Script)
+					var testCode = t.Script;
+					if (string.IsNullOrEmpty(testCode))
+					{
+						testCode = t.TestCode;
+					}
+
+					if (t.Disabled || string.IsNullOrEmpty(testCode)
 						|| (ids.Count > 0 && !ids.Any(id => caseId.Contains(id))))
 						return;
 
@@ -144,7 +150,7 @@ namespace Unvell.ReoScript.TestCase
 						sw.Reset();
 						sw.Start();
 
-						srm.Run(t.Script);
+						srm.Run(testCode);
 
 						sw.Stop();
 
@@ -303,6 +309,9 @@ namespace Unvell.ReoScript.TestCase
 
 		[XmlElement("script")]
 		public string Script { get; set; }
+
+		[XmlText]
+		public string TestCode { get; set; }
 
 		[XmlAttribute("disabled")]
 		public bool Disabled { get; set; }
