@@ -201,6 +201,12 @@ t(apple.price, 1.95);
 
 t(apple.color + ' ' + apple.price, 'red 1.95');
 
+
+t( apple['name'], 'apple' );
+t( apple['Color'], 'red' );
+t( apple['color'], 'red' );
+t( apple['price'], '1.95' );
+
 ");
 		}
 
@@ -218,6 +224,9 @@ var apple = new MyClass();
 apple.shipOut();
 
 t(apple.isShippedOut, true);
+
+var a = 'isShippedOut';
+t( apple[a], true );
 
 ");
 		}
