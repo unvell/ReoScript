@@ -1467,7 +1467,7 @@ namespace Unvell.ReoScript
 	#endregion
 
 	#region Array
-	public class ArrayObject : ObjectValue
+	public class ArrayObject : ObjectValue, IList
 	{
 		private ArrayList list = new ArrayList(5);
 
@@ -1480,11 +1480,8 @@ namespace Unvell.ReoScript
 		public ArrayObject()
 		{
 			this["length"] = new ExternalProperty(
-				() => { return this.Length; },
-				(v) =>
-				{
-					this.Length = ScriptRunningMachine.GetIntValue(v, List.Count);
-				});
+				() => this.Length,
+				v => this.Length = ScriptRunningMachine.GetIntValue(v, List.Count));
 		}
 
 		public int Length
@@ -1511,6 +1508,16 @@ namespace Unvell.ReoScript
 				}
 			}
 		}
+
+		public bool IsReadOnly => false;
+
+		public bool IsFixedSize => false;
+
+		public int Count => this.list.Count;
+
+		public object SyncRoot => this.list.SyncRoot;
+
+		public bool IsSynchronized => this.list.IsSynchronized;
 
 		public object this[int index]
 		{
@@ -1552,7 +1559,47 @@ namespace Unvell.ReoScript
 				yield return list[i];
 			}
 		}
-		#endregion
+
+		public int Add(object value)
+		{
+			return this.list.Add(value);
+		}
+
+		public bool Contains(object value)
+		{
+			return this.list.Contains(value);
+		}
+
+		public void Clear()
+		{
+			this.list.Clear();
+		}
+
+		public int IndexOf(object value)
+		{
+			return this.list.IndexOf(value);
+		}
+
+		public void Insert(int index, object value)
+		{
+			this.list.Insert(index, value);
+		}
+
+		public void Remove(object value)
+		{
+			this.list.Remove(value);
+		}
+
+		public void RemoveAt(int index)
+		{
+			this.list.RemoveAt(index);
+		}
+
+		public void CopyTo(Array array, int index)
+		{
+			this.list.CopyTo(array, index);
+		}
+		#endregion IEnumerable Members
 
 	}
 	class ArrayConstructorFunction : TypedNativeFunctionObject
@@ -1677,6 +1724,30 @@ namespace Unvell.ReoScript
 					}
 
 					return sb.ToString();
+				});
+
+				objValue["concat"] = new NativeFunctionObject("concat", (ctx, owner, args) =>
+				{
+					if (!(owner is ArrayObject)) return null;
+
+					if (args.Length <= 0) return owner;
+
+					var newArr = ctx.CreateNewArray();
+					newArr.List.AddRange(((ArrayObject)owner).List);
+
+					foreach (var arg in args)
+					{
+						if (arg is ArrayObject arrayArg)
+						{
+							newArr.List.AddRange(arrayArg.List);
+						}
+						else
+						{
+							newArr.List.Add(arg);
+						}
+					}
+
+					return newArr;
 				});
 			}
 
@@ -2242,85 +2313,27 @@ namespace Unvell.ReoScript
 	#region Array Access
 	class ArrayAccess : AccessValue
 	{
-		private object array;
-		public object Array
-		{
-			get { return array; }
-			set { array = value; }
-		}
-		private int index;
-		public int Index
-		{
-			get { return index; }
-			set { index = value; }
-		}
-		public ArrayAccess(ScriptRunningMachine srm, ScriptContext ctx, object array, int index)
+		public IList Array { get; set; }
+		public int Index { get; set; }
+
+		public ArrayAccess(ScriptRunningMachine srm, ScriptContext ctx, IList array, int index)
 			: base(srm, ctx)
 		{
-			this.array = array;
-			this.index = index;
+			this.Array = array;
+			this.Index = index;
 		}
 		#region Access Members
 		public override void Set(object value)
 		{
-			if ((array is ArrayObject))
-			{
-				((ArrayObject)array)[index] = value;
-			}
-			else if (array is IList)
-			{
-				((IList)array)[index] = value;
-			}
-			else if (array is string)
-			{
-				// FIXME: string can not be modified (since v1.2.2)
-				string str = (string)array;
-				if (index < str.Length)
-				{
-					array = str.Substring(0, index) + Convert.ToString(value) + str.Substring(index + 1);
-				}
-				else
-				{
-					str += value;
-					array = str;
-				}
-			}
-		
+			Array[Index] = value;
 		}
 		public override object Get()
 		{
-			if (array is ArrayObject)
-			{
-				return ((ArrayObject)array)[index];
-			}
-			else if (array is IList)
-			{
-				IList list = (IList)array;
-				return index >= list.Count ? null : list[index];
-			}
-			else if (array is string)
-			{
-				string str = Convert.ToString(array);
-				return index >= 0 && index < str.Length ? (str[index].ToString()) : string.Empty;
-			}
-			//else if (Srm.EnableDirectAccess && Srm.IsDirectAccessObject(array))
-			//{
-			//  if (array is IList)
-			//  {
-			//    return ((IList)array)[index];
-			//  }
-
-			//  else
-			//    return null;
-			//}
-			else
-			{
-				return null;
-			}
+			return Index >= Array.Count ? null : Array[Index];
 		}
 		#endregion
 	}
-	#endregion
+	#endregion Array Access
 
 	#region Property Access
 	class PropertyAccess : AccessValue
@@ -2626,7 +2639,49 @@ namespace Unvell.ReoScript
 	}
 	#endregion Property Access
 
-	#endregion
+	#region String Access
+	class StringAccess : AccessValue
+	{
+		public object StringVariable { get; set; }
+		public int Index { get; set; }
+
+		public StringAccess(ScriptRunningMachine srm, ScriptContext ctx, object array, int index)
+				: base(srm, ctx)
+		{
+			this.StringVariable = array;
+			this.Index = index;
+		}
+
+		#region Access Members
+		public override void Set(object value)
+		{
+			// modifying string is not supported
+		}
+
+		public override object Get()
+		{
+			if (StringVariable is string str)
+			{
+				return Context.CreateNewObject(Srm.BuiltinConstructors.StringFunction, true, new object[] { str[Index].ToString() });
+			}
+			else if (StringVariable is StringObject strobj)
+			{
+				return Context.CreateNewObject(Srm.BuiltinConstructors.StringFunction, true, new object[] { strobj.String[Index].ToString() });
+			}
+			else if (StringVariable is StringBuilder sb)
+			{
+				return Context.CreateNewObject(Srm.BuiltinConstructors.StringFunction, true, new object[] { sb[Index].ToString() });
+			}
+			else
+			{
+				return null;
+			}
+		}
+		#endregion Access Members
+	}
+	#endregion String Access
+
+	#endregion Accessor
 
 	#region Parsers
 	namespace Parsers
@@ -4558,16 +4613,29 @@ namespace Unvell.ReoScript
 				object indexValue = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], context);
 				if (indexValue is IAccess) indexValue = ((IAccess)indexValue).Get();
 
-				if (indexValue is string) // FIXME: StringObject
+				if (value is IList list)
+				{
+					// index access for array
+					return new ArrayAccess(srm, context, list, ScriptRunningMachine.GetIntValue(indexValue));
+				}
+				else if (value is ObjectValue)
 				{
 					// index access for object
-					return new PropertyAccess(srm, context, value, (string)indexValue);
+					return new PropertyAccess(srm, context, value, ScriptRunningMachine.ConvertToString(indexValue));
+				}
+				else if (value is string || value is StringObject || value is StringBuilder)
+				{
+					// index access for string
+					return new StringAccess(srm, context, value, ScriptRunningMachine.GetIntValue(indexValue));
+				}
+				else if (indexValue is string indexStr)
+				{
+					// index access for object
+					return new PropertyAccess(srm, context, value, indexStr);
 				}
 				else
 				{
-					// index access for array
-					int index = ScriptRunningMachine.GetIntValue(indexValue);
-					return new ArrayAccess(srm, context, value, index);
+					return null;
 				}
 			}
 
