@@ -17,15 +17,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
-using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
 using System.Diagnostics;
 using System.Reflection;
-
-using Unvell.ReoScript;
-using Unvell.ReoScript.Editor;
 using Unvell.ReoScript.Diagnostics;
 
 namespace Unvell.ReoScript.TestCase
