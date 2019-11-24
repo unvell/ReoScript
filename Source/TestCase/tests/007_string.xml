@@ -20,13 +20,18 @@
 <test-suite id="007" name="string" disabled="true">
   <test-case id="001" name="literal">
     <script>
-      var t = debug.assert;
+			var t = debug.assert;
 
-      var a = "hello";
-      
-      t(a == "hello");
-      t(a.length == 5);
-    </script>
+			var a = "hello";
+
+			t( a, "hello" );
+
+			t( a.length, 5 );
+
+			// failed on this test
+			//t( a['length'], 5 );
+
+		</script>
   </test-case>
 
   <test-case id="002" name="+op">

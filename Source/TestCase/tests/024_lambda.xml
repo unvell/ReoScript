@@ -29,16 +29,16 @@
   </test-case>
 
   <test-case id="002" name="anonymous lambda">
-    <script>
-      var t = debug.assert;
+		<![CDATA[
+			var t = debug.assert;
 
-      // anonymous function
-      t( (a, b) => { return a + b; } (10, 20) == 30 );
+			// anonymous function
+			t( (a, b) => { return a + b; } (10, 20) == 30 );
+		
+			// anonymous lambda
+			t( ((a, b) => a + b)(2, 3) == 5 );
 
-      // anonymous lambda
-      t( ( ((a,b)=>a+b)(2,3) ) == 5 );
-
-    </script>
+		]]>
   </test-case>
 
   <test-case id="003" name="nested anonymous lambda">
@@ -50,19 +50,22 @@
   </test-case>
 
   <test-case id="010" name="where">
-    <script>
+    <![CDATA[
       var t = debug.assert;
 
       var arr = [1, 2, 5, 7, 8, 10, 12, 15, 17, 18, 19];
       
       Array.prototype.equals = targetArray => {
-        if( targetArray == null 
-          || this.length != targetArray.length) 
+        if (targetArray == null 
+          || this.length != targetArray.length) {
           return false;
+				}
         
-        for(var i=0; i&lt;this.length; i++)
-          if( this[i] != targetArray[i] )
+        for (var i = 0; i < this.length; i++) {
+          if (this[i] != targetArray[i]) {
             return false;
+					}
+				}
         
         return true;
       };
@@ -70,9 +73,11 @@
       Array.prototype.where = predicate => {
         var result = [];
         
-        for(var element in this)
-          if( predicate(element) )
+        for (var element in this) {
+          if (predicate(element)) {
             result.push(element);
+					}
+				}
 
         return result;
       };
@@ -84,16 +89,16 @@
       t( rs != null );
       t( rs.equals([2, 8, 10, 12, 18]) );
 
-    	rs = arr.where( n => n &gt;= 10 );
+    	rs = arr.where( n => n >= 10 );
       
       t( rs != null );
       t( rs.equals([10, 12, 15, 17, 18, 19]) );
 
-    </script>
+    ]]>
   </test-case>
 
   <test-case id="011" name="where sum">
-    <script>
+    <![CDATA[
       var t = debug.assert;
 
       var arr = [1, 2, 5, 7, 8, 10, 12, 15, 17, 18, 19];
@@ -101,9 +106,11 @@
       Array.prototype.where = predicate => {
         var result = [];
 
-        for(var element in this)
-          if( predicate(element) )
+        for (var element in this) {
+          if (predicate(element)) {
             result.push(element);
+					}
+				}
 
         return result;
       };
@@ -111,23 +118,22 @@
       Array.prototype.sum = selector => {
         var total = 0;
         
-        for(element in this) 
-        {
+        for (element in this) {
           total += (selector == null ? element : selector(element));
         }
 
         return total;
       };
       
-      t( arr.where( n => n &lt; 10 ).sum() == 23 );  // 1+2+5+7+8
+      t( arr.where( n => n < 10 ).sum() == 23 );  // 1+2+5+7+8
       
-      t( [1,2,3,4,5].where(n=&gt;n&gt;=3).sum() == 12 ); // 3+4+5
+      t( [1,2,3,4,5].where(n => n >= 3).sum() == 12 ); // 3+4+5
       
-    </script>
+    ]]>
   </test-case>
 
   <test-case id="012" name="object sum">
-    <script>
+    <![CDATA[
       var t = debug.assert;
 
       function Sales(year, amount) {
@@ -157,7 +163,7 @@
         for(element in this) 
         {
           var val = (selector == null ? element : selector(element));
-          if(min == null || min &gt; val) min = val;
+          if(min == null || min > val) min = val;
         }
 
         return min;
@@ -172,6 +178,6 @@
       // total amount
       t( arr.sum(obj => obj.amount) == 630 );
       
-    </script>
+    ]]>
   </test-case>
 </test-suite>

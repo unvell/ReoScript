@@ -20,11 +20,13 @@
 <test-suite id="999" name="template">
 
   <test-case id="001" name="test-case template">
-    <script>
+		<![CDATA[
+    
       var t = debug.assert;
       
       // do test here
-    </script>
-  </test-case>
+
+		]]>
+	</test-case>
 
 </test-suite>

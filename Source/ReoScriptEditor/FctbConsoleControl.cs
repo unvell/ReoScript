@@ -43,10 +43,7 @@ namespace Unvell.ReoScript.Editor
 		{
 			InitializeComponent();
 
-			fctb.LineReceived += (s, e) =>
-			{
-				if (LineReceived != null) LineReceived(s, e);
-			};
+			fctb.LineReceived += (s, e) => LineReceived?.Invoke(s, e);
 		}
 
 		public void OutLine(string text)
