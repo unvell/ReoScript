@@ -1899,6 +1899,7 @@ namespace Unvell.ReoScript
 		{
 			return new ObjectValue();
 		}
+
 		public virtual object CreatePrototype(ScriptContext context)
 		{
 			return context.CreateNewObject(context.Srm.BuiltinConstructors.ObjectFunction) as ObjectValue;
@@ -5812,9 +5813,14 @@ namespace Unvell.ReoScript
 				Load(ms);
 			}
 
+			using (ms = new MemoryStream(Resources.lib_array))
+			{
+				Load(ms);
+			}
+
 			if ((this.CoreFeatures & CoreFeatures.ArrayExtension) == CoreFeatures.ArrayExtension)
 			{
-				using (ms = new MemoryStream(Resources.lib_array))
+				using (ms = new MemoryStream(Resources.lib_array_ext))
 				{
 					Load(ms);
 				}
@@ -8885,6 +8891,13 @@ namespace Unvell.ReoScript
 								throw new ReoScriptAssertionException(string.Format("expect '{0}' but '{1}'",
 									ScriptRunningMachine.ConvertToString(args[1]),
 									ScriptRunningMachine.ConvertToString(args[0])));
+							}
+						}
+						else if (args.Length == 3)
+						{
+							if (!comparer.Compare(args[0], args[1], srm))
+							{
+								throw new ReoScriptAssertionException(ScriptRunningMachine.ConvertToString(args[2]));
 							}
 						}
 						return null;
