@@ -6,8 +6,9 @@
 Array.prototype.sum = function(s) {
   var total = 0;
   
-  for (e in this)
+  for (e in this) {
     total += (s == null ? e : s(e));
+	}
   
   return total;
 };
@@ -52,11 +53,13 @@ Array.prototype.join = function(s, sp) {
 
 var arr = [];
 
-for (var i = 0; i < 100; i++) arr.push(Math.random() * i);
+for (var i = 0; i < 100; i++) {
+	arr.push(Math.random() * i);
+}
 
 var o = [
   'len: ' + arr.length,
-  'sum: ' + arr.sum(),
+  'sum: ' + arr.sum(n => n < 50),
   'avg: ' + arr.avg(),
   'min: ' + arr.min(),
   'max: ' + arr.max(),
