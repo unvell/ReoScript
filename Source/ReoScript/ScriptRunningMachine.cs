@@ -1901,9 +1901,9 @@ namespace Unvell.ReoScript
 		}
 		public virtual object CreatePrototype(ScriptContext context)
 		{
-			return context.CreateNewObject(context.Srm.BuiltinConstructors.ObjectFunction, null) as ObjectValue;
+			return context.CreateNewObject(context.Srm.BuiltinConstructors.ObjectFunction) as ObjectValue;
 		}
-		
+
 		internal CallScope OuterCallScope { get; set; }
 	}
 
@@ -2065,7 +2065,7 @@ namespace Unvell.ReoScript
 
 		public override object CreatePrototype(ScriptContext context)
 		{
-			ObjectValue obj = context.CreateNewObject(context.Srm.BuiltinConstructors.ObjectFunction, null) as ObjectValue;
+			ObjectValue obj = context.CreateNewObject(context.Srm.BuiltinConstructors.ObjectFunction) as ObjectValue;
 
 			if (obj == null) return obj;
 
@@ -2322,11 +2322,13 @@ namespace Unvell.ReoScript
 			this.Array = array;
 			this.Index = index;
 		}
+
 		#region Access Members
 		public override void Set(object value)
 		{
 			Array[Index] = value;
 		}
+
 		public override object Get()
 		{
 			return Index >= Array.Count ? null : Array[Index];
@@ -2495,6 +2497,7 @@ namespace Unvell.ReoScript
 				// unknown type, ignore it
 			}
 		}
+
 		internal static object GetProperty(ScriptContext ctx, object target, string identifier)
 		{
 			ScriptRunningMachine srm = ctx.Srm;
