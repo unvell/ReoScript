@@ -190,7 +190,10 @@ namespace Unvell.ReoScript
 				FunctionInfo = fi,
 			};
 
-			CurrentStack.Functions.Add(fi);
+			if (body.Type != RETURN)
+			{
+				CurrentStack.Functions.Add(fi);
+			}
 
 			return afdn;
 		}
