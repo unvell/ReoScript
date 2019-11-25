@@ -3638,6 +3638,9 @@ namespace Unvell.ReoScript
 				{
 					return ScriptRunningMachine.GetNumberValue(left) > ((NumberObject)right).Number;
 				}
+				else if (ScriptRunningMachine.IsPrimitiveString(left) && ScriptRunningMachine.IsPrimitiveString(right))
+				{
+					return string.Compare(ScriptRunningMachine.ConvertToString(left), ScriptRunningMachine.ConvertToString(right)) > 0;
 				}
 				else
 				{
@@ -3673,7 +3676,7 @@ namespace Unvell.ReoScript
 				}
 				else if (ScriptRunningMachine.IsPrimitiveString(left) && ScriptRunningMachine.IsPrimitiveString(right))
 				{
-					return ScriptRunningMachine.GetDoubleValue(left) >= ((NumberObject)right).Number;
+					return string.Compare(ScriptRunningMachine.ConvertToString(left), ScriptRunningMachine.ConvertToString(right)) >= 0;
 				}
 				else
 				{
@@ -3734,7 +3737,7 @@ namespace Unvell.ReoScript
 					{
 						return ((NumberObject)left).Number < ScriptRunningMachine.GetNumberValue(right);
 					}
-					else if (left is string)
+					else if (ScriptRunningMachine.IsPrimitiveString(left))
 					{
 						if (double.TryParse(ScriptRunningMachine.ConvertToString(left), out double d))
 							return d < ScriptRunningMachine.GetNumberValue(right);
@@ -3742,6 +3745,7 @@ namespace Unvell.ReoScript
 							return false;
 					}
 				}
+				{
 
 				return false;
 			}
@@ -3770,6 +3774,10 @@ namespace Unvell.ReoScript
 				else if (right is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(left))
 				{
 					return ScriptRunningMachine.GetNumberValue(left) <= ((NumberObject)right).Number;
+				}
+				else if (ScriptRunningMachine.IsPrimitiveString(left) && ScriptRunningMachine.IsPrimitiveString(right))
+				{
+					return string.Compare(ScriptRunningMachine.ConvertToString(left), ScriptRunningMachine.ConvertToString(right)) <= 0;
 				}
 				else
 				{
@@ -7907,6 +7915,16 @@ namespace Unvell.ReoScript
 		{
 			return target is double || target is int || target is float || target is char || target is byte
 				|| target is short || target is long;
+		}
+
+		/// <summary>
+		/// Check whether a specified object is string.
+		/// </summary>
+		/// <param name="target">object will be checked.</param>
+		/// <returns>true if specified object is instance of <class>StringObject</class>, <class>string</class> or <class>StringBuilder</class>.</returns>
+		public static bool IsPrimitiveString(object target)
+		{
+			return target is string || target is StringObject || target is StringBuilder;
 		}
 
 		internal static bool IsPrimitiveTypes(object obj)
