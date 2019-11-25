@@ -1290,23 +1290,26 @@ namespace Unvell.ReoScript
 			}
 		});
 
+		private static readonly NativeFunctionObject __isNumber__ = new NativeFunctionObject("isNumber",
+			(ctx, owner, args) =>
+			{
+				if (args.Length == 1)
+				{
+					return ScriptRunningMachine.TryGetNumberValue(args[0], out double val);
+				}
+				else
+					return true;
+			});
+
 		private static readonly NativeFunctionObject __isNaN__ = new NativeFunctionObject("isNaN",
 			(ctx, owner, args) =>
 			{
 				if (args.Length == 1)
 				{
-					if (args[0] is float)
-						return float.IsNaN((float)args[0]);
-
-					if (args[0] is double)
-						return double.IsNaN((double)args[0]);
-
-					double i = 0;
-					double.TryParse(Convert.ToString(args[0]), out i);
-					return double.IsNaN(i);
+					return !ScriptRunningMachine.TryGetNumberValue(args[0], out double val);
 				}
 				else
-					return false;
+					return true;
 			});
 		#endregion
 
@@ -1320,6 +1323,7 @@ namespace Unvell.ReoScript
 			this[__stdout__.FunName] = __stdout__;
 			this[__stdoutln__.FunName] = __stdoutln__;
 			this[__parseInt__.FunName] = __parseInt__;
+			this[__isNumber__.FunName] = __isNumber__;
 			this[__isNaN__.FunName] = __isNaN__;
 		}
 	}
@@ -7779,6 +7783,32 @@ namespace Unvell.ReoScript
 			}
 			else
 				return def;
+		}
+
+		public static bool TryGetNumberValue(object obj, out double value)
+		{
+			if (obj is double doubleVal)
+			{
+				value = doubleVal;
+				return true;
+			}
+			else if (IsPrimitiveNumber(obj))
+			{
+				value = Convert.ToDouble(obj);
+				return true;
+			}
+			else if (IsPrimitiveString(obj))
+			{
+				return double.TryParse(ConvertToString(obj), out value);
+			}
+			else if (obj is NumberObject numObj)
+			{
+				value = numObj.Number;
+				return true;
+			}
+
+			value = 0;
+			return false;
 		}
 
 		/// <summary>

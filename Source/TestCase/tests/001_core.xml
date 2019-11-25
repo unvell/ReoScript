@@ -52,4 +52,38 @@
 			
     </script>
   </test-case>
+
+	<test-case id="003" name="isNaN">
+		<script>
+			var t = debug.assert;
+
+			t( isNaN(123)          , false );
+			t( isNaN(-1.23)        , false );
+			t( isNaN(5-2)          , false );
+			t( isNaN(0)            , false );
+
+			t( isNaN('123')        , false );
+			t( isNaN('Hello')      , true );
+			t( isNaN('2005/12/12') , true );
+
+			t( isNaN([1, 2, 3])    , true );
+
+
+			// ReoScript interprets empty string as non-number
+			//t( isNaN('')           , false );
+
+			// ReoScript interpetes bool value as non-number
+			//t( isNaN(true)         , false );
+
+			t( isNaN(undefined)    , true );
+
+			// these will fail
+			//t( isNaN('NaN')        , true );
+			//t( isNaN(NaN)          , true );
+
+			t( isNaN(0 / 0)        , true );
+
+		</script>
+	</test-case>
+
 </test-suite>
