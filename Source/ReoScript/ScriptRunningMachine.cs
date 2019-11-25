@@ -8290,15 +8290,16 @@ namespace Unvell.ReoScript
 						AbstractFunctionObject func = owner as AbstractFunctionObject;
 						if (func != null)
 						{
-							object[] callArgs = null;
+							List<object> callArgs = new List<object>();
 
-							if (args.Length > 1)
+							if (args.Length > 1 && args[1] is IEnumerable argEnum)
 							{
-								callArgs = new object[args.Length - 1];
-								Array.Copy(args, 1, callArgs, 0, args.Length - 1);
+								foreach (var arg in argEnum) {
+									callArgs.Add(arg);
+								}
 							}
 
-							return ctx.Srm.InvokeFunction(ctx, args.Length > 0 ? args[0] : null, func, new object[] { callArgs });
+							return ctx.Srm.InvokeFunction(ctx, args.Length > 0 ? args[0] : null, func,  callArgs.ToArray());
 						}
 						return null;
 					});
