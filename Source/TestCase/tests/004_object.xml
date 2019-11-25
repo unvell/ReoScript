@@ -175,7 +175,19 @@
     </script>
   </test-case>
 
-  <test-case id="020" name="delete property">
+	<test-case id="015" name="toString" disabled="1">
+		<!-- Not supported yet -->
+		<script>
+			var t = debug.assert;
+
+			var obj = new Object();
+			obj.toString = () => "my object";
+			t( obj, "my object" );
+
+		</script>
+	</test-case>
+
+	<test-case id="020" name="delete property">
     <script>
       var t = debug.assert;
 
