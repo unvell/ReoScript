@@ -1344,9 +1344,9 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else if (args.Length < 2)
-					return (Math.Round(ScriptRunningMachine.GetDoubleValue(args[0])));
+					return (Math.Round(ScriptRunningMachine.GetNumberValue(args[0])));
 				else
-					return (Math.Round(ScriptRunningMachine.GetDoubleValue(args[0]),
+					return (Math.Round(ScriptRunningMachine.GetNumberValue(args[0]),
 						ScriptRunningMachine.GetIntValue(args[1])));
 			});
 			#endregion // round
@@ -1356,7 +1356,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return (Math.Floor(ScriptRunningMachine.GetDoubleValue(args[0])));
+					return (Math.Floor(ScriptRunningMachine.GetNumberValue(args[0])));
 			});
 			#endregion // floor
 
@@ -1366,7 +1366,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Sin(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Sin(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // sin
 			#region cos
@@ -1375,7 +1375,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Cos(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Cos(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // ocs
 			#region tan
@@ -1384,7 +1384,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Tan(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Tan(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // tan
 			#region atan
@@ -1393,7 +1393,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Atan(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Atan(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // atan
 			#region atan2
@@ -1402,8 +1402,8 @@ namespace Unvell.ReoScript
 				if (args.Length < 2)
 					return NaNValue.Value;
 				else
-					return Math.Atan2(ScriptRunningMachine.GetDoubleValue(args[0], 0),
-						ScriptRunningMachine.GetDoubleValue(args[0], 1));
+					return Math.Atan2(ScriptRunningMachine.GetNumberValue(args[0], 0),
+						ScriptRunningMachine.GetNumberValue(args[0], 1));
 			});
 			#endregion // atan2
 
@@ -1413,7 +1413,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Abs(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Abs(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // abs
 			#region exp
@@ -1422,7 +1422,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Exp(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Exp(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // exp
 			#region log
@@ -1431,7 +1431,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Log(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Log(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // log
 			#region cosh
@@ -1440,7 +1440,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Cosh(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Cosh(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // log
 			#region pow
@@ -1449,8 +1449,8 @@ namespace Unvell.ReoScript
 				if (args.Length < 2)
 					return NaNValue.Value;
 				else
-					return Math.Pow(ScriptRunningMachine.GetDoubleValue(args[0], 0),
-						ScriptRunningMachine.GetDoubleValue(args[1], 0));
+					return Math.Pow(ScriptRunningMachine.GetNumberValue(args[0], 0),
+						ScriptRunningMachine.GetNumberValue(args[1], 0));
 			});
 			#endregion //pow
 			#region sqrt
@@ -1459,7 +1459,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Sqrt(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Sqrt(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // sqrt		
 		}
@@ -2512,7 +2512,7 @@ namespace Unvell.ReoScript
 					return PropertyAccessHelper.GetProperty(ctx, srm.BuiltinConstructors.StringFunction[
 						ScriptRunningMachine.KEY_PROTOTYPE], identifier);
 			}
-			else if (ScriptRunningMachine.IsNumber(target))
+			else if (ScriptRunningMachine.IsPrimitiveNumber(target))
 			{
 				return PropertyAccessHelper.GetProperty(ctx, srm.BuiltinConstructors.NumberFunction[
 					ScriptRunningMachine.KEY_PROTOTYPE], identifier);
@@ -2922,11 +2922,11 @@ namespace Unvell.ReoScript
 				if (left == NaNValue.Value || right == NaNValue.Value)
 					return NaNValue.Value;
 
-				if (!ScriptRunningMachine.IsNumber(left)) left = 0;
-				if (!ScriptRunningMachine.IsNumber(right)) right = 0;
+				if (!ScriptRunningMachine.IsPrimitiveNumber(left)) left = 0;
+				if (!ScriptRunningMachine.IsPrimitiveNumber(right)) right = 0;
 
-				return MathCalc(ScriptRunningMachine.GetDoubleValue(left),
-					ScriptRunningMachine.GetDoubleValue(right));
+				return MathCalc(ScriptRunningMachine.GetNumberValue(left),
+					ScriptRunningMachine.GetNumberValue(right));
 			}
 
 			public abstract object MathCalc(double left, double right);
@@ -2943,11 +2943,11 @@ namespace Unvell.ReoScript
 
 				if (left == NaNValue.Value && right == NaNValue.Value) return NaNValue.Value;
 
-				if (ScriptRunningMachine.IsNumber(left))
+				if (ScriptRunningMachine.IsPrimitiveNumber(left))
 				{
-					if (ScriptRunningMachine.IsNumber(right))
+					if (ScriptRunningMachine.IsPrimitiveNumber(right))
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) + ScriptRunningMachine.GetDoubleValue(right);
+						return ScriptRunningMachine.GetNumberValue(left) + ScriptRunningMachine.GetNumberValue(right);
 					}
 					else if (right == null)
 					{
@@ -2959,14 +2959,14 @@ namespace Unvell.ReoScript
 					}
 					else if (right is NumberObject)
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) + ((NumberObject)right).Number;
+						return ScriptRunningMachine.GetNumberValue(left) + ((NumberObject)right).Number;
 					}
 				}
-				else if (ScriptRunningMachine.IsNumber(right))
+				else if (ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
-					if (ScriptRunningMachine.IsNumber(left))
+					if (ScriptRunningMachine.IsPrimitiveNumber(left))
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) + ScriptRunningMachine.GetDoubleValue(right);
+						return ScriptRunningMachine.GetNumberValue(left) + ScriptRunningMachine.GetNumberValue(right);
 					}
 					else if (left == null)
 					{
@@ -2978,7 +2978,7 @@ namespace Unvell.ReoScript
 					}
 					else if (left is NumberObject)
 					{
-						return ((NumberObject)left).Number + ScriptRunningMachine.GetDoubleValue(right);
+						return ((NumberObject)left).Number + ScriptRunningMachine.GetNumberValue(right);
 					}
 				}
 
@@ -3011,7 +3011,7 @@ namespace Unvell.ReoScript
 
 				if (left == NaNValue.Value && right == NaNValue.Value) return NaNValue.Value;
 
-				if (ScriptRunningMachine.IsNumber(left))
+				if (ScriptRunningMachine.IsPrimitiveNumber(left))
 				{
 					if (right == null)
 					{
@@ -3021,20 +3021,20 @@ namespace Unvell.ReoScript
 					{
 						return NaNValue.Value;
 					}
-					else if (ScriptRunningMachine.IsNumber(right))
+					else if (ScriptRunningMachine.IsPrimitiveNumber(right))
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) - ScriptRunningMachine.GetDoubleValue(right);
+						return ScriptRunningMachine.GetNumberValue(left) - ScriptRunningMachine.GetNumberValue(right);
 					}
 					else if (right is NumberObject)
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) - ((NumberObject)right).Number;
+						return ScriptRunningMachine.GetNumberValue(left) - ((NumberObject)right).Number;
 					}
 					else if (right is DateObject)
 					{
 						return ((NumberObject)left).Number - ((DateObject)right).Ticks;
 					}
 				}
-				else if (ScriptRunningMachine.IsNumber(right))
+				else if (ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
 					if (left == null)
 					{
@@ -3044,17 +3044,17 @@ namespace Unvell.ReoScript
 					{
 						return NaNValue.Value;
 					}
-					else if (ScriptRunningMachine.IsNumber(left))
+					else if (ScriptRunningMachine.IsPrimitiveNumber(left))
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) - ScriptRunningMachine.GetDoubleValue(right);
+						return ScriptRunningMachine.GetNumberValue(left) - ScriptRunningMachine.GetNumberValue(right);
 					}
 					else if (left is NumberObject)
 					{
-						return ((NumberObject)left).Number - ScriptRunningMachine.GetDoubleValue(right);
+						return ((NumberObject)left).Number - ScriptRunningMachine.GetNumberValue(right);
 					}
 					else if (left is DateObject)
 					{
-						return ((DateObject)left).Ticks - ScriptRunningMachine.GetDoubleValue(right);
+						return ((DateObject)left).Ticks - ScriptRunningMachine.GetNumberValue(right);
 					}
 				}
 				else if (left is DateObject && right is DateObject)
@@ -3314,12 +3314,12 @@ namespace Unvell.ReoScript
 					object orginal = null;
 					container.TryGetValue(identifier, out orginal);
 
-					if (!ScriptRunningMachine.IsNumber(orginal))
+					if (!ScriptRunningMachine.IsPrimitiveNumber(orginal))
 					{
 						throw ctx.CreateRuntimeError(t, "only number can be used as increment or decrement statement.");
 					}
 
-					double target = ScriptRunningMachine.GetDoubleValue(orginal) + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1);
+					double target = ScriptRunningMachine.GetNumberValue(orginal) + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1);
 
 					if (orginal is ExternalProperty)
 					{
@@ -3348,12 +3348,12 @@ namespace Unvell.ReoScript
 						oldValue = 0;
 					}
 
-					if (!ScriptRunningMachine.IsNumber(oldValue))
+					if (!ScriptRunningMachine.IsPrimitiveNumber(oldValue))
 					{
 						throw ctx.CreateRuntimeError(t, "only number can be used as increment or decrement statement.");
 					}
 
-					double value = ScriptRunningMachine.GetDoubleValue(oldValue);
+					double value = ScriptRunningMachine.GetNumberValue(oldValue);
 					double returnValue = value;
 					access.Set((value + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1)));
 					return returnValue;
@@ -3408,12 +3408,12 @@ namespace Unvell.ReoScript
 					object orginal = null;
 					container.TryGetValue(identifier, out orginal);
 
-					if (!ScriptRunningMachine.IsNumber(orginal))
+					if (!ScriptRunningMachine.IsPrimitiveNumber(orginal))
 					{
 						throw ctx.CreateRuntimeError(t, "only number can be used as increment or decrement statement.");
 					}
 
-					double target = ScriptRunningMachine.GetDoubleValue(orginal) + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1);
+					double target = ScriptRunningMachine.GetNumberValue(orginal) + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1);
 
 					if (orginal is ExternalProperty)
 					{
@@ -3440,12 +3440,12 @@ namespace Unvell.ReoScript
 						oldValue = 0;
 					}
 
-					if (!ScriptRunningMachine.IsNumber(oldValue))
+					if (!ScriptRunningMachine.IsPrimitiveNumber(oldValue))
 					{
 						throw ctx.CreateRuntimeError(t, "only number can be used as increment or decrement statement.");
 					}
 
-					double value = ScriptRunningMachine.GetDoubleValue(oldValue);
+					double value = ScriptRunningMachine.GetNumberValue(oldValue);
 
 					object v = (value + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1));
 					access.Set(v);
@@ -3511,7 +3511,7 @@ namespace Unvell.ReoScript
 				}
 				else
 				{
-					if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+					if (ScriptRunningMachine.IsPrimitiveNumber(left) && ScriptRunningMachine.IsPrimitiveNumber(right))
 					{
 						if (left is float || right is float)
 						{
@@ -3519,17 +3519,17 @@ namespace Unvell.ReoScript
 						}
 						else
 						{
-							return ScriptRunningMachine.GetDoubleValue(left) == ScriptRunningMachine.GetDoubleValue(right);
+							return ScriptRunningMachine.GetNumberValue(left) == ScriptRunningMachine.GetNumberValue(right);
 						}
 					}
 
-					else if (left is NumberObject && ScriptRunningMachine.IsNumber(right))
+					else if (left is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(right))
 					{
-						return ((NumberObject)left).Number == ScriptRunningMachine.GetDoubleValue(right);
+						return ((NumberObject)left).Number == ScriptRunningMachine.GetNumberValue(right);
 					}
-					else if (right is NumberObject && ScriptRunningMachine.IsNumber(left))
+					else if (right is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(left))
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) == ((NumberObject)right).Number;
+						return ScriptRunningMachine.GetNumberValue(left) == ((NumberObject)right).Number;
 					}
 					else if (left is NumberObject && right is NumberObject)
 					{
@@ -3580,7 +3580,7 @@ namespace Unvell.ReoScript
 				if (left == null && right == null) return true;
 				if (left == null || right == null) return false;
 
-				if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+				if (ScriptRunningMachine.IsPrimitiveNumber(left) && ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
 					if (left is float || right is float)
 					{
@@ -3588,7 +3588,7 @@ namespace Unvell.ReoScript
 					}
 					else
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) == ScriptRunningMachine.GetDoubleValue(right);
+						return ScriptRunningMachine.GetNumberValue(left) == ScriptRunningMachine.GetNumberValue(right);
 					}
 				}
 				else if ((left is string && right is string) || (left is bool && right is bool))
@@ -3626,17 +3626,18 @@ namespace Unvell.ReoScript
 				{
 					return Convert.ToSingle(left) > Convert.ToSingle(right);
 				}
-				else if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+				else if (ScriptRunningMachine.IsPrimitiveNumber(left) && ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
-					return ScriptRunningMachine.GetDoubleValue(left) > ScriptRunningMachine.GetDoubleValue(right);
+					return ScriptRunningMachine.GetNumberValue(left) > ScriptRunningMachine.GetNumberValue(right);
 				}
-				else if (left is NumberObject && ScriptRunningMachine.IsNumber(right))
+				else if (left is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
-					return ((NumberObject)left).Number > ScriptRunningMachine.GetDoubleValue(right);
+					return ((NumberObject)left).Number > ScriptRunningMachine.GetNumberValue(right);
 				}
-				else if (right is NumberObject && ScriptRunningMachine.IsNumber(left))
+				else if (right is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(left))
 				{
-					return ScriptRunningMachine.GetDoubleValue(left) > ((NumberObject)right).Number;
+					return ScriptRunningMachine.GetNumberValue(left) > ((NumberObject)right).Number;
+				}
 				}
 				else
 				{
@@ -3658,15 +3659,19 @@ namespace Unvell.ReoScript
 				{
 					return Convert.ToSingle(left) >= Convert.ToSingle(right);
 				}
-				else if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+				else if (ScriptRunningMachine.IsPrimitiveNumber(left) && ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
-					return ScriptRunningMachine.GetDoubleValue(left) >= ScriptRunningMachine.GetDoubleValue(right);
+					return ScriptRunningMachine.GetNumberValue(left) >= ScriptRunningMachine.GetNumberValue(right);
 				}
-				else if (left is NumberObject && ScriptRunningMachine.IsNumber(right))
+				else if (left is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
-					return ((NumberObject)left).Number >= ScriptRunningMachine.GetDoubleValue(right);
+					return ((NumberObject)left).Number >= ScriptRunningMachine.GetNumberValue(right);
 				}
-				else if (right is NumberObject && ScriptRunningMachine.IsNumber(left))
+				else if (right is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(left))
+				{
+					return ScriptRunningMachine.GetNumberValue(left) >= ((NumberObject)right).Number;
+				}
+				else if (ScriptRunningMachine.IsPrimitiveString(left) && ScriptRunningMachine.IsPrimitiveString(right))
 				{
 					return ScriptRunningMachine.GetDoubleValue(left) >= ((NumberObject)right).Number;
 				}
@@ -3686,9 +3691,9 @@ namespace Unvell.ReoScript
 
 			public override bool Compare(object left, object right, ScriptRunningMachine srm)
 			{
-				if (ScriptRunningMachine.IsNumber(left))
+				if (ScriptRunningMachine.IsPrimitiveNumber(left))
 				{
-					if (ScriptRunningMachine.IsNumber(right))
+					if (ScriptRunningMachine.IsPrimitiveNumber(right))
 					{
 						if (left is float || right is float)
 						{
@@ -3696,25 +3701,25 @@ namespace Unvell.ReoScript
 						}
 						else
 						{
-							return ScriptRunningMachine.GetDoubleValue(left) < ScriptRunningMachine.GetDoubleValue(right);
+							return ScriptRunningMachine.GetNumberValue(left) < ScriptRunningMachine.GetNumberValue(right);
 						}
 					}
 					else if (right is NumberObject)
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) < ((NumberObject)right).Number;
+						return ScriptRunningMachine.GetNumberValue(left) < ((NumberObject)right).Number;
 					}
 					else if (right is string)
 					{
 						double d = 0;
 						if (double.TryParse(Convert.ToString(right), out d))
-							return ScriptRunningMachine.GetDoubleValue(left) < d;
+							return ScriptRunningMachine.GetNumberValue(left) < d;
 						else
 							return false;
 					}
 				}
-				else if (ScriptRunningMachine.IsNumber(right))
+				else if (ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
-					if (ScriptRunningMachine.IsNumber(left))
+					if (ScriptRunningMachine.IsPrimitiveNumber(left))
 					{
 						if (left is float || right is float)
 						{
@@ -3722,18 +3727,17 @@ namespace Unvell.ReoScript
 						}
 						else
 						{
-							return ScriptRunningMachine.GetDoubleValue(left) < ScriptRunningMachine.GetDoubleValue(right);
+							return ScriptRunningMachine.GetNumberValue(left) < ScriptRunningMachine.GetNumberValue(right);
 						}
 					}
 					else if (left is NumberObject)
 					{
-						return ((NumberObject)left).Number < ScriptRunningMachine.GetDoubleValue(right);
+						return ((NumberObject)left).Number < ScriptRunningMachine.GetNumberValue(right);
 					}
 					else if (left is string)
 					{
-						double d = 0;
-						if (double.TryParse(Convert.ToString(left), out d))
-							return d < ScriptRunningMachine.GetDoubleValue(right);
+						if (double.TryParse(ScriptRunningMachine.ConvertToString(left), out double d))
+							return d < ScriptRunningMachine.GetNumberValue(right);
 						else
 							return false;
 					}
@@ -3752,22 +3756,20 @@ namespace Unvell.ReoScript
 
 			public override bool Compare(object left, object right, ScriptRunningMachine srm)
 			{
-				if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+				if (ScriptRunningMachine.IsPrimitiveNumber(left) && ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
 					if (left is float || right is float)
 						return Convert.ToSingle(left) <= Convert.ToSingle(right);
 					else
-						return ScriptRunningMachine.GetDoubleValue(left) <= ScriptRunningMachine.GetDoubleValue(right);
+						return ScriptRunningMachine.GetNumberValue(left) <= ScriptRunningMachine.GetNumberValue(right);
 				}
-				else if (left is NumberObject
-						 && ScriptRunningMachine.IsNumber(right))
+				else if (left is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
-					return ((NumberObject)left).Number <= ScriptRunningMachine.GetDoubleValue(right);
+					return ((NumberObject)left).Number <= ScriptRunningMachine.GetNumberValue(right);
 				}
-				else if (right is NumberObject
-						&& ScriptRunningMachine.IsNumber(left))
+				else if (right is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(left))
 				{
-					return ScriptRunningMachine.GetDoubleValue(left) <= ((NumberObject)right).Number;
+					return ScriptRunningMachine.GetNumberValue(left) <= ((NumberObject)right).Number;
 				}
 				else
 				{
@@ -4665,7 +4667,7 @@ namespace Unvell.ReoScript
 
 				string identifier = t.Children[1].Text;
 
-				if (ScriptRunningMachine.IsNumber(value) || value is string || value is bool || value is IList)
+				if (ScriptRunningMachine.IsPrimitiveNumber(value) || value is string || value is bool || value is IList)
 				{
 					// no need check
 				}
@@ -4764,7 +4766,7 @@ namespace Unvell.ReoScript
 				{
 					return srm.BuiltinConstructors.BooleanFunction.FunName.ToLower();
 				}
-				else if (ScriptRunningMachine.IsNumber(obj)
+				else if (ScriptRunningMachine.IsPrimitiveNumber(obj)
 					|| obj == NaNValue.Value || obj == InfinityValue.Value || obj == MinusInfinityValue.Value)
 				{
 					return srm.BuiltinConstructors.NumberFunction.FunName.ToLower();
@@ -4820,7 +4822,7 @@ namespace Unvell.ReoScript
 				{
 					return constructor == srm.BuiltinConstructors.StringFunction;
 				}
-				else if (ScriptRunningMachine.IsNumber(obj))
+				else if (ScriptRunningMachine.IsPrimitiveNumber(obj))
 				{
 					return constructor == srm.BuiltinConstructors.NumberFunction;
 				}
@@ -7604,7 +7606,7 @@ namespace Unvell.ReoScript
 			{
 				return (int)obj;
 			}
-			else if (obj is double || ScriptRunningMachine.IsNumber(obj))
+			else if (obj is double || ScriptRunningMachine.IsPrimitiveNumber(obj))
 			{
 				return (int)(double)obj;
 			}
@@ -7660,7 +7662,7 @@ namespace Unvell.ReoScript
 			{
 				return (long)obj;
 			}
-			else if (obj is double || ScriptRunningMachine.IsNumber(obj))
+			else if (obj is double || ScriptRunningMachine.IsPrimitiveNumber(obj))
 			{
 				return (long)(double)obj;
 			}
@@ -7699,7 +7701,7 @@ namespace Unvell.ReoScript
 			{
 				return (float)obj;
 			}
-			else if (ScriptRunningMachine.IsNumber(obj))
+			else if (ScriptRunningMachine.IsPrimitiveNumber(obj))
 			{
 				return (float)(double)obj;
 			}
@@ -7732,9 +7734,9 @@ namespace Unvell.ReoScript
 				return GetFloatValue(args[index], def);
 		}
 
-		public static double GetDoubleValue(object obj)
+		public static double GetNumberValue(object obj)
 		{
-			return GetDoubleValue(obj, 0);
+			return GetNumberValue(obj, 0);
 		}
 
 		/// <summary>
@@ -7743,13 +7745,13 @@ namespace Unvell.ReoScript
 		/// <param name="obj">object to be converted</param>
 		/// <param name="def">default value will be return if converting is failed</param>
 		/// <returns>converted double value</returns>
-		public static double GetDoubleValue(object obj, double def)
+		public static double GetNumberValue(object obj, double def)
 		{
 			if (obj is double)
 			{
 				return (double)obj;
 			}
-			else if (ScriptRunningMachine.IsNumber(obj))
+			else if (ScriptRunningMachine.IsPrimitiveNumber(obj))
 			{
 				return Convert.ToDouble(obj);
 			}
@@ -7897,11 +7899,11 @@ namespace Unvell.ReoScript
 		}
 
 		/// <summary>
-		/// Check whether a specified object is of number type.
+		/// Check whether a specified object is number.
 		/// </summary>
-		/// <param name="target">object will be checked</param>
+		/// <param name="target">object will be checked.</param>
 		/// <returns>true if specified object is of number type.</returns>
-		public static bool IsNumber(object target)
+		public static bool IsPrimitiveNumber(object target)
 		{
 			return target is double || target is int || target is float || target is char || target is byte
 				|| target is short || target is long;
@@ -7909,7 +7911,7 @@ namespace Unvell.ReoScript
 
 		internal static bool IsPrimitiveTypes(object obj)
 		{
-			return obj == null || obj is bool || obj is string || IsNumber(obj);
+			return obj == null || obj is bool || obj is string || IsPrimitiveNumber(obj);
 		}
 
 		internal static MethodInfo FindCLRMethodAmbiguous(object obj, string methodName, object[] args)
@@ -8286,9 +8288,9 @@ namespace Unvell.ReoScript
 
 						double num = 0;
 
-						if (ScriptRunningMachine.IsNumber(owner))
+						if (ScriptRunningMachine.IsPrimitiveNumber(owner))
 						{
-							num = ScriptRunningMachine.GetDoubleValue(owner);
+							num = ScriptRunningMachine.GetNumberValue(owner);
 						}
 						else if (owner is NumberObject)
 						{
