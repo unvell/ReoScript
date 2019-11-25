@@ -86,4 +86,20 @@
 		</script>
 	</test-case>
 
+	<test-case id="004" name="boolean comparison">
+		<script>
+			var t = debug.assert;
+
+			t( 10 == 10 );
+			t( 010 == 10 );
+			t( 0b10100 == 20 );
+			t( 0x1e == 30 );
+
+			t( "2" == 2 );
+			t( 3 == "3" );
+			t( "-1" == "-1" );
+
+		</script>
+	</test-case>
+	
 </test-suite>
