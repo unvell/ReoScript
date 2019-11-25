@@ -5505,8 +5505,10 @@ namespace Unvell.ReoScript
 
 #if DEBUG
 			Debug.Assert(scope != null);
-			Debug.Assert(scope.ThisObject != null);
 			Debug.Assert(scope.CurrentFunction != null);
+
+			// allow null 'this' reference
+			//Debug.Assert(scope.ThisObject != null);
 #endif
 
 			callStack.Push(scope);
