@@ -56,4 +56,28 @@
 
     </script>
   </test-case>
+
+	<test-case id="004" name="min, max">
+		<script>
+			var t = debug.assert;
+
+			t( Math.min(1, 2), 1 );
+
+			t( Math.min(1, 2, 3), 1 );
+			t( Math.min(-10, -20, 0), -20 );
+
+			var arr = [10, 20, "30"];
+			t( Math.min.apply(null, arr), 10 );
+
+
+			t( Math.max(10, 20), 20 );
+
+			t( Math.max(10, 20, 30), 30 );
+			t( Math.max(-10, -20, 0), 0 );
+
+			var arr = [-300, "-200", 0, 100, 200, 300];
+			t( Math.max.apply(null, arr), 300 );
+
+		</script>
+	</test-case>
 </test-suite>
