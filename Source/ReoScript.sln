@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B31E531C-7554-4897-AF6E-9A59D03ED1A0}"
 	ProjectSection(SolutionItems) = preProject
+		ReoScriptEditor\ANTLR 3 License.txt = ReoScriptEditor\ANTLR 3 License.txt
 		ChangeLog.txt = ChangeLog.txt
+		ReoScriptEditor\FastColoredTextBox License.txt = ReoScriptEditor\FastColoredTextBox License.txt
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReoScript", "ReoScript\ReoScript.csproj", "{544005E7-F55A-42E2-8DDB-B43F95F27C69}"
@@ -79,5 +84,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E17FF8F2-3AA7-4C26-9212-7317B143930F}
 	EndGlobalSection
 EndGlobal

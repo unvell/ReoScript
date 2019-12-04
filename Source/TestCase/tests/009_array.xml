@@ -1,18 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <!--
+/*****************************************************************************
+ * 
  * ReoScript - .NET Script Language Engine
  * 
- * http://www.unvell.com/ReoScript
+ * https://github.com/unvell/ReoScript
  *
  * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
  * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
  * PURPOSE.
  *
- * This software released under LGPLv3 license.
- * Author: Jing Lu <dujid0@gmail.com>
+ * This software released under MIT license.
+ * Copyright (c) 2012-2019 Jingwood, unvell.com, all rights reserved.
  * 
- * Copyright (c) 2012-2013 unvell.com, all rights reserved.
+ ****************************************************************************/
 -->
 
 <test-suite id="009" name="array">
@@ -172,13 +174,172 @@
       var t = debug.assert;
 
       var arr = [ 1,2,3 ];
-      t(arr.length, 3);
+      t( arr.length, 3 );
       
       arr[9] = 10;
-      t(arr.length === 10);
+      t( arr.length === 10 );
       
     </script>
   </test-case>
-  
-  
+
+	<test-case id="100" name="where">
+		<![CDATA[
+      var t = debug.assert;
+
+			var arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+			var brr = arr.where(n => n < 5);
+			
+			t( brr.equals([1, 2, 3, 4]) );
+
+	]]>
+	</test-case>
+
+	<test-case id="101" name="first">
+		<![CDATA[
+		
+	]]>
+	</test-case>
+
+	<test-case id="102" name="last">
+		<![CDATA[
+		
+	]]>
+	</test-case>
+
+	<test-case id="103" name="map">
+		<![CDATA[
+	    var t = debug.assert;
+			var teq = (no, a, b) => t(a.equals(b), true, "failed at #" + no);
+
+			/////////////////////////////////
+
+			var array1 = [1, 4, 9, 16];
+
+			teq(1, array1.map(x => x * 2), [2, 8, 18, 32]);
+			teq(2, array1, [1, 4, 9, 16]);
+
+			teq(3, [1, 4, 9].map(num => Math.sqrt(num)), [1, 2, 3]);
+
+			/////////////////////////////////
+			
+			var kvArray = [{key: 1, value: 10}, 
+										 {key: 2, value: 20}, 
+										 {key: 3, value: 30}];
+
+			var reformattedArray = kvArray.map(obj => {
+				 var rObj = {};
+				 rObj[obj.key] = obj.value;
+				 return rObj;
+			});
+			
+			t( reformattedArray[0][1], 10 );
+			t( reformattedArray[1][2], 20 );
+			t( reformattedArray[2][3], 30 );
+		
+			/////////////////////////////////
+		
+			var map = Array.prototype.map;
+			var a = map.call('Hello World', function(x) {
+				return x.charCodeAt(0);
+			});
+			
+			teq(4, a, [72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100] );
+	]]>
+	</test-case>
+
+	<test-case id="104" name="reduce">
+		<![CDATA[
+			var t = debug.assert;
+			var teq = (no, a, b) => t(a.equals(b), true, "failed at #" + no);
+
+			// Test code refer to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+			
+			var reducer = (accumulator, currentValue) => accumulator + currentValue;
+			t( [1, 2, 3, 4].reduce(reducer), 10 );
+			t( [1, 2, 3, 4].reduce(reducer, 5), 15 );
+			
+			t( [0, 1, 2, 3].reduce((a, c) => a + c), 6);
+			t( [{x: 1}, {x: 2}, {x: 3}].reduce((a, c) => a + c.x), 6);
+			
+			teq(1, [[0, 1], [2, 3], [4, 5]].reduce((a, c) => a.concat(c), []), [0, 1, 2, 3, 4, 5]);
+			
+			/////////////////////////////////
+			
+			var names = ['Alice', 'Bob', 'Tiff', 'Bruce', 'Alice'];
+
+			var countedNames = names.reduce(function(allNames, name) { 
+				if (allNames.hasOwnProperty(name)) {    // if (a in b) 
+					allNames[name]++;
+				}
+				else {
+					allNames[name] = 1;
+				}
+				return allNames;
+			}, {});
+			
+			// expect: { 'Alice': 2, 'Bob': 1, 'Tiff': 1, 'Bruce': 1 }
+			t( countedNames["Alice"], 2 );
+			t( countedNames["Bob"], 1 );
+			t( countedNames["Tiff"], 1 );
+			t( countedNames["Bruce"], 1 );
+			
+			/////////////////////////////////
+			
+			var people = [
+				{ name: 'Alice', age: 21 },
+				{ name: 'Max', age: 20 },
+				{ name: 'Jane', age: 20 }
+			];
+
+			function groupBy(objectArray, property) {
+				return objectArray.reduce(function (acc, obj) {
+					var key = obj[property];
+					if (!acc[key]) {
+						acc[key] = [];
+					}
+					acc[key].push(obj);
+					return acc;
+				}, {});
+			}
+
+			// Exception happen - can't access outer variable from closure function
+			// var groupedPeople = groupBy(people, 'age');
+			
+			// groupedPeople is:
+			// { 
+			//   20: [
+			//     { name: 'Max', age: 20 }, 
+			//     { name: 'Jane', age: 20 }
+			//   ], 
+			//   21: [{ name: 'Alice', age: 21 }] 
+			// }
+
+			// t( groupedPeople["20"]["Max"], 20 );    // failed on this test 
+			
+	]]>
+	</test-case>
+
+	<test-case id="105" name="concat">
+		<![CDATA[
+      var t = debug.assert;
+			var teq = (no, a, b) => t(a.equals(b), true, "failed at #" + no);
+	
+			teq(1, [1,2,3].concat([4,5,6], "abb"), [1,2,3,4,5,6,"abb"]);
+			teq(2, [1,2,3].concat(4, 5, 6), [1,2,3,4,5,6]);
+			teq(3, [1,2,3].concat([4, 5], null), [1,2,3,4,5,null]);
+			teq(4, [1,2,3].concat([3, 3, null], 3, 4), [1,2,3,3,3,null,3,4] );
+
+			teq(5, [].concat([]), [] );
+			teq(6, [].concat([null]), [null] );
+			teq(7, ["abc"].concat(["def"]), ["abc","def"] );
+			teq(8, ["abc"].concat("def", ["ghi"], "j", "k"), ["abc","def", "ghi", "j", "k"] );
+	]]>
+	</test-case>
+
+	<test-case id="106" name="">
+		<![CDATA[
+		
+	]]>
+	</test-case>
+
 </test-suite>

@@ -1,18 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <!--
+/*****************************************************************************
+ * 
  * ReoScript - .NET Script Language Engine
  * 
- * http://www.unvell.com/ReoScript
+ * https://github.com/unvell/ReoScript
  *
  * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
  * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
  * PURPOSE.
  *
- * This software released under LGPLv3 license.
- * Author: Jing Lu <dujid0@gmail.com>
+ * This software released under MIT license.
+ * Copyright (c) 2012-2019 Jingwood, unvell.com, all rights reserved.
  * 
- * Copyright (c) 2012-2013 unvell.com, all rights reserved.
+ ****************************************************************************/
 -->
 
 <test-suite id="011" name="math">
@@ -29,13 +31,13 @@
     <script>
       var t = debug.assert;
 
-      t( Math.min(10, 20) == 10 );
-      t( Math.max(5.22, 10.2233) == 10.2233 );
+      t( Math.min(10, 20), 10 );
+      t( Math.max(5.22, 10.2233), 10.2233 );
 
-      t( Math.PI == 3.141592653589793 );
-      t( Math.E == 2.71828182845904 );
-      t( Math.LN2 == 0.6931471805599453 );
-      t( Math.LN10 == 2.302585092994046 );
+      t( Math.PI, 3.141592653589793 );
+      t( Math.E, 2.71828182845904 );
+      t( Math.LN2, 0.6931471805599453 );
+      t( Math.LN10, 2.302585092994046 );
     </script>
   </test-case>
 
@@ -54,4 +56,28 @@
 
     </script>
   </test-case>
+
+	<test-case id="004" name="min, max">
+		<script>
+			var t = debug.assert;
+
+			t( Math.min(1, 2), 1 );
+
+			t( Math.min(1, 2, 3), 1 );
+			t( Math.min(-10, -20, 0), -20 );
+
+			var arr = [10, 20, "30"];
+			t( Math.min.apply(null, arr), 10 );
+
+
+			t( Math.max(10, 20), 20 );
+
+			t( Math.max(10, 20, 30), 30 );
+			t( Math.max(-10, -20, 0), 0 );
+
+			var arr = [-300, "-200", 0, 100, 200, 300];
+			t( Math.max.apply(null, arr), 300 );
+
+		</script>
+	</test-case>
 </test-suite>

@@ -2,17 +2,15 @@
  * 
  * ReoScript - .NET Script Language Engine
  * 
- * http://www.unvell.com/ReoScript
+ * https://github.com/unvell/ReoScript
  *
  * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
  * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
  * PURPOSE.
  *
- * This software released under LGPLv3 license.
- * Author: Jing Lu <dujid0@gmail.com>
- * 
- * Copyright (c) 2012-2013 unvell.com, all rights reserved.
+ * This software released under MIT license.
+ * Copyright (c) 2012-2019 Jingwood, unvell.com, all rights reserved.
  * 
  ****************************************************************************/
 
@@ -203,6 +201,12 @@ t(apple.price, 1.95);
 
 t(apple.color + ' ' + apple.price, 'red 1.95');
 
+
+t( apple['name'], 'apple' );
+t( apple['Color'], 'red' );
+t( apple['color'], 'red' );
+t( apple['price'], '1.95' );
+
 ");
 		}
 
@@ -220,6 +224,9 @@ var apple = new MyClass();
 apple.shipOut();
 
 t(apple.isShippedOut, true);
+
+var a = 'isShippedOut';
+t( apple[a], true );
 
 ");
 		}

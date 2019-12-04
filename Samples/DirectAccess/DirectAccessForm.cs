@@ -20,7 +20,7 @@ namespace DirectAccess
 
 			srm.WorkMode |= MachineWorkMode.AllowDirectAccess;
 
-			srm.SetGlobalVariable("guest", new User());
+			srm.SetGlobalVariable("user", new User());
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -30,27 +30,27 @@ namespace DirectAccess
 
 	}
 
-	public class User 
+public class User 
+{
+	private string nickname = "no name";
+
+	public string Nickname
 	{
-		private string nickname = "no name";
-
-		public string Nickname
-		{
-			get { return nickname; }
-			set { nickname = value; }
-		}
-
-		private int age = 30;
-
-		public int Age
-		{
-			get { return age; }
-			set { age = value; }
-		}
-
-		public void Hello()
-		{
-			MessageBox.Show(string.Format("Hello {0}!", nickname));
-		}
+		get { return nickname; }
+		set { nickname = value; }
 	}
+
+	private int age = 30;
+
+	public int Age
+	{
+		get { return age; }
+		set { age = value; }
+	}
+
+	public void Hello()
+	{
+		MessageBox.Show(string.Format("Hello {0}!", nickname));
+	}
+}
 }

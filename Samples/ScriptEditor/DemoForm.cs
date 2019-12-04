@@ -73,7 +73,7 @@ namespace ScriptEditor
 
 		private void linkLabel4_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			ShowScript(Resources.array_demo, true);
+			ShowScript(Resources.lambda, true);
 		}
 	}
 }

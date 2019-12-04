@@ -1,18 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <!--
+/*****************************************************************************
+ * 
  * ReoScript - .NET Script Language Engine
  * 
- * http://www.unvell.com/ReoScript
+ * https://github.com/unvell/ReoScript
  *
  * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
  * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
  * PURPOSE.
  *
- * This software released under LGPLv3 license.
- * Author: Jing Lu <dujid0@gmail.com>
+ * This software released under MIT license.
+ * Copyright (c) 2012-2019 Jingwood, unvell.com, all rights reserved.
  * 
- * Copyright (c) 2012-2013 unvell.com, all rights reserved.
+ ****************************************************************************/
 -->
 
 <test-suite id="002" name="expr">
@@ -234,35 +236,35 @@
   </test-case>
   
   <!-- Bit computing -->
-  <test-case id="020" name="binary">
-    <script>
+  <test-case id="020" name="binary operation">
+		!<![CDATA[
       var t = debug.assert;
 
-      t( 1 &lt;&lt; 1 == 2);
-      t( 2 &gt;&gt; 1 == 1);
+      t( 1 << 1 == 2);
+      t( 2 >> 1 == 1);
 
       var a = 1;
-      a &lt;&lt;= 1;
+      a <<= 1;
       t(a == 2);
 
-      a &gt;&gt;= 1;
+      a >>= 1;
       t(a == 1);
 
-    </script>
+		]]>
   </test-case>
 
-  <test-case id="021" name="binary literal">
-    <script>
+  <test-case id="021" name="binary operation">
+    !<![CDATA[
       var t = debug.assert;
 
       t( 0b011 == 3 );
 
       t( (0b0101 | 0b1010) == 0b1111 );
-      t( (0b1111 &amp; 0b0101) == 0b0101 );
+      t( (0b1111 & 0b0101) == 0b0101 );
       
-      t( (0b0011 &lt;&lt; 2) == 0b1100 );
-      t( (0b1100 &gt;&gt; 2) == 0b0011 );
+      t( (0b0011 << 2) == 0b1100 );
+      t( (0b1100 >> 2) == 0b0011 );
 
-    </script>
+    ]]>
   </test-case>
 </test-suite>

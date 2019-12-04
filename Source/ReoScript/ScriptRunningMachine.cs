@@ -2,17 +2,15 @@
  * 
  * ReoScript - .NET Script Language Engine
  * 
- * http://www.unvell.com/ReoScript
+ * https://github.com/unvell/ReoScript
  *
  * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
  * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
  * PURPOSE.
  *
- * This software released under LGPLv3 license.
- * Author: Jing Lu <dujid0@gmail.com>
- * 
- * Copyright (c) 2012-2013 unvell.com, all rights reserved.
+ * This software released under MIT license.
+ * Copyright (c) 2012-2019 Jingwood, unvell.com, all rights reserved.
  * 
  ****************************************************************************/
 
@@ -116,7 +114,7 @@ namespace Unvell.ReoScript
 			e.Message = msg;
 			e.CharIndex = re.CharPositionInLine;
 			e.Line = re.Line;
-			
+
 			CompilingErrors.Add(e);
 
 			if (CompilingErrorHandler != null)
@@ -140,11 +138,11 @@ namespace Unvell.ReoScript
 		{
 			if (localStack.Count > 1)
 				lastLocalScope = localStack.Pop();
-			
+
 			CurrentStack = localStack.Peek();
 		}
 
-		private FunctionDefineNode DefineLocalFunction(string name, CommonTree paramsTree, CommonTree body, 
+		private FunctionDefineNode DefineLocalFunction(string name, CommonTree paramsTree, CommonTree body,
 			int modifierToken, int line, int charIndex)
 		{
 			FunctionInfo fi = new FunctionInfo
@@ -192,7 +190,10 @@ namespace Unvell.ReoScript
 				FunctionInfo = fi,
 			};
 
-			CurrentStack.Functions.Add(fi);
+			if (body.Type != RETURN)
+			{
+				CurrentStack.Functions.Add(fi);
+			}
 
 			return afdn;
 		}
@@ -761,7 +762,7 @@ namespace Unvell.ReoScript
 	public class DateObject : ObjectValue
 	{
 		public static readonly long StartTimeTicks = (new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).Ticks;
-		
+
 		public DateTime DateTime;
 
 		public DateObject(DateTime value)
@@ -848,7 +849,7 @@ namespace Unvell.ReoScript
 
 		#endregion
 	}
-	
+
 	class StringConstructorFunction : TypedNativeFunctionObject
 	{
 		public StringConstructorFunction()
@@ -981,7 +982,7 @@ namespace Unvell.ReoScript
 						{
 							if (args.Length == 1)
 							{
-								arr.List.AddRange(str.Split(new string[] { separator }, 
+								arr.List.AddRange(str.Split(new string[] { separator },
 									StringSplitOptions.RemoveEmptyEntries));
 							}
 							else
@@ -1177,7 +1178,7 @@ namespace Unvell.ReoScript
 
 	internal class ErrorConstructorFunction : TypedNativeFunctionObject
 	{
-		public ErrorConstructorFunction() : base(typeof(ErrorObject), "Error") {}
+		public ErrorConstructorFunction() : base(typeof(ErrorObject), "Error") { }
 
 		public override object CreateObject(ScriptContext context, object[] args)
 		{
@@ -1292,23 +1293,26 @@ namespace Unvell.ReoScript
 			}
 		});
 
+		private static readonly NativeFunctionObject __isNumber__ = new NativeFunctionObject("isNumber",
+			(ctx, owner, args) =>
+			{
+				if (args.Length == 1)
+				{
+					return ScriptRunningMachine.TryGetNumberValue(args[0], out double val);
+				}
+				else
+					return true;
+			});
+
 		private static readonly NativeFunctionObject __isNaN__ = new NativeFunctionObject("isNaN",
 			(ctx, owner, args) =>
 			{
 				if (args.Length == 1)
 				{
-					if (args[0] is float)
-						return float.IsNaN((float)args[0]);
-
-					if (args[0] is double)
-						return double.IsNaN((double)args[0]);
-
-					double i = 0;
-					double.TryParse(Convert.ToString(args[0]), out i);
-					return double.IsNaN(i);
+					return !ScriptRunningMachine.TryGetNumberValue(args[0], out double val);
 				}
 				else
-					return false;
+					return true;
 			});
 		#endregion
 
@@ -1322,6 +1326,7 @@ namespace Unvell.ReoScript
 			this[__stdout__.FunName] = __stdout__;
 			this[__stdoutln__.FunName] = __stdoutln__;
 			this[__parseInt__.FunName] = __parseInt__;
+			this[__isNumber__.FunName] = __isNumber__;
 			this[__isNaN__.FunName] = __isNaN__;
 		}
 	}
@@ -1346,9 +1351,9 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else if (args.Length < 2)
-					return (Math.Round(ScriptRunningMachine.GetDoubleValue(args[0])));
+					return (Math.Round(ScriptRunningMachine.GetNumberValue(args[0])));
 				else
-					return (Math.Round(ScriptRunningMachine.GetDoubleValue(args[0]), 
+					return (Math.Round(ScriptRunningMachine.GetNumberValue(args[0]),
 						ScriptRunningMachine.GetIntValue(args[1])));
 			});
 			#endregion // round
@@ -1358,7 +1363,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return (Math.Floor(ScriptRunningMachine.GetDoubleValue(args[0])));
+					return (Math.Floor(ScriptRunningMachine.GetNumberValue(args[0])));
 			});
 			#endregion // floor
 
@@ -1368,7 +1373,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Sin(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Sin(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // sin
 			#region cos
@@ -1377,7 +1382,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Cos(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Cos(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // ocs
 			#region tan
@@ -1386,7 +1391,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Tan(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Tan(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // tan
 			#region atan
@@ -1395,7 +1400,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Atan(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Atan(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // atan
 			#region atan2
@@ -1404,8 +1409,8 @@ namespace Unvell.ReoScript
 				if (args.Length < 2)
 					return NaNValue.Value;
 				else
-					return Math.Atan2(ScriptRunningMachine.GetDoubleValue(args[0], 0),
-						ScriptRunningMachine.GetDoubleValue(args[0], 1));
+					return Math.Atan2(ScriptRunningMachine.GetNumberValue(args[0], 0),
+						ScriptRunningMachine.GetNumberValue(args[0], 1));
 			});
 			#endregion // atan2
 
@@ -1415,7 +1420,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Abs(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Abs(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // abs
 			#region exp
@@ -1424,7 +1429,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Exp(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Exp(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // exp
 			#region log
@@ -1433,7 +1438,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Log(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Log(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // log
 			#region cosh
@@ -1442,7 +1447,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Cosh(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Cosh(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // log
 			#region pow
@@ -1451,8 +1456,8 @@ namespace Unvell.ReoScript
 				if (args.Length < 2)
 					return NaNValue.Value;
 				else
-					return Math.Pow(ScriptRunningMachine.GetDoubleValue(args[0], 0),
-						ScriptRunningMachine.GetDoubleValue(args[1], 0));
+					return Math.Pow(ScriptRunningMachine.GetNumberValue(args[0], 0),
+						ScriptRunningMachine.GetNumberValue(args[1], 0));
 			});
 			#endregion //pow
 			#region sqrt
@@ -1461,7 +1466,7 @@ namespace Unvell.ReoScript
 				if (args.Length < 1)
 					return NaNValue.Value;
 				else
-					return Math.Sqrt(ScriptRunningMachine.GetDoubleValue(args[0], 0));
+					return Math.Sqrt(ScriptRunningMachine.GetNumberValue(args[0], 0));
 			});
 			#endregion // sqrt		
 		}
@@ -1469,7 +1474,7 @@ namespace Unvell.ReoScript
 	#endregion
 
 	#region Array
-	public class ArrayObject : ObjectValue
+	public class ArrayObject : ObjectValue, IList
 	{
 		private ArrayList list = new ArrayList(5);
 
@@ -1482,11 +1487,8 @@ namespace Unvell.ReoScript
 		public ArrayObject()
 		{
 			this["length"] = new ExternalProperty(
-				() => { return this.Length; },
-				(v) =>
-				{
-					this.Length = ScriptRunningMachine.GetIntValue(v, List.Count);
-				});
+				() => this.Length,
+				v => this.Length = ScriptRunningMachine.GetIntValue(v, List.Count));
 		}
 
 		public int Length
@@ -1514,6 +1516,16 @@ namespace Unvell.ReoScript
 			}
 		}
 
+		public bool IsReadOnly => false;
+
+		public bool IsFixedSize => false;
+
+		public int Count => this.list.Count;
+
+		public object SyncRoot => this.list.SyncRoot;
+
+		public bool IsSynchronized => this.list.IsSynchronized;
+
 		public object this[int index]
 		{
 			get
@@ -1524,7 +1536,7 @@ namespace Unvell.ReoScript
 			{
 				if (index >= list.Count)
 				{
-					this.Length = index+1;
+					this.Length = index + 1;
 				}
 
 				this.list[index] = value;
@@ -1554,13 +1566,54 @@ namespace Unvell.ReoScript
 				yield return list[i];
 			}
 		}
-		#endregion
+
+		public int Add(object value)
+		{
+			return this.list.Add(value);
+		}
+
+		public bool Contains(object value)
+		{
+			return this.list.Contains(value);
+		}
+
+		public void Clear()
+		{
+			this.list.Clear();
+		}
+
+		public int IndexOf(object value)
+		{
+			return this.list.IndexOf(value);
+		}
+
+		public void Insert(int index, object value)
+		{
+			this.list.Insert(index, value);
+		}
+
+		public void Remove(object value)
+		{
+			this.list.Remove(value);
+		}
+
+		public void RemoveAt(int index)
+		{
+			this.list.RemoveAt(index);
+		}
+
+		public void CopyTo(Array array, int index)
+		{
+			this.list.CopyTo(array, index);
+		}
+		#endregion IEnumerable Members
 
 	}
 	class ArrayConstructorFunction : TypedNativeFunctionObject
 	{
 		public ArrayConstructorFunction() :
-			base(typeof(ArrayObject), "Array") { }
+			base(typeof(ArrayObject), "Array")
+		{ }
 
 		public override object Invoke(ScriptContext context, object owner, object[] args)
 		{
@@ -1605,7 +1658,8 @@ namespace Unvell.ReoScript
 					ArrayObject newArray = ctx.CreateNewArray();
 
 					int index = ScriptRunningMachine.GetIntParam(args, 0, 0);
-					if(index<0 || index>=arr.Length) {
+					if (index < 0 || index >= arr.Length)
+					{
 						return newArray;
 					}
 
@@ -1621,10 +1675,10 @@ namespace Unvell.ReoScript
 					if (args.Length < 2 || !(owner is ArrayObject)) return false;
 
 					ArrayObject arr = (ArrayObject)owner;
-			
+
 					int index = ScriptRunningMachine.GetIntParam(args, 0, 0);
-					if(index<0) index=0;
-					if(index>=arr.Length) return false;
+					if (index < 0) index = 0;
+					if (index >= arr.Length) return false;
 
 					int howmany = ScriptRunningMachine.GetIntParam(args, 1, arr.Length - index);
 
@@ -1678,13 +1732,37 @@ namespace Unvell.ReoScript
 
 					return sb.ToString();
 				});
+
+				objValue["concat"] = new NativeFunctionObject("concat", (ctx, owner, args) =>
+				{
+					if (!(owner is ArrayObject)) return null;
+
+					if (args.Length <= 0) return owner;
+
+					var newArr = ctx.CreateNewArray();
+					newArr.List.AddRange(((ArrayObject)owner).List);
+
+					foreach (var arg in args)
+					{
+						if (arg is ArrayObject arrayArg)
+						{
+							newArr.List.AddRange(arrayArg.List);
+						}
+						else
+						{
+							newArr.List.Add(arg);
+						}
+					}
+
+					return newArr;
+				});
 			}
 
 			return obj;
 		}
 	}
-	#endregion
-	#endregion
+	#endregion Array
+	#endregion Built-in Objects
 
 	#region Extension Objects
 	/// <summary>
@@ -1828,11 +1906,12 @@ namespace Unvell.ReoScript
 		{
 			return new ObjectValue();
 		}
+
 		public virtual object CreatePrototype(ScriptContext context)
 		{
-			return context.CreateNewObject(context.Srm.BuiltinConstructors.ObjectFunction, null) as ObjectValue;
+			return context.CreateNewObject(context.Srm.BuiltinConstructors.ObjectFunction) as ObjectValue;
 		}
-		
+
 		internal CallScope OuterCallScope { get; set; }
 	}
 
@@ -1994,14 +2073,11 @@ namespace Unvell.ReoScript
 
 		public override object CreatePrototype(ScriptContext context)
 		{
-			ObjectValue obj = context.CreateNewObject(context.Srm.BuiltinConstructors.ObjectFunction, null) as ObjectValue;
+			ObjectValue obj = context.CreateNewObject(context.Srm.BuiltinConstructors.ObjectFunction) as ObjectValue;
 
 			if (obj == null) return obj;
 
-			if (PrototypeBuilder != null)
-			{
-				PrototypeBuilder(obj);
-			}
+			PrototypeBuilder?.Invoke(obj);
 
 			return obj;
 		}
@@ -2014,7 +2090,7 @@ namespace Unvell.ReoScript
 	public class TypedNativeFunctionObject<T> : TypedNativeFunctionObject
 	{
 		public TypedNativeFunctionObject()
-			: this(typeof(T).Name) 
+			: this(typeof(T).Name)
 		{
 			// this();
 		}
@@ -2161,7 +2237,7 @@ namespace Unvell.ReoScript
 	#region Variable Access
 	class VariableAccess : AccessValue
 	{
-		public string Identifier { get ; set ; }
+		public string Identifier { get; set; }
 		public IVariableContainer Scope { get; set; }
 		public object Value { get; set; }
 
@@ -2178,7 +2254,7 @@ namespace Unvell.ReoScript
 				{
 					Scope = cs;
 				}
-				else 
+				else
 				{
 					CallScope outerScope = cs.CurrentFunction.OuterCallScope;
 					while (outerScope != null)
@@ -2238,92 +2314,36 @@ namespace Unvell.ReoScript
 			//else
 			//  return Scope == null ? (GlobalObject == null ? null : GlobalObject[Identifier]) : Scope[Identifier];
 		}
-		#endregion
+		#endregion Access Members
 	}
-	#endregion
+	#endregion Variable Access
 
 	#region Array Access
 	class ArrayAccess : AccessValue
 	{
-		private object array;
-		public object Array
-		{
-			get { return array; }
-			set { array = value; }
-		}
-		private int index;
-		public int Index
-		{
-			get { return index; }
-			set { index = value; }
-		}
-		public ArrayAccess(ScriptRunningMachine srm, ScriptContext ctx, object array, int index)
+		public IList Array { get; set; }
+		public int Index { get; set; }
+
+		public ArrayAccess(ScriptRunningMachine srm, ScriptContext ctx, IList array, int index)
 			: base(srm, ctx)
 		{
-			this.array = array;
-			this.index = index;
+			this.Array = array;
+			this.Index = index;
 		}
+
 		#region Access Members
 		public override void Set(object value)
 		{
-			if ((array is ArrayObject))
-			{
-				((ArrayObject)array)[index] = value;
-			}
-			else if (array is IList)
-			{
-				((IList)array)[index] = value;
-			}
-			else if (array is string)
-			{
-				// FIXME: string can not be modified (since v1.2.2)
-				string str = (string)array;
-				if (index < str.Length)
-				{
-					array = str.Substring(0, index) + Convert.ToString(value) + str.Substring(index + 1);
-				}
-				else
-				{
-					str += value;
-					array = str;
-				}
-			}
-		
+			Array[Index] = value;
 		}
+
 		public override object Get()
 		{
-			if (array is ArrayObject)
-			{
-				return ((ArrayObject)array)[index];
-			}
-			else if (array is IList)
-			{
-				IList list = (IList)array;
-				return index >= list.Count ? null : list[index];
-			}
-			else if (array is string)
-			{
-				string str = Convert.ToString(array);
-				return index >= 0 && index < str.Length ? (str[index].ToString()) : string.Empty;
-			}
-			//else if (Srm.EnableDirectAccess && Srm.IsDirectAccessObject(array))
-			//{
-			//  if (array is IList)
-			//  {
-			//    return ((IList)array)[index];
-			//  }
-
-			//  else
-			//    return null;
-			//}
-			else
-			{
-				return null;
-			}
+			return Index >= Array.Count ? null : Array[Index];
 		}
 		#endregion
 	}
-	#endregion
+	#endregion Array Access
 
 	#region Property Access
 	class PropertyAccess : AccessValue
@@ -2485,20 +2505,21 @@ namespace Unvell.ReoScript
 				// unknown type, ignore it
 			}
 		}
+
 		internal static object GetProperty(ScriptContext ctx, object target, string identifier)
 		{
 			ScriptRunningMachine srm = ctx.Srm;
 
-			if (target is string)
+			if (target is string str)
 			{
 				// FIXME: not very good to get property 'length' in hard coding
 				if (identifier == "length")
-					return ((string)target).Length;
+					return str.Length;
 				else
 					return PropertyAccessHelper.GetProperty(ctx, srm.BuiltinConstructors.StringFunction[
 						ScriptRunningMachine.KEY_PROTOTYPE], identifier);
 			}
-			else if (ScriptRunningMachine.IsNumber(target))
+			else if (ScriptRunningMachine.IsPrimitiveNumber(target))
 			{
 				return PropertyAccessHelper.GetProperty(ctx, srm.BuiltinConstructors.NumberFunction[
 					ScriptRunningMachine.KEY_PROTOTYPE], identifier);
@@ -2508,23 +2529,26 @@ namespace Unvell.ReoScript
 				return PropertyAccessHelper.GetProperty(ctx, srm.BuiltinConstructors.BooleanFunction[
 					ScriptRunningMachine.KEY_PROTOTYPE], identifier);
 			}
-			else if (target is IList)
+			else if (target is IList listObj && !(target is ArrayObject))
 			{
 				// FIXME: not very good to get property 'length' in hard coding
 				if (identifier == "length")
-					return ((IList)target).Count;
+				{
+					return listObj.Count;
+				}
 				else
+				{
 					return PropertyAccessHelper.GetProperty(ctx, srm.BuiltinConstructors.ArrayFunction[
 						ScriptRunningMachine.KEY_PROTOTYPE], identifier);
+				}
 			}
-			else if (target is ObjectValue)
+			else if (target is ObjectValue objValue)
 			{
-				ObjectValue objValue = (ObjectValue)target;
 				object val = objValue[identifier];
 
-				if (val is ExternalProperty)
+				if (val is ExternalProperty extProp)
 				{
-					return (((ExternalProperty)val).GetNativeValue());
+					return extProp.GetNativeValue();
 				}
 				else
 				{
@@ -2541,8 +2565,8 @@ namespace Unvell.ReoScript
 			else if (target is IDictionary<string, object>)
 			{
 				IDictionary<string, object> dict = (IDictionary<string, object>)target;
-        object o = null;
-        dict.TryGetValue(identifier, out o);
+				object o = null;
+				dict.TryGetValue(identifier, out o);
 				return o;
 			}
 			else if (srm.AllowDirectAccess && !(target is ISyntaxTreeReturn))
@@ -2624,9 +2648,51 @@ namespace Unvell.ReoScript
 			return null;
 		}
 	}
-	#endregion
+	#endregion Property Access
 
-	#endregion
+	#region String Access
+	class StringAccess : AccessValue
+	{
+		public object StringVariable { get; set; }
+		public int Index { get; set; }
+
+		public StringAccess(ScriptRunningMachine srm, ScriptContext ctx, object array, int index)
+				: base(srm, ctx)
+		{
+			this.StringVariable = array;
+			this.Index = index;
+		}
+
+		#region Access Members
+		public override void Set(object value)
+		{
+			// modifying string is not supported
+		}
+
+		public override object Get()
+		{
+			if (StringVariable is string str)
+			{
+				return Context.CreateNewObject(Srm.BuiltinConstructors.StringFunction, true, new object[] { str[Index].ToString() });
+			}
+			else if (StringVariable is StringObject strobj)
+			{
+				return Context.CreateNewObject(Srm.BuiltinConstructors.StringFunction, true, new object[] { strobj.String[Index].ToString() });
+			}
+			else if (StringVariable is StringBuilder sb)
+			{
+				return Context.CreateNewObject(Srm.BuiltinConstructors.StringFunction, true, new object[] { sb[Index].ToString() });
+			}
+			else
+			{
+				return null;
+			}
+		}
+		#endregion Access Members
+	}
+	#endregion String Access
+
+	#endregion Accessor
 
 	#region Parsers
 	namespace Parsers
@@ -2863,11 +2929,11 @@ namespace Unvell.ReoScript
 				if (left == NaNValue.Value || right == NaNValue.Value)
 					return NaNValue.Value;
 
-				if (!ScriptRunningMachine.IsNumber(left)) left = 0;
-				if (!ScriptRunningMachine.IsNumber(right)) right = 0;
+				if (!ScriptRunningMachine.IsPrimitiveNumber(left)) left = 0;
+				if (!ScriptRunningMachine.IsPrimitiveNumber(right)) right = 0;
 
-				return MathCalc(ScriptRunningMachine.GetDoubleValue(left),
-					ScriptRunningMachine.GetDoubleValue(right));
+				return MathCalc(ScriptRunningMachine.GetNumberValue(left),
+					ScriptRunningMachine.GetNumberValue(right));
 			}
 
 			public abstract object MathCalc(double left, double right);
@@ -2884,11 +2950,11 @@ namespace Unvell.ReoScript
 
 				if (left == NaNValue.Value && right == NaNValue.Value) return NaNValue.Value;
 
-				if (ScriptRunningMachine.IsNumber(left))
+				if (ScriptRunningMachine.IsPrimitiveNumber(left))
 				{
-					if (ScriptRunningMachine.IsNumber(right))
+					if (ScriptRunningMachine.IsPrimitiveNumber(right))
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) + ScriptRunningMachine.GetDoubleValue(right);
+						return ScriptRunningMachine.GetNumberValue(left) + ScriptRunningMachine.GetNumberValue(right);
 					}
 					else if (right == null)
 					{
@@ -2900,14 +2966,14 @@ namespace Unvell.ReoScript
 					}
 					else if (right is NumberObject)
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) + ((NumberObject)right).Number;
+						return ScriptRunningMachine.GetNumberValue(left) + ((NumberObject)right).Number;
 					}
 				}
-				else if (ScriptRunningMachine.IsNumber(right))
+				else if (ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
-					if (ScriptRunningMachine.IsNumber(left))
+					if (ScriptRunningMachine.IsPrimitiveNumber(left))
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) + ScriptRunningMachine.GetDoubleValue(right);
+						return ScriptRunningMachine.GetNumberValue(left) + ScriptRunningMachine.GetNumberValue(right);
 					}
 					else if (left == null)
 					{
@@ -2919,7 +2985,7 @@ namespace Unvell.ReoScript
 					}
 					else if (left is NumberObject)
 					{
-						return ((NumberObject)left).Number + ScriptRunningMachine.GetDoubleValue(right);
+						return ((NumberObject)left).Number + ScriptRunningMachine.GetNumberValue(right);
 					}
 				}
 
@@ -2952,7 +3018,7 @@ namespace Unvell.ReoScript
 
 				if (left == NaNValue.Value && right == NaNValue.Value) return NaNValue.Value;
 
-				if (ScriptRunningMachine.IsNumber(left))
+				if (ScriptRunningMachine.IsPrimitiveNumber(left))
 				{
 					if (right == null)
 					{
@@ -2962,20 +3028,20 @@ namespace Unvell.ReoScript
 					{
 						return NaNValue.Value;
 					}
-					else if (ScriptRunningMachine.IsNumber(right))
+					else if (ScriptRunningMachine.IsPrimitiveNumber(right))
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) - ScriptRunningMachine.GetDoubleValue(right);
+						return ScriptRunningMachine.GetNumberValue(left) - ScriptRunningMachine.GetNumberValue(right);
 					}
 					else if (right is NumberObject)
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) - ((NumberObject)right).Number;
+						return ScriptRunningMachine.GetNumberValue(left) - ((NumberObject)right).Number;
 					}
 					else if (right is DateObject)
 					{
 						return ((NumberObject)left).Number - ((DateObject)right).Ticks;
 					}
 				}
-				else if (ScriptRunningMachine.IsNumber(right))
+				else if (ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
 					if (left == null)
 					{
@@ -2985,17 +3051,17 @@ namespace Unvell.ReoScript
 					{
 						return NaNValue.Value;
 					}
-					else if (ScriptRunningMachine.IsNumber(left))
+					else if (ScriptRunningMachine.IsPrimitiveNumber(left))
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) - ScriptRunningMachine.GetDoubleValue(right);
+						return ScriptRunningMachine.GetNumberValue(left) - ScriptRunningMachine.GetNumberValue(right);
 					}
 					else if (left is NumberObject)
 					{
-						return ((NumberObject)left).Number - ScriptRunningMachine.GetDoubleValue(right);
+						return ((NumberObject)left).Number - ScriptRunningMachine.GetNumberValue(right);
 					}
 					else if (left is DateObject)
 					{
-						return ((DateObject)left).Ticks - ScriptRunningMachine.GetDoubleValue(right);
+						return ((DateObject)left).Ticks - ScriptRunningMachine.GetNumberValue(right);
 					}
 				}
 				else if (left is DateObject && right is DateObject)
@@ -3255,13 +3321,13 @@ namespace Unvell.ReoScript
 					object orginal = null;
 					container.TryGetValue(identifier, out orginal);
 
-					if (!ScriptRunningMachine.IsNumber(orginal))
+					if (!ScriptRunningMachine.IsPrimitiveNumber(orginal))
 					{
 						throw ctx.CreateRuntimeError(t, "only number can be used as increment or decrement statement.");
 					}
 
-					double target = ScriptRunningMachine.GetDoubleValue(orginal) + (t.Children[1].Type== ReoScriptLexer.INCREMENT ? 1 : -1);
-		
+					double target = ScriptRunningMachine.GetNumberValue(orginal) + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1);
+
 					if (orginal is ExternalProperty)
 					{
 						((ExternalProperty)orginal).Setter(target);
@@ -3289,12 +3355,12 @@ namespace Unvell.ReoScript
 						oldValue = 0;
 					}
 
-					if (!ScriptRunningMachine.IsNumber(oldValue))
+					if (!ScriptRunningMachine.IsPrimitiveNumber(oldValue))
 					{
 						throw ctx.CreateRuntimeError(t, "only number can be used as increment or decrement statement.");
 					}
 
-					double value = ScriptRunningMachine.GetDoubleValue(oldValue);
+					double value = ScriptRunningMachine.GetNumberValue(oldValue);
 					double returnValue = value;
 					access.Set((value + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1)));
 					return returnValue;
@@ -3349,12 +3415,12 @@ namespace Unvell.ReoScript
 					object orginal = null;
 					container.TryGetValue(identifier, out orginal);
 
-					if (!ScriptRunningMachine.IsNumber(orginal))
+					if (!ScriptRunningMachine.IsPrimitiveNumber(orginal))
 					{
 						throw ctx.CreateRuntimeError(t, "only number can be used as increment or decrement statement.");
 					}
 
-					double target = ScriptRunningMachine.GetDoubleValue(orginal) + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1);
+					double target = ScriptRunningMachine.GetNumberValue(orginal) + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1);
 
 					if (orginal is ExternalProperty)
 					{
@@ -3381,12 +3447,12 @@ namespace Unvell.ReoScript
 						oldValue = 0;
 					}
 
-					if (!ScriptRunningMachine.IsNumber(oldValue))
+					if (!ScriptRunningMachine.IsPrimitiveNumber(oldValue))
 					{
 						throw ctx.CreateRuntimeError(t, "only number can be used as increment or decrement statement.");
 					}
 
-					double value = ScriptRunningMachine.GetDoubleValue(oldValue);
+					double value = ScriptRunningMachine.GetNumberValue(oldValue);
 
 					object v = (value + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1));
 					access.Set(v);
@@ -3452,7 +3518,7 @@ namespace Unvell.ReoScript
 				}
 				else
 				{
-					if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+					if (ScriptRunningMachine.IsPrimitiveNumber(left) && ScriptRunningMachine.IsPrimitiveNumber(right))
 					{
 						if (left is float || right is float)
 						{
@@ -3460,17 +3526,17 @@ namespace Unvell.ReoScript
 						}
 						else
 						{
-							return ScriptRunningMachine.GetDoubleValue(left) == ScriptRunningMachine.GetDoubleValue(right);
+							return ScriptRunningMachine.GetNumberValue(left) == ScriptRunningMachine.GetNumberValue(right);
 						}
 					}
 
-					else if (left is NumberObject && ScriptRunningMachine.IsNumber(right))
+					else if (left is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(right))
 					{
-						return ((NumberObject)left).Number == ScriptRunningMachine.GetDoubleValue(right);
+						return ((NumberObject)left).Number == ScriptRunningMachine.GetNumberValue(right);
 					}
-					else if (right is NumberObject && ScriptRunningMachine.IsNumber(left))
+					else if (right is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(left))
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) == ((NumberObject)right).Number;
+						return ScriptRunningMachine.GetNumberValue(left) == ((NumberObject)right).Number;
 					}
 					else if (left is NumberObject && right is NumberObject)
 					{
@@ -3521,7 +3587,7 @@ namespace Unvell.ReoScript
 				if (left == null && right == null) return true;
 				if (left == null || right == null) return false;
 
-				if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+				if (ScriptRunningMachine.IsPrimitiveNumber(left) && ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
 					if (left is float || right is float)
 					{
@@ -3529,7 +3595,7 @@ namespace Unvell.ReoScript
 					}
 					else
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) == ScriptRunningMachine.GetDoubleValue(right);
+						return ScriptRunningMachine.GetNumberValue(left) == ScriptRunningMachine.GetNumberValue(right);
 					}
 				}
 				else if ((left is string && right is string) || (left is bool && right is bool))
@@ -3567,17 +3633,21 @@ namespace Unvell.ReoScript
 				{
 					return Convert.ToSingle(left) > Convert.ToSingle(right);
 				}
-				else if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+				else if (ScriptRunningMachine.IsPrimitiveNumber(left) && ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
-					return ScriptRunningMachine.GetDoubleValue(left) > ScriptRunningMachine.GetDoubleValue(right);
+					return ScriptRunningMachine.GetNumberValue(left) > ScriptRunningMachine.GetNumberValue(right);
 				}
-				else if (left is NumberObject && ScriptRunningMachine.IsNumber(right))
+				else if (left is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
-					return ((NumberObject)left).Number > ScriptRunningMachine.GetDoubleValue(right);
+					return ((NumberObject)left).Number > ScriptRunningMachine.GetNumberValue(right);
 				}
-				else if (right is NumberObject && ScriptRunningMachine.IsNumber(left))
+				else if (right is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(left))
 				{
-					return ScriptRunningMachine.GetDoubleValue(left) > ((NumberObject)right).Number;
+					return ScriptRunningMachine.GetNumberValue(left) > ((NumberObject)right).Number;
+				}
+				else if (ScriptRunningMachine.IsPrimitiveString(left) && ScriptRunningMachine.IsPrimitiveString(right))
+				{
+					return string.Compare(ScriptRunningMachine.ConvertToString(left), ScriptRunningMachine.ConvertToString(right)) > 0;
 				}
 				else
 				{
@@ -3599,17 +3669,21 @@ namespace Unvell.ReoScript
 				{
 					return Convert.ToSingle(left) >= Convert.ToSingle(right);
 				}
-				else if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+				else if (ScriptRunningMachine.IsPrimitiveNumber(left) && ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
-					return ScriptRunningMachine.GetDoubleValue(left) >= ScriptRunningMachine.GetDoubleValue(right);
+					return ScriptRunningMachine.GetNumberValue(left) >= ScriptRunningMachine.GetNumberValue(right);
 				}
-				else if (left is NumberObject && ScriptRunningMachine.IsNumber(right))
+				else if (left is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
-					return ((NumberObject)left).Number >= ScriptRunningMachine.GetDoubleValue(right);
+					return ((NumberObject)left).Number >= ScriptRunningMachine.GetNumberValue(right);
 				}
-				else if (right is NumberObject && ScriptRunningMachine.IsNumber(left))
+				else if (right is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(left))
 				{
-					return ScriptRunningMachine.GetDoubleValue(left) >= ((NumberObject)right).Number;
+					return ScriptRunningMachine.GetNumberValue(left) >= ((NumberObject)right).Number;
+				}
+				else if (ScriptRunningMachine.IsPrimitiveString(left) && ScriptRunningMachine.IsPrimitiveString(right))
+				{
+					return string.Compare(ScriptRunningMachine.ConvertToString(left), ScriptRunningMachine.ConvertToString(right)) >= 0;
 				}
 				else
 				{
@@ -3627,9 +3701,9 @@ namespace Unvell.ReoScript
 
 			public override bool Compare(object left, object right, ScriptRunningMachine srm)
 			{
-				if (ScriptRunningMachine.IsNumber(left))
+				if (ScriptRunningMachine.IsPrimitiveNumber(left))
 				{
-					if (ScriptRunningMachine.IsNumber(right))
+					if (ScriptRunningMachine.IsPrimitiveNumber(right))
 					{
 						if (left is float || right is float)
 						{
@@ -3637,25 +3711,25 @@ namespace Unvell.ReoScript
 						}
 						else
 						{
-							return ScriptRunningMachine.GetDoubleValue(left) < ScriptRunningMachine.GetDoubleValue(right);
+							return ScriptRunningMachine.GetNumberValue(left) < ScriptRunningMachine.GetNumberValue(right);
 						}
 					}
 					else if (right is NumberObject)
 					{
-						return ScriptRunningMachine.GetDoubleValue(left) < ((NumberObject)right).Number;
+						return ScriptRunningMachine.GetNumberValue(left) < ((NumberObject)right).Number;
 					}
 					else if (right is string)
 					{
 						double d = 0;
 						if (double.TryParse(Convert.ToString(right), out d))
-							return ScriptRunningMachine.GetDoubleValue(left) < d;
+							return ScriptRunningMachine.GetNumberValue(left) < d;
 						else
 							return false;
 					}
 				}
-				else if (ScriptRunningMachine.IsNumber(right))
+				else if (ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
-					if (ScriptRunningMachine.IsNumber(left))
+					if (ScriptRunningMachine.IsPrimitiveNumber(left))
 					{
 						if (left is float || right is float)
 						{
@@ -3663,21 +3737,24 @@ namespace Unvell.ReoScript
 						}
 						else
 						{
-							return ScriptRunningMachine.GetDoubleValue(left) < ScriptRunningMachine.GetDoubleValue(right);
+							return ScriptRunningMachine.GetNumberValue(left) < ScriptRunningMachine.GetNumberValue(right);
 						}
 					}
 					else if (left is NumberObject)
 					{
-						return ((NumberObject)left).Number < ScriptRunningMachine.GetDoubleValue(right);
+						return ((NumberObject)left).Number < ScriptRunningMachine.GetNumberValue(right);
 					}
-					else if (left is string)
+					else if (ScriptRunningMachine.IsPrimitiveString(left))
 					{
-						double d = 0;
-						if (double.TryParse(Convert.ToString(left), out d))
-							return d < ScriptRunningMachine.GetDoubleValue(right);
+						if (double.TryParse(ScriptRunningMachine.ConvertToString(left), out double d))
+							return d < ScriptRunningMachine.GetNumberValue(right);
 						else
 							return false;
 					}
+				}
+				else if (ScriptRunningMachine.IsPrimitiveString(left) && ScriptRunningMachine.IsPrimitiveString(right))
+				{
+					return string.Compare(ScriptRunningMachine.ConvertToString(left), ScriptRunningMachine.ConvertToString(right)) < 0;
 				}
 
 				return false;
@@ -3693,22 +3770,24 @@ namespace Unvell.ReoScript
 
 			public override bool Compare(object left, object right, ScriptRunningMachine srm)
 			{
-				if (ScriptRunningMachine.IsNumber(left) && ScriptRunningMachine.IsNumber(right))
+				if (ScriptRunningMachine.IsPrimitiveNumber(left) && ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
 					if (left is float || right is float)
 						return Convert.ToSingle(left) <= Convert.ToSingle(right);
 					else
-						return ScriptRunningMachine.GetDoubleValue(left) <= ScriptRunningMachine.GetDoubleValue(right);
+						return ScriptRunningMachine.GetNumberValue(left) <= ScriptRunningMachine.GetNumberValue(right);
 				}
-				else if (left is NumberObject
-						 && ScriptRunningMachine.IsNumber(right))
+				else if (left is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(right))
 				{
-					return ((NumberObject)left).Number <= ScriptRunningMachine.GetDoubleValue(right);
+					return ((NumberObject)left).Number <= ScriptRunningMachine.GetNumberValue(right);
 				}
-				else if (right is NumberObject
-						&& ScriptRunningMachine.IsNumber(left))
+				else if (right is NumberObject && ScriptRunningMachine.IsPrimitiveNumber(left))
 				{
-					return ScriptRunningMachine.GetDoubleValue(left) <= ((NumberObject)right).Number;
+					return ScriptRunningMachine.GetNumberValue(left) <= ((NumberObject)right).Number;
+				}
+				else if (ScriptRunningMachine.IsPrimitiveString(left) && ScriptRunningMachine.IsPrimitiveString(right))
+				{
+					return string.Compare(ScriptRunningMachine.ConvertToString(left), ScriptRunningMachine.ConvertToString(right)) <= 0;
 				}
 				else
 				{
@@ -3969,18 +4048,18 @@ namespace Unvell.ReoScript
 
 			private static readonly MethodInfo _ParseNode = typeof(ScriptRunningMachine).GetMethod("ParseNode");
 			private static readonly MethodInfo _ParseChildNodes = typeof(ScriptRunningMachine).GetMethod("ParseChildNodes");
-			
+
 			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
 				CommonTree forInit = (CommonTree)t.Children[0];
 				ScriptRunningMachine.ParseChildNodes(forInit, ctx);
-				
+
 				CommonTree condition = ((CommonTree)t.Children[1]);
 
-				bool test = ScriptRunningMachine.GetBoolValue(ScriptRunningMachine.ParseNode(condition, ctx)) ;
-				if( !test) return null;
+				bool test = ScriptRunningMachine.GetBoolValue(ScriptRunningMachine.ParseNode(condition, ctx));
+				if (!test) return null;
 
-				DynamicMethod dm = new DynamicMethod("__for$" + count++, typeof(object), 
+				DynamicMethod dm = new DynamicMethod("__for$" + count++, typeof(object),
 					new Type[] { typeof(ScriptContext), typeof(CommonTree), typeof(CommonTree), typeof(CommonTree) });
 				ILGenerator il = dm.GetILGenerator();
 
@@ -4022,7 +4101,7 @@ namespace Unvell.ReoScript
 
 				//// loop
 				il.Emit(OpCodes.Br_S, start);
-				
+
 				il.MarkLabel(end);
 				il.Emit(OpCodes.Ldnull);
 				il.Emit(OpCodes.Ret);
@@ -4123,7 +4202,7 @@ namespace Unvell.ReoScript
 			#endregion
 
 		}
-		
+
 		#endregion
 		#region Return
 		class ReturnNodeParser : INodeParser
@@ -4218,7 +4297,7 @@ namespace Unvell.ReoScript
 			{
 				object obj = ScriptRunningMachine.ParseNode(t.Children[0] as CommonTree, ctx);
 				if (obj is IAccess) obj = ((IAccess)obj).Get();
-				
+
 				ErrorObject err = ctx.CreateErrorObject(t, Convert.ToString(obj));
 				err.CustomeErrorObject = obj;
 				throw new ReoScriptRuntimeException(err);
@@ -4507,7 +4586,7 @@ namespace Unvell.ReoScript
 					CommonTree argTree = (constructTree == null || constructTree.ChildCount < 2) ? null : constructTree.Children[1] as CommonTree;
 					object[] args = srm.GetParameterList(argTree, context);
 
-					object obj = srm.CreateNewObject(context, funObj, args);
+					object obj = srm.CreateNewObject(context, funObj, constructArguments: args);
 
 					// committedDepth > 0 means there is some primaryExpressions are remaining.
 					// replace current construction tree and call srm to execute the remaining.
@@ -4558,16 +4637,29 @@ namespace Unvell.ReoScript
 				object indexValue = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], context);
 				if (indexValue is IAccess) indexValue = ((IAccess)indexValue).Get();
 
-				if (indexValue is string) // FIXME: StringObject
+				if (value is IList list)
+				{
+					// index access for array
+					return new ArrayAccess(srm, context, list, ScriptRunningMachine.GetIntValue(indexValue));
+				}
+				else if (value is ObjectValue)
 				{
 					// index access for object
-					return new PropertyAccess(srm, context, value, (string)indexValue);
+					return new PropertyAccess(srm, context, value, ScriptRunningMachine.ConvertToString(indexValue));
+				}
+				else if (value is string || value is StringObject || value is StringBuilder)
+				{
+					// index access for string
+					return new StringAccess(srm, context, value, ScriptRunningMachine.GetIntValue(indexValue));
+				}
+				else if (indexValue is string indexStr)
+				{
+					// index access for object
+					return new PropertyAccess(srm, context, value, indexStr);
 				}
 				else
 				{
-					// index access for array
-					int index = ScriptRunningMachine.GetIntValue(indexValue);
-					return new ArrayAccess(srm, context, value, index);
+					return null;
 				}
 			}
 
@@ -4593,7 +4685,7 @@ namespace Unvell.ReoScript
 
 				string identifier = t.Children[1].Text;
 
-				if (ScriptRunningMachine.IsNumber(value) || value is string || value is bool || value is IList)
+				if (ScriptRunningMachine.IsPrimitiveNumber(value) || value is string || value is bool || value is IList)
 				{
 					// no need check
 				}
@@ -4692,7 +4784,7 @@ namespace Unvell.ReoScript
 				{
 					return srm.BuiltinConstructors.BooleanFunction.FunName.ToLower();
 				}
-				else if (ScriptRunningMachine.IsNumber(obj)
+				else if (ScriptRunningMachine.IsPrimitiveNumber(obj)
 					|| obj == NaNValue.Value || obj == InfinityValue.Value || obj == MinusInfinityValue.Value)
 				{
 					return srm.BuiltinConstructors.NumberFunction.FunName.ToLower();
@@ -4748,7 +4840,7 @@ namespace Unvell.ReoScript
 				{
 					return constructor == srm.BuiltinConstructors.StringFunction;
 				}
-				else if (ScriptRunningMachine.IsNumber(obj))
+				else if (ScriptRunningMachine.IsPrimitiveNumber(obj))
 				{
 					return constructor == srm.BuiltinConstructors.NumberFunction;
 				}
@@ -4787,7 +4879,7 @@ namespace Unvell.ReoScript
 				string tagName = (((CommonTree)t.Children[0]).Children[0].ToString());
 
 				tagName = ((srm.WorkMode & MachineWorkMode.AutoUppercaseWhenCLRCalling)
-					== MachineWorkMode.AutoUppercaseWhenCLRCalling) 
+					== MachineWorkMode.AutoUppercaseWhenCLRCalling)
 					? ScriptRunningMachine.GetNativeIdentifier(tagName) : tagName;
 
 				AbstractFunctionObject classConstructor = srm.GetClass(tagName) as AbstractFunctionObject;
@@ -4862,10 +4954,10 @@ namespace Unvell.ReoScript
 						if (scope == null && templateConstructor.TemplateTag.ChildCount > 2)
 						{
 							scope = new CallScope(obj, classConstructor)
-								{
-									CharIndex = t.CharPositionInLine,
-									Line = t.Line,
-								};
+							{
+								CharIndex = t.CharPositionInLine,
+								Line = t.Line,
+							};
 						}
 
 						if (scope != null)
@@ -5024,7 +5116,7 @@ namespace Unvell.ReoScript
 		}
 		#endregion
 		#region RangeGenerator
-		#if EXTERNAL_GETTER_SETTER
+#if EXTERNAL_GETTER_SETTER
 		class RangeLiteralParser : INodeParser
 		{
 			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
@@ -5046,7 +5138,7 @@ namespace Unvell.ReoScript
 				return null;
 			}
 		}
-		#endif
+#endif
 		#endregion
 	}
 	#endregion
@@ -5138,7 +5230,7 @@ namespace Unvell.ReoScript
 		static object Parse(CommonTree t, ScriptContext ctx)
 		{
 			INodeParser parser = definedParser[t.Type];
-			return (parser!=null) ? parser.Parse(t, ctx.Srm, ctx) : null;
+			return (parser != null) ? parser.Parse(t, ctx.Srm, ctx) : null;
 		}
 
 
@@ -5169,7 +5261,8 @@ namespace Unvell.ReoScript
 		/// Path of file loaded by Load method of SRM
 		/// </summary>
 		internal ScriptContext(ScriptRunningMachine srm, AbstractFunctionObject function) :
-			this(srm, function, null) { }
+			this(srm, function, null)
+		{ }
 
 		internal ScriptContext(ScriptRunningMachine srm, AbstractFunctionObject function, string filePath)
 		{
@@ -5247,7 +5340,7 @@ namespace Unvell.ReoScript
 					}
 				}
 #endif
-			
+
 				IVariableContainer container = null;
 
 				CallScope cs = CurrentCallScope;
@@ -5418,8 +5511,10 @@ namespace Unvell.ReoScript
 
 #if DEBUG
 			Debug.Assert(scope != null);
-			Debug.Assert(scope.ThisObject != null);
 			Debug.Assert(scope.CurrentFunction != null);
+
+			// allow null 'this' reference
+			//Debug.Assert(scope.ThisObject != null);
 #endif
 
 			callStack.Push(scope);
@@ -5462,40 +5557,8 @@ namespace Unvell.ReoScript
 		public ObjectValue CreateNewObject(Action<ObjectValue> initializer)
 		{
 			ObjectValue obj = CreateNewObject();
-			if (initializer != null) initializer(obj);
+			initializer?.Invoke(obj);
 			return obj;
-		}
-
-		/// <summary>
-		/// Create an object using specified constructor function.
-		/// </summary>
-		/// <param name="funObject">constructor function to be used to create instance</param>
-		/// <returns>created object</returns>
-		public object CreateNewObject(AbstractFunctionObject funObject)
-		{
-			return Srm.CreateNewObject(this, funObject, true);
-		}
-
-		/// <summary>
-		/// Create an object instance using specified constructor function without arguments specified.
-		/// </summary>
-		/// <param name="funObject">constructor function to be used to create instance</param>
-		/// <param name="invokeConstructor">specifies whether allowed to call constructor</param>
-		/// <returns>created object instance</returns>
-		internal object CreateNewObject(AbstractFunctionObject funObject, bool invokeConstructor)
-		{
-			return Srm.CreateNewObject(this, funObject, invokeConstructor, null);
-		}
-
-		/// <summary>
-		/// Create an object instance using specified constructor function.
-		/// </summary>
-		/// <param name="funObject">function constructor</param>
-		/// <param name="args">arguments for calling constructor</param>
-		/// <returns>created object</returns>
-		public object CreateNewObject(AbstractFunctionObject funObject, object[] args)
-		{
-			return Srm.CreateNewObject(this, funObject, true, args);
 		}
 
 		/// <summary>
@@ -5505,9 +5568,9 @@ namespace Unvell.ReoScript
 		/// <param name="invokeConstructor">specifies whether allow to call constructor</param>
 		/// <param name="args">arguments for calling constructor</param>
 		/// <returns>created object</returns>
-		internal object CreateNewObject(AbstractFunctionObject funObject, bool invokeConstructor, object[] args)
+		public object CreateNewObject(AbstractFunctionObject funObject, bool invokeConstructor = true, object[] args = null)
 		{
-			return Srm.CreateNewObject(this, funObject, invokeConstructor);
+			return Srm.CreateNewObject(this, funObject, invokeConstructor, args);
 		}
 
 		/// <summary>
@@ -5559,7 +5622,7 @@ namespace Unvell.ReoScript
 
 			return err;
 		}
-		
+
 		internal ReoScriptRuntimeException CreateRuntimeError(CommonTree t, string msg)
 		{
 			return new ReoScriptRuntimeException(CreateErrorObject(t, msg));
@@ -5632,7 +5695,7 @@ namespace Unvell.ReoScript
 					return "<anonymous>";
 				}
 			}
-			
+
 			return fun.FunName;
 		}
 
@@ -5772,9 +5835,14 @@ namespace Unvell.ReoScript
 				Load(ms);
 			}
 
+			using (ms = new MemoryStream(Resources.lib_array))
+			{
+				Load(ms);
+			}
+
 			if ((this.CoreFeatures & CoreFeatures.ArrayExtension) == CoreFeatures.ArrayExtension)
 			{
-				using (ms = new MemoryStream(Resources.lib_array))
+				using (ms = new MemoryStream(Resources.lib_array_ext))
 				{
 					Load(ms);
 				}
@@ -5936,7 +6004,7 @@ namespace Unvell.ReoScript
 
 		public ObjectValue CreateNewObject(Dictionary<string, object> properties)
 		{
-			return CreateNewObject((obj) => obj.AddProperties(properties));
+			return CreateNewObject(obj => obj.AddProperties(properties));
 		}
 
 		internal ObjectValue CreateNewObject(ScriptContext context)
@@ -5944,22 +6012,7 @@ namespace Unvell.ReoScript
 			return CreateNewObject(context, BuiltinConstructors.ObjectFunction) as ObjectValue;
 		}
 
-		internal object CreateNewObject(ScriptContext context, AbstractFunctionObject funObject)
-		{
-			return CreateNewObject(context, funObject, true);
-		}
-
-		internal object CreateNewObject(ScriptContext context, AbstractFunctionObject funObject, bool invokeConstructor)
-		{
-			return CreateNewObject(context, funObject, invokeConstructor, null);
-		}
-
-		public object CreateNewObject(ScriptContext context, AbstractFunctionObject funObject, object[] constructArguments)
-		{
-			return CreateNewObject(context, funObject, true, constructArguments);
-		}
-
-		internal object CreateNewObject(ScriptContext context, AbstractFunctionObject constructor, bool invokeConstructor, object[] constructArguments)
+		internal object CreateNewObject(ScriptContext context, AbstractFunctionObject constructor, bool invokeConstructor = true, object[] constructArguments = null)
 		{
 			object obj = null;
 
@@ -6145,7 +6198,7 @@ namespace Unvell.ReoScript
 			DetachEvent(obj, ei);
 
 			EventHandlerInfo ehi = new EventHandlerInfo(this, context, obj, ei, null, functionValue);
-			Action<object> doEvent = (e) => { InvokeFunction(context, obj, functionValue, new object[] { e }); };
+			Action<object> doEvent = (e) => InvokeFunction(context, obj, functionValue, new object[] { e });
 
 			Delegate d = null;
 			if (ei.EventHandlerType == typeof(EventHandler))
@@ -6384,7 +6437,8 @@ namespace Unvell.ReoScript
 		/// <summary>
 		/// Get or set whether allowed to access .NET object, type, namespace, etc. directly. (default is false)
 		/// </summary>
-		public bool AllowDirectAccess { 
+		public bool AllowDirectAccess
+		{
 			get { return (workMode & MachineWorkMode.AllowDirectAccess) == MachineWorkMode.AllowDirectAccess; }
 			set
 			{
@@ -6543,7 +6597,7 @@ namespace Unvell.ReoScript
 				return returnValue != null ? returnValue.Value : null;
 			}
 			else
-			  throw new ReoScriptRuntimeException(string.Format("{0} is not a function", Convert.ToString(funObject)));
+				throw new ReoScriptRuntimeException(string.Format("{0} is not a function", Convert.ToString(funObject)));
 		}
 
 		/// <summary>
@@ -7029,12 +7083,12 @@ namespace Unvell.ReoScript
 			return Run(filePath, true);
 		}
 
-    /// <summary>
-    /// Run script from specified file and get the last value of execution.
-    /// </summary>
-    /// <param name="filePath">file to be executed</param>
+		/// <summary>
+		/// Run script from specified file and get the last value of execution.
+		/// </summary>
+		/// <param name="filePath">file to be executed</param>
 		/// <param name="ignoreSyntaxErrors">indicates whether allowed to ignore syntax check. (default is true)</param>
-    /// <returns>last result returned from script</returns>
+		/// <returns>last result returned from script</returns>
 		public object Run(FileInfo filePath, bool ignoreSyntaxErrors)
 		{
 			return Run(new ANTLRFileStream(filePath.FullName), filePath.FullName, ignoreSyntaxErrors);
@@ -7099,7 +7153,7 @@ namespace Unvell.ReoScript
 		{
 			return Run(stream, filepath, ignoreSyntaxErrors ? (Action<ErrorObject>)(e => { }) : null);
 		}
-		
+
 		internal object Run(ICharStream stream, string filepath, bool ignoreSyntaxErrors, ScriptContext context)
 		{
 			return Run(stream, filepath, ignoreSyntaxErrors ? (Action<ErrorObject>)(e => { }) : null, context);
@@ -7386,7 +7440,7 @@ namespace Unvell.ReoScript
 							{
 								return ctx[t.Text];
 							}
-								//return new VariableAccess(ctx.Srm, ctx, t.Text);
+							//return new VariableAccess(ctx.Srm, ctx, t.Text);
 						}
 
 					case ReoScriptLexer.THIS:
@@ -7428,7 +7482,7 @@ namespace Unvell.ReoScript
 					//  str = str.Substring(1, str.Length - 2);
 					//  return ConvertEscapeLiterals(str);
 
-				
+
 					case ReoScriptLexer.OBJECT_LITERAL:
 						if (t.ChildCount % 2 != 0)
 							throw ctx.CreateRuntimeError(t, "object literal should be key/value paired.");
@@ -7484,7 +7538,7 @@ namespace Unvell.ReoScript
 			if (t.ChildCount > 0)
 			{
 				//foreach (CommonTree child in t.Children)
-				for(int i=0;i<t.ChildCount;i++)
+				for (int i = 0; i < t.ChildCount; i++)
 				{
 					childValue = ParseNode((CommonTree)t.Children[i], ctx);
 
@@ -7572,7 +7626,7 @@ namespace Unvell.ReoScript
 			{
 				return (int)obj;
 			}
-			else if (obj is double || ScriptRunningMachine.IsNumber(obj))
+			else if (obj is double || ScriptRunningMachine.IsPrimitiveNumber(obj))
 			{
 				return (int)(double)obj;
 			}
@@ -7628,7 +7682,7 @@ namespace Unvell.ReoScript
 			{
 				return (long)obj;
 			}
-			else if (obj is double || ScriptRunningMachine.IsNumber(obj))
+			else if (obj is double || ScriptRunningMachine.IsPrimitiveNumber(obj))
 			{
 				return (long)(double)obj;
 			}
@@ -7667,7 +7721,7 @@ namespace Unvell.ReoScript
 			{
 				return (float)obj;
 			}
-			else if (ScriptRunningMachine.IsNumber(obj))
+			else if (ScriptRunningMachine.IsPrimitiveNumber(obj))
 			{
 				return (float)(double)obj;
 			}
@@ -7700,9 +7754,9 @@ namespace Unvell.ReoScript
 				return GetFloatValue(args[index], def);
 		}
 
-		public static double GetDoubleValue(object obj)
+		public static double GetNumberValue(object obj)
 		{
-			return GetDoubleValue(obj, 0);
+			return GetNumberValue(obj, 0);
 		}
 
 		/// <summary>
@@ -7711,17 +7765,17 @@ namespace Unvell.ReoScript
 		/// <param name="obj">object to be converted</param>
 		/// <param name="def">default value will be return if converting is failed</param>
 		/// <returns>converted double value</returns>
-		public static double GetDoubleValue(object obj, double def)
+		public static double GetNumberValue(object obj, double def)
 		{
 			if (obj is double)
 			{
 				return (double)obj;
 			}
-			else if (ScriptRunningMachine.IsNumber(obj))
+			else if (ScriptRunningMachine.IsPrimitiveNumber(obj))
 			{
 				return Convert.ToDouble(obj);
 			}
-			
+
 			else if (obj is string || obj is StringObject)
 			{
 				double v = def;
@@ -7736,6 +7790,32 @@ namespace Unvell.ReoScript
 				return def;
 		}
 
+		public static bool TryGetNumberValue(object obj, out double value)
+		{
+			if (obj is double doubleVal)
+			{
+				value = doubleVal;
+				return true;
+			}
+			else if (IsPrimitiveNumber(obj))
+			{
+				value = Convert.ToDouble(obj);
+				return true;
+			}
+			else if (IsPrimitiveString(obj))
+			{
+				return double.TryParse(ConvertToString(obj), out value);
+			}
+			else if (obj is NumberObject numObj)
+			{
+				value = numObj.Number;
+				return true;
+			}
+
+			value = 0;
+			return false;
+		}
+
 		/// <summary>
 		/// Convert object into boolean value. If converting is failed, false will be returned.
 		/// </summary>
@@ -7743,7 +7823,7 @@ namespace Unvell.ReoScript
 		/// <returns>converted boolean value</returns>
 		public static bool GetBoolValue(object obj)
 		{
-			return ((obj is bool) && ((bool)obj)) || (( obj is BooleanObject) && (((BooleanObject)obj).Boolean));
+			return ((obj is bool) && ((bool)obj)) || ((obj is BooleanObject) && (((BooleanObject)obj).Boolean));
 		}
 
 		/// <summary>
@@ -7761,7 +7841,7 @@ namespace Unvell.ReoScript
 			{
 				return ((bool)v) ? "true" : "false";
 			}
-			else 
+			else
 			{
 				return Convert.ToString(v);
 			}
@@ -7865,19 +7945,29 @@ namespace Unvell.ReoScript
 		}
 
 		/// <summary>
-		/// Check whether a specified object is of number type.
+		/// Check whether a specified object is number.
 		/// </summary>
-		/// <param name="target">object will be checked</param>
+		/// <param name="target">object will be checked.</param>
 		/// <returns>true if specified object is of number type.</returns>
-		public static bool IsNumber(object target)
+		public static bool IsPrimitiveNumber(object target)
 		{
-			return target is double || target is int || target is float || target is char || target is byte 
+			return target is double || target is int || target is float || target is char || target is byte
 				|| target is short || target is long;
+		}
+
+		/// <summary>
+		/// Check whether a specified object is string.
+		/// </summary>
+		/// <param name="target">object will be checked.</param>
+		/// <returns>true if specified object is instance of <class>StringObject</class>, <class>string</class> or <class>StringBuilder</class>.</returns>
+		public static bool IsPrimitiveString(object target)
+		{
+			return target is string || target is StringObject || target is StringBuilder;
 		}
 
 		internal static bool IsPrimitiveTypes(object obj)
 		{
-			return obj == null || obj is bool || obj is string || IsNumber(obj);
+			return obj == null || obj is bool || obj is string || IsPrimitiveNumber(obj);
 		}
 
 		internal static MethodInfo FindCLRMethodAmbiguous(object obj, string methodName, object[] args)
@@ -8142,7 +8232,7 @@ namespace Unvell.ReoScript
 			{
 				foreach (CommonTree t in node.Children)
 				{
-					if (t.ChildCount > 0) 
+					if (t.ChildCount > 0)
 						yield return IterateAST(node);
 					else
 						yield return t;
@@ -8152,7 +8242,7 @@ namespace Unvell.ReoScript
 
 		//public void IterateProperties(Action<string, string> iterate)
 		//{
-			
+
 		//}
 	}
 
@@ -8208,15 +8298,16 @@ namespace Unvell.ReoScript
 						AbstractFunctionObject func = owner as AbstractFunctionObject;
 						if (func != null)
 						{
-							object[] callArgs = null;
+							List<object> callArgs = new List<object>();
 
-							if (args.Length > 1)
+							if (args.Length > 1 && args[1] is IEnumerable argEnum)
 							{
-								callArgs = new object[args.Length - 1];
-								Array.Copy(args, 1, callArgs, 0, args.Length - 1);
+								foreach (var arg in argEnum) {
+									callArgs.Add(arg);
+								}
 							}
 
-							return ctx.Srm.InvokeFunction(ctx, args.Length > 0 ? args[0] : null, func, new object[] { callArgs });
+							return ctx.Srm.InvokeFunction(ctx, args.Length > 0 ? args[0] : null, func,  callArgs.ToArray());
 						}
 						return null;
 					});
@@ -8246,7 +8337,7 @@ namespace Unvell.ReoScript
 					proto["toString"] = new NativeFunctionObject("toString", (ctx, owner, args) =>
 					{
 						int radix = 10;
-						
+
 						if (args != null && args.Length > 0)
 						{
 							radix = ScriptRunningMachine.GetIntParam(args, 0);
@@ -8254,9 +8345,9 @@ namespace Unvell.ReoScript
 
 						double num = 0;
 
-						if (ScriptRunningMachine.IsNumber(owner))
+						if (ScriptRunningMachine.IsPrimitiveNumber(owner))
 						{
-							num = ScriptRunningMachine.GetDoubleValue(owner);
+							num = ScriptRunningMachine.GetNumberValue(owner);
 						}
 						else if (owner is NumberObject)
 						{
@@ -8448,7 +8539,8 @@ namespace Unvell.ReoScript
 				#region JSON
 				if ((srm.CoreFeatures & CoreFeatures.JSON) == CoreFeatures.JSON)
 				{
-					ObjectValue json = new ObjectValue(){
+					ObjectValue json = new ObjectValue()
+					{
 						//Name = "JSON",
 					};
 
@@ -8485,7 +8577,9 @@ namespace Unvell.ReoScript
 					json["stringify"] = new NativeFunctionObject("stringify", (ctx, owner, args) =>
 					{
 						if (args.Length == 0 || args[0] == null)
+						{
 							return string.Empty; // FIXME: StringObject ?
+						}
 
 						AbstractFunctionObject func = null;
 						if (args.Length >= 2 && args[1] is AbstractFunctionObject)
@@ -8845,20 +8939,30 @@ namespace Unvell.ReoScript
 						else if (args.Length == 1)
 						{
 							if (!ScriptRunningMachine.GetBoolValue(args[0]))
+							{
 								throw new ReoScriptAssertionException("assertion failed.");
+							}
 						}
 						else if (args.Length == 2)
 						{
 							if (!comparer.Compare(args[0], args[1], srm))
+							{
 								throw new ReoScriptAssertionException(string.Format("expect '{0}' but '{1}'",
 									ScriptRunningMachine.ConvertToString(args[1]),
 									ScriptRunningMachine.ConvertToString(args[0])));
+							}
+						}
+						else if (args.Length == 3)
+						{
+							if (!comparer.Compare(args[0], args[1], srm))
+							{
+								throw new ReoScriptAssertionException(ScriptRunningMachine.ConvertToString(args[2]));
+							}
 						}
 						return null;
 					});
 
-					DebugObject["total_created_objects"] = new ExternalProperty(
-						() => { return totalObjectCreated; }, null);
+					DebugObject["total_created_objects"] = new ExternalProperty(() => totalObjectCreated, null);
 				}
 
 				RestoreDebugger();

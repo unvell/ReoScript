@@ -2,32 +2,25 @@
  * 
  * ReoScript - .NET Script Language Engine
  * 
- * http://www.unvell.com/ReoScript
+ * https://github.com/unvell/ReoScript
  *
  * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
  * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
  * PURPOSE.
  *
- * This software released under LGPLv3 license.
- * Author: Jing Lu <dujid0@gmail.com>
- * 
- * Copyright (c) 2012-2013 unvell.com, all rights reserved.
+ * This software released under MIT license.
+ * Copyright (c) 2012-2019 Jingwood, unvell.com, all rights reserved.
  * 
  ****************************************************************************/
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
-using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
 using System.Diagnostics;
 using System.Reflection;
-
-using Unvell.ReoScript;
-using Unvell.ReoScript.Editor;
 using Unvell.ReoScript.Diagnostics;
 
 namespace Unvell.ReoScript.TestCase
@@ -103,7 +96,7 @@ namespace Unvell.ReoScript.TestCase
 
 		private static readonly XmlSerializer xmlSuiteSerializer = new XmlSerializer(typeof(XmlTestSuite));
 
-		public bool RunLanguageTests(List<string> ids, List<string> enabledTags)
+		public bool RunLanguageTests(List<string> filter, List<string> enabledTags)
 		{
 			Console.WriteLine("Run Core tests...\n");
 
@@ -117,6 +110,8 @@ namespace Unvell.ReoScript.TestCase
 
 			foreach (string filename in Directory.GetFiles("tests"))
 			{
+				if (filter.Count > 0 && !filter.Any(f => filename.Contains(f))) continue;
+
 				XmlTestSuite suite = xmlSuiteSerializer.Deserialize(File.OpenRead(filename)) as XmlTestSuite;
 
 				if (suite != null)
@@ -138,8 +133,14 @@ namespace Unvell.ReoScript.TestCase
 				{
 					string caseId = string.Format("{0,3}-{1,3}", suite.Id, t.Id);
 
-					if (t.Disabled || string.IsNullOrEmpty(t.Script)
-						|| (ids.Count > 0 && !ids.Any(id => caseId.Contains(id))))
+					var testCode = t.Script;
+					if (string.IsNullOrEmpty(testCode))
+					{
+						testCode = t.TestCode;
+					}
+
+					if (t.Disabled || string.IsNullOrEmpty(testCode)
+						|| (filter.Count > 0 && !filter.Any(id => caseId.Contains(id))))
 						return;
 
 					srm.Reset();
@@ -151,7 +152,7 @@ namespace Unvell.ReoScript.TestCase
 						sw.Reset();
 						sw.Start();
 
-						srm.Run(t.Script);
+						srm.Run(testCode);
 
 						sw.Stop();
 
@@ -310,6 +311,9 @@ namespace Unvell.ReoScript.TestCase
 
 		[XmlElement("script")]
 		public string Script { get; set; }
+
+		[XmlText]
+		public string TestCode { get; set; }
 
 		[XmlAttribute("disabled")]
 		public bool Disabled { get; set; }

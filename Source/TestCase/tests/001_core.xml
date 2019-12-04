@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+/*****************************************************************************
+ * 
+ * ReoScript - .NET Script Language Engine
+ * 
+ * https://github.com/unvell/ReoScript
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+ * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ *
+ * This software released under MIT license.
+ * Copyright (c) 2012-2019 Jingwood, unvell.com, all rights reserved.
+ * 
+ ****************************************************************************/
+-->
+
+<test-suite id="001" name="debug">
+  <test-case id="001">
+    <script>
+      
+      // check whether debugger currently is supported
+      if (debug == null) {
+        alert('No debugger supported. Try start by test-case runner.');
+        return;
+      }
+
+      // dummy call debug.assert, should not crash
+      debug.assert(true);
+      
+      // debug.assert usage:
+      //
+      // assert( boolean_expression )   // false to raise assert runtime exception
+      //
+      // assert( result, expect )       // compare 'result' and 'expect', difference result to 
+      //                                // raise assert runtime exception
+      
+    </script>
+  </test-case>
+
+  <test-case id="002" name="number toString">
+    <script>
+      var t = debug.assert;
+			
+			var a = 4;
+			var b = new Number(a);
+			
+      // toString to binary
+			t( b.toString(2) == '100' );
+			
+    </script>
+  </test-case>
+
+	<test-case id="003" name="isNaN">
+		<script>
+			var t = debug.assert;
+
+			t( isNaN(123)          , false );
+			t( isNaN(-1.23)        , false );
+			t( isNaN(5-2)          , false );
+			t( isNaN(0)            , false );
+
+			t( isNaN('123')        , false );
+			t( isNaN('Hello')      , true );
+			t( isNaN('2005/12/12') , true );
+
+			t( isNaN([1, 2, 3])    , true );
+
+
+			// ReoScript interprets empty string as non-number
+			//t( isNaN('')           , false );
+
+			// ReoScript interpetes bool value as non-number
+			//t( isNaN(true)         , false );
+
+			t( isNaN(undefined)    , true );
+
+			// these will fail
+			//t( isNaN('NaN')        , true );
+			//t( isNaN(NaN)          , true );
+
+			t( isNaN(0 / 0)        , true );
+
+		</script>
+	</test-case>
+
+	<test-case id="004" name="boolean comparison">
+		<script>
+			var t = debug.assert;
+
+			t( 10 == 10 );
+			t( 010 == 10 );
+			t( 0b10100 == 20 );
+			t( 0x1e == 30 );
+
+			t( "2" == 2 );
+			t( 3 == "3" );
+			t( "-1" == "-1" );
+
+		</script>
+	</test-case>
+	
+</test-suite>

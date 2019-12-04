@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcExpression", "CalcExpression\CalcExpression.csproj", "{F397DD6A-FC2F-46B0-A8BC-C8EFC7319031}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalProperty", "PropertyGetterAndSetter\ExternalProperty.csproj", "{090B09A8-BABD-4AC7-89FE-962168AFBCB5}"
@@ -20,6 +22,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetScriptInfo", "GetScriptInfo\GetScriptInfo.csproj", "{6332B4C0-1112-420B-BF60-5DBC53287AD0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeFunctionExtension", "NativeFunctionExtension\NativeFunctionExtension.csproj", "{16091842-A755-4DC1-AF71-AE3D99143288}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DE34AFBA-1651-4B97-81AB-49C4FF366290}"
+	ProjectSection(SolutionItems) = preProject
+		Ref\ANTLR 3 License.txt = Ref\ANTLR 3 License.txt
+		Ref\FastColoredTextBox License.txt = Ref\FastColoredTextBox License.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,5 +78,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B461052C-D123-4D2B-AECF-F3F11D6A975C}
 	EndGlobalSection
 EndGlobal

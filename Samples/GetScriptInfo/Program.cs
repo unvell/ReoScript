@@ -44,7 +44,7 @@ namespace GetScriptInfo
 				function outer(p1, p2, p3, p4) {
 					
 					function inner(key, value) { 
-            var local = 10;
+            var local1 = 10, local2;
 
 						function inner2(param) {
             }
@@ -53,9 +53,7 @@ namespace GetScriptInfo
 					return function(a, b) { return a + b; } ();
 				}
 
-				var af = function(x, y) { return x * y; };
-
-				var result = af(2, 5);
+				var af = function(x, y) { return x * y; }, result = af(2, 5);
 		 		
 			";
 

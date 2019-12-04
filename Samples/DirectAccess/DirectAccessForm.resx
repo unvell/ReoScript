@@ -117,13 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label1.Text" xml:space="preserve">
-    <value>DirectAccess provide the ability that makes script can access property, call method from a .NET object directly.
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>public class User 
+{
+	private string nickname = "no name";
 
-To enable DirectAccess:
+	public string Nickname
+	{
+		get { return nickname; }
+		set { nickname = value; }
+	}
 
-srm.WorkMode |= MachineWorkMode.AllowDirectAccess;
+	private int age = 30;
 
-Guest class and its properties are defined in C# but available in both C# and script.</value>
+	public int Age
+	{
+		get { return age; }
+		set { age = value; }
+	}
+
+	public void Hello()
+	{
+		MessageBox.Show(string.Format("Hello {0}!", nickname));
+	}
+}</value>
   </data>
 </root>

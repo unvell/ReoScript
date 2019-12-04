@@ -121,6 +121,9 @@
   <data name="lib_array" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\scripts\array.reo;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="lib_array_ext" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\scripts\array_ext.reo;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="lib_core" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\scripts\core.reo;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

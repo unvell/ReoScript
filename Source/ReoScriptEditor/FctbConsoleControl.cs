@@ -2,20 +2,17 @@
  * 
  * ReoScript - .NET Script Language Engine
  * 
- * http://www.unvell.com/ReoScript
+ * https://github.com/unvell/ReoScript
  *
  * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
  * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
  * PURPOSE.
  *
- * This software released under LGPLv3 license.
- * Author: Jing Lu <dujid0@gmail.com>
- * 
- * Copyright (c) 2012-2013 unvell.com, all rights reserved.
- * 
- ****************************************************************************
+ * This software released under MIT license.
+ * Copyright (c) 2012-2019 Jingwood, unvell.com, all rights reserved.
  *
+ * 
  * This control base on FastColoredTextBox 
  * http://www.codeproject.com/Articles/161871/Fast-Colored-TextBox-for-syntax-highlighting
  *
@@ -33,11 +30,6 @@
  ****************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 
@@ -51,10 +43,7 @@ namespace Unvell.ReoScript.Editor
 		{
 			InitializeComponent();
 
-			fctb.LineReceived += (s, e) =>
-			{
-				if (LineReceived != null) LineReceived(s, e);
-			};
+			fctb.LineReceived += (s, e) => LineReceived?.Invoke(s, e);
 		}
 
 		public void OutLine(string text)

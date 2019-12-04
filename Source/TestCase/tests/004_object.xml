@@ -1,18 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <!--
+/*****************************************************************************
+ * 
  * ReoScript - .NET Script Language Engine
  * 
- * http://www.unvell.com/ReoScript
+ * https://github.com/unvell/ReoScript
  *
  * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
  * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
  * PURPOSE.
  *
- * This software released under LGPLv3 license.
- * Author: Jing Lu <dujid0@gmail.com>
+ * This software released under MIT license.
+ * Copyright (c) 2012-2019 Jingwood, unvell.com, all rights reserved.
  * 
- * Copyright (c) 2012-2013 unvell.com, all rights reserved.
+ ****************************************************************************/
 -->
 
 <test-suite id="004" name="object">
@@ -103,7 +105,7 @@
     </script>
   </test-case>
 
-  <test-case id="011" desc="Initializer">
+  <test-case id="011" desc="initializer">
     <script>
       var t = debug.assert;
 
@@ -173,7 +175,19 @@
     </script>
   </test-case>
 
-  <test-case id="020" name="delete property">
+	<test-case id="015" name="toString" disabled="1">
+		<!-- Not supported yet -->
+		<script>
+			var t = debug.assert;
+
+			var obj = new Object();
+			obj.toString = () => "my object";
+			t( obj, "my object" );
+
+		</script>
+	</test-case>
+
+	<test-case id="020" name="delete property">
     <script>
       var t = debug.assert;
 

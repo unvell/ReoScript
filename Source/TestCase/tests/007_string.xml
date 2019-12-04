@@ -1,30 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <!--
+/*****************************************************************************
+ * 
  * ReoScript - .NET Script Language Engine
  * 
- * http://www.unvell.com/ReoScript
+ * https://github.com/unvell/ReoScript
  *
  * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
  * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
  * PURPOSE.
  *
- * This software released under LGPLv3 license.
- * Author: Jing Lu <dujid0@gmail.com>
+ * This software released under MIT license.
+ * Copyright (c) 2012-2019 Jingwood, unvell.com, all rights reserved.
  * 
- * Copyright (c) 2012-2013 unvell.com, all rights reserved.
+ ****************************************************************************/
 -->
 
 <test-suite id="007" name="string" disabled="true">
   <test-case id="001" name="literal">
     <script>
-      var t = debug.assert;
+			var t = debug.assert;
 
-      var a = "hello";
-      
-      t(a == "hello");
-      t(a.length == 5);
-    </script>
+			var a = "hello";
+
+			t( a, "hello" );
+
+			t( a.length, 5 );
+
+			// failed on this test
+			//t( a['length'], 5 );
+
+		</script>
   </test-case>
 
   <test-case id="002" name="+op">
@@ -146,8 +153,39 @@
       
     </script>
   </test-case>
-  
-  <!--
+
+
+	<test-case id="009" name="equals">
+		<script>
+			var t = debug.assert;
+
+			t( 'hello' == 'hello' );
+			t( 'hello' == "hello" );
+
+			t( 'hello' != 'Hello' );
+
+		</script>
+	</test-case>
+
+
+	<test-case id="010" name="comparison">
+		<![CDATA[
+			var t = debug.assert;
+
+			t( "a" < "b", true );
+			t( "a" < "a", false );
+			t( "a" < "ab", true );
+			t( "a" <= "a", true );
+			
+			t( "b" > "a", true );
+			t( "b" > "c", false );
+			t( "b" > "ab", true );
+			t( "b" >= "b", true );
+
+		]]>
+	</test-case>
+
+	<!--
   since v1.2.2 - no longer supported 
   
   <test-case id="010" name="index modify">
@@ -165,7 +203,7 @@
     </script>
   </test-case>-->
 
-  <test-case id="011" name="split">
+  <test-case id="020" name="split">
     <script>
       var t = debug.assert;
 
@@ -197,7 +235,7 @@
     </script>
   </test-case>
 
-  <test-case id="012" name="substr">
+  <test-case id="021" name="substr">
     <script>
       var t = debug.assert;
 
@@ -216,7 +254,7 @@
     </script>
   </test-case>
 
-  <test-case id="013" name="upper lower">
+  <test-case id="022" name="upper lower">
     <script>
       var t = debug.assert;
 
@@ -227,7 +265,7 @@
     </script>
   </test-case>
 
-  <test-case id="013" name="mix primitive">
+  <test-case id="023" name="mix primitive">
     <script>
       var t = debug.assert;
 
@@ -239,7 +277,7 @@
     </script>
   </test-case>
   
-  <test-case id="020" name="wrap">
+  <test-case id="030" name="wrap">
     <script>
       var t = debug.assert;
 
@@ -255,7 +293,7 @@
     </script>
   </test-case>
 
-  <test-case id="021" name="wrap args">
+  <test-case id="031" name="wrap args">
     <script>
       var t = debug.assert;
 
@@ -276,7 +314,7 @@
     </script>
   </test-case>
 
-  <test-case id="022" name="wrap operations">
+  <test-case id="032" name="wrap operations">
     <script>
       var t = debug.assert;
 
