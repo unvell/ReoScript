@@ -96,7 +96,7 @@ namespace Unvell.ReoScript.TestCase
 
 		private static readonly XmlSerializer xmlSuiteSerializer = new XmlSerializer(typeof(XmlTestSuite));
 
-		public bool RunLanguageTests(List<string> ids, List<string> enabledTags)
+		public bool RunLanguageTests(List<string> filter, List<string> enabledTags)
 		{
 			Console.WriteLine("Run Core tests...\n");
 
@@ -110,6 +110,8 @@ namespace Unvell.ReoScript.TestCase
 
 			foreach (string filename in Directory.GetFiles("tests"))
 			{
+				if (filter.Count > 0 && !filter.Any(f => filename.Contains(f))) continue;
+
 				XmlTestSuite suite = xmlSuiteSerializer.Deserialize(File.OpenRead(filename)) as XmlTestSuite;
 
 				if (suite != null)
@@ -138,7 +140,7 @@ namespace Unvell.ReoScript.TestCase
 					}
 
 					if (t.Disabled || string.IsNullOrEmpty(testCode)
-						|| (ids.Count > 0 && !ids.Any(id => caseId.Contains(id))))
+						|| (filter.Count > 0 && !filter.Any(id => caseId.Contains(id))))
 						return;
 
 					srm.Reset();
