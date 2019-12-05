@@ -6,7 +6,7 @@
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0802DFE2-D172-4099-8538-DC2C114152D1}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Unvell.ReoScript.Editor</RootNamespace>
     <AssemblyName>Unvell.ReoScriptEditor</AssemblyName>
