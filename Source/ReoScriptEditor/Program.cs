@@ -17,7 +17,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Unvell.ReoScript.Editor
+namespace unvell.ReoScript.Editor
 {
 	static class Program
 	{

@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Unvell.ReoScript.Extensions
+namespace unvell.ReoScript.Extensions
 {
 	public interface IModuleLoader
 	{

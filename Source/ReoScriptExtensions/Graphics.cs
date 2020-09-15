@@ -21,7 +21,7 @@ using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Drawing.Drawing2D;
 
-namespace Unvell.ReoScript.Extensions
+namespace unvell.ReoScript.Extensions
 {
 	public sealed class GraphicsExtensionUtility
 	{

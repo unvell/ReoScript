@@ -29,7 +29,7 @@
  *  
  ****************************************************************************/
 
-namespace Unvell.ReoScript.Editor
+namespace unvell.ReoScript.Editor
 {
 	partial class FctbConsoleControl
 	{
@@ -60,7 +60,7 @@ namespace Unvell.ReoScript.Editor
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.fctb = new Unvell.ReoScript.Editor.MyConsoleTextBox();
+			this.fctb = new unvell.ReoScript.Editor.MyConsoleTextBox();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.fctb)).BeginInit();

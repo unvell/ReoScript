@@ -14,7 +14,7 @@
  * 
  ****************************************************************************/
 
-namespace Unvell.ReoScript.Editor
+namespace unvell.ReoScript.Editor
 {
 	partial class ReoScriptEditor
 	{
@@ -91,8 +91,8 @@ namespace Unvell.ReoScript.Editor
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.runToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.stopToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.editor = new Unvell.ReoScript.Editor.ReoScriptEditorControl();
-			this.console = new Unvell.ReoScript.Editor.FctbConsoleControl();
+			this.editor = new unvell.ReoScript.Editor.ReoScriptEditorControl();
+			this.console = new unvell.ReoScript.Editor.FctbConsoleControl();
 			this.menuStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -129,7 +129,7 @@ namespace Unvell.ReoScript.Editor
 			// 
 			// newToolStripMenuItem
 			// 
-			this.newToolStripMenuItem.Image = global::Unvell.ReoScript.Editor.Properties.Resources.NewDocumentHS;
+			this.newToolStripMenuItem.Image = global::unvell.ReoScript.Editor.Properties.Resources.NewDocumentHS;
 			this.newToolStripMenuItem.Name = "newToolStripMenuItem";
 			this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
 			this.newToolStripMenuItem.Size = new System.Drawing.Size(272, 40);
@@ -137,7 +137,7 @@ namespace Unvell.ReoScript.Editor
 			// 
 			// openToolStripMenuItem
 			// 
-			this.openToolStripMenuItem.Image = global::Unvell.ReoScript.Editor.Properties.Resources.openHS;
+			this.openToolStripMenuItem.Image = global::unvell.ReoScript.Editor.Properties.Resources.openHS;
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
 			this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
 			this.openToolStripMenuItem.Size = new System.Drawing.Size(272, 40);
@@ -145,7 +145,7 @@ namespace Unvell.ReoScript.Editor
 			// 
 			// saveToolStripMenuItem
 			// 
-			this.saveToolStripMenuItem.Image = global::Unvell.ReoScript.Editor.Properties.Resources.saveHS;
+			this.saveToolStripMenuItem.Image = global::unvell.ReoScript.Editor.Properties.Resources.saveHS;
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
 			this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
 			this.saveToolStripMenuItem.Size = new System.Drawing.Size(272, 40);
@@ -184,7 +184,7 @@ namespace Unvell.ReoScript.Editor
 			// 
 			// undoToolStripMenuItem
 			// 
-			this.undoToolStripMenuItem.Image = global::Unvell.ReoScript.Editor.Properties.Resources.Edit_UndoHS;
+			this.undoToolStripMenuItem.Image = global::unvell.ReoScript.Editor.Properties.Resources.Edit_UndoHS;
 			this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
 			this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
 			this.undoToolStripMenuItem.Size = new System.Drawing.Size(252, 40);
@@ -192,7 +192,7 @@ namespace Unvell.ReoScript.Editor
 			// 
 			// redoToolStripMenuItem
 			// 
-			this.redoToolStripMenuItem.Image = global::Unvell.ReoScript.Editor.Properties.Resources.Edit_RedoHS;
+			this.redoToolStripMenuItem.Image = global::unvell.ReoScript.Editor.Properties.Resources.Edit_RedoHS;
 			this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
 			this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
 			this.redoToolStripMenuItem.Size = new System.Drawing.Size(252, 40);
@@ -205,7 +205,7 @@ namespace Unvell.ReoScript.Editor
 			// 
 			// cutToolStripMenuItem
 			// 
-			this.cutToolStripMenuItem.Image = global::Unvell.ReoScript.Editor.Properties.Resources.CutHS;
+			this.cutToolStripMenuItem.Image = global::unvell.ReoScript.Editor.Properties.Resources.CutHS;
 			this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
 			this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
 			this.cutToolStripMenuItem.Size = new System.Drawing.Size(252, 40);
@@ -213,7 +213,7 @@ namespace Unvell.ReoScript.Editor
 			// 
 			// copyToolStripMenuItem
 			// 
-			this.copyToolStripMenuItem.Image = global::Unvell.ReoScript.Editor.Properties.Resources.CopyHS;
+			this.copyToolStripMenuItem.Image = global::unvell.ReoScript.Editor.Properties.Resources.CopyHS;
 			this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
 			this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
 			this.copyToolStripMenuItem.Size = new System.Drawing.Size(252, 40);
@@ -221,7 +221,7 @@ namespace Unvell.ReoScript.Editor
 			// 
 			// pasteToolStripMenuItem
 			// 
-			this.pasteToolStripMenuItem.Image = global::Unvell.ReoScript.Editor.Properties.Resources.PasteHS;
+			this.pasteToolStripMenuItem.Image = global::unvell.ReoScript.Editor.Properties.Resources.PasteHS;
 			this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
 			this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
 			this.pasteToolStripMenuItem.Size = new System.Drawing.Size(252, 40);
@@ -240,7 +240,7 @@ namespace Unvell.ReoScript.Editor
 			// 
 			// runToolStripMenuItem
 			// 
-			this.runToolStripMenuItem.Image = global::Unvell.ReoScript.Editor.Properties.Resources.PlayHS;
+			this.runToolStripMenuItem.Image = global::unvell.ReoScript.Editor.Properties.Resources.PlayHS;
 			this.runToolStripMenuItem.Name = "runToolStripMenuItem";
 			this.runToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
 			this.runToolStripMenuItem.Size = new System.Drawing.Size(315, 40);
@@ -249,7 +249,7 @@ namespace Unvell.ReoScript.Editor
 			// stopToolStripMenuItem
 			// 
 			this.stopToolStripMenuItem.Enabled = false;
-			this.stopToolStripMenuItem.Image = global::Unvell.ReoScript.Editor.Properties.Resources.StopHS;
+			this.stopToolStripMenuItem.Image = global::unvell.ReoScript.Editor.Properties.Resources.StopHS;
 			this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
 			this.stopToolStripMenuItem.Size = new System.Drawing.Size(315, 40);
 			this.stopToolStripMenuItem.Text = "&Stop";
@@ -261,7 +261,7 @@ namespace Unvell.ReoScript.Editor
 			// 
 			// checkSyntaxToolStripMenuItem
 			// 
-			this.checkSyntaxToolStripMenuItem.Image = global::Unvell.ReoScript.Editor.Properties.Resources.CheckGrammarHS;
+			this.checkSyntaxToolStripMenuItem.Image = global::unvell.ReoScript.Editor.Properties.Resources.CheckGrammarHS;
 			this.checkSyntaxToolStripMenuItem.Name = "checkSyntaxToolStripMenuItem";
 			this.checkSyntaxToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
 			this.checkSyntaxToolStripMenuItem.Size = new System.Drawing.Size(315, 40);
@@ -366,7 +366,7 @@ namespace Unvell.ReoScript.Editor
 			// newToolStripButton
 			// 
 			this.newToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.newToolStripButton.Image = global::Unvell.ReoScript.Editor.Properties.Resources.NewDocumentHS;
+			this.newToolStripButton.Image = global::unvell.ReoScript.Editor.Properties.Resources.NewDocumentHS;
 			this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.newToolStripButton.Name = "newToolStripButton";
 			this.newToolStripButton.Size = new System.Drawing.Size(40, 32);
@@ -375,7 +375,7 @@ namespace Unvell.ReoScript.Editor
 			// openToolStripButton
 			// 
 			this.openToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.openToolStripButton.Image = global::Unvell.ReoScript.Editor.Properties.Resources.openHS;
+			this.openToolStripButton.Image = global::unvell.ReoScript.Editor.Properties.Resources.openHS;
 			this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.openToolStripButton.Name = "openToolStripButton";
 			this.openToolStripButton.Size = new System.Drawing.Size(40, 32);
@@ -384,7 +384,7 @@ namespace Unvell.ReoScript.Editor
 			// saveToolStripButton
 			// 
 			this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.saveToolStripButton.Image = global::Unvell.ReoScript.Editor.Properties.Resources.saveHS;
+			this.saveToolStripButton.Image = global::unvell.ReoScript.Editor.Properties.Resources.saveHS;
 			this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.saveToolStripButton.Name = "saveToolStripButton";
 			this.saveToolStripButton.Size = new System.Drawing.Size(40, 32);
@@ -398,7 +398,7 @@ namespace Unvell.ReoScript.Editor
 			// cutToolStripButton
 			// 
 			this.cutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.cutToolStripButton.Image = global::Unvell.ReoScript.Editor.Properties.Resources.CutHS;
+			this.cutToolStripButton.Image = global::unvell.ReoScript.Editor.Properties.Resources.CutHS;
 			this.cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.cutToolStripButton.Name = "cutToolStripButton";
 			this.cutToolStripButton.Size = new System.Drawing.Size(40, 32);
@@ -407,7 +407,7 @@ namespace Unvell.ReoScript.Editor
 			// copyToolStripButton
 			// 
 			this.copyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.copyToolStripButton.Image = global::Unvell.ReoScript.Editor.Properties.Resources.CopyHS;
+			this.copyToolStripButton.Image = global::unvell.ReoScript.Editor.Properties.Resources.CopyHS;
 			this.copyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.copyToolStripButton.Name = "copyToolStripButton";
 			this.copyToolStripButton.Size = new System.Drawing.Size(40, 32);
@@ -416,7 +416,7 @@ namespace Unvell.ReoScript.Editor
 			// pasteToolStripDropDownButton
 			// 
 			this.pasteToolStripDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.pasteToolStripDropDownButton.Image = global::Unvell.ReoScript.Editor.Properties.Resources.PasteHS;
+			this.pasteToolStripDropDownButton.Image = global::unvell.ReoScript.Editor.Properties.Resources.PasteHS;
 			this.pasteToolStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.pasteToolStripDropDownButton.Name = "pasteToolStripDropDownButton";
 			this.pasteToolStripDropDownButton.Size = new System.Drawing.Size(40, 32);
@@ -430,7 +430,7 @@ namespace Unvell.ReoScript.Editor
 			// undoToolStripButton
 			// 
 			this.undoToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.undoToolStripButton.Image = global::Unvell.ReoScript.Editor.Properties.Resources.Edit_UndoHS;
+			this.undoToolStripButton.Image = global::unvell.ReoScript.Editor.Properties.Resources.Edit_UndoHS;
 			this.undoToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.undoToolStripButton.Name = "undoToolStripButton";
 			this.undoToolStripButton.Size = new System.Drawing.Size(40, 32);
@@ -439,7 +439,7 @@ namespace Unvell.ReoScript.Editor
 			// redoToolStripButton
 			// 
 			this.redoToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.redoToolStripButton.Image = global::Unvell.ReoScript.Editor.Properties.Resources.Edit_RedoHS;
+			this.redoToolStripButton.Image = global::unvell.ReoScript.Editor.Properties.Resources.Edit_RedoHS;
 			this.redoToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.redoToolStripButton.Name = "redoToolStripButton";
 			this.redoToolStripButton.Size = new System.Drawing.Size(40, 32);
@@ -453,7 +453,7 @@ namespace Unvell.ReoScript.Editor
 			// checkSyntaxStripButton
 			// 
 			this.checkSyntaxStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.checkSyntaxStripButton.Image = global::Unvell.ReoScript.Editor.Properties.Resources.CheckGrammarHS;
+			this.checkSyntaxStripButton.Image = global::unvell.ReoScript.Editor.Properties.Resources.CheckGrammarHS;
 			this.checkSyntaxStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.checkSyntaxStripButton.Name = "checkSyntaxStripButton";
 			this.checkSyntaxStripButton.Size = new System.Drawing.Size(40, 32);
@@ -467,7 +467,7 @@ namespace Unvell.ReoScript.Editor
 			// runToolStripButton
 			// 
 			this.runToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.runToolStripButton.Image = global::Unvell.ReoScript.Editor.Properties.Resources.PlayHS;
+			this.runToolStripButton.Image = global::unvell.ReoScript.Editor.Properties.Resources.PlayHS;
 			this.runToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.runToolStripButton.Name = "runToolStripButton";
 			this.runToolStripButton.Size = new System.Drawing.Size(40, 32);
@@ -477,7 +477,7 @@ namespace Unvell.ReoScript.Editor
 			// 
 			this.stopToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.stopToolStripButton.Enabled = false;
-			this.stopToolStripButton.Image = global::Unvell.ReoScript.Editor.Properties.Resources.StopHS;
+			this.stopToolStripButton.Image = global::unvell.ReoScript.Editor.Properties.Resources.StopHS;
 			this.stopToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.stopToolStripButton.Name = "stopToolStripButton";
 			this.stopToolStripButton.Size = new System.Drawing.Size(40, 32);
@@ -534,7 +534,7 @@ namespace Unvell.ReoScript.Editor
 		private System.Windows.Forms.ToolStripMenuItem scriptToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
 		private System.Windows.Forms.Splitter splitter1;
-		private Unvell.ReoScript.Editor.ReoScriptEditorControl editor;
+		private unvell.ReoScript.Editor.ReoScriptEditorControl editor;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;

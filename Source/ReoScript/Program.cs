@@ -17,7 +17,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Unvell.ReoScript
+namespace unvell.ReoScript
 {
 	static class Program
 	{

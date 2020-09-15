@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace Unvell.ReoScript
+namespace unvell.ReoScript
 {
 	public class MachineConsole
 	{

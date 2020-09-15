@@ -8,7 +8,7 @@
     <ProjectGuid>{7DE6506B-AB2D-477D-A075-44AAC1742D6C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Unvell.ReoScript.Runner</RootNamespace>
+    <RootNamespace>unvell.ReoScript.Runner</RootNamespace>
     <AssemblyName>ReoScript</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

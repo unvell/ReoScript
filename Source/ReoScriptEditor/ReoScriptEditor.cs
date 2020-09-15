@@ -19,10 +19,10 @@ using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using Unvell.ReoScript.Editor.Properties;
-using Unvell.ReoScript.Diagnostics;
+using unvell.ReoScript.Editor.Properties;
+using unvell.ReoScript.Diagnostics;
 
-namespace Unvell.ReoScript.Editor
+namespace unvell.ReoScript.Editor
 {
 	public partial class ReoScriptEditor : Form, IStandardOutputListener
 	{

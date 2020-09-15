@@ -31,12 +31,12 @@ using System.Reflection.Emit;
 using Antlr.Runtime;
 using Antlr.Runtime.Tree;
 
-using Unvell.ReoScript.Properties;
-using Unvell.ReoScript.Runtime;
-using Unvell.ReoScript.Parsers;
-using Unvell.ReoScript.Reflection;
+using unvell.ReoScript.Properties;
+using unvell.ReoScript.Runtime;
+using unvell.ReoScript.Parsers;
+using unvell.ReoScript.Reflection;
 
-namespace Unvell.ReoScript
+namespace unvell.ReoScript
 {
 	#region Lexer & Parser
 	sealed internal partial class ReoScriptLexer

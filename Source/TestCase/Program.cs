@@ -21,9 +21,9 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Diagnostics;
 using System.Reflection;
-using Unvell.ReoScript.Diagnostics;
+using unvell.ReoScript.Diagnostics;
 
-namespace Unvell.ReoScript.TestCase
+namespace unvell.ReoScript.TestCase
 {
 	static class Program
 	{

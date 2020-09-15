@@ -28,7 +28,7 @@ using Antlr.Runtime.Misc;
 using Antlr.Runtime.Tree;
 using RewriteRuleITokenStream = Antlr.Runtime.Tree.RewriteRuleTokenStream;
 
-namespace Unvell.ReoScript
+namespace unvell.ReoScript
 {
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "3.4")]
 [System.CLSCompliant(false)]

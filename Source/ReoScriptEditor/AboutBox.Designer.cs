@@ -14,7 +14,7 @@
  * 
  ****************************************************************************/
 
-namespace Unvell.ReoScript.Editor
+namespace unvell.ReoScript.Editor
 {
 	partial class AboutBox
 	{

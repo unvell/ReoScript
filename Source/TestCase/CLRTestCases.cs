@@ -17,7 +17,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Unvell.ReoScript.TestCase
+namespace unvell.ReoScript.TestCase
 {
 	[TestSuite]
 	class ReoScriptTestSuite

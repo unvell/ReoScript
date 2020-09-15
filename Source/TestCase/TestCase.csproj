@@ -8,8 +8,8 @@
     <ProjectGuid>{561F035D-EFC9-4F28-99AD-1F363438E89C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Unvell.ReoScript.TestCase</RootNamespace>
-    <AssemblyName>Unvell.ReoScript.TestCase</AssemblyName>
+    <RootNamespace>unvell.ReoScript.TestCase</RootNamespace>
+    <AssemblyName>unvell.ReoScript.TestCase</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>

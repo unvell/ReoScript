@@ -19,10 +19,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-using Unvell.ReoScript.Extensions;
-using Unvell.ReoScript.Diagnostics;
+using unvell.ReoScript.Extensions;
+using unvell.ReoScript.Diagnostics;
 
-namespace Unvell.ReoScript
+namespace unvell.ReoScript
 {
 	class ConsoleRunnerProgram
 	{
@@ -126,7 +126,7 @@ Usage: ReoScript.exe [filename|-workpath|-debug|-exec|-console]");
 			{
 			  using (StreamReader sr = new StreamReader(new FileStream(args[0], FileMode.Open, FileAccess.Read, FileShare.Read)))
 			  {
-			    Console.WriteLine(Unvell.ReoScript.Compiler.ReoScriptCompiler.Run(sr.ReadToEnd()));
+			    Console.WriteLine(unvell.ReoScript.Compiler.ReoScriptCompiler.Run(sr.ReadToEnd()));
 			  }
 			  return;
 			}

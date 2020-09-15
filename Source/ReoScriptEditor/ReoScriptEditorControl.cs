@@ -19,7 +19,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using FastColoredTextBoxNS;
 
-namespace Unvell.ReoScript.Editor
+namespace unvell.ReoScript.Editor
 {
 	public partial class ReoScriptEditorControl : UserControl
 	{

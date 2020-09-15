@@ -35,7 +35,7 @@ using System.Threading;
 
 using FastColoredTextBoxNS;
 
-namespace Unvell.ReoScript.Editor
+namespace unvell.ReoScript.Editor
 {
 	public partial class FctbConsoleControl : UserControl
 	{

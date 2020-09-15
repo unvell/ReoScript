@@ -16,7 +16,7 @@
 
 using System.IO;
 
-namespace Unvell.ReoScript.Extensions
+namespace unvell.ReoScript.Extensions
 {
 	public class FileObject
 	{

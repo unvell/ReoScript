@@ -8,8 +8,8 @@
     <ProjectGuid>{0802DFE2-D172-4099-8538-DC2C114152D1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Unvell.ReoScript.Editor</RootNamespace>
-    <AssemblyName>Unvell.ReoScriptEditor</AssemblyName>
+    <RootNamespace>unvell.ReoScript.Editor</RootNamespace>
+    <AssemblyName>unvell.ReoScriptEditor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>

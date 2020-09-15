@@ -8,8 +8,8 @@
     <ProjectGuid>{544005E7-F55A-42E2-8DDB-B43F95F27C69}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Unvell.ReoScript</RootNamespace>
-    <AssemblyName>Unvell.ReoScript</AssemblyName>
+    <RootNamespace>unvell.ReoScript</RootNamespace>
+    <AssemblyName>unvell.ReoScript</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>
