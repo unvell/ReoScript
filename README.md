@@ -14,4 +14,4 @@ ReoScript is an ECMAScript-like script language interpreter designed to integrat
 
 MIT License
 
-Copyright (c) jinglu@unvell.com, unvell.com 2012-2017, all rights reserved.
+Copyright (c) unvell inc., Jingwood 2012-2022, all rights reserved.
