@@ -1427,7 +1427,22 @@ namespace unvell.ReoScript
 			return context.CreateNewObject(context.Srm.BuiltinConstructors.ObjectFunction) as ObjectValue;
 		}
 
-		internal CallScope OuterCallScope { get; set; }
+		/// <summary>
+		/// Lexical environment captured at the moment this function value was created.
+		///
+		/// For named/anonymous inner functions this points to the enclosing call scope
+		/// at creation time, giving them proper closure semantics: the captured
+		/// variables remain reachable for the entire lifetime of the function value,
+		/// independent of where (or how often) the function is later called.
+		///
+		/// For top-level functions and native functions this is null; lookups fall
+		/// through to the global object.
+		///
+		/// Each evaluation of a function expression / declaration produces a fresh
+		/// FunctionObject instance, so two closures created from the same source
+		/// have independent CapturedScope references and do not interfere.
+		/// </summary>
+		internal CallScope CapturedScope { get; set; }
 	}
 
 	/// <summary>
@@ -1771,7 +1786,7 @@ namespace unvell.ReoScript
 				}
 				else
 				{
-					CallScope outerScope = cs.CurrentFunction.OuterCallScope;
+					CallScope outerScope = cs.CurrentFunction.CapturedScope;
 					while (outerScope != null)
 					{
 						if (outerScope.Variables.ContainsKey(identifier))
@@ -1780,7 +1795,7 @@ namespace unvell.ReoScript
 							break;
 						}
 
-						outerScope = outerScope.CurrentFunction.OuterCallScope;
+						outerScope = outerScope.CurrentFunction.CapturedScope;
 					}
 				}
 			}
@@ -2354,7 +2369,7 @@ namespace unvell.ReoScript
 						}
 						else
 						{
-							CallScope outerScope = cs.CurrentFunction.OuterCallScope;
+							CallScope outerScope = cs.CurrentFunction.CapturedScope;
 							while (outerScope != null)
 							{
 								if (outerScope.Variables.ContainsKey(identifier))
@@ -2363,7 +2378,7 @@ namespace unvell.ReoScript
 									break;
 								}
 
-								outerScope = outerScope.CurrentFunction.OuterCallScope;
+								outerScope = outerScope.CurrentFunction.CapturedScope;
 							}
 						}
 					}
@@ -2814,7 +2829,7 @@ namespace unvell.ReoScript
 						}
 						else
 						{
-							CallScope outerScope = cs.CurrentFunction.OuterCallScope;
+							CallScope outerScope = cs.CurrentFunction.CapturedScope;
 							while (outerScope != null)
 							{
 								if (outerScope.Variables.ContainsKey(identifier))
@@ -2823,7 +2838,7 @@ namespace unvell.ReoScript
 									break;
 								}
 
-								outerScope = outerScope.CurrentFunction.OuterCallScope;
+								outerScope = outerScope.CurrentFunction.CapturedScope;
 							}
 						}
 					}
@@ -2908,7 +2923,7 @@ namespace unvell.ReoScript
 						}
 						else
 						{
-							CallScope outerScope = cs.CurrentFunction.OuterCallScope;
+							CallScope outerScope = cs.CurrentFunction.CapturedScope;
 							while (outerScope != null)
 							{
 								if (outerScope.Variables.ContainsKey(identifier))
@@ -2917,7 +2932,7 @@ namespace unvell.ReoScript
 									break;
 								}
 
-								outerScope = outerScope.CurrentFunction.OuterCallScope;
+								outerScope = outerScope.CurrentFunction.CapturedScope;
 							}
 						}
 					}
@@ -3830,6 +3845,10 @@ namespace unvell.ReoScript
 			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
 			{
 				FunctionObject fun = CreateAndInitFunction(context, ((FunctionDefineNode)t).FunctionInfo);
+				// Capture the lexical scope this declaration is being walked in.
+				// For top-level declarations CurrentCallScope is null and lookups
+				// fall through to the global object.
+				fun.CapturedScope = context.CurrentCallScope;
 				srm[fun.FunName] = fun;
 				return fun;
 			}
@@ -3872,7 +3891,7 @@ namespace unvell.ReoScript
 			{
 				FunctionObject fun = FunctionDefineNodeParser.CreateAndInitFunction(ctx,
 					((AnonymousFunctionDefineNode)t).FunctionInfo);
-				fun.OuterCallScope = ctx.CurrentCallScope;
+				fun.CapturedScope = ctx.CurrentCallScope;
 				return fun;
 			}
 
@@ -3898,7 +3917,7 @@ namespace unvell.ReoScript
 
 					if (funObj == null && context.CurrentCallScope != null)
 					{
-						CallScope outerScope = context.CurrentCallScope.CurrentFunction.OuterCallScope;
+						CallScope outerScope = context.CurrentCallScope.CurrentFunction.CapturedScope;
 						while (outerScope != null)
 						{
 							if (outerScope.Variables.TryGetValue(funName, out funObj))
@@ -3906,7 +3925,7 @@ namespace unvell.ReoScript
 								break;
 							}
 
-							outerScope = outerScope.CurrentFunction.OuterCallScope;
+							outerScope = outerScope.CurrentFunction.CapturedScope;
 						}
 					}
 				}
@@ -4868,7 +4887,7 @@ namespace unvell.ReoScript
 					}
 					else
 					{
-						CallScope outerScope = cs.CurrentFunction.OuterCallScope;
+						CallScope outerScope = cs.CurrentFunction.CapturedScope;
 						while (outerScope != null)
 						{
 							if (outerScope.Variables.ContainsKey(identifier))
@@ -4877,7 +4896,7 @@ namespace unvell.ReoScript
 								break;
 							}
 
-							outerScope = outerScope.CurrentFunction.OuterCallScope;
+							outerScope = outerScope.CurrentFunction.CapturedScope;
 						}
 					}
 				}
@@ -6067,7 +6086,12 @@ namespace unvell.ReoScript
 						if (!fi.IsAnonymous)
 						{
 							Debug.Assert(!newScope.Variables.ContainsKey(fi.Name));
-							newScope[fi.Name] = FunctionDefineNodeParser.CreateAndInitFunction(context, fi);
+							FunctionObject innerFun = FunctionDefineNodeParser.CreateAndInitFunction(context, fi);
+							// Hoisted inner functions lexically belong to the scope
+							// being entered, so they capture newScope as their
+							// closure environment.
+							innerFun.CapturedScope = newScope;
+							newScope[fi.Name] = innerFun;
 						}
 					}
 				}
@@ -6082,14 +6106,11 @@ namespace unvell.ReoScript
 					}
 				}
 
-				if (!fun.FunctionInfo.IsAnonymous // anonymous function's scope set by create-time
-					&& fun.FunctionInfo.IsInner     // only inner function need to set outer scope
-
-					// check whether the function will be called is inner function of current function
-					&& fun.FunctionInfo.OuterScope.Functions.Any(f => f == fun.FunctionInfo))
-				{
-					fun.OuterCallScope = context.CurrentCallScope;
-				}
+				// CapturedScope is now bound at function-creation time (in
+				// AnonymousFunctionNodeParser, FunctionDefineNodeParser, and the
+				// hoisting loop above), so the closure environment travels with
+				// the FunctionObject and is independent of where it is later
+				// called from. Nothing to set here, nothing to clear in finally.
 
 				newScope[KEY___ARGS__] = args;
 
@@ -6104,9 +6125,6 @@ namespace unvell.ReoScript
 				finally
 				{
 					context.PopCallStack();
-
-					// clear cached outer stack from current function
-					fun.OuterCallScope = null;
 				}
 
 				return returnValue != null ? returnValue.Value : null;
