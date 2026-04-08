@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using Antlr.Runtime;
 using Antlr.Runtime.Misc;
 
-namespace unvell.ReoScript
+namespace unvell.ReoScript.Core
 {
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "3.4")]
 [System.CLSCompliant(false)]

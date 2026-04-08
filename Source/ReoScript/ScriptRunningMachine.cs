@@ -35,505 +35,24 @@ using unvell.ReoScript.Properties;
 using unvell.ReoScript.Runtime;
 using unvell.ReoScript.Parsers;
 using unvell.ReoScript.Reflection;
+using unvell.ReoScript.Core.Statement;
+using unvell.ReoScript.Core;
 
 namespace unvell.ReoScript
 {
-	#region Lexer & Parser
-	sealed internal partial class ReoScriptLexer
-	{
-		public static readonly int HIDDEN = Hidden;
 
-		public const int MAX_TOKENS = 200;
-		public const int REPLACED_TREE = MAX_TOKENS - 1;
-	}
-
-	sealed internal partial class ReoScriptParser
-	{
-		//internal Preinterpreter Preinterpreter { get; set; }
-
-		private CommonTree ConstLiteral(CommonTree t)
-		{
-			switch (t.Type)
-			{
-				case ReoScriptLexer.NUMBER_LITERATE:
-					return new ConstValueNode(t, Convert.ToDouble(t.Text, System.Globalization.CultureInfo.InvariantCulture), ReoScriptLexer.NUMBER_LITERATE);
-
-				case ReoScriptLexer.HEX_LITERATE:
-					return new ConstValueNode(t, (double)Convert.ToInt32(t.Text.Substring(2), 16), ReoScriptLexer.NUMBER_LITERATE);
-
-				case ReoScriptLexer.BINARY_LITERATE:
-					return new ConstValueNode(t, (double)Convert.ToInt32(t.Text.Substring(2), 2), ReoScriptLexer.NUMBER_LITERATE);
-
-				case ReoScriptLexer.STRING_LITERATE:
-					string str = t.ToString();
-					str = str.Substring(1, str.Length - 2);
-					return new ConstValueNode(t, ScriptRunningMachine.ConvertEscapeLiterals(str), ReoScriptLexer.STRING_LITERATE);
-
-				//case ReoScriptLexer.LIT_TRUE:
-				//  return new ConstValueNode(t, true);
-
-				//case ReoScriptLexer.LIT_FALSE:
-				//  return new ConstValueNode(t, false);
-
-				//case ReoScriptLexer.LIT_NULL:
-				//case ReoScriptLexer.UNDEFINED:
-				//  return new ConstValueNode(t, null);
-
-				//case ReoScriptLexer.NAN:
-				//  return new ConstValueNode(t, NaNValue.Value);
-			}
-
-			return t;
-		}
-
-		internal Action<ErrorObject> CompilingErrorHandler;
-
-		internal List<ErrorObject> CompilingErrors = new List<ErrorObject>();
-
-		public override void ReportError(RecognitionException re)
-		{
-			string msg = string.Format("syntax error at char {0} on line {1}", re.CharPositionInLine, re.Line);
-
-			if (re is MissingTokenException)
-			{
-				MissingTokenException mte = (MissingTokenException)re;
-				msg += string.Format(", missing {0}", ReoScriptParser.tokenNames[mte.MissingType]);
-			}
-			else if (re is MismatchedTokenException)
-			{
-				MismatchedTokenException mte = (MismatchedTokenException)re;
-				msg += string.Format(", expect {0}", ReoScriptParser.tokenNames[mte.Expecting]);
-			}
-			else if (re is NoViableAltException)
-			{
-				NoViableAltException nvae = (NoViableAltException)re;
-				msg += ", unexpected token " + nvae.Token.Text;
-			}
-
-			ErrorObject e = new ErrorObject();
-			e.Message = msg;
-			e.CharIndex = re.CharPositionInLine;
-			e.Line = re.Line;
-
-			CompilingErrors.Add(e);
-
-			if (CompilingErrorHandler != null)
-			{
-				CompilingErrorHandler(e);
-			}
-		}
-
-		private Stack<StaticFunctionScope> localStack = new Stack<StaticFunctionScope>();
-
-		internal StaticFunctionScope CurrentStack { get; set; }
-
-		private void PushLocalStack()
-		{
-			localStack.Push(CurrentStack = new StaticFunctionScope());
-		}
-
-		private StaticFunctionScope lastLocalScope;
-
-		private void PopLocalStack()
-		{
-			if (localStack.Count > 1)
-				lastLocalScope = localStack.Pop();
-
-			CurrentStack = localStack.Peek();
-		}
-
-		private FunctionDefineNode DefineLocalFunction(string name, CommonTree paramsTree, CommonTree body,
-			int modifierToken, int line, int charIndex)
-		{
-			FunctionInfo fi = new FunctionInfo
-			{
-				Name = name,
-				IsInner = localStack.Count > 1,
-				Args = GetArgumentList(paramsTree),
-				IsAnonymous = false,
-				ScopeModifier = GetScopeModifier(modifierToken),
-				BodyTree = body,
-				CharIndex = charIndex,
-				Line = line,
-				InnerScope = lastLocalScope,
-				OuterScope = CurrentStack,
-			};
-
-			FunctionDefineNode fdn = new FunctionDefineNode
-			{
-				FunctionInfo = fi,
-			};
-
-			CurrentStack.Functions.Add(fi);
-
-			return fdn;
-		}
-
-		private AnonymousFunctionDefineNode DefineAnonymousFunction(string arg1, CommonTree argsTree, CommonTree body,
-			int modifierToken, int line, int charIndex)
-		{
-			FunctionInfo fi = new FunctionInfo
-			{
-				Name = "<anonymous>",
-				Args = arg1 == null ? GetArgumentList(argsTree) : new string[] { arg1 },
-				IsAnonymous = true,
-				ScopeModifier = MemberScopeModifier.Public,
-				BodyTree = body,
-				CharIndex = charIndex,
-				Line = line,
-				InnerScope = lastLocalScope,
-				OuterScope = CurrentStack,
-			};
-
-			AnonymousFunctionDefineNode afdn = new AnonymousFunctionDefineNode
-			{
-				FunctionInfo = fi,
-			};
-
-			if (body.Type != RETURN)
-			{
-				CurrentStack.Functions.Add(fi);
-			}
-
-			return afdn;
-		}
-
-		private VariableDefineNode DefineLocalVariable(string name, CommonTree val/*, int modifierToken*/,
-			int line, int charIndex)
-		{
-			VariableInfo vi = new VariableInfo
-			{
-				Name = name,
-				HasInitialValue = val != null,
-				IsImplicitDeclaration = false,
-				IsLocal = true,
-				CharIndex = charIndex,
-				Line = line,
-				//TODO: ScopeModifier = GetScopeModifier(modifierToken),
-				InitialValueTree = val,
-			};
-
-			VariableDefineNode vdn = new VariableDefineNode
-			{
-				VariableInfo = vi
-			};
-
-			CurrentStack.Variables.Add(vi);
-
-			return vdn;
-		}
-
-		private static string[] GetArgumentList(CommonTree argsTree)
-		{
-			if (argsTree == null) return new string[0];
-
-			if (argsTree.ChildCount == 0)
-			{
-				return new string[] { argsTree.Text };
-			}
-			else
-			{
-				string[] identifiers = new string[argsTree.ChildCount];
-
-				for (int i = 0; i < identifiers.Length; i++)
-				{
-					identifiers[i] = argsTree.Children[i].ToString();
-				}
-
-				return identifiers;
-			}
-		}
-
-		private static MemberScopeModifier GetScopeModifier(int tokenType)
-		{
-			switch (tokenType)
-			{
-				default:
-				case ReoScriptLexer.PUBLIC:
-					return MemberScopeModifier.Public;
-				case ReoScriptLexer.INTERNAL:
-					return MemberScopeModifier.Internal;
-				case ReoScriptLexer.PROTECTED:
-					return MemberScopeModifier.Protected;
-				case ReoScriptLexer.PRIVATE:
-					return MemberScopeModifier.Private;
-			}
-		}
-	}
-
-	public class StaticFunctionScope
-	{
-		internal readonly List<FunctionInfo> Functions;
-		internal readonly List<VariableInfo> Variables;
-
-		internal protected StaticFunctionScope()
-		{
-			Functions = new List<FunctionInfo>();
-			Variables = new List<VariableInfo>();
-		}
-	}
-
-	internal class FunctionDefineNode : CommonTree
-	{
-		public FunctionInfo FunctionInfo { get; set; }
-
-		public FunctionDefineNode()
-			: base(new CommonToken(ReoScriptLexer.FUNCTION_DEFINE))
-		{
-		}
-	}
-
-	internal class AnonymousFunctionDefineNode : CommonTree
-	{
-		public FunctionInfo FunctionInfo { get; set; }
-
-		public AnonymousFunctionDefineNode()
-			: base(new CommonToken(ReoScriptLexer.ANONYMOUS_FUNCTION))
-		{
-		}
-	}
-
-	namespace Reflection
-	{
-		/// <summary>
-		/// ReoScript function information
-		/// </summary>
-		public class FunctionInfo
-		{
-			/// <summary>
-			/// Function name
-			/// </summary>
-			public string Name { get; set; }
-
-			/// <summary>
-			/// Argument name list
-			/// </summary>
-			public string[] Args { get; set; }
-
-			/// <summary>
-			/// Specifies whether is anonymous function.
-			/// </summary>
-			public bool IsAnonymous { get; set; }
-
-			/// <summary>
-			/// Specifies whether is nested function inside another function.
-			/// </summary>
-			public bool IsInner { get; set; }
-
-			/// <summary>
-			/// Specifies the modifier of function visibility scope.
-			/// </summary>
-			public MemberScopeModifier ScopeModifier { get; set; }
-
-			/// <summary>
-			/// Specifies the char position on line where function is defined.
-			/// </summary>
-			public int CharIndex { get; set; }
-
-			/// <summary>
-			/// Specifies the line number where function is defined.
-			/// </summary>
-			public int Line { get; set; }
-
-			internal CommonTree BodyTree { get; set; }
-			internal StaticFunctionScope InnerScope { get; set; }
-			internal StaticFunctionScope OuterScope { get; set; }
-
-			/// <summary>
-			/// Get string of function's body.
-			/// </summary>
-			/// <returns></returns>
-			public string GetBodyText()
-			{
-				return BodyTree.ToString();
-			}
-
-			/// <summary>
-			/// Get all inner functions defined in this function
-			/// </summary>
-			public List<FunctionInfo> DeclaredInnerFunctions
-			{
-				get
-				{
-					return InnerScope.Functions;
-				}
-			}
-
-			/// <summary>
-			/// Get local variables defined in this function
-			/// </summary>
-			public List<VariableInfo> DeclaredLocalVariables
-			{
-				get
-				{
-					return InnerScope.Variables;
-				}
-			}
-		}
-
-		/// <summary>
-		/// ReoScript variable information
-		/// </summary>
-		public class VariableInfo
-		{
-			/// <summary>
-			/// Variable name
-			/// </summary>
-			public string Name { get; set; }
-
-			/// <summary>
-			/// Specifies whether is local variable.
-			/// </summary>
-			public bool IsLocal { get; set; }
-
-			/// <summary>
-			/// Specifies whether the variable to be used without declaration.
-			/// </summary>
-			public bool IsImplicitDeclaration { get; set; }
-
-			/// <summary>
-			/// Specifies whether the variable has an initialize value.
-			/// </summary>
-			public bool HasInitialValue { get; set; }
-
-			/// <summary>
-			/// Specifies the modifier of variable visibility scope.
-			/// </summary>
-			public MemberScopeModifier ScopeModifier { get; set; }
-
-			/// <summary>
-			/// Specifies the char position on line where variable is defined.
-			/// </summary>
-			public int CharIndex { get; set; }
-
-			/// <summary>
-			/// Specifies the line number where variable is defined.
-			/// </summary>
-			public int Line { get; set; }
-
-			internal CommonTree InitialValueTree { get; set; }
-
-			/// <summary>
-			/// Get string of initial value expression.
-			/// </summary>
-			/// <returns></returns>
-			public string GetInitialValueExpression()
-			{
-				return InitialValueTree.ToString();
-			}
-		}
-	}
-
-	internal class VariableDefineNode : CommonTree
-	{
-		public VariableInfo VariableInfo { get; set; }
-
-		public VariableDefineNode()
-			: base(new CommonToken(ReoScriptLexer.LOCAL_DECLARE_ASSIGNMENT))
-		{
-		}
-	}
-
-	/// <summary>
-	/// Member scope modifier. (RESERVED FEATURE)
-	/// </summary>
-	public enum MemberScopeModifier
-	{
-		/// <summary>
-		/// Property or method visible to any scope
-		/// </summary>
-		Public,
-
-		/// <summary>
-		/// Property or method visible to other members defined in same file
-		/// </summary>
-		Internal,
-
-		/// <summary>
-		/// Property or method visible to other members belonging to same instance or prototype
-		/// </summary>
-		Protected,
-
-		/// <summary>
-		/// Property or method visible to other members belonging to same instance
-		/// </summary>
-		Private,
-	}
-	#endregion
-
-	#region Syntax Tree
-	internal interface ISyntaxTreeReturn { }
-
-	#region NaNValue
-	/// <summary>
-	/// Runtime NaN value.
-	/// </summary>
-	public sealed class NaNValue : ISyntaxTreeReturn
-	{
-		public static readonly NaNValue Value = new NaNValue();
-		private NaNValue() { }
-		public override string ToString()
-		{
-			return "NaN";
-		}
-	}
-
-	/// <summary>
-	/// Runtime infinity value.
-	/// </summary>
-	public sealed class InfinityValue : ISyntaxTreeReturn
-	{
-		public static readonly InfinityValue Value = new InfinityValue();
-		private InfinityValue() { }
-		public override string ToString()
-		{
-			return "Infinity";
-		}
-	}
-
-	/// <summary>
-	/// Runtime -infinity value.
-	/// </summary>
-	public sealed class MinusInfinityValue : ISyntaxTreeReturn
-	{
-		public static readonly MinusInfinityValue Value = new MinusInfinityValue();
-		private MinusInfinityValue() { }
-		public override string ToString()
-		{
-			return "-Infinity";
-		}
-	}
-	#endregion
-	#region BreakNode
 	class BreakNode : ISyntaxTreeReturn
 	{
 		public static readonly BreakNode Value = new BreakNode();
 		private BreakNode() { }
 	}
-	#endregion
-	#region ContinueNode
 	class ContinueNode : ISyntaxTreeReturn
 	{
 		public static readonly ContinueNode Value = new ContinueNode();
 		private ContinueNode() { }
 	}
-	#endregion
-	#region ReturnNode
-	class ReturnNode : ISyntaxTreeReturn
-	{
-		public object Value { get; set; }
 
-		public ReturnNode(object value)
-		{
-			this.Value = value;
-		}
-	}
-	#endregion
 
-	#endregion
-
-	#region Built-in Objects
-	#region Object Value
 	/// <summary>
 	/// Object instance of ReoScript
 	/// </summary>
@@ -742,8 +261,7 @@ namespace unvell.ReoScript
 			return rootPrototype;
 		}
 	}
-	#endregion
-	#region NumberObject
+
 	public class NumberObject : ObjectValue
 	{
 		public double Number { get; set; }
@@ -757,8 +275,7 @@ namespace unvell.ReoScript
 			return Number.ToString();
 		}
 	}
-	#endregion
-	#region DateTimeValue
+
 	public class DateObject : ObjectValue
 	{
 		public static readonly long StartTimeTicks = (new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).Ticks;
@@ -797,8 +314,7 @@ namespace unvell.ReoScript
 			return DateTime.ToLongDateString();
 		}
 	}
-	#endregion
-	#region StringValue
+
 	public class StringObject : ObjectValue
 	{
 		public string String { get; set; }
@@ -1056,7 +572,7 @@ namespace unvell.ReoScript
 			return obj;
 		}
 	}
-	#endregion
+
 	#region BooleanObject
 	class BooleanObject : ObjectValue
 	{
@@ -1762,7 +1278,6 @@ namespace unvell.ReoScript
 		}
 	}
 	#endregion Array
-	#endregion Built-in Objects
 
 	#region Extension Objects
 	/// <summary>
