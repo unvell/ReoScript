@@ -645,12 +645,76 @@
       var t = debug.assert;
 
       function a() { a(); }
-      
+
       try {
-        a(); 
+        a();
       } catch(e) {
         alert(e.dumpStack());
       }
+    </script>
+  </test-case>
+
+  <test-case id="032" name="closure escape">
+    <script>
+      var t = debug.assert;
+
+      // An inner function returned from its enclosing function must
+      // still see the enclosing function's local variables, even after
+      // the enclosing function has already returned (lexical closure).
+      function makeAdder(x) {
+        return function(y) { return x + y; };
+      }
+
+      var add5 = makeAdder(5);
+
+      t(add5(3), 8);
+      t(add5(100), 105);
+    </script>
+  </test-case>
+
+  <test-case id="033" name="closure independence">
+    <script>
+      var t = debug.assert;
+
+      // Two closures created from the same outer function must each
+      // hold their own captured environment, independent of each other.
+      function makeAdder(x) {
+        return function(y) { return x + y; };
+      }
+
+      var add5 = makeAdder(5);
+      var add10 = makeAdder(10);
+
+      t(add5(1), 6);
+      t(add10(1), 11);
+      t(add5(1), 6);     // add5 must not be polluted by add10's creation
+      t(add10(2), 12);
+    </script>
+  </test-case>
+
+  <test-case id="034" name="closure counter">
+    <script>
+      var t = debug.assert;
+
+      // Classic closure counter: each counter has its own private,
+      // mutable state that persists across calls and is independent
+      // from other counters created from the same factory.
+      function makeCounter() {
+        var count = 0;
+        return function() {
+          count = count + 1;
+          return count;
+        };
+      }
+
+      var c1 = makeCounter();
+      var c2 = makeCounter();
+
+      t(c1(), 1);
+      t(c1(), 2);
+      t(c2(), 1);    // c2 starts fresh, independent of c1
+      t(c1(), 3);
+      t(c2(), 2);
     </script>
   </test-case>
 
