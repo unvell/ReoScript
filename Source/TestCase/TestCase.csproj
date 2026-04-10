@@ -16,6 +16,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="CLRTestCases.cs" />
     <Compile Include="XmlTestAdapter.cs" />
+    <Compile Include="JitBenchmark.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6736,6 +6736,34 @@ namespace unvell.ReoScript
 		}
 
 		/// <summary>
+		/// JIT-compile and run the specified script. Parses the source,
+		/// compiles the AST to IL via DynamicMethod, then executes.
+		/// Unsupported AST nodes automatically fall back to tree-walking.
+		/// </summary>
+		public object JitRun(string script)
+		{
+			if (!script.EndsWith(";")) script += ";";
+
+			var cs = Compile(script);
+			if (cs == null || cs.RootNode == null) return null;
+
+			var context = CreateContext();
+			isForceStop = false;
+
+			// define global functions (same as RunCompiledScript)
+			if (cs.RootScope != null)
+			{
+				foreach (var fi in cs.RootScope.Functions.Where(fi => !fi.IsAnonymous && !fi.IsInner))
+				{
+					GlobalObject[fi.Name] = FunctionDefineNodeParser.CreateAndInitFunction(context, fi);
+				}
+			}
+
+			var compiled = Compiler.JitCompiler.Compile(cs.RootNode);
+			return UnboxAnything(compiled(context));
+		}
+
+		/// <summary>
 		/// Unbox anything from script return
 		/// </summary>
 		/// <param name="o">object returned from script</param>
