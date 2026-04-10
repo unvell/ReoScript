@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-using unvell.ReoScript.Extensions;
 using unvell.ReoScript.Diagnostics;
 
 namespace unvell.ReoScript
@@ -121,14 +120,11 @@ Usage: ReoScript.exe [filename|-workpath|-debug|-exec|-console]");
 				workPath = Environment.CurrentDirectory;
 			}
 
-			// for test!
+			// JIT compile mode placeholder — will be reimplemented for .NET 10
 			if (compileMode)
 			{
-			  using (StreamReader sr = new StreamReader(new FileStream(args[0], FileMode.Open, FileAccess.Read, FileShare.Read)))
-			  {
-			    Console.WriteLine(unvell.ReoScript.Compiler.ReoScriptCompiler.Run(sr.ReadToEnd()));
-			  }
-			  return;
+				Console.WriteLine("Compile mode is not yet available in this version.");
+				return;
 			}
 
 			// create SRM

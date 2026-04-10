@@ -16,7 +16,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace unvell.ReoScript
 {
@@ -33,8 +33,6 @@ namespace unvell.ReoScript
 		public MachineConsole(string[] args)
 		{
 			srm.AddStdOutputListener(new BuiltinConsoleOutputListener());
-
-			QueryPerformanceFrequency(out freq);
 
 			foreach (string arg in args)
 			{
@@ -206,19 +204,16 @@ ReoScript Machine Console Help
 		}
 
 		#region Runtime Analysis
-		//private static DateTime logStartTime;
-		static long freq = 0;
+		private static Stopwatch logStopwatch;
 		internal static void LogStart(string msg)
 		{
 			if (msg != null && msg.Length > 0) System.Console.Write(msg);
-			QueryPerformanceCounter(out start);
+			logStopwatch = Stopwatch.StartNew();
 		}
-		static long start = 0;
-		static long end = 0;
 		internal static double LogEnd(string msg)
 		{
-			QueryPerformanceCounter(out end);
-			double dur = Math.Round((double)(end - start) / (double)freq * 1000, 4);
+			logStopwatch.Stop();
+			double dur = Math.Round(logStopwatch.Elapsed.TotalMilliseconds, 4);
 			if (msg != null && msg.Length > 0)
 			{
 				msg += " (cost " + dur + " ms.)\n";
@@ -226,11 +221,6 @@ ReoScript Machine Console Help
 			}
 			return dur;
 		}
-		[DllImport("Kernel32.dll")]
-		internal static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
-
-		[DllImport("Kernel32.dll")]
-		internal static extern bool QueryPerformanceFrequency(out long lpFrequency);
 		#endregion
 	}
 }

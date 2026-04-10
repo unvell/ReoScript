@@ -22,7 +22,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Collections;
 using System.Net;
-using System.Windows.Forms;
+// System.Windows.Forms removed for cross-platform .NET 10 support
 using System.ComponentModel;
 using System.Threading;
 using System.Collections.Generic;
@@ -31,7 +31,7 @@ using System.Reflection.Emit;
 using Antlr.Runtime;
 using Antlr.Runtime.Tree;
 
-using unvell.ReoScript.Properties;
+// Resources now loaded via Assembly.GetManifestResourceStream instead of resx
 using unvell.ReoScript.Runtime;
 using unvell.ReoScript.Parsers;
 using unvell.ReoScript.Reflection;
@@ -1963,17 +1963,7 @@ namespace unvell.ReoScript
 					{
 						try
 						{
-							if (target is Control && ((Control)target).InvokeRequired)
-							{
-								((Control)target).Invoke((MethodInvoker)(() =>
-								{
-									pi.SetValue(target, srm.ConvertToCLRType(context, value, pi.PropertyType), null);
-								}));
-							}
-							else
-							{
-								pi.SetValue(target, srm.ConvertToCLRType(context, value, pi.PropertyType), null);
-							}
+							pi.SetValue(target, srm.ConvertToCLRType(context, value, pi.PropertyType), null);
 						}
 						catch (Exception ex)
 						{
@@ -5362,24 +5352,20 @@ namespace unvell.ReoScript
 
 		internal void LoadCoreLibraries()
 		{
-			MemoryStream ms;
-
-			using (ms = new MemoryStream(Resources.lib_core))
-			{
-				Load(ms);
-			}
-
-			using (ms = new MemoryStream(Resources.lib_array))
-			{
-				Load(ms);
-			}
+			LoadEmbeddedScript("unvell.ReoScript.scripts.core.reo");
+			LoadEmbeddedScript("unvell.ReoScript.scripts.array.reo");
 
 			if ((this.CoreFeatures & CoreFeatures.ArrayExtension) == CoreFeatures.ArrayExtension)
 			{
-				using (ms = new MemoryStream(Resources.lib_array_ext))
-				{
-					Load(ms);
-				}
+				LoadEmbeddedScript("unvell.ReoScript.scripts.array_ext.reo");
+			}
+		}
+
+		private void LoadEmbeddedScript(string resourceName)
+		{
+			using (Stream stream = typeof(ScriptRunningMachine).Assembly.GetManifestResourceStream(resourceName))
+			{
+				if (stream != null) Load(stream);
 			}
 		}
 
@@ -5739,17 +5725,18 @@ namespace unvell.ReoScript
 			{
 				d = new EventHandler((s, e) => doEvent(e));
 			}
-			else if (ei.EventHandlerType == typeof(MouseEventHandler))
+			else
 			{
-				d = new MouseEventHandler((s, e) => doEvent(e));
-			}
-			else if (ei.EventHandlerType == typeof(KeyEventHandler))
-			{
-				d = new KeyEventHandler((s, e) => doEvent(e));
-			}
-			else if (ei.EventHandlerType == typeof(PaintEventHandler))
-			{
-				d = new PaintEventHandler((s, e) => doEvent(e));
+				// Generic handler: create a delegate matching the event's signature
+				// by wrapping the second parameter (EventArgs-derived) through doEvent.
+				MethodInfo invokeMethod = ei.EventHandlerType.GetMethod("Invoke");
+				ParameterInfo[] parms = invokeMethod.GetParameters();
+				if (parms.Length == 2)
+				{
+					d = new EventHandler((s, e) => doEvent(e));
+					d = Delegate.CreateDelegate(ei.EventHandlerType,
+						d.Target, d.Method, false) ?? new EventHandler((s, e) => doEvent(e));
+				}
 			}
 
 			ehi.ActionMethod = d;
@@ -5849,7 +5836,7 @@ namespace unvell.ReoScript
 
 		private static void DoEventFunction(object e)
 		{
-			MessageBox.Show("ok" + e.ToString());
+			System.Diagnostics.Debug.WriteLine("DoEvent: " + e.ToString());
 		}
 
 		private Type[] GetDelegateParameterTypes(Type d)
@@ -6531,7 +6518,6 @@ namespace unvell.ReoScript
 			if (outputListeners != null)
 			{
 				outputListeners.ForEach(ol => ol.Write(buf, index, count));
-				Application.DoEvents();
 			}
 		}
 
@@ -6540,7 +6526,6 @@ namespace unvell.ReoScript
 			if (outputListeners != null)
 			{
 				outputListeners.ForEach(ol => ol.Write(obj));
-				Application.DoEvents();
 			}
 		}
 
@@ -6549,7 +6534,6 @@ namespace unvell.ReoScript
 			if (outputListeners != null)
 			{
 				outputListeners.ForEach(ol => ol.WriteLine(line));
-				Application.DoEvents();
 			}
 		}
 
@@ -8003,7 +7987,7 @@ namespace unvell.ReoScript
 		{
 			if (args.Length > 0)
 			{
-				MessageBox.Show(Convert.ToString(args[0]), args.Length > 1 ? Convert.ToString(args[1]) : string.Empty);
+				ctx.Srm.StandardIOWriteLine(Convert.ToString(args[0]));
 			}
 			return null;
 		});
@@ -8012,13 +7996,10 @@ namespace unvell.ReoScript
 		{
 			if (args.Length > 0)
 			{
-				return MessageBox.Show(
-					Convert.ToString(args[0]),
-					args.Length > 1 ? Convert.ToString(args[1]) : string.Empty,
-					MessageBoxButtons.YesNo,
-					MessageBoxIcon.Question) == DialogResult.Yes;
+				ctx.Srm.StandardIOWriteLine(Convert.ToString(args[0]));
 			}
-			return null;
+			// Cross-platform: always returns true (no GUI dialog available)
+			return true;
 		});
 
 		private static readonly NativeFunctionObject __eval__ = new NativeFunctionObject("eval", (ctx, owner, args) =>
@@ -8512,9 +8493,10 @@ namespace unvell.ReoScript
 				}
 
 				// debug script library
-				using (MemoryStream ms = new MemoryStream(Resources.lib_debug))
+				using (Stream ms = typeof(ScriptRunningMachine).Assembly
+					.GetManifestResourceStream("unvell.ReoScript.scripts.debug.reo"))
 				{
-					Srm.Load(ms);
+					if (ms != null) Srm.Load(ms);
 				}
 			}
 
@@ -8555,6 +8537,8 @@ namespace unvell.ReoScript
 	#region NOT AVAILABLE YET !
 	namespace Compiler
 	{
+
+#if REOSCRIPT_JIT // JIT compiler prototype — will be rewritten for .NET 10
 
 		/// <summary>
 		/// Compile ReoScript into .NET assembly. (NOT AVAILABLE YET!)
@@ -9186,6 +9170,7 @@ namespace unvell.ReoScript
 			internal FieldBuilder CachedFunctionFieldBuilder { get; set; }
 			internal FieldBuilder ArgNameField { get; set; }
 		}
+#endif // REOSCRIPT_JIT
 	}
 
 	namespace Runtime
