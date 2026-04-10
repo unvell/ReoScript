@@ -8561,16 +8561,15 @@ namespace unvell.ReoScript
 
 	#endregion
 
-	#region Compiler
-	#region NOT AVAILABLE YET !
-	namespace Compiler
-	{
+	#region Legacy Compiler Prototype (removed)
+	// The original JIT compiler prototype (ReoScriptCompiler, CompilerContext,
+	// CompiledFunction) has been removed. It was a 2013-era experiment using
+	// AssemblyBuilder.Save / AppDomain.DefineDynamicAssembly that was never
+	// completed. The new JIT compiler lives in Compiler/JitCompiler.cs and
+	// Compiler/JitRuntime.cs, using DynamicMethod for lightweight IL generation.
+	#endregion
 
-#if REOSCRIPT_JIT // JIT compiler prototype — will be rewritten for .NET 10
-
-		/// <summary>
-		/// Compile ReoScript into .NET assembly. (NOT AVAILABLE YET!)
-		/// </summary>
+#if false // ── removed legacy JIT prototype ──
 		public sealed class ReoScriptCompiler
 		{
 			public delegate object EntryFunction(ScriptContext ctx);
@@ -9198,8 +9197,7 @@ namespace unvell.ReoScript
 			internal FieldBuilder CachedFunctionFieldBuilder { get; set; }
 			internal FieldBuilder ArgNameField { get; set; }
 		}
-#endif // REOSCRIPT_JIT
-	}
+#endif // removed legacy JIT prototype
 
 	namespace Runtime
 	{
@@ -9251,7 +9249,4 @@ namespace unvell.ReoScript
 
 		}
 	}
-
-	#endregion
-	#endregion
 }
