@@ -54,9 +54,12 @@ dotnet test Source/TestCase/TestCase.csproj -v normal
 dotnet test Source/TestCase/TestCase.csproj --filter "DisplayName~closure"
 ```
 
-Two test suites run:
+Three test suites run:
 1. **Language tests** — XML files in [Source/TestCase/tests/](Source/TestCase/tests/) (e.g. `001_core.xml`, `021_fun.xml`). Each XML file contains `<test-case>` blocks of ReoScript source that call `debug.assert()`.
-2. **CLR interop tests** — C# test methods in [Source/TestCase/CLRTestCases.cs](Source/TestCase/CLRTestCases.cs), discovered via `[TestSuite]` / `[TestCase]` attributes.
+2. **CLR interop tests** — Standard xUnit `[Fact]` methods in [Source/TestCase/CLRTestCases.cs](Source/TestCase/CLRTestCases.cs) testing .NET direct-access, property/method access, and IDictionary support.
+3. **Engine tests** — Standard xUnit `[Fact]` methods in [Source/TestCase/EngineTests.cs](Source/TestCase/EngineTests.cs) testing loop protection, truthy/falsy, error reporting, and module import.
+
+Note: `070-001 setInterval` is a known flaky test (timing-dependent busy-wait).
 
 ## Architecture
 
@@ -85,6 +88,37 @@ Closures use lexical scoping. Each `FunctionObject` has a `CapturedScope` field 
 ### JIT compiler prototype
 
 A JIT compiler prototype (`ReoScriptCompiler`, `CompilerContext`) exists in `ScriptRunningMachine.cs` behind `#if REOSCRIPT_JIT`. It uses `System.Reflection.Emit` to generate IL. This is not yet functional and will be rewritten for .NET 10.
+
+### Truthy/falsy semantics
+
+Condition expressions (`if`, `while`, `for`, `? :`, `&&`, `||`, `!`) use truthy/falsy conversion:
+- **Falsy**: `null`, `false`, `0`, `NaN`, `""` (empty string)
+- **Truthy**: everything else (non-zero numbers, non-empty strings, objects, arrays, functions)
+
+`&&` and `||` return the actual value (short-circuit), enabling patterns like `var x = obj || "default"`.
+
+### Loop protection
+
+`ScriptRunningMachine.MaxIterationsPerLoop` (default: 10,000,000) limits iterations per `for`/`while` loop. Exceeding the limit throws `ScriptExecutionTimeoutException`. Set to `0` to disable. This prevents user scripts from freezing the host application.
+
+### Error reporting
+
+`ErrorObject` includes `FilePath`, `Line`, and `CharIndex`. `GetFullErrorInfo()` produces formatted output like `demo.reo:3:5 - error message` with a full call stack. Scripts can access `error.file`, `error.line`, `error.message`, and `error.stack`.
+
+### Event handler exception safety
+
+Script exceptions in CLR event handlers and async callbacks (`setTimeout`/`setInterval`) are caught and routed to the `ScriptRunningMachine.ScriptError` event instead of crashing the host. Subscribe to `ScriptError` to log or display errors.
+
+### Module import
+
+`importModule("path/to/file.reo")` loads a script file in an isolated scope and returns a module object. Module-level functions and variables become properties of the returned object. Results are cached (each file executes at most once). Closures inside the module correctly resolve module-level variables.
+
+```javascript
+var anim = importModule("animation/animate.xb");
+anim.fadeIn(element);
+```
+
+The traditional `import "file.reo"` (which executes in global scope) remains available for backward compatibility. From C# host code, use `srm.ImportModuleFile(fullPath)`.
 
 ### Host-integration surface
 

@@ -5371,6 +5371,8 @@ namespace unvell.ReoScript
 			// reset imported namespace and types
 			ImportedNamespace.Clear();
 			ImportedTypes.Clear();
+			importedCodeFiles.Clear();
+			moduleCache.Clear();
 
 			// reset machine status
 			isForceStop = false;
@@ -7805,6 +7807,81 @@ namespace unvell.ReoScript
 			}
 		}
 
+		private readonly Dictionary<string, ObjectValue> moduleCache = new Dictionary<string, ObjectValue>();
+
+		/// <summary>
+		/// Import a script file as an isolated module. The file is compiled and
+		/// executed in a separate scope; top-level functions and variables defined
+		/// in the file become properties of the returned module object. Results
+		/// are cached so each file is executed at most once.
+		/// </summary>
+		/// <param name="fullPath">Absolute path to the script file</param>
+		/// <returns>Module object containing the file's exported definitions</returns>
+		public ObjectValue ImportModuleFile(string fullPath)
+		{
+			if (moduleCache.TryGetValue(fullPath, out ObjectValue cached))
+			{
+				return cached;
+			}
+
+			FileInfo fi = new FileInfo(fullPath);
+			if (!fi.Exists)
+			{
+				throw new ReoScriptException("Module file not found: " + fi.FullName);
+			}
+
+			// Compile the module source
+			var stream = new ANTLRFileStream(fullPath);
+			CompiledScript script = Compile(stream, e => { });
+			if (script == null || script.RootNode == null)
+			{
+				throw new ReoScriptException("Failed to compile module: " + fi.FullName);
+			}
+
+			// Create an isolated module scope: a fresh ObjectValue acts as the
+			// module's "global" so that its definitions don't leak into the real
+			// global scope.
+			ObjectValue moduleGlobal = new ObjectValue();
+
+			// Create a context whose GlobalObject points to the module scope
+			ScriptContext moduleCtx = new ScriptContext(this, entryFunction, fullPath);
+			moduleCtx.GlobalObject = moduleGlobal;
+
+			// Hoist top-level function definitions into the module scope
+			if (script.RootScope != null)
+			{
+				foreach (FunctionInfo funcInfo in script.RootScope.Functions.Where(f => !f.IsAnonymous && !f.IsInner))
+				{
+					moduleGlobal[funcInfo.Name] = FunctionDefineNodeParser.CreateAndInitFunction(moduleCtx, funcInfo);
+				}
+			}
+
+			// Execute the module body (variables land in moduleGlobal)
+			ParseNode(script.RootNode, moduleCtx);
+
+			// Build a CallScope containing all module-level definitions so that
+			// module functions can resolve their free variables through the
+			// CapturedScope chain when called from an external context.
+			CallScope moduleScope = new CallScope(moduleGlobal, entryFunction);
+			foreach (string key in moduleGlobal)
+			{
+				moduleScope[key] = moduleGlobal[key];
+			}
+
+			// Bind every FunctionObject defined in the module to this scope
+			foreach (string key in moduleGlobal)
+			{
+				if (moduleGlobal[key] is FunctionObject fun)
+				{
+					fun.CapturedScope = moduleScope;
+				}
+			}
+
+			// Cache and return
+			moduleCache[fullPath] = moduleGlobal;
+			return moduleGlobal;
+		}
+
 		#endregion
 
 		//public void Test()
@@ -8150,6 +8227,20 @@ namespace unvell.ReoScript
 
 				if ((srm.CoreFeatures & CoreFeatures.Eval) == CoreFeatures.Eval)
 					srm.GlobalObject[__eval__.FunName] = __eval__;
+
+				// importModule() — always available
+				srm.GlobalObject["importModule"] = new NativeFunctionObject("importModule", (ctx, owner, args) =>
+				{
+					if (args.Length == 0 || args[0] == null)
+						throw new ReoScriptRuntimeException("importModule requires a file path argument.");
+
+					string codeFile = Convert.ToString(args[0]);
+					string path = Path.GetFullPath(Path.Combine(
+						string.IsNullOrEmpty(ctx.SourceFilePath) ? ctx.Srm.WorkPath
+						: Path.GetDirectoryName(ctx.SourceFilePath), codeFile));
+
+					return ctx.Srm.ImportModuleFile(path);
+				});
 
 				if ((srm.CoreFeatures & CoreFeatures.AsyncCalling) == CoreFeatures.AsyncCalling)
 				{

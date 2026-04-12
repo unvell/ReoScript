@@ -14,6 +14,8 @@
  *
  ****************************************************************************/
 
+using System;
+using System.IO;
 using Xunit;
 using unvell.ReoScript;
 using unvell.ReoScript.Diagnostics;
@@ -219,6 +221,142 @@ namespace unvell.ReoScript.TestCase
 
 			string info = ex.GetFullErrorInfo();
 			Assert.Contains("Loop exceeded maximum iteration limit", info);
+		}
+
+		#endregion
+
+		#region Module Import
+
+		private string WriteTempScript(string content)
+		{
+			string path = Path.Combine(Path.GetTempPath(), "reoscript_test_" + Guid.NewGuid().ToString("N") + ".reo");
+			File.WriteAllText(path, content);
+			return path;
+		}
+
+		[Fact]
+		public void ImportModule_FunctionsAvailable()
+		{
+			string modulePath = WriteTempScript(@"
+function add(a, b) { return a + b; }
+function mul(a, b) { return a * b; }
+");
+			try
+			{
+				var srm = CreateSRM();
+				srm.Run(string.Format(
+					"var math = importModule(\"{0}\"); var r = math.add(3, 4);",
+					modulePath.Replace("\\", "\\\\")));
+				Assert.Equal(7.0, srm.CalcExpression("r;"));
+			}
+			finally
+			{
+				File.Delete(modulePath);
+			}
+		}
+
+		[Fact]
+		public void ImportModule_VariablesAvailable()
+		{
+			string modulePath = WriteTempScript(@"
+var PI = 3.14159;
+var name = 'mathlib';
+");
+			try
+			{
+				var srm = CreateSRM();
+				srm.Run(string.Format(
+					"var m = importModule(\"{0}\");",
+					modulePath.Replace("\\", "\\\\")));
+				Assert.Equal("mathlib", srm.CalcExpression("m.name;"));
+			}
+			finally
+			{
+				File.Delete(modulePath);
+			}
+		}
+
+		[Fact]
+		public void ImportModule_IsolatedScope()
+		{
+			string modulePath = WriteTempScript(@"
+var secret = 42;
+function getSecret() { return secret; }
+");
+			try
+			{
+				var srm = CreateSRM();
+				srm.Run(string.Format(
+					"var m = importModule(\"{0}\"); var s = m.getSecret();",
+					modulePath.Replace("\\", "\\\\")));
+
+				// Module function should work
+				Assert.Equal(42.0, srm.CalcExpression("s;"));
+
+				// Module's 'secret' should NOT be in global scope
+				Assert.Null(srm.CalcExpression("secret;"));
+			}
+			finally
+			{
+				File.Delete(modulePath);
+			}
+		}
+
+		[Fact]
+		public void ImportModule_CachedOnSecondImport()
+		{
+			string modulePath = WriteTempScript(@"
+var counter = 0;
+counter++;
+");
+			try
+			{
+				var srm = CreateSRM();
+				srm.Run(string.Format(@"
+var m1 = importModule(""{0}"");
+var m2 = importModule(""{0}"");
+",
+					modulePath.Replace("\\", "\\\\")));
+
+				// Both references should be the same cached object
+				// counter should be 1, not 2 (file executed only once)
+				Assert.Equal(1.0, srm.CalcExpression("m1.counter;"));
+				Assert.Equal(1.0, srm.CalcExpression("m2.counter;"));
+			}
+			finally
+			{
+				File.Delete(modulePath);
+			}
+		}
+
+		[Fact]
+		public void ImportModule_FileNotFound_Throws()
+		{
+			var srm = CreateSRM();
+			Assert.Throws<ReoScriptException>(() =>
+			{
+				srm.Run("var m = importModule('nonexistent_file.reo');");
+			});
+		}
+
+		[Fact]
+		public void ImportModuleFile_FromCSharp()
+		{
+			string modulePath = WriteTempScript(@"
+function greet(name) { return 'hello ' + name; }
+");
+			try
+			{
+				var srm = CreateSRM();
+				var module = srm.ImportModuleFile(modulePath);
+
+				Assert.NotNull(module);
+				Assert.True(module["greet"] is AbstractFunctionObject);
+			}
+			finally
+			{
+				File.Delete(modulePath);
+			}
 		}
 
 		#endregion
