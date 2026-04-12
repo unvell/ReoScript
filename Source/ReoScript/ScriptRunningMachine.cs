@@ -614,6 +614,11 @@ namespace unvell.ReoScript
 		public int Line { get; set; }
 
 		/// <summary>
+		/// Source file path where error happened (null for inline scripts)
+		/// </summary>
+		public string FilePath { get; set; }
+
+		/// <summary>
 		/// Construct an error without message content
 		/// </summary>
 		public ErrorObject() : this(string.Empty) { }
@@ -629,6 +634,7 @@ namespace unvell.ReoScript
 			this["message"] = new ExternalProperty(() => Message);
 			this["charIndex"] = new ExternalProperty(() => CharIndex);
 			this["line"] = new ExternalProperty(() => Line);
+			this["file"] = new ExternalProperty(() => FilePath);
 			this["stack"] = new ExternalProperty(() => CallStack);
 		}
 
@@ -638,17 +644,35 @@ namespace unvell.ReoScript
 		/// <returns></returns>
 		public string GetFullErrorInfo()
 		{
-			if (CallStack == null || CallStack.Count == 0)
+			StringBuilder sb = new StringBuilder();
+
+			// Include file and line info in the error header
+			if (!string.IsNullOrEmpty(FilePath))
 			{
-				return Message;
+				sb.Append(Path.GetFileName(FilePath));
+				if (Line > 0)
+				{
+					sb.AppendFormat(":{0}", Line);
+					if (CharIndex > 0) sb.AppendFormat(":{0}", CharIndex);
+				}
+				sb.Append(" - ");
 			}
-			else
+			else if (Line > 0)
 			{
-				StringBuilder sb = new StringBuilder();
-				sb.AppendLine(Message);
+				sb.AppendFormat("line {0}", Line);
+				if (CharIndex > 0) sb.AppendFormat(":{0}", CharIndex);
+				sb.Append(" - ");
+			}
+
+			sb.Append(Message);
+
+			if (CallStack != null && CallStack.Count > 0)
+			{
+				sb.AppendLine();
 				sb.Append(DumpCallStack());
-				return sb.ToString();
 			}
+
+			return sb.ToString();
 		}
 
 		/// <summary>
@@ -1721,6 +1745,15 @@ namespace unvell.ReoScript
 	}
 
 	/// <summary>
+	/// Exception thrown when a loop exceeds the maximum allowed iterations.
+	/// </summary>
+	public class ScriptExecutionTimeoutException : ReoScriptRuntimeException
+	{
+		public ScriptExecutionTimeoutException(ErrorObject error) : base(error) { }
+		public ScriptExecutionTimeoutException(string msg) : base(msg) { }
+	}
+
+	/// <summary>
 	/// This exception will be thrown if script attempts to call an undefined function.
 	/// </summary>
 	public class FunctionNotDefinedException : ReoScriptRuntimeException
@@ -1796,6 +1829,20 @@ namespace unvell.ReoScript
 						}
 
 						outerScope = outerScope.CurrentFunction.CapturedScope;
+					}
+				}
+
+				// If not found via CapturedScope chain, search up the call stack.
+				// This allows nested tags inside templates to resolve template parameters.
+				if (Scope == null)
+				{
+					foreach (var stackScope in ctx.CallStack)
+					{
+						if (stackScope != cs && stackScope.Variables.ContainsKey(identifier))
+						{
+							Scope = stackScope;
+							break;
+						}
 					}
 				}
 			}
@@ -2765,7 +2812,15 @@ namespace unvell.ReoScript
 				// get value
 				while (value is IAccess) value = ((IAccess)value).Get();
 
-				if (value == null) return null;
+				switch (oprt)
+				{
+					case "!":
+						return !ScriptRunningMachine.GetBoolValue(value);
+
+					default:
+						if (value == null) return null;
+						break;
+				}
 
 				switch (oprt)
 				{
@@ -2780,13 +2835,6 @@ namespace unvell.ReoScript
 							return -((double)value);
 						else
 							return null;
-
-					case "!":
-						if (!(value is bool))
-						{
-							return null;
-						}
-						return !((bool)value);
 
 					case "~":
 						return (~(Convert.ToInt64(value)));
@@ -2991,11 +3039,9 @@ namespace unvell.ReoScript
 			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
 				object value = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
-				if (!(value is bool))
-				{
-					throw ctx.CreateRuntimeError(t, "only boolean expression can be used for conditional expression.");
-				}
-				bool condition = (bool)value;
+				if (value is IAccess) value = ((IAccess)value).Get();
+
+				bool condition = ScriptRunningMachine.GetBoolValue(value);
 				return condition ? ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx)
 					: ScriptRunningMachine.ParseNode((CommonTree)t.Children[2], ctx);
 			}
@@ -3329,20 +3375,14 @@ namespace unvell.ReoScript
 				object left = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
 				if (left is IAccess) left = ((IAccess)left).Get();
 
-				if (left == null || !(left is bool))
-					return false;
-
-				bool leftBool = (bool)left;
-				if (!leftBool) return false;
+				// Short-circuit: if left is falsy, return left; otherwise return right.
+				if (!ScriptRunningMachine.GetBoolValue(left))
+					return left;
 
 				object right = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
 				if (right is IAccess) right = ((IAccess)right).Get();
 
-				if (right == null || !(right is bool))
-					return false;
-
-				bool rightBool = (bool)right;
-				return rightBool;
+				return right;
 			}
 
 			#endregion
@@ -3358,20 +3398,14 @@ namespace unvell.ReoScript
 				object left = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
 				if (left is IAccess) left = ((IAccess)left).Get();
 
-				if (left == null || !(left is bool))
-					return false;
-
-				bool leftBool = (bool)left;
-				if (leftBool) return true;
+				// Short-circuit: if left is truthy, return left; otherwise return right.
+				if (ScriptRunningMachine.GetBoolValue(left))
+					return left;
 
 				object right = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
 				if (right is IAccess) right = ((IAccess)right).Get();
 
-				if (right == null || !(right is bool))
-					return false;
-
-				bool rightBool = (bool)right;
-				return rightBool;
+				return right;
 			}
 
 			#endregion
@@ -3387,12 +3421,7 @@ namespace unvell.ReoScript
 				object value = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
 				if (value is IAccess) value = ((IAccess)value).Get();
 
-				if (!(value is bool))
-				{
-					return false;
-					//throw new AWDLRuntimeException("only boolean expression can be used as test condition.");
-				}
-				bool condition = (bool)value;
+				bool condition = ScriptRunningMachine.GetBoolValue(value);
 				if (condition)
 				{
 					return ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
@@ -3497,35 +3526,31 @@ namespace unvell.ReoScript
 				CommonTree iteratorTree = ((CommonTree)t.Children[2]);
 				CommonTree body = (CommonTree)(((CommonTree)t.Children[3]).Children[0]);
 
-				bool hasCondition = condition != null && condition.ChildCount > 0;
+				bool hasCondition = condition != null;
 				bool hasBody = body.ChildCount > 0;
+
+				int maxIterations = srm.MaxIterationsPerLoop;
+				int iterations = 0;
 
 				while (true)
 				{
+					if (maxIterations > 0 && ++iterations > maxIterations)
+					{
+						throw new ScriptExecutionTimeoutException(
+							ctx.CreateErrorObject(t, string.Format(
+								"Loop exceeded maximum iteration limit ({0}). " +
+								"Possible infinite loop at line {1}.",
+								maxIterations, t.Line)));
+					}
+
+					if (srm.IsForceStop) return null;
+
 					if (hasCondition)
 					{
-						//object conditionValue = i++ < 500000;
-						//object conditionValue = i++ < (double)ScriptRunningMachine.ParseNode((CommonTree)(condition.Children[1]), ctx);
-
-						//object conditionValue = (double)ctx[condition.Children[0].Text] < 500000;
 						object conditionValue = ScriptRunningMachine.ParseNode(condition, ctx);
 
-						bool rs = false;
-
-						if (conditionValue is bool)
-						{
-							rs = (bool)conditionValue;
-						}
-						else if (conditionValue is BooleanObject)
-						{
-							rs = ((BooleanObject)conditionValue).Boolean;
-						}
-						else
-						{
-							throw ctx.CreateRuntimeError(t, "only boolean expression can be used as test condition.");
-						}
-
-						if (!rs) return null;
+						if (!ScriptRunningMachine.GetBoolValue(conditionValue))
+							return null;
 					}
 
 					if (hasBody)
@@ -5126,23 +5151,19 @@ namespace unvell.ReoScript
 			ErrorObject err = CreateNewObject(Srm.BuiltinConstructors.ErrorFunction) as ErrorObject;
 			err.Line = t.Line;
 			err.CharIndex = t.CharPositionInLine;
+			err.FilePath = this.SourceFilePath;
 			err.Message = msg;
 			err.CallStack = new List<CallScopeObject>();
 
 			CallScope sc = callStack.Peek();
 			sc.Line = t.Line;
 			sc.CharIndex = t.CharPositionInLine;
+			sc.FilePath = this.SourceFilePath;
 
 			foreach (CallScope scope in callStack)
 			{
 				err.CallStack.Add(new CallScopeObject(scope));
 			}
-
-			//err.CallStack.Add(new CallScopeObject(new CallScope(GlobalObject, ScriptRunningMachine.entryFunction)
-			//{
-			//  CharIndex = t.CharPositionInLine,
-			//  Line = t.Line
-			//}));
 
 			return err;
 		}
@@ -5203,9 +5224,15 @@ namespace unvell.ReoScript
 		public int CharIndex { get; set; }
 		public int Line { get; set; }
 
+		public string FilePath { get; set; }
+
 		public override string ToString()
 		{
-			return string.Format("at {0} ({1}:{2})", GetFunctionName(CurrentFunction), Line, CharIndex);
+			string funcName = GetFunctionName(CurrentFunction);
+			if (!string.IsNullOrEmpty(FilePath))
+				return string.Format("at {0} ({1}:{2}:{3})", funcName, Path.GetFileName(FilePath), Line, CharIndex);
+			else
+				return string.Format("at {0} (line {1}:{2})", funcName, Line, CharIndex);
 		}
 
 		private static string GetFunctionName(AbstractFunctionObject fun)
@@ -5718,7 +5745,17 @@ namespace unvell.ReoScript
 			DetachEvent(obj, ei);
 
 			EventHandlerInfo ehi = new EventHandlerInfo(this, context, obj, ei, null, functionValue);
-			Action<object> doEvent = (e) => InvokeFunction(context, obj, functionValue, new object[] { e });
+			Action<object> doEvent = (e) =>
+			{
+				try
+				{
+					InvokeFunction(context, obj, functionValue, new object[] { e });
+				}
+				catch (ReoScriptException ex)
+				{
+					RaiseScriptError(ex);
+				}
+			};
 
 			Delegate d = null;
 			if (ei.EventHandlerType == typeof(EventHandler))
@@ -5922,7 +5959,14 @@ namespace unvell.ReoScript
 
 			public void DoEvent(object sender, object arg)
 			{
-				Srm.InvokeFunction(Context, Instance, FunctionValue, new object[] { arg });
+				try
+				{
+					Srm.InvokeFunction(Context, Instance, FunctionValue, new object[] { arg });
+				}
+				catch (ReoScriptException ex)
+				{
+					Srm.RaiseScriptError(ex);
+				}
 			}
 		}
 
@@ -6155,6 +6199,16 @@ namespace unvell.ReoScript
 		}
 		#endregion
 
+		#region Execution Limits
+
+		/// <summary>
+		/// Maximum number of iterations allowed per loop (while/for).
+		/// Set to 0 to disable the limit. Default is 10,000,000.
+		/// </summary>
+		public int MaxIterationsPerLoop { get; set; } = 10_000_000;
+
+		#endregion
+
 		#region Async Calling
 		private bool isForceStop = false;
 
@@ -6301,9 +6355,9 @@ namespace unvell.ReoScript
 						}
 					} while (forever);
 				}
-				catch (Exception ex)
+				catch (ReoScriptException ex)
 				{
-					throw ex;
+					RaiseScriptError(ex);
 				}
 			};
 
@@ -7362,13 +7416,24 @@ namespace unvell.ReoScript
 		}
 
 		/// <summary>
-		/// Convert object into boolean value. If converting is failed, false will be returned.
+		/// Convert object into boolean value using truthy/falsy semantics.
+		/// Falsy: null, false, 0, NaN, empty string.
+		/// Truthy: everything else (non-zero numbers, non-empty strings, objects).
 		/// </summary>
 		/// <param name="obj">object to be converted</param>
 		/// <returns>converted boolean value</returns>
 		public static bool GetBoolValue(object obj)
 		{
-			return ((obj is bool) && ((bool)obj)) || ((obj is BooleanObject) && (((BooleanObject)obj).Boolean));
+			if (obj == null) return false;
+			if (obj is bool) return (bool)obj;
+			if (obj is BooleanObject) return ((BooleanObject)obj).Boolean;
+			if (obj == NaNValue.Value) return false;
+			if (IsPrimitiveNumber(obj)) return GetNumberValue(obj) != 0;
+			if (obj is NumberObject) return ((NumberObject)obj).Number != 0;
+			if (obj is string) return ((string)obj).Length > 0;
+			if (obj is StringObject) return ((StringObject)obj).String.Length > 0;
+			// All objects (ObjectValue, arrays, functions, etc.) are truthy
+			return true;
 		}
 
 		/// <summary>
@@ -7637,6 +7702,18 @@ namespace unvell.ReoScript
 		/// Event fired when script running machine is resetted.
 		/// </summary>
 		public event EventHandler Resetted;
+
+		/// <summary>
+		/// Event fired when a script error occurs during event handler execution
+		/// or other contexts where exceptions cannot propagate to the caller.
+		/// Subscribe to this event to log or display script errors in the host application.
+		/// </summary>
+		public event EventHandler<ScriptErrorEventArgs> ScriptError;
+
+		internal void RaiseScriptError(ReoScriptException ex)
+		{
+			ScriptError?.Invoke(this, new ScriptErrorEventArgs(ex));
+		}
 		#endregion
 
 		#region Namespace & Class & CodeFile
@@ -8414,6 +8491,22 @@ namespace unvell.ReoScript
 		{
 			this.Object = obj;
 			this.Constructor = constructor;
+		}
+	}
+
+	/// <summary>
+	/// Event arguments for script errors caught during event handler execution.
+	/// </summary>
+	public class ScriptErrorEventArgs : EventArgs
+	{
+		/// <summary>
+		/// The exception that occurred.
+		/// </summary>
+		public ReoScriptException Exception { get; }
+
+		public ScriptErrorEventArgs(ReoScriptException exception)
+		{
+			this.Exception = exception;
 		}
 	}
 

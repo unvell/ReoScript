@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+/*****************************************************************************
+ *
+ * ReoScript - .NET Script Language Engine
+ *
+ * https://github.com/unvell/ReoScript
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+ * KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ *
+ * This software released under MIT license.
+ * Copyright (c) 2012-2019 Jingwood, unvell.com, all rights reserved.
+ *
+ ****************************************************************************/
+-->
+
+<test-suite id="054" name="truthy">
+
+  <test-case id="001" name="if truthy values">
+    <script>
+      var t = debug.assert;
+
+      var result = false;
+      if (1) result = true;
+      t(result == true);
+
+      result = false;
+      if ("hello") result = true;
+      t(result == true);
+
+      result = false;
+      var obj = {};
+      if (obj) result = true;
+      t(result == true);
+
+      result = false;
+      if (-1) result = true;
+      t(result == true);
+
+      result = false;
+      if (0.5) result = true;
+      t(result == true);
+    </script>
+  </test-case>
+
+  <test-case id="002" name="if falsy values">
+    <script>
+      var t = debug.assert;
+
+      var result = true;
+      if (0) result = false;
+      t(result == true);
+
+      result = true;
+      if (null) result = false;
+      t(result == true);
+
+      result = true;
+      if ("") result = false;
+      t(result == true);
+    </script>
+  </test-case>
+
+  <test-case id="003" name="not operator truthy">
+    <script>
+      var t = debug.assert;
+
+      t(!null == true);
+      t(!0 == true);
+      t(!"" == true);
+
+      t(!1 == false);
+      t(!"hello" == false);
+      t(!{} == false);
+    </script>
+  </test-case>
+
+  <test-case id="004" name="logical or default value">
+    <script>
+      var t = debug.assert;
+
+      var a = null;
+      var b = a || "default";
+      t(b, "default");
+
+      var c = "value";
+      var d = c || "default";
+      t(d, "value");
+
+      var e = 0;
+      var f = e || 42;
+      t(f, 42);
+    </script>
+  </test-case>
+
+  <test-case id="005" name="logical and short-circuit">
+    <script>
+      var t = debug.assert;
+
+      var a = null;
+      var b = a &amp;&amp; "hello";
+      t(b == null);
+
+      var c = "value";
+      var d = c &amp;&amp; "hello";
+      t(d, "hello");
+
+      var e = 1;
+      var f = e &amp;&amp; 42;
+      t(f, 42);
+    </script>
+  </test-case>
+
+  <test-case id="006" name="ternary with truthy">
+    <script>
+      var t = debug.assert;
+
+      var a = 1 ? "yes" : "no";
+      t(a, "yes");
+
+      var b = 0 ? "yes" : "no";
+      t(b, "no");
+
+      var c = "str" ? "yes" : "no";
+      t(c, "yes");
+
+      var d = null ? "yes" : "no";
+      t(d, "no");
+    </script>
+  </test-case>
+
+  <test-case id="007" name="while with truthy condition">
+    <script>
+      var t = debug.assert;
+
+      var count = 5;
+      var sum = 0;
+      while (count) {
+        sum += count;
+        count--;
+      }
+      t(sum, 15);
+    </script>
+  </test-case>
+
+  <test-case id="008" name="for with truthy condition">
+    <script>
+      var t = debug.assert;
+
+      var sum = 0;
+      for (var arr = [1,2,3], i = arr.length; i; i--) {
+        sum += arr[i - 1];
+      }
+      t(sum, 6);
+    </script>
+  </test-case>
+
+</test-suite>

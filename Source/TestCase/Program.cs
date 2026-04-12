@@ -20,12 +20,6 @@ using System.Xml.Serialization;
 
 namespace unvell.ReoScript.TestCase
 {
-	public class TestCaseFailureException : Exception
-	{
-		public TestCaseFailureException(string msg) :
-			base(msg) { }
-	}
-
 	[XmlRoot("test-suite")]
 	public class XmlTestSuite
 	{
@@ -58,31 +52,5 @@ namespace unvell.ReoScript.TestCase
 
 		[XmlAttribute("disabled")]
 		public bool Disabled { get; set; }
-	}
-
-	public class TestSuiteAttribute : Attribute
-	{
-		public string Name { get; set; }
-
-		public TestSuiteAttribute() { }
-		public TestSuiteAttribute(string name) : base() { this.Name = name; }
-	}
-
-	public class TestCaseAttribute : Attribute
-	{
-		public string Desc { get; set; }
-
-		public bool Disabled { get; set; }
-
-		public MachineWorkMode WorkMode { get; set; }
-
-		public TestCaseAttribute()
-		{
-			WorkMode = MachineWorkMode.Default | MachineWorkMode.AllowDirectAccess
-				| MachineWorkMode.AllowCLREventBind | MachineWorkMode.AllowImportTypeInScript | MachineWorkMode.AutoImportRelationType
-				| MachineWorkMode.AutoUppercaseWhenCLRCalling | MachineWorkMode.IgnoreCLRExceptions;
-		}
-
-		public TestCaseAttribute(string desc) : base() { this.Desc = desc; }
 	}
 }

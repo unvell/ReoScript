@@ -1,7 +1,7 @@
-﻿/*****************************************************************************
- * 
+/*****************************************************************************
+ *
  * ReoScript - .NET Script Language Engine
- * 
+ *
  * https://github.com/unvell/ReoScript
  *
  * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
@@ -11,20 +11,16 @@
  *
  * This software released under MIT license.
  * Copyright (c) 2012-2019 Jingwood, unvell.com, all rights reserved.
- * 
+ *
  ****************************************************************************/
 
 using System.Collections;
 using System.Collections.Generic;
+using Xunit;
+using unvell.ReoScript.Diagnostics;
 
 namespace unvell.ReoScript.TestCase
 {
-	[TestSuite]
-	class ReoScriptTestSuite
-	{
-		public ScriptRunningMachine SRM { get; set; }
-	}
-
 	class Friut {
 		public string Name { get; set; }
 		public string Color { get; set; }
@@ -131,9 +127,11 @@ namespace unvell.ReoScript.TestCase
 		#endregion
 	}
 
-
-	[TestSuite("DirectAccess")]
-	class DirectAccessTests : ReoScriptTestSuite
+	/// <summary>
+	/// CLR direct-access interop tests, exercising .NET type import, property/method
+	/// access, and IDictionary support from script.
+	/// </summary>
+	public class DirectAccessTests
 	{
 		public const MachineWorkMode FullWorkMode =
 		 MachineWorkMode.AllowCLREventBind | MachineWorkMode.AllowDirectAccess
@@ -143,49 +141,53 @@ namespace unvell.ReoScript.TestCase
 		public const MachineWorkMode DirectAccessWithoutAutoUppercase =
 			FullWorkMode & ~(MachineWorkMode.AutoUppercaseWhenCLRCalling);
 
-		[TestCase("import and create instance", WorkMode = FullWorkMode)]
+		private ScriptRunningMachine CreateSRM(MachineWorkMode workMode = FullWorkMode)
+		{
+			var srm = new ScriptRunningMachine();
+			srm.WorkMode = workMode;
+			new ScriptDebugger(srm);
+			return srm;
+		}
+
+		[Fact]
 		public void ImportAndCreate()
 		{
-			SRM.ImportType(typeof(Friut));
+			var srm = CreateSRM();
+			srm.ImportType(typeof(Friut));
 
-			SRM.Run(@"
-
+			srm.Run(@"
 var t = debug.assert;
 
 var apple = new Friut();
 
 t(typeof apple, 'native object');
 t(apple instanceof Friut);
-
 ");
 		}
 
-		[TestCase("create instance with alias", WorkMode = FullWorkMode)]
-		public void ImportAndCreate2()
+		[Fact]
+		public void ImportAndCreateWithAlias()
 		{
-			// import using alias
-			SRM.ImportType(typeof(Friut), "MyClass");
+			var srm = CreateSRM();
+			srm.ImportType(typeof(Friut), "MyClass");
 
-			SRM.Run(@"
-
+			srm.Run(@"
 var t = debug.assert;
 
 var apple = new MyClass();
 
 t(typeof apple, 'native object');
 t(apple instanceof MyClass);
-
 ");
 		}
 
-		[TestCase("access property", WorkMode = FullWorkMode)]
+		[Fact]
 		public void AccessProperty()
 		{
-			// import using alias
-			SRM.ImportType(typeof(Friut), "MyClass");
+			var srm = CreateSRM();
+			srm.ImportType(typeof(Friut), "MyClass");
 
-			SRM.Run(@"
-
+			srm.Run(@"
 var t = debug.assert;
 
 var apple = new MyClass();
@@ -201,23 +203,20 @@ t(apple.price, 1.95);
 
 t(apple.color + ' ' + apple.price, 'red 1.95');
 
-
 t( apple['name'], 'apple' );
 t( apple['Color'], 'red' );
 t( apple['color'], 'red' );
 t( apple['price'], '1.95' );
-
 ");
 		}
 
-		[TestCase("access method", WorkMode = FullWorkMode)]
+		[Fact]
 		public void AccessMethod()
 		{
-			// import using alias
-			SRM.ImportType(typeof(Friut), "MyClass");
+			var srm = CreateSRM();
+			srm.ImportType(typeof(Friut), "MyClass");
 
-			SRM.Run(@"
-
+			srm.Run(@"
 var t = debug.assert;
 
 var apple = new MyClass();
@@ -227,36 +226,32 @@ t(apple.isShippedOut, true);
 
 var a = 'isShippedOut';
 t( apple[a], true );
-
 ");
 		}
 
-		[TestCase("access lowercase method", WorkMode = DirectAccessWithoutAutoUppercase)]
+		[Fact]
 		public void AccessLowercaseMethod()
 		{
-			// import using alias
-			SRM.ImportType(typeof(Friut), "MyClass");
+			var srm = CreateSRM(DirectAccessWithoutAutoUppercase);
+			srm.ImportType(typeof(Friut), "MyClass");
 
-			SRM.Run(@"
-
+			srm.Run(@"
 var t = debug.assert;
 
 var apple = new MyClass();
 var c = apple.methodInLowercase(5, 6);
 
 t(c, 11);
-
 ");
 		}
 
-		[TestCase("comparing operators", WorkMode = FullWorkMode)]
+		[Fact]
 		public void ComparingOperators()
 		{
-			// import using alias
-			SRM.ImportType(typeof(Friut), "MyClass");
+			var srm = CreateSRM();
+			srm.ImportType(typeof(Friut), "MyClass");
 
-			SRM.Run(@"
-
+			srm.Run(@"
 var t = debug.assert;
 
 var apple = new MyClass();
@@ -270,19 +265,17 @@ t(apple.price == '1.95');         // compare to string
 
 t(apple.price === 1.95);
 apple.price = 2.1;
-t(apple.price === 2.1);    
-
+t(apple.price === 2.1);
 ");
 		}
 
-		[TestCase("IDictionary interface support", WorkMode = FullWorkMode)]
+		[Fact]
 		public void IDictionarySupport()
 		{
-			// import using alias
-			SRM["obj"] = new Stuff();
+			var srm = CreateSRM();
+			srm["obj"] = new Stuff();
 
-			SRM.Run(@"
-
+			srm.Run(@"
 var t = debug.assert;
 
 var date = new Date();
@@ -292,18 +285,16 @@ obj.startTime = date;
 
 t(obj.name, 'red alert');
 t(obj.startTime, date);
-
 ");
 		}
 
-		[TestCase("IDictionary enumeration", WorkMode = FullWorkMode)]
+		[Fact]
 		public void IDictionaryEnumeration()
 		{
-			// import using alias
-			SRM["obj"] = new Stuff();
+			var srm = CreateSRM();
+			srm["obj"] = new Stuff();
 
-			SRM.Run(@"
-
+			srm.Run(@"
 var t = debug.assert;
 
 var date = new Date();
@@ -317,25 +308,7 @@ for(name in obj) {
 }
 
 t(o, 'name startTime ');
-
 ");
-		}
-
-		[TestCase("CLR Attribute Property")]
-		public void CLRAttributeProperty()
-		{
-
-		}
-
-		[TestCase("CLR Attribute Method")]
-		public void CLRAttributeMethod()
-		{
-
-		}
-
-		[TestCase("TestCase Template", Disabled=true)]
-		public void TestCaseTemplate()
-		{
 		}
 	}
 }
