@@ -4914,6 +4914,20 @@ namespace unvell.ReoScript
 							outerScope = outerScope.CurrentFunction.CapturedScope;
 						}
 					}
+
+					// If not found via CapturedScope chain, search up the call stack.
+					// This allows nested tags inside templates to resolve template parameters.
+					if (container == null)
+					{
+						foreach (var stackScope in callStack)
+						{
+							if (stackScope != cs && stackScope.Variables.ContainsKey(identifier))
+							{
+								container = stackScope;
+								break;
+							}
+						}
+					}
 				}
 
 				if (container == null)
