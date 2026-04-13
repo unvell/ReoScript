@@ -6815,21 +6815,41 @@ namespace unvell.ReoScript
 			if (!script.EndsWith(";")) script += ";";
 
 			var cs = Compile(script);
-			if (cs == null || cs.RootNode == null) return null;
+			return JitRun(cs);
+		}
 
-			var context = CreateContext();
+		/// <summary>
+		/// JIT-compile and run a pre-compiled script (parsed AST).
+		/// </summary>
+		/// <param name="script">a compiled script to be JIT-executed</param>
+		/// <returns>return value from script</returns>
+		public object JitRun(CompiledScript script)
+		{
+			return JitRun(script, new ScriptContext(this, entryFunction));
+		}
+
+		/// <summary>
+		/// JIT-compile and run a pre-compiled script with the specified context.
+		/// </summary>
+		/// <param name="script">a compiled script to be JIT-executed</param>
+		/// <param name="context">current executing context</param>
+		/// <returns>return value from script</returns>
+		public object JitRun(CompiledScript script, ScriptContext context)
+		{
+			if (script == null || script.RootNode == null) return null;
+
 			isForceStop = false;
 
 			// define global functions (same as RunCompiledScript)
-			if (cs.RootScope != null)
+			if (script.RootScope != null)
 			{
-				foreach (var fi in cs.RootScope.Functions.Where(fi => !fi.IsAnonymous && !fi.IsInner))
+				foreach (var fi in script.RootScope.Functions.Where(fi => !fi.IsAnonymous && !fi.IsInner))
 				{
 					GlobalObject[fi.Name] = FunctionDefineNodeParser.CreateAndInitFunction(context, fi);
 				}
 			}
 
-			var compiled = Compiler.JitCompiler.Compile(cs.RootNode);
+			var compiled = Compiler.JitCompiler.Compile(script.RootNode);
 			return UnboxAnything(compiled(context));
 		}
 
