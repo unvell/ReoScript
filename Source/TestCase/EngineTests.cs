@@ -735,5 +735,72 @@ var elapsed = Date.now() - start;
 		}
 
 		#endregion
+
+		#region Int32/Double Type Conversion
+
+		[Fact]
+		public void BoxedInt32_Arithmetic()
+		{
+			// Simulate ExternalProperty returning boxed Int32
+			var srm = CreateSRM();
+			srm.SetGlobalVariable("w", (object)(int)800);
+			srm.Run("var x = (w - 16) / 3;");
+			Assert.Equal((800.0 - 16) / 3, srm.CalcExpression("x;"));
+		}
+
+		[Fact]
+		public void BoxedInt32_MathFloor()
+		{
+			var srm = CreateSRM();
+			srm.SetGlobalVariable("w", (object)(int)800);
+			object result = srm.CalcExpression("Math.floor(w);");
+			Assert.Equal(800.0, result);
+		}
+
+		[Fact]
+		public void BoxedInt32_GetIntValue()
+		{
+			// GetIntValue should handle boxed int, float, byte etc.
+			Assert.Equal(42, ScriptRunningMachine.GetIntValue((object)(int)42));
+			Assert.Equal(3, ScriptRunningMachine.GetIntValue((object)(float)3.7f));
+			Assert.Equal(5, ScriptRunningMachine.GetIntValue((object)(byte)5));
+			Assert.Equal(99, ScriptRunningMachine.GetIntValue((object)(short)99));
+		}
+
+		[Fact]
+		public void BoxedInt32_GetNumberValue()
+		{
+			Assert.Equal(42.0, ScriptRunningMachine.GetNumberValue((object)(int)42));
+			Assert.Equal(3.0, ScriptRunningMachine.GetNumberValue((object)(float)3.0f));
+		}
+
+		[Fact]
+		public void BoxedInt32_Comparison()
+		{
+			var srm = CreateSRM();
+			srm.SetGlobalVariable("w", (object)(int)800);
+			Assert.Equal(true, srm.CalcExpression("w > 100;"));
+			Assert.Equal(true, srm.CalcExpression("w == 800;"));
+		}
+
+		[Fact]
+		public void ParseInt_WithBoxedInt32Radix()
+		{
+			var srm = CreateSRM();
+			object result = srm.CalcExpression("parseInt('FF', 16);");
+			Assert.Equal(255, result);
+		}
+
+		[Fact]
+		public void MathAtan2_CorrectArgs()
+		{
+			var srm = CreateSRM();
+			object result = srm.CalcExpression("Math.atan2(1, 0);");
+			Assert.IsType<double>(result);
+			// atan2(1, 0) = PI/2
+			Assert.Equal(Math.PI / 2, (double)result, 10);
+		}
+
+		#endregion
 	}
 }

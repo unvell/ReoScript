@@ -423,7 +423,7 @@ namespace unvell.ReoScript
 					}
 					else if (right is DateObject)
 					{
-						return ((NumberObject)left).Number - ((DateObject)right).Ticks;
+						return ScriptRunningMachine.GetNumberValue(left) - ((DateObject)right).Ticks;
 					}
 				}
 				else if (ScriptRunningMachine.IsPrimitiveNumber(right))

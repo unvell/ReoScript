@@ -91,7 +91,8 @@ namespace unvell.ReoScript
 			if (args.Length == 0) return 0;
 			else if (args.Length == 1)
 			{
-				if (args[0] is double) return Convert.ToInt32(args[0]);
+				if (ScriptRunningMachine.IsPrimitiveNumber(args[0]))
+					return (int)ScriptRunningMachine.GetNumberValue(args[0]);
 
 				int i = 0;
 				int.TryParse(Convert.ToString(args[0]), out i);
@@ -101,7 +102,8 @@ namespace unvell.ReoScript
 			{
 				try
 				{
-					return Convert.ToInt32(Convert.ToString(args[0]), Convert.ToInt32(args[1]));
+					int radix = ScriptRunningMachine.GetIntValue(args[1], 10);
+					return Convert.ToInt32(Convert.ToString(args[0]), radix);
 				}
 				catch
 				{

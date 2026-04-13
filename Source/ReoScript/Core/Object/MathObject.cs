@@ -96,7 +96,7 @@ namespace unvell.ReoScript
 					return NaNValue.Value;
 				else
 					return Math.Atan2(ScriptRunningMachine.GetNumberValue(args[0], 0),
-						ScriptRunningMachine.GetNumberValue(args[0], 1));
+						ScriptRunningMachine.GetNumberValue(args[1], 0));
 			});
 			#endregion // atan2
 

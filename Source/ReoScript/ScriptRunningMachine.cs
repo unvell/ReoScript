@@ -2027,13 +2027,17 @@ namespace unvell.ReoScript
 		/// <returns>converted integer value</returns>
 		public static int GetIntValue(object obj, int def)
 		{
-			if (obj is int || obj is long)
+			if (obj is int i)
 			{
-				return (int)obj;
+				return i;
+			}
+			else if (obj is long l)
+			{
+				return (int)l;
 			}
 			else if (obj is double || ScriptRunningMachine.IsPrimitiveNumber(obj))
 			{
-				return (int)(double)obj;
+				return (int)Convert.ToDouble(obj);
 			}
 			else if (obj is string || obj is StringObject)
 			{
@@ -2083,13 +2087,17 @@ namespace unvell.ReoScript
 		/// <returns>converted long integer value</returns>
 		public static long GetLongValue(object obj, long def)
 		{
-			if (obj is int || obj is long)
+			if (obj is long l)
 			{
-				return (long)obj;
+				return l;
+			}
+			else if (obj is int i)
+			{
+				return i;
 			}
 			else if (obj is double || ScriptRunningMachine.IsPrimitiveNumber(obj))
 			{
-				return (long)(double)obj;
+				return (long)Convert.ToDouble(obj);
 			}
 			else if (obj is string || obj is StringObject)
 			{
@@ -2118,17 +2126,13 @@ namespace unvell.ReoScript
 		/// <returns>converted float value</returns>
 		public static float GetFloatValue(object obj, float def)
 		{
-			if (obj is double)
+			if (obj is float f)
 			{
-				return (float)(double)obj;
+				return f;
 			}
-			else if (obj is float)
+			else if (obj is double || ScriptRunningMachine.IsPrimitiveNumber(obj))
 			{
-				return (float)obj;
-			}
-			else if (ScriptRunningMachine.IsPrimitiveNumber(obj))
-			{
-				return (float)(double)obj;
+				return (float)Convert.ToDouble(obj);
 			}
 			else if (obj is string || obj is StringObject)
 			{
