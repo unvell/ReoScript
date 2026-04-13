@@ -736,6 +736,27 @@ var elapsed = Date.now() - start;
 
 		#endregion
 
+		#region CalcExpression Without Semicolon
+
+		[Fact]
+		public void CalcExpression_WithoutSemicolon()
+		{
+			var srm = CreateSRM();
+			srm.Run("var x = 42;");
+			// Should work without trailing semicolon
+			Assert.Equal(42.0, srm.CalcExpression("x"));
+		}
+
+		[Fact]
+		public void CalcExpression_ComplexExprWithoutSemicolon()
+		{
+			var srm = CreateSRM();
+			srm.Run("var a = 10; var b = 20;");
+			Assert.Equal(30.0, srm.CalcExpression("a + b"));
+		}
+
+		#endregion
+
 		#region Int32/Double Type Conversion
 
 		[Fact]
