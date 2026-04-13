@@ -147,6 +147,9 @@ namespace unvell.ReoScript
 		// Bitwise NOT (~) — distinct from logical NOT (!)
 		public const int BITWISE_NOT = 151;
 
+		// Context keyword: used in "import ... as alias"
+		public const int AS = 152;
+
 		public const int MAX_TOKENS = 200;
 		public const int REPLACED_TREE = MAX_TOKENS - 1;
 	}

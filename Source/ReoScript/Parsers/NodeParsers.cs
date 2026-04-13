@@ -43,6 +43,15 @@ namespace unvell.ReoScript
 
 			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
+				// Check if the last child is an AS node (alias)
+				string alias = null;
+				int contentChildCount = t.ChildCount;
+				if (t.ChildCount > 1 && t.Children[t.ChildCount - 1].Type == NodeType.AS)
+				{
+					alias = t.Children[t.ChildCount - 1].ToString();
+					contentChildCount--;
+				}
+
 				if (t.Children[0].Type == NodeType.STRING_LITERATE)
 				{
 					string codeFile = t.Children[0].ToString();
@@ -52,16 +61,26 @@ namespace unvell.ReoScript
 						string.IsNullOrEmpty(ctx.SourceFilePath) ? srm.WorkPath
 						: Path.GetDirectoryName(ctx.SourceFilePath), codeFile));
 
-					srm.ImportCodeFile(path);
+					if (alias != null)
+					{
+						// import "file.reo" as mod; → isolated module import
+						ObjectValue module = srm.ImportModuleFile(path);
+						ctx[alias] = module;
+					}
+					else
+					{
+						// import "file.reo"; → legacy global-scope import
+						srm.ImportCodeFile(path);
+					}
 				}
 				else if (srm.AllowImportTypeInScript)
 				{
 					StringBuilder sb = new StringBuilder();
-					for (int i = 0; i < t.ChildCount; i++)
+					for (int i = 0; i < contentChildCount; i++)
 					{
 						string ns = t.Children[i].ToString();
 
-						if (i == t.ChildCount - 1)
+						if (i == contentChildCount - 1)
 						{
 							if (ns == "*")
 							{
@@ -76,7 +95,15 @@ namespace unvell.ReoScript
 								Type type = srm.GetTypeFromAssembly(name, ns);
 								if (type != null)
 								{
-									srm.ImportType(type);
+									if (alias != null)
+									{
+										// import System.Collections.Generic.List as List;
+										srm.ImportType(type, alias);
+									}
+									else
+									{
+										srm.ImportType(type);
+									}
 								}
 								return null;
 							}

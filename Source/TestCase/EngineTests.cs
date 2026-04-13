@@ -537,5 +537,81 @@ obj.x + obj.y
 		}
 
 		#endregion
+
+		#region Import As
+
+		[Fact]
+		public void ImportAs_FunctionsAvailable()
+		{
+			string modulePath = WriteTempScript(@"
+function add(a, b) { return a + b; }
+function sub(a, b) { return a - b; }
+");
+			try
+			{
+				var srm = CreateSRM();
+				srm.WorkPath = Path.GetDirectoryName(modulePath);
+				srm.Run(string.Format(
+					"import \"{0}\" as math; var r = math.add(10, 3);",
+					Path.GetFileName(modulePath)));
+				Assert.Equal(13.0, srm.CalcExpression("r;"));
+			}
+			finally
+			{
+				File.Delete(modulePath);
+			}
+		}
+
+		[Fact]
+		public void ImportAs_IsolatedScope()
+		{
+			string modulePath = WriteTempScript(@"
+var secret = 99;
+function getSecret() { return secret; }
+");
+			try
+			{
+				var srm = CreateSRM();
+				srm.WorkPath = Path.GetDirectoryName(modulePath);
+				srm.Run(string.Format(
+					"import \"{0}\" as m;",
+					Path.GetFileName(modulePath)));
+
+				// Module function works via alias
+				Assert.Equal(99.0, srm.CalcExpression("m.getSecret();"));
+
+				// secret is NOT in global scope
+				Assert.Null(srm.CalcExpression("typeof secret == 'undefined' ? null : secret;"));
+			}
+			finally
+			{
+				File.Delete(modulePath);
+			}
+		}
+
+		[Fact]
+		public void ImportAs_WithoutAs_LegacyBehavior()
+		{
+			string modulePath = WriteTempScript(@"
+var x = 42;
+");
+			try
+			{
+				var srm = CreateSRM();
+				srm.WorkPath = Path.GetDirectoryName(modulePath);
+				srm.Run(string.Format(
+					"import \"{0}\";",
+					Path.GetFileName(modulePath)));
+
+				// Legacy import: x should be in global scope
+				Assert.Equal(42.0, srm.CalcExpression("x;"));
+			}
+			finally
+			{
+				File.Delete(modulePath);
+			}
+		}
+
+		#endregion
 	}
 }

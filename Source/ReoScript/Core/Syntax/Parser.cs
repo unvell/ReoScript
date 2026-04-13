@@ -104,6 +104,15 @@ namespace unvell.ReoScript
 			if (Check(NodeType.STRING_LITERATE))
 			{
 				node.AddChild(MakeLeaf(Advance()));
+
+				// import "file.reo" as alias;
+				if (Check(NodeType.IDENTIFIER) && Current().Text == "as")
+				{
+					Advance(); // consume 'as'
+					var aliasToken = Expect(NodeType.IDENTIFIER);
+					node.AddChild(new SyntaxNode(NodeType.AS, aliasToken.Text, aliasToken.Line, aliasToken.CharPosition));
+				}
+
 				ExpectSemiOrASI();
 				return node;
 			}
@@ -122,6 +131,15 @@ namespace unvell.ReoScript
 					node.AddChild(MakeLeaf(Expect(NodeType.IDENTIFIER)));
 				}
 			}
+
+			// import System.Collections.Generic.List as List;
+			if (Check(NodeType.IDENTIFIER) && Current().Text == "as")
+			{
+				Advance(); // consume 'as'
+				var aliasToken = Expect(NodeType.IDENTIFIER);
+				node.AddChild(new SyntaxNode(NodeType.AS, aliasToken.Text, aliasToken.Line, aliasToken.CharPosition));
+			}
+
 			ExpectSemiOrASI();
 			return node;
 		}
