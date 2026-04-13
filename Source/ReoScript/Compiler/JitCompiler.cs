@@ -13,7 +13,6 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Collections.Generic;
-using Antlr.Runtime.Tree;
 using unvell.ReoScript.Core;
 using unvell.ReoScript.Core.Statement;
 
@@ -22,7 +21,7 @@ namespace unvell.ReoScript.Compiler
 	/// <summary>
 	/// Baseline JIT compiler for ReoScript.
 	///
-	/// Takes a compiled AST (CommonTree) and emits a DynamicMethod that
+	/// Takes a compiled AST (SyntaxNode) and emits a DynamicMethod that
 	/// executes the script by calling into JitRuntime helper methods.
 	/// Unsupported AST nodes fall back to tree-walking via
 	/// JitRuntime.InterpretNode, so correctness is always preserved.
@@ -86,7 +85,7 @@ namespace unvell.ReoScript.Compiler
 		/// <summary>
 		/// Compile a parsed AST into a callable delegate.
 		/// </summary>
-		public static Func<ScriptContext, object> Compile(CommonTree rootNode)
+		public static Func<ScriptContext, object> Compile(SyntaxNode rootNode)
 		{
 			var dm = new DynamicMethod(
 				"ReoScript_JIT",
@@ -125,13 +124,13 @@ namespace unvell.ReoScript.Compiler
 
 		// ── Statement-level emit ─────────────────────────────────────
 
-		private void EmitStatements(CommonTree node)
+		private void EmitStatements(SyntaxNode node)
 		{
 			if (node == null || node.Children == null) return;
 
 			for (int i = 0; i < node.ChildCount; i++)
 			{
-				EmitNode((CommonTree)node.Children[i]);
+				EmitNode((SyntaxNode)node.Children[i]);
 				// each statement leaves a value on the stack; pop it
 				// unless it's the last statement (return value).
 				if (i < node.ChildCount - 1)
@@ -141,7 +140,7 @@ namespace unvell.ReoScript.Compiler
 
 		// ── Core emit dispatcher ─────────────────────────────────────
 
-		private void EmitNode(CommonTree t)
+		private void EmitNode(SyntaxNode t)
 		{
 			if (t == null) { il.Emit(OpCodes.Ldnull); return; }
 			nodeCount++;
@@ -149,116 +148,116 @@ namespace unvell.ReoScript.Compiler
 			switch (t.Type)
 			{
 				// ── Variable declaration ─────────────────────────
-				case ReoScriptLexer.DECLARATION:
+				case NodeType.DECLARATION:
 					EmitDeclaration(t);
 					break;
 
-				case ReoScriptLexer.LOCAL_DECLARE_ASSIGNMENT:
+				case NodeType.LOCAL_DECLARE_ASSIGNMENT:
 					EmitLocalDeclareAssignment(t);
 					break;
 
 				// ── Assignment ────────────────────────────────────
-				case ReoScriptLexer.ASSIGNMENT:
+				case NodeType.ASSIGNMENT:
 					EmitAssignment(t);
 					break;
 
 				// ── Control flow ──────────────────────────────────
-				case ReoScriptLexer.FOR_STATEMENT:
+				case NodeType.FOR_STATEMENT:
 					EmitFor(t);
 					break;
 
-				case ReoScriptLexer.WHILE_STATEMENT:
+				case NodeType.WHILE_STATEMENT:
 					EmitWhile(t);
 					break;
 
-				case ReoScriptLexer.IF_STATEMENT:
+				case NodeType.IF_STATEMENT:
 					EmitIf(t);
 					break;
 
-				case ReoScriptLexer.BLOCK:
+				case NodeType.BLOCK:
 					EmitBlock(t);
 					break;
 
-				case ReoScriptLexer.RETURN:
+				case NodeType.RETURN:
 					EmitReturn(t);
 					break;
 
 				// ── Expressions ───────────────────────────────────
-				case ReoScriptLexer.IDENTIFIER:
+				case NodeType.IDENTIFIER:
 					EmitGetVariable(t);
 					break;
 
-				case ReoScriptLexer.CONST_VALUE:
+				case NodeType.CONST_VALUE:
 					EmitConst(t);
 					break;
 
-				case ReoScriptLexer.THIS:
+				case NodeType.THIS:
 					il.Emit(OpCodes.Ldarg_0);
 					il.Emit(OpCodes.Call, RT_GetThisObject);
 					break;
 
-				case ReoScriptLexer.PROPERTY_ACCESS:
+				case NodeType.PROPERTY_ACCESS:
 					EmitPropertyAccess(t);
 					break;
 
-				case ReoScriptLexer.FUNCTION_CALL:
+				case NodeType.FUNCTION_CALL:
 					EmitFunctionCall(t);
 					break;
 
 				// ── Binary arithmetic ─────────────────────────────
-				case ReoScriptLexer.PLUS:
+				case NodeType.PLUS:
 					EmitBinaryOp(t, RT_Add);
 					break;
-				case ReoScriptLexer.MINUS:
+				case NodeType.MINUS:
 					EmitBinaryOp(t, RT_Subtract);
 					break;
-				case ReoScriptLexer.MUL:
+				case NodeType.MUL:
 					EmitBinaryOp(t, RT_Multiply);
 					break;
-				case ReoScriptLexer.DIV:
+				case NodeType.DIV:
 					EmitBinaryOp(t, RT_Divide);
 					break;
-				case ReoScriptLexer.MOD:
+				case NodeType.MOD:
 					EmitBinaryOp(t, RT_Modulo);
 					break;
 
 				// ── Comparison ────────────────────────────────────
-				case ReoScriptLexer.LESS_THAN:
+				case NodeType.LESS_THAN:
 					EmitBinaryOp(t, RT_LessThan);
 					il.Emit(OpCodes.Box, typeof(bool));
 					break;
-				case ReoScriptLexer.LESS_EQUALS:
+				case NodeType.LESS_EQUALS:
 					EmitBinaryOp(t, RT_LessOrEqual);
 					il.Emit(OpCodes.Box, typeof(bool));
 					break;
-				case ReoScriptLexer.GREAT_THAN:
+				case NodeType.GREAT_THAN:
 					EmitBinaryOp(t, RT_GreaterThan);
 					il.Emit(OpCodes.Box, typeof(bool));
 					break;
-				case ReoScriptLexer.GREAT_EQUALS:
+				case NodeType.GREAT_EQUALS:
 					EmitBinaryOp(t, RT_GreaterOrEqual);
 					il.Emit(OpCodes.Box, typeof(bool));
 					break;
-				case ReoScriptLexer.EQUALS:
+				case NodeType.EQUALS:
 					EmitBinaryOp(t, RT_Equals);
 					il.Emit(OpCodes.Box, typeof(bool));
 					break;
-				case ReoScriptLexer.NOT_EQUALS:
+				case NodeType.NOT_EQUALS:
 					EmitBinaryOp(t, RT_NotEquals);
 					il.Emit(OpCodes.Box, typeof(bool));
 					break;
 
 				// ── Unary step ────────────────────────────────────
-				case ReoScriptLexer.POST_UNARY_STEP:
+				case NodeType.POST_UNARY_STEP:
 					EmitPostUnaryStep(t);
 					break;
 
-				case ReoScriptLexer.PRE_UNARY_STEP:
+				case NodeType.PRE_UNARY_STEP:
 					EmitPreUnaryStep(t);
 					break;
 
 				// ── Pre-unary (!, -, ~, typeof) ──────────────────
-				case ReoScriptLexer.PRE_UNARY:
+				case NodeType.PRE_UNARY:
 					EmitPreUnary(t);
 					break;
 
@@ -271,16 +270,16 @@ namespace unvell.ReoScript.Compiler
 
 		// ── Variable declaration ──────────────────────────────────────
 
-		private void EmitDeclaration(CommonTree t)
+		private void EmitDeclaration(SyntaxNode t)
 		{
 			for (int i = 0; i < t.ChildCount; i++)
 			{
-				EmitNode((CommonTree)t.Children[i]);
+				EmitNode((SyntaxNode)t.Children[i]);
 				if (i < t.ChildCount - 1) il.Emit(OpCodes.Pop);
 			}
 		}
 
-		private void EmitLocalDeclareAssignment(CommonTree t)
+		private void EmitLocalDeclareAssignment(SyntaxNode t)
 		{
 			if (t is VariableDefineNode vdn && vdn.VariableInfo != null
 				&& vdn.VariableInfo.HasInitialValue)
@@ -300,16 +299,16 @@ namespace unvell.ReoScript.Compiler
 
 		// ── Assignment ────────────────────────────────────────────────
 
-		private void EmitAssignment(CommonTree t)
+		private void EmitAssignment(SyntaxNode t)
 		{
-			CommonTree target = (CommonTree)t.Children[0];
+			SyntaxNode target = (SyntaxNode)t.Children[0];
 
 			switch (target.Type)
 			{
-				case ReoScriptLexer.IDENTIFIER:
+				case NodeType.IDENTIFIER:
 					il.Emit(OpCodes.Ldarg_0); // ctx
 					il.Emit(OpCodes.Ldstr, target.Text);
-					EmitNode((CommonTree)t.Children[1]); // value
+					EmitNode((SyntaxNode)t.Children[1]); // value
 					il.Emit(OpCodes.Dup); // keep value on stack as expression result
 					var local = il.DeclareLocal(typeof(object));
 					il.Emit(OpCodes.Stloc, local);
@@ -317,11 +316,11 @@ namespace unvell.ReoScript.Compiler
 					il.Emit(OpCodes.Ldloc, local);
 					break;
 
-				case ReoScriptLexer.PROPERTY_ACCESS:
+				case NodeType.PROPERTY_ACCESS:
 					il.Emit(OpCodes.Ldarg_0); // ctx
-					EmitNode((CommonTree)target.Children[0]); // owner
+					EmitNode((SyntaxNode)target.Children[0]); // owner
 					il.Emit(OpCodes.Ldstr, target.Children[1].Text); // name
-					EmitNode((CommonTree)t.Children[1]); // value
+					EmitNode((SyntaxNode)t.Children[1]); // value
 					var local2 = il.DeclareLocal(typeof(object));
 					il.Emit(OpCodes.Dup);
 					il.Emit(OpCodes.Stloc, local2);
@@ -338,18 +337,18 @@ namespace unvell.ReoScript.Compiler
 
 		// ── Control flow ──────────────────────────────────────────────
 
-		private void EmitFor(CommonTree t)
+		private void EmitFor(SyntaxNode t)
 		{
 			// Children: [0]=FOR_INIT, [1]=FOR_CONDITION, [2]=FOR_ITERATOR, [3]=FOR_BODY
-			CommonTree forInit = (CommonTree)t.Children[0];
-			CommonTree forCond = (CommonTree)t.Children[1];
-			CommonTree forIter = (CommonTree)t.Children[2];
-			CommonTree forBody = (CommonTree)t.Children[3];
+			SyntaxNode forInit = (SyntaxNode)t.Children[0];
+			SyntaxNode forCond = (SyntaxNode)t.Children[1];
+			SyntaxNode forIter = (SyntaxNode)t.Children[2];
+			SyntaxNode forBody = (SyntaxNode)t.Children[3];
 
 			// init
 			for (int i = 0; i < forInit.ChildCount; i++)
 			{
-				EmitNode((CommonTree)forInit.Children[i]);
+				EmitNode((SyntaxNode)forInit.Children[i]);
 				il.Emit(OpCodes.Pop);
 			}
 
@@ -361,7 +360,7 @@ namespace unvell.ReoScript.Compiler
 			// condition
 			if (forCond.ChildCount > 0)
 			{
-				EmitNode((CommonTree)forCond.Children[0]);
+				EmitNode((SyntaxNode)forCond.Children[0]);
 				il.Emit(OpCodes.Call, RT_IsTrue);
 				il.Emit(OpCodes.Brfalse, loopEnd);
 			}
@@ -369,7 +368,7 @@ namespace unvell.ReoScript.Compiler
 			// body
 			if (forBody.ChildCount > 0)
 			{
-				CommonTree body = (CommonTree)forBody.Children[0];
+				SyntaxNode body = (SyntaxNode)forBody.Children[0];
 				EmitBlockBody(body);
 				il.Emit(OpCodes.Pop); // discard body result in loop
 			}
@@ -377,7 +376,7 @@ namespace unvell.ReoScript.Compiler
 			// iterator
 			for (int i = 0; i < forIter.ChildCount; i++)
 			{
-				EmitNode((CommonTree)forIter.Children[i]);
+				EmitNode((SyntaxNode)forIter.Children[i]);
 				il.Emit(OpCodes.Pop);
 			}
 
@@ -387,7 +386,7 @@ namespace unvell.ReoScript.Compiler
 			il.Emit(OpCodes.Ldnull); // for loop value = null
 		}
 
-		private void EmitWhile(CommonTree t)
+		private void EmitWhile(SyntaxNode t)
 		{
 			Label loopStart = il.DefineLabel();
 			Label loopEnd = il.DefineLabel();
@@ -395,14 +394,14 @@ namespace unvell.ReoScript.Compiler
 			il.MarkLabel(loopStart);
 
 			// condition
-			EmitNode((CommonTree)t.Children[0]);
+			EmitNode((SyntaxNode)t.Children[0]);
 			il.Emit(OpCodes.Call, RT_IsTrue);
 			il.Emit(OpCodes.Brfalse, loopEnd);
 
 			// body
 			if (t.ChildCount > 1)
 			{
-				EmitBlockBody((CommonTree)t.Children[1]);
+				EmitBlockBody((SyntaxNode)t.Children[1]);
 				il.Emit(OpCodes.Pop); // discard body result in loop
 			}
 
@@ -412,25 +411,25 @@ namespace unvell.ReoScript.Compiler
 			il.Emit(OpCodes.Ldnull);
 		}
 
-		private void EmitIf(CommonTree t)
+		private void EmitIf(SyntaxNode t)
 		{
 			// Children: [0]=condition, [1]=thenBody, [2]?=elseBody
 			Label elseLabel = il.DefineLabel();
 			Label endLabel = il.DefineLabel();
 
-			EmitNode((CommonTree)t.Children[0]);
+			EmitNode((SyntaxNode)t.Children[0]);
 			il.Emit(OpCodes.Call, RT_IsTrue);
 			il.Emit(OpCodes.Brfalse, elseLabel);
 
 			// then
-			EmitNode((CommonTree)t.Children[1]);
+			EmitNode((SyntaxNode)t.Children[1]);
 
 			if (t.ChildCount > 2)
 			{
 				il.Emit(OpCodes.Pop);
 				il.Emit(OpCodes.Br, endLabel);
 				il.MarkLabel(elseLabel);
-				EmitNode((CommonTree)t.Children[2]);
+				EmitNode((SyntaxNode)t.Children[2]);
 				il.MarkLabel(endLabel);
 			}
 			else
@@ -442,12 +441,12 @@ namespace unvell.ReoScript.Compiler
 			}
 		}
 
-		private void EmitBlock(CommonTree t)
+		private void EmitBlock(SyntaxNode t)
 		{
 			EmitBlockBody(t);
 		}
 
-		private void EmitBlockBody(CommonTree body)
+		private void EmitBlockBody(SyntaxNode body)
 		{
 			if (body == null || body.ChildCount == 0)
 			{
@@ -457,15 +456,15 @@ namespace unvell.ReoScript.Compiler
 
 			for (int i = 0; i < body.ChildCount; i++)
 			{
-				EmitNode((CommonTree)body.Children[i]);
+				EmitNode((SyntaxNode)body.Children[i]);
 				if (i < body.ChildCount - 1) il.Emit(OpCodes.Pop);
 			}
 		}
 
-		private void EmitReturn(CommonTree t)
+		private void EmitReturn(SyntaxNode t)
 		{
 			if (t.ChildCount > 0)
-				EmitNode((CommonTree)t.Children[0]);
+				EmitNode((SyntaxNode)t.Children[0]);
 			else
 				il.Emit(OpCodes.Ldnull);
 			il.Emit(OpCodes.Ret);
@@ -473,32 +472,32 @@ namespace unvell.ReoScript.Compiler
 
 		// ── Expressions ───────────────────────────────────────────────
 
-		private void EmitGetVariable(CommonTree t)
+		private void EmitGetVariable(SyntaxNode t)
 		{
 			il.Emit(OpCodes.Ldarg_0); // ctx
 			il.Emit(OpCodes.Ldstr, t.Text);
 			il.Emit(OpCodes.Call, RT_GetVariable);
 		}
 
-		private void EmitConst(CommonTree t)
+		private void EmitConst(SyntaxNode t)
 		{
 			if (t.ChildCount == 0) { il.Emit(OpCodes.Ldnull); return; }
 
-			CommonTree child = (CommonTree)t.Children[0];
+			SyntaxNode child = (SyntaxNode)t.Children[0];
 
 			switch (child.Type)
 			{
-				case ReoScriptLexer.CONST_VALUE:
+				case NodeType.CONST_VALUE:
 					// Constant folded value (ConstValueNode)
 					if (child is ConstValueNode cvn)
 					{
 						switch (cvn.TokenType)
 						{
-							case ReoScriptLexer.NUMBER_LITERATE:
+							case NodeType.NUMBER_LITERATE:
 								il.Emit(OpCodes.Ldc_R8, (double)cvn.ConstValue);
 								il.Emit(OpCodes.Box, typeof(double));
 								break;
-							case ReoScriptLexer.STRING_LITERATE:
+							case NodeType.STRING_LITERATE:
 								il.Emit(OpCodes.Ldstr, (string)cvn.ConstValue);
 								break;
 							default:
@@ -512,17 +511,17 @@ namespace unvell.ReoScript.Compiler
 					}
 					break;
 
-				case ReoScriptLexer.LIT_TRUE:
+				case NodeType.LIT_TRUE:
 					il.Emit(OpCodes.Ldc_I4_1);
 					il.Emit(OpCodes.Box, typeof(bool));
 					break;
 
-				case ReoScriptLexer.LIT_FALSE:
+				case NodeType.LIT_FALSE:
 					il.Emit(OpCodes.Ldc_I4_0);
 					il.Emit(OpCodes.Box, typeof(bool));
 					break;
 
-				case ReoScriptLexer.LIT_NULL:
+				case NodeType.LIT_NULL:
 					il.Emit(OpCodes.Ldnull);
 					break;
 
@@ -533,23 +532,23 @@ namespace unvell.ReoScript.Compiler
 			}
 		}
 
-		private void EmitPropertyAccess(CommonTree t)
+		private void EmitPropertyAccess(SyntaxNode t)
 		{
 			il.Emit(OpCodes.Ldarg_0); // ctx
-			EmitNode((CommonTree)t.Children[0]); // owner
+			EmitNode((SyntaxNode)t.Children[0]); // owner
 			il.Emit(OpCodes.Ldstr, t.Children[1].Text); // name
 			il.Emit(OpCodes.Call, RT_GetProperty);
 		}
 
-		private void EmitFunctionCall(CommonTree t)
+		private void EmitFunctionCall(SyntaxNode t)
 		{
-			CommonTree funRef = (CommonTree)t.Children[0];
+			SyntaxNode funRef = (SyntaxNode)t.Children[0];
 			bool hasArgs = t.ChildCount > 1 && t.Children[1].ChildCount > 0;
 
 			// Arguments: build object[]
 			if (hasArgs)
 			{
-				EmitArgumentArray((CommonTree)t.Children[1]);
+				EmitArgumentArray((SyntaxNode)t.Children[1]);
 			}
 
 			LocalBuilder argsLocal = null;
@@ -563,10 +562,10 @@ namespace unvell.ReoScript.Compiler
 			il.Emit(OpCodes.Ldarg_0);
 
 			// owner and function
-			if (funRef.Type == ReoScriptLexer.PROPERTY_ACCESS)
+			if (funRef.Type == NodeType.PROPERTY_ACCESS)
 			{
 				// method call: obj.method(args)
-				EmitNode((CommonTree)funRef.Children[0]); // owner (also used as 'this')
+				EmitNode((SyntaxNode)funRef.Children[0]); // owner (also used as 'this')
 				var ownerLocal = il.DeclareLocal(typeof(object));
 				il.Emit(OpCodes.Dup);
 				il.Emit(OpCodes.Stloc, ownerLocal);
@@ -577,7 +576,7 @@ namespace unvell.ReoScript.Compiler
 				il.Emit(OpCodes.Ldstr, funRef.Children[1].Text);
 				il.Emit(OpCodes.Call, RT_GetProperty);
 			}
-			else if (funRef.Type == ReoScriptLexer.IDENTIFIER)
+			else if (funRef.Type == NodeType.IDENTIFIER)
 			{
 				// local function call: fun(args)
 				il.Emit(OpCodes.Ldnull); // owner = null
@@ -598,7 +597,7 @@ namespace unvell.ReoScript.Compiler
 			il.Emit(OpCodes.Call, RT_CallFunction);
 		}
 
-		private void EmitArgumentArray(CommonTree argList)
+		private void EmitArgumentArray(SyntaxNode argList)
 		{
 			int count = argList.ChildCount;
 			il.Emit(OpCodes.Ldc_I4, count);
@@ -608,37 +607,37 @@ namespace unvell.ReoScript.Compiler
 			{
 				il.Emit(OpCodes.Dup);
 				il.Emit(OpCodes.Ldc_I4, i);
-				EmitNode((CommonTree)argList.Children[i]);
+				EmitNode((SyntaxNode)argList.Children[i]);
 				il.Emit(OpCodes.Stelem_Ref);
 			}
 		}
 
 		// ── Binary operations ─────────────────────────────────────────
 
-		private void EmitBinaryOp(CommonTree t, MethodInfo helper)
+		private void EmitBinaryOp(SyntaxNode t, MethodInfo helper)
 		{
-			EmitNode((CommonTree)t.Children[0]);
-			EmitNode((CommonTree)t.Children[1]);
+			EmitNode((SyntaxNode)t.Children[0]);
+			EmitNode((SyntaxNode)t.Children[1]);
 			il.Emit(OpCodes.Call, helper);
 		}
 
 		// ── Unary step ────────────────────────────────────────────────
 
-		private void EmitPostUnaryStep(CommonTree t)
+		private void EmitPostUnaryStep(SyntaxNode t)
 		{
 			string name = t.Children[0].Text;
-			int stepChild = t.ChildCount > 1 ? ((CommonTree)t.Children[1]).Type : 0;
+			int stepChild = t.ChildCount > 1 ? ((SyntaxNode)t.Children[1]).Type : 0;
 
 			il.Emit(OpCodes.Ldarg_0);
 			il.Emit(OpCodes.Ldstr, name);
 
-			if (stepChild == ReoScriptLexer.DECREMENT)
+			if (stepChild == NodeType.DECREMENT)
 				il.Emit(OpCodes.Call, RT_PostDecrement);
 			else
 				il.Emit(OpCodes.Call, RT_PostIncrement);
 		}
 
-		private void EmitPreUnaryStep(CommonTree t)
+		private void EmitPreUnaryStep(SyntaxNode t)
 		{
 			string name = t.Children[0].Text;
 			il.Emit(OpCodes.Ldarg_0);
@@ -648,16 +647,16 @@ namespace unvell.ReoScript.Compiler
 
 		// ── Pre-unary ─────────────────────────────────────────────────
 
-		private void EmitPreUnary(CommonTree t)
+		private void EmitPreUnary(SyntaxNode t)
 		{
 			if (t.ChildCount < 2) { EmitFallback(t); return; }
 
-			int op = ((CommonTree)t.Children[0]).Type;
-			CommonTree operand = (CommonTree)t.Children[1];
+			int op = ((SyntaxNode)t.Children[0]).Type;
+			SyntaxNode operand = (SyntaxNode)t.Children[1];
 
 			switch (op)
 			{
-				case ReoScriptLexer.NOT:
+				case NodeType.NOT:
 					EmitNode(operand);
 					il.Emit(OpCodes.Call, RT_IsTrue);
 					il.Emit(OpCodes.Ldc_I4_0);
@@ -665,7 +664,7 @@ namespace unvell.ReoScript.Compiler
 					il.Emit(OpCodes.Box, typeof(bool));
 					break;
 
-				case ReoScriptLexer.MINUS:
+				case NodeType.MINUS:
 					EmitNode(operand);
 					il.Emit(OpCodes.Call, RT_Negate);
 					break;
@@ -683,22 +682,22 @@ namespace unvell.ReoScript.Compiler
 		/// the tree-walking interpreter. This keeps the JIT correct
 		/// while we incrementally add more node types.
 		/// </summary>
-		private void EmitFallback(CommonTree t)
+		private void EmitFallback(SyntaxNode t)
 		{
 			il.Emit(OpCodes.Ldarg_0); // ctx
-			EmitTreeRef(t); // push the CommonTree node
+			EmitTreeRef(t); // push the SyntaxNode node
 			il.Emit(OpCodes.Call, RT_InterpretNode);
 		}
 
 		/// <summary>
-		/// Push a reference to a CommonTree node onto the IL stack.
+		/// Push a reference to a SyntaxNode node onto the IL stack.
 		///
 		/// DynamicMethod can't embed arbitrary object references as IL
 		/// constants, so we store the tree node in a static holder and
 		/// emit IL that reads it back. This is only used for fallback
 		/// paths, so the performance cost is negligible.
 		/// </summary>
-		private void EmitTreeRef(CommonTree t)
+		private void EmitTreeRef(SyntaxNode t)
 		{
 			int index = TreeRefHolder.Store(t);
 			il.Emit(OpCodes.Ldc_I4, index);
@@ -707,15 +706,15 @@ namespace unvell.ReoScript.Compiler
 	}
 
 	/// <summary>
-	/// Thread-safe holder for CommonTree references used by the fallback path.
+	/// Thread-safe holder for SyntaxNode references used by the fallback path.
 	/// JIT-emitted IL stores tree indices and retrieves them at runtime.
 	/// </summary>
 	public static class TreeRefHolder
 	{
-		private static readonly List<CommonTree> nodes = new List<CommonTree>();
+		private static readonly List<SyntaxNode> nodes = new List<SyntaxNode>();
 		private static readonly object syncLock = new object();
 
-		public static int Store(CommonTree node)
+		public static int Store(SyntaxNode node)
 		{
 			lock (syncLock)
 			{
@@ -725,7 +724,7 @@ namespace unvell.ReoScript.Compiler
 			}
 		}
 
-		public static CommonTree Load(int index)
+		public static SyntaxNode Load(int index)
 		{
 			return nodes[index];
 		}

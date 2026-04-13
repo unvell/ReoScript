@@ -17,7 +17,6 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Antlr.Runtime.Tree;
 
 using unvell.ReoScript.Reflection;
 
@@ -88,7 +87,7 @@ namespace unvell.ReoScript
 		/// <summary>
 		/// Syntax Tree of function body
 		/// </summary>
-		internal CommonTree Body { get; set; }
+		internal SyntaxNode Body { get; set; }
 
 		public override string ToString()
 		{

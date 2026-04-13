@@ -19,8 +19,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 
-using Antlr.Runtime;
-using Antlr.Runtime.Tree;
 
 using unvell.ReoScript.Runtime;
 using unvell.ReoScript.Core;
@@ -34,7 +32,7 @@ namespace unvell.ReoScript
 		#region Parser Interface
 		interface INodeParser
 		{
-			object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx);
+			object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx);
 		}
 		#endregion
 
@@ -43,9 +41,9 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				if (t.Children[0].Type == ReoScriptLexer.STRING_LITERATE)
+				if (t.Children[0].Type == NodeType.STRING_LITERATE)
 				{
 					string codeFile = t.Children[0].ToString();
 					codeFile = codeFile.Substring(1, codeFile.Length - 2);
@@ -100,7 +98,7 @@ namespace unvell.ReoScript
 			private AssignmentNodeParser assignmentParser = new AssignmentNodeParser();
 
 			#region INodeParser Members
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext context)
 			{
 				//for (int i = 0; i < t.ChildCount; i++)
 				//{
@@ -121,7 +119,7 @@ namespace unvell.ReoScript
 				//for (int i = 1; i < t.ChildCount; i++)
 				//{
 				//  var identifier = t.Children[0].ToString();
-				//  var value = srm.ParseNode((CommonTree)t.Children[i], context);
+				//  var value = srm.ParseNode((SyntaxNode)t.Children[i], context);
 
 				//  if (value is IAccess) value = ((IAccess)value).Get();
 
@@ -150,14 +148,14 @@ namespace unvell.ReoScript
 
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
 				if (t.ChildCount == 1)
 				{
 					return null;
 				}
 
-				if (t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
+				if (t.Children[0].Type == NodeType.IDENTIFIER)
 				{
 					string identifier = t.Children[0].Text;
 
@@ -195,7 +193,7 @@ namespace unvell.ReoScript
 					object orginal = null;
 					container.TryGetValue(identifier, out orginal);
 
-					object target = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
+					object target = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[1], ctx);
 
 					if (orginal is ExternalProperty)
 					{
@@ -210,8 +208,8 @@ namespace unvell.ReoScript
 				}
 				else
 				{
-					IAccess access = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx) as IAccess;
-					CommonTree expr = t.ChildCount > 1 ? (CommonTree)t.Children[1] : null;
+					IAccess access = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[0], ctx) as IAccess;
+					SyntaxNode expr = t.ChildCount > 1 ? (SyntaxNode)t.Children[1] : null;
 
 					object value = null;
 					if (expr != null)
@@ -241,12 +239,12 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				object left = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
+				object left = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[0], ctx);
 				if (left is IAccess) left = ((IAccess)left).Get();
 
-				object right = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
+				object right = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[1], ctx);
 				if (right is IAccess) right = ((IAccess)right).Get();
 
 				return Calc(left, right, srm, ctx);
@@ -571,10 +569,10 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
 				string oprt = t.Children[0].ToString();
-				object value = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
+				object value = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[1], ctx);
 
 				// get value
 				while (value is IAccess) value = ((IAccess)value).Get();
@@ -616,9 +614,9 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				if (t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
+				if (t.Children[0].Type == NodeType.IDENTIFIER)
 				{
 					string identifier = t.Children[0].Text;
 
@@ -661,7 +659,7 @@ namespace unvell.ReoScript
 						throw ctx.CreateRuntimeError(t, "only number can be used as increment or decrement statement.");
 					}
 
-					double target = ScriptRunningMachine.GetNumberValue(orginal) + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1);
+					double target = ScriptRunningMachine.GetNumberValue(orginal) + (t.Children[1].Type == NodeType.INCREMENT ? 1 : -1);
 
 					if (orginal is ExternalProperty)
 					{
@@ -677,7 +675,7 @@ namespace unvell.ReoScript
 				else
 				{
 
-					IAccess access = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx) as IAccess;
+					IAccess access = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[0], ctx) as IAccess;
 
 					if (access == null)
 					{
@@ -697,7 +695,7 @@ namespace unvell.ReoScript
 
 					double value = ScriptRunningMachine.GetNumberValue(oldValue);
 					double returnValue = value;
-					access.Set((value + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1)));
+					access.Set((value + (t.Children[1].Type == NodeType.INCREMENT ? 1 : -1)));
 					return returnValue;
 				}
 			}
@@ -710,9 +708,9 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				if (t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
+				if (t.Children[0].Type == NodeType.IDENTIFIER)
 				{
 					string identifier = t.Children[0].Text;
 
@@ -755,7 +753,7 @@ namespace unvell.ReoScript
 						throw ctx.CreateRuntimeError(t, "only number can be used as increment or decrement statement.");
 					}
 
-					double target = ScriptRunningMachine.GetNumberValue(orginal) + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1);
+					double target = ScriptRunningMachine.GetNumberValue(orginal) + (t.Children[1].Type == NodeType.INCREMENT ? 1 : -1);
 
 					if (orginal is ExternalProperty)
 					{
@@ -770,8 +768,8 @@ namespace unvell.ReoScript
 				}
 				else
 				{
-					CommonTree target = (CommonTree)t.Children[0];
-					IAccess access = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx) as IAccess;
+					SyntaxNode target = (SyntaxNode)t.Children[0];
+					IAccess access = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[0], ctx) as IAccess;
 					if (access == null)
 					{
 						throw ctx.CreateRuntimeError(t, "only property, indexer, and variable can be used as increment or decrement statement.");
@@ -789,7 +787,7 @@ namespace unvell.ReoScript
 
 					double value = ScriptRunningMachine.GetNumberValue(oldValue);
 
-					object v = (value + (t.Children[1].Type == ReoScriptLexer.INCREMENT ? 1 : -1));
+					object v = (value + (t.Children[1].Type == NodeType.INCREMENT ? 1 : -1));
 					access.Set(v);
 					return v;
 				}
@@ -803,14 +801,14 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				object value = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
+				object value = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[0], ctx);
 				if (value is IAccess) value = ((IAccess)value).Get();
 
 				bool condition = ScriptRunningMachine.GetBoolValue(value);
-				return condition ? ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx)
-					: ScriptRunningMachine.ParseNode((CommonTree)t.Children[2], ctx);
+				return condition ? ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[1], ctx)
+					: ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[2], ctx);
 			}
 
 			#endregion
@@ -1137,16 +1135,16 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				object left = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
+				object left = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[0], ctx);
 				if (left is IAccess) left = ((IAccess)left).Get();
 
 				// Short-circuit: if left is falsy, return left; otherwise return right.
 				if (!ScriptRunningMachine.GetBoolValue(left))
 					return left;
 
-				object right = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
+				object right = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[1], ctx);
 				if (right is IAccess) right = ((IAccess)right).Get();
 
 				return right;
@@ -1160,16 +1158,16 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				object left = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
+				object left = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[0], ctx);
 				if (left is IAccess) left = ((IAccess)left).Get();
 
 				// Short-circuit: if left is truthy, return left; otherwise return right.
 				if (ScriptRunningMachine.GetBoolValue(left))
 					return left;
 
-				object right = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
+				object right = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[1], ctx);
 				if (right is IAccess) right = ((IAccess)right).Get();
 
 				return right;
@@ -1183,19 +1181,19 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				object value = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
+				object value = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[0], ctx);
 				if (value is IAccess) value = ((IAccess)value).Get();
 
 				bool condition = ScriptRunningMachine.GetBoolValue(value);
 				if (condition)
 				{
-					return ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
+					return ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[1], ctx);
 				}
 				else if (t.ChildCount == 3)
 				{
-					return ScriptRunningMachine.ParseNode((CommonTree)t.Children[2], ctx);
+					return ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[2], ctx);
 				}
 				else
 					return null;
@@ -1209,11 +1207,11 @@ namespace unvell.ReoScript
 		{
 			private ExprEqualsNodeParser equalsParser = new ExprEqualsNodeParser();
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
 				if (t.ChildCount == 0) return null;
 
-				object source = ScriptRunningMachine.ParseNode((CommonTree)(t.Children[0]), ctx);
+				object source = ScriptRunningMachine.ParseNode((SyntaxNode)(t.Children[0]), ctx);
 				while (source is IAccess) source = ((IAccess)source).Get();
 
 				if (source == null) return null;
@@ -1226,25 +1224,25 @@ namespace unvell.ReoScript
 			doDefault:
 				while (i < t.ChildCount)
 				{
-					CommonTree caseTree = (CommonTree)t.Children[i];
+					SyntaxNode caseTree = (SyntaxNode)t.Children[i];
 
-					if (caseTree.Type == ReoScriptLexer.BREAK)
+					if (caseTree.Type == NodeType.BREAK)
 					{
 						if (doParse) return null;
 					}
-					else if (caseTree.Type == ReoScriptLexer.RETURN)
+					else if (caseTree.Type == NodeType.RETURN)
 					{
 						if (doParse) return ScriptRunningMachine.ParseNode(caseTree, ctx);
 					}
-					else if (caseTree.Type == ReoScriptLexer.SWITCH_CASE_ELSE)
+					else if (caseTree.Type == NodeType.SWITCH_CASE_ELSE)
 					{
 						defaultCaseLine = i;
 					}
-					else if (caseTree.Type == ReoScriptLexer.SWITCH_CASE)
+					else if (caseTree.Type == NodeType.SWITCH_CASE)
 					{
 						if (caseTree.ChildCount > 0)
 						{
-							object target = ScriptRunningMachine.ParseNode((CommonTree)caseTree.Children[0], ctx);
+							object target = ScriptRunningMachine.ParseNode((SyntaxNode)caseTree.Children[0], ctx);
 							if (target is IAccess) target = ((IAccess)target).Get();
 
 							if ((bool)equalsParser.Calc(source, target, srm, ctx))
@@ -1277,21 +1275,21 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				CommonTree forInit = (CommonTree)t.Children[0];
+				SyntaxNode forInit = (SyntaxNode)t.Children[0];
 				ScriptRunningMachine.ParseChildNodes(forInit, ctx);
 
-				CommonTree conditionTree = ((CommonTree)t.Children[1]);
-				CommonTree condition = null;
+				SyntaxNode conditionTree = ((SyntaxNode)t.Children[1]);
+				SyntaxNode condition = null;
 
 				if (conditionTree.ChildCount > 0)
 				{
-					condition = (CommonTree)(conditionTree.Children[0]);
+					condition = (SyntaxNode)(conditionTree.Children[0]);
 				}
 
-				CommonTree iteratorTree = ((CommonTree)t.Children[2]);
-				CommonTree body = (CommonTree)(((CommonTree)t.Children[3]).Children[0]);
+				SyntaxNode iteratorTree = ((SyntaxNode)t.Children[2]);
+				SyntaxNode body = (SyntaxNode)(((SyntaxNode)t.Children[3]).Children[0]);
 
 				bool hasCondition = condition != null;
 				bool hasBody = body.ChildCount > 0;
@@ -1347,9 +1345,9 @@ namespace unvell.ReoScript
 
 			//private struct ForSession
 			//{
-			//  public CommonTree Condition;
-			//  public CommonTree Body;
-			//  public CommonTree Iterators;
+			//  public SyntaxNode Condition;
+			//  public SyntaxNode Body;
+			//  public SyntaxNode Iterators;
 			//  public ScriptContext ctx;
 			//}
 
@@ -1361,22 +1359,22 @@ namespace unvell.ReoScript
 			private static readonly MethodInfo _ParseNode = typeof(ScriptRunningMachine).GetMethod("ParseNode");
 			private static readonly MethodInfo _ParseChildNodes = typeof(ScriptRunningMachine).GetMethod("ParseChildNodes");
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				CommonTree forInit = (CommonTree)t.Children[0];
+				SyntaxNode forInit = (SyntaxNode)t.Children[0];
 				ScriptRunningMachine.ParseChildNodes(forInit, ctx);
 
-				CommonTree condition = ((CommonTree)t.Children[1]);
+				SyntaxNode condition = ((SyntaxNode)t.Children[1]);
 
 				bool test = ScriptRunningMachine.GetBoolValue(ScriptRunningMachine.ParseNode(condition, ctx));
 				if (!test) return null;
 
 				DynamicMethod dm = new DynamicMethod("__for$" + count++, typeof(object),
-					new Type[] { typeof(ScriptContext), typeof(CommonTree), typeof(CommonTree), typeof(CommonTree) });
+					new Type[] { typeof(ScriptContext), typeof(SyntaxNode), typeof(SyntaxNode), typeof(SyntaxNode) });
 				ILGenerator il = dm.GetILGenerator();
 
-				CommonTree body = (CommonTree)(((CommonTree)t.Children[3]).Children[0]);
-				CommonTree iterators = ((CommonTree)t.Children[2]);
+				SyntaxNode body = (SyntaxNode)(((SyntaxNode)t.Children[3]).Children[0]);
+				SyntaxNode iterators = ((SyntaxNode)t.Children[2]);
 
 				System.Reflection.Emit.Label start = il.DefineLabel();
 				System.Reflection.Emit.Label end = il.DefineLabel();
@@ -1432,22 +1430,22 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
 				string varName = t.Children[0].ToString();
 
 				CallScope scope = null;
 
-				if (t.ChildCount > 3 && t.Children[3].Type == ReoScriptLexer.TYPE
+				if (t.ChildCount > 3 && t.Children[3].Type == NodeType.TYPE
 					&& !srm.IsInGlobalScope(ctx))
 				{
 					scope = ctx.CurrentCallScope;
 				}
 
-				CommonTree body = (CommonTree)t.Children[2];
+				SyntaxNode body = (SyntaxNode)t.Children[2];
 
 				// retrieve target object
-				object target = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], ctx);
+				object target = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[1], ctx);
 				if (target is IAccess) target = ((IAccess)target).Get();
 
 				if (target is IDictionary<string, object>)
@@ -1521,13 +1519,13 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
 				object v = null;
 
 				if (t.ChildCount > 0)
 				{
-					v = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
+					v = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[0], ctx);
 					if (v is IAccess) v = ((IAccess)v).Get();
 				}
 
@@ -1543,22 +1541,22 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				CommonTree tryBody = t.Children[0] as CommonTree;
+				SyntaxNode tryBody = t.Children[0] as SyntaxNode;
 
 				string errorObjIdentifier = null;
 
-				CommonTree catchNode = t.Children[1] as CommonTree;
-				CommonTree catchBody = catchNode.Children[0] as CommonTree;
+				SyntaxNode catchNode = t.Children[1] as SyntaxNode;
+				SyntaxNode catchBody = catchNode.Children[0] as SyntaxNode;
 
 				if (catchNode.ChildCount > 1)
 				{
 					errorObjIdentifier = catchNode.Children[1].Text;
 				}
 
-				CommonTree finallyNode = t.Children[2] as CommonTree;
-				CommonTree finallyBody = finallyNode.ChildCount > 0 ? finallyNode.Children[0] as CommonTree : null;
+				SyntaxNode finallyNode = t.Children[2] as SyntaxNode;
+				SyntaxNode finallyBody = finallyNode.ChildCount > 0 ? finallyNode.Children[0] as SyntaxNode : null;
 
 				object ret = null;
 
@@ -1605,9 +1603,9 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				object obj = ScriptRunningMachine.ParseNode(t.Children[0] as CommonTree, ctx);
+				object obj = ScriptRunningMachine.ParseNode(t.Children[0] as SyntaxNode, ctx);
 				if (obj is IAccess) obj = ((IAccess)obj).Get();
 
 				ErrorObject err = ctx.CreateErrorObject(t, Convert.ToString(obj));
@@ -1624,7 +1622,7 @@ namespace unvell.ReoScript
 			private AssignmentNodeParser assignParser = new AssignmentNodeParser();
 
 			#region INodeParser Members
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext context)
 			{
 				FunctionObject fun = CreateAndInitFunction(context, ((FunctionDefineNode)t).FunctionInfo);
 				// Capture the lexical scope this declaration is being walked in.
@@ -1669,7 +1667,7 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
 				FunctionObject fun = FunctionDefineNodeParser.CreateAndInitFunction(ctx,
 					((AnonymousFunctionDefineNode)t).FunctionInfo);
@@ -1686,13 +1684,13 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext context)
 			{
 				object funObj = null;
 				object ownerObj = null;
 
 				// local function call
-				if (t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
+				if (t.Children[0].Type == NodeType.IDENTIFIER)
 				{
 					string funName = t.Children[0].ToString();
 					funObj = context[funName];
@@ -1714,7 +1712,7 @@ namespace unvell.ReoScript
 				else
 				{
 					// object method call
-					funObj = ScriptRunningMachine.ParseNode(t.Children[0] as CommonTree, context);
+					funObj = ScriptRunningMachine.ParseNode(t.Children[0] as SyntaxNode, context);
 
 					if (funObj is PropertyAccess)
 					{
@@ -1734,7 +1732,7 @@ namespace unvell.ReoScript
 								if (srm.AllowDirectAccess && !(ownerObj is ISyntaxTreeReturn))
 								{
 									object[] args = srm.GetParameterList(
-											(t.ChildCount <= 1 ? null : t.Children[1] as CommonTree), context);
+											(t.ChildCount <= 1 ? null : t.Children[1] as SyntaxNode), context);
 
 									methodName = ((srm.WorkMode & MachineWorkMode.AutoUppercaseWhenCLRCalling)
 										== MachineWorkMode.AutoUppercaseWhenCLRCalling)
@@ -1797,7 +1795,7 @@ namespace unvell.ReoScript
 
 				if (ownerObj == null) ownerObj = context.ThisObject;
 
-				CommonTree argTree = t.ChildCount < 2 ? null : t.Children[1] as CommonTree;
+				SyntaxNode argTree = t.ChildCount < 2 ? null : t.Children[1] as SyntaxNode;
 
 				try
 				{
@@ -1828,21 +1826,21 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext context)
 			{
 				// combiled construct
-				if (t.ChildCount > 0 && t.Children[0].Type == ReoScriptLexer.COMBINE_OBJECT)
+				if (t.ChildCount > 0 && t.Children[0].Type == NodeType.COMBINE_OBJECT)
 				{
-					CommonTree combileTree = ((CommonTree)t.Children[0]);
-					ObjectValue combileObj = ScriptRunningMachine.ParseNode(combileTree.Children[1] as CommonTree, context) as ObjectValue;
+					SyntaxNode combileTree = ((SyntaxNode)t.Children[0]);
+					ObjectValue combileObj = ScriptRunningMachine.ParseNode(combileTree.Children[1] as SyntaxNode, context) as ObjectValue;
 
-					object createdObj = Parse(combileTree.Children[0] as CommonTree, srm, context);
+					object createdObj = Parse(combileTree.Children[0] as SyntaxNode, srm, context);
 					srm.CombineObject(context, createdObj, combileObj);
 					return createdObj;
 				}
 
-				CommonTree tempTree = t.Children[0] as CommonTree;
-				CommonTree constructTree = t;
+				SyntaxNode tempTree = t.Children[0] as SyntaxNode;
+				SyntaxNode constructTree = t;
 
 				// need a depth variable to remember the depth of construct calling
 				int committedDepth = 0, depth = 0;
@@ -1850,23 +1848,23 @@ namespace unvell.ReoScript
 				// find construct calling
 				while (tempTree != null && tempTree.Children != null)
 				{
-					if (tempTree.Type == ReoScriptLexer.FUNCTION_CALL)
+					if (tempTree.Type == NodeType.FUNCTION_CALL)
 					{
 						constructTree = tempTree;
 						committedDepth += depth;
 					}
 
-					tempTree = tempTree.Children[0] as CommonTree;
+					tempTree = tempTree.Children[0] as SyntaxNode;
 					depth++;
 				}
 
 				if (constructTree == null) throw context.CreateRuntimeError(t, "unexpected end to new operator.");
 
 				// get constructor if it is need to retrieve from other Accessors
-				object constructorValue = ScriptRunningMachine.ParseNode((CommonTree)constructTree.Children[0], context);
+				object constructorValue = ScriptRunningMachine.ParseNode((SyntaxNode)constructTree.Children[0], context);
 
 				// get identifier of constructor
-				string constructorName = constructTree.Children[0].Type == ReoScriptLexer.IDENTIFIER
+				string constructorName = constructTree.Children[0].Type == NodeType.IDENTIFIER
 					? constructTree.Children[0].Text : ScriptRunningMachine.KEY_UNDEFINED;
 
 				if (constructorValue is IAccess) constructorValue = ((IAccess)constructorValue).Get();
@@ -1899,7 +1897,7 @@ namespace unvell.ReoScript
 					// call constructor
 					AbstractFunctionObject funObj = (AbstractFunctionObject)constructorValue;
 
-					CommonTree argTree = (constructTree == null || constructTree.ChildCount < 2) ? null : constructTree.Children[1] as CommonTree;
+					SyntaxNode argTree = (constructTree == null || constructTree.ChildCount < 2) ? null : constructTree.Children[1] as SyntaxNode;
 					object[] args = srm.GetParameterList(argTree, context);
 
 					object obj = srm.CreateNewObject(context, funObj, constructArguments: args);
@@ -1908,21 +1906,20 @@ namespace unvell.ReoScript
 					// replace current construction tree and call srm to execute the remaining.
 					if (committedDepth > 0)
 					{
-						CommonTreeAdaptor ad = new CommonTreeAdaptor();
-						CommonTree newTree = ad.DupTree(t) as CommonTree;
+						SyntaxNode newTree = t.DeepClone();
 
 						int d = 0;
-						CommonTree ct = newTree.Children[0] as CommonTree;
+						SyntaxNode ct = newTree.Children[0] as SyntaxNode;
 						while (d++ < committedDepth - 1)
 						{
-							ct = ct.Children[0] as CommonTree;
+							ct = ct.Children[0] as SyntaxNode;
 						}
 
 						// replace construction tree with created object
-						ct.ReplaceChildren(0, 0, new ReplacedCommonTree(obj));
+						ct.ReplaceChild(0, new ReplacedSyntaxNode(obj));
 
 						// drop the construction tree topmost node [CREATE]
-						newTree = newTree.Children[0] as CommonTree;
+						newTree = newTree.Children[0] as SyntaxNode;
 
 						// execute remained nodes than construction tree
 						return ScriptRunningMachine.ParseNode(newTree, context);
@@ -1940,9 +1937,9 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext context)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext context)
 			{
-				object value = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], context);
+				object value = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[0], context);
 				if (value is IAccess) value = ((IAccess)value).Get();
 
 				if (value == null)
@@ -1950,7 +1947,7 @@ namespace unvell.ReoScript
 					throw context.CreateRuntimeError(t, "Attempt to access an array or object that is null or undefined.");
 				}
 
-				object indexValue = ScriptRunningMachine.ParseNode((CommonTree)t.Children[1], context);
+				object indexValue = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[1], context);
 				if (indexValue is IAccess) indexValue = ((IAccess)indexValue).Get();
 
 				if (value is IList list)
@@ -1987,16 +1984,16 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
 				object value = null;
 
-				value = ScriptRunningMachine.ParseNode((CommonTree)t.Children[0], ctx);
+				value = ScriptRunningMachine.ParseNode((SyntaxNode)t.Children[0], ctx);
 				if (value is IAccess) value = ((IAccess)value).Get();
 
 				if (value == null) throw ctx.CreateRuntimeError(t,
 					"Attempt to access property of null or undefined object" +
-					((t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
+					((t.Children[0].Type == NodeType.IDENTIFIER)
 					? (": " + t.Children[0].ToString()) : "."));
 
 				string identifier = t.Children[1].Text;
@@ -2031,12 +2028,12 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				t = t.Children[0] as CommonTree;
+				t = t.Children[0] as SyntaxNode;
 				if (t == null) return false;
 
-				if (t.Type == ReoScriptLexer.IDENTIFIER)
+				if (t.Type == NodeType.IDENTIFIER)
 				{
 					string identifier = t.Text;
 					if (ctx.GlobalObject.HasOwnProperty(identifier))
@@ -2045,21 +2042,21 @@ namespace unvell.ReoScript
 						return true;
 					}
 				}
-				else if (t.Type == ReoScriptLexer.PROPERTY_ACCESS)
+				else if (t.Type == NodeType.PROPERTY_ACCESS)
 				{
-					if (t.Children[1].Type != ReoScriptLexer.IDENTIFIER)
+					if (t.Children[1].Type != NodeType.IDENTIFIER)
 					{
 						throw ctx.CreateRuntimeError(t, "delete keyword requires an identifier to delete property from object.");
 					}
 
-					object owner = ScriptRunningMachine.ParseNode(t.Children[0] as CommonTree, ctx);
+					object owner = ScriptRunningMachine.ParseNode(t.Children[0] as SyntaxNode, ctx);
 					if (owner is IAccess) owner = ((IAccess)owner).Get();
 
 					if (owner == null)
 					{
 						string msg = "Attmpt to delete property from null or undefined object";
 
-						if (t.Children[0].Type == ReoScriptLexer.IDENTIFIER)
+						if (t.Children[0].Type == NodeType.IDENTIFIER)
 						{
 							msg += ": " + t.Text;
 						}
@@ -2129,9 +2126,9 @@ namespace unvell.ReoScript
 
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				object obj = ScriptRunningMachine.ParseNode(t.Children[0] as CommonTree, ctx);
+				object obj = ScriptRunningMachine.ParseNode(t.Children[0] as SyntaxNode, ctx);
 				if (obj is IAccess) obj = ((IAccess)obj).Get();
 				return Typeof(srm, obj);
 			}
@@ -2142,12 +2139,12 @@ namespace unvell.ReoScript
 		#region InstanceOf
 		class InstanceOfNodeParser : INodeParser
 		{
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				object obj = ScriptRunningMachine.ParseNode(t.Children[0] as CommonTree, ctx);
+				object obj = ScriptRunningMachine.ParseNode(t.Children[0] as SyntaxNode, ctx);
 				if (obj is IAccess) obj = ((IAccess)obj).Get();
 
-				object constructor = ScriptRunningMachine.ParseNode(t.Children[1] as CommonTree, ctx);
+				object constructor = ScriptRunningMachine.ParseNode(t.Children[1] as SyntaxNode, ctx);
 				if (constructor is IAccess) constructor = ((IAccess)constructor).Get();
 
 				if (!(constructor is AbstractFunctionObject)) return false;
@@ -2190,9 +2187,9 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				string tagName = (((CommonTree)t.Children[0]).Children[0].ToString());
+				string tagName = (((SyntaxNode)t.Children[0]).Children[0].ToString());
 
 				tagName = ((srm.WorkMode & MachineWorkMode.AutoUppercaseWhenCLRCalling)
 					== MachineWorkMode.AutoUppercaseWhenCLRCalling)
@@ -2214,7 +2211,7 @@ namespace unvell.ReoScript
 						Dictionary<string, object> mergedPropertes = new Dictionary<string, object>();
 
 						// instance property setter
-						CommonTree instAttrTree = t.Children[1] as CommonTree;
+						SyntaxNode instAttrTree = t.Children[1] as SyntaxNode;
 
 						CallScope scope = null;
 
@@ -2228,9 +2225,9 @@ namespace unvell.ReoScript
 
 							for (int i = 0; i < instAttrTree.ChildCount; i++)
 							{
-								CommonTree attr = instAttrTree.Children[i] as CommonTree;
+								SyntaxNode attr = instAttrTree.Children[i] as SyntaxNode;
 
-								object val = ScriptRunningMachine.ParseNode(attr.Children[1] as CommonTree, ctx);
+								object val = ScriptRunningMachine.ParseNode(attr.Children[1] as SyntaxNode, ctx);
 								if (val is IAccess) val = ((IAccess)val).Get();
 
 								string propertyName = attr.Children[0].ToString();
@@ -2244,12 +2241,12 @@ namespace unvell.ReoScript
 						}
 
 						// template default setter
-						CommonTree templateTagAttrTree = templateConstructor.TemplateTag.Children[1] as CommonTree;
+						SyntaxNode templateTagAttrTree = templateConstructor.TemplateTag.Children[1] as SyntaxNode;
 						for (int i = 0; i < templateTagAttrTree.ChildCount; i++)
 						{
-							CommonTree attr = templateTagAttrTree.Children[i] as CommonTree;
+							SyntaxNode attr = templateTagAttrTree.Children[i] as SyntaxNode;
 
-							object val = ScriptRunningMachine.ParseNode(attr.Children[1] as CommonTree, ctx);
+							object val = ScriptRunningMachine.ParseNode(attr.Children[1] as SyntaxNode, ctx);
 							if (val is IAccess) val = ((IAccess)val).Get();
 
 							string propertyName = attr.Children[0].ToString();
@@ -2284,9 +2281,9 @@ namespace unvell.ReoScript
 							{
 								for (int i = 2; i < templateConstructor.TemplateTag.ChildCount; i++)
 								{
-									CommonTree tagStmt = templateConstructor.TemplateTag.Children[i] as CommonTree;
+									SyntaxNode tagStmt = templateConstructor.TemplateTag.Children[i] as SyntaxNode;
 
-									if (tagStmt.Type == ReoScriptLexer.TAG)
+									if (tagStmt.Type == NodeType.TAG)
 									{
 										srm.InvokeFunctionIfExisted(obj, "appendChild", ScriptRunningMachine.ParseNode(tagStmt, ctx));
 									}
@@ -2307,12 +2304,12 @@ namespace unvell.ReoScript
 					else
 					{
 						// start of constructing tag from class
-						CommonTree attrTree = t.Children[1] as CommonTree;
+						SyntaxNode attrTree = t.Children[1] as SyntaxNode;
 						for (int i = 0; i < attrTree.ChildCount; i++)
 						{
-							CommonTree attr = attrTree.Children[i] as CommonTree;
+							SyntaxNode attr = attrTree.Children[i] as SyntaxNode;
 
-							object val = ScriptRunningMachine.ParseNode(attr.Children[1] as CommonTree, ctx);
+							object val = ScriptRunningMachine.ParseNode(attr.Children[1] as SyntaxNode, ctx);
 							if (val is IAccess) val = ((IAccess)val).Get();
 
 							PropertyAccessHelper.SetProperty(ctx, obj, attr.Children[0].ToString(), val);
@@ -2333,9 +2330,9 @@ namespace unvell.ReoScript
 						{
 							for (int i = 2; i < t.ChildCount; i++)
 							{
-								CommonTree tagStmt = t.Children[i] as CommonTree;
+								SyntaxNode tagStmt = t.Children[i] as SyntaxNode;
 
-								if (tagStmt.Type == ReoScriptLexer.TAG)
+								if (tagStmt.Type == NodeType.TAG)
 								{
 									srm.InvokeFunctionIfExisted(obj, "appendChild", ScriptRunningMachine.ParseNode(tagStmt, ctx));
 								}
@@ -2355,7 +2352,7 @@ namespace unvell.ReoScript
 				return obj;
 			}
 
-			static void RunInTag(CommonTree tagTree, ScriptContext context)
+			static void RunInTag(SyntaxNode tagTree, ScriptContext context)
 			{
 
 			}
@@ -2366,14 +2363,14 @@ namespace unvell.ReoScript
 		{
 			#region INodeParser Members
 
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
 				string typeName = t.Children[0].Text;
 
-				CommonTree paramsTree = t.Children[1] as CommonTree;
-				CommonTree rootTag = t.Children[2] as CommonTree;
+				SyntaxNode paramsTree = t.Children[1] as SyntaxNode;
+				SyntaxNode rootTag = t.Children[2] as SyntaxNode;
 
-				string tagName = (rootTag.Children[0] as CommonTree).Children[0].Text;
+				string tagName = (rootTag.Children[0] as SyntaxNode).Children[0].Text;
 
 				TypedNativeFunctionObject typedConstructor = srm.GetClass(typeName) as TypedNativeFunctionObject;
 
@@ -2386,7 +2383,7 @@ namespace unvell.ReoScript
 					TypedConstructor = typedConstructor,
 				};
 
-				CommonTree rootAttrTree = rootTag.Children[1] as CommonTree;
+				SyntaxNode rootAttrTree = rootTag.Children[1] as SyntaxNode;
 
 				templateDefine[ScriptRunningMachine.KEY_PROTOTYPE] = templateDefine.CreatePrototype(
 					new ScriptContext(srm, ScriptRunningMachine.entryFunction));
@@ -2409,7 +2406,7 @@ namespace unvell.ReoScript
 		{
 			public TemplateConstructorObject(string name) : base(name) { }
 
-			public CommonTree TemplateTag { get; set; }
+			public SyntaxNode TemplateTag { get; set; }
 
 			public string[] Args { get; set; }
 
@@ -2435,13 +2432,13 @@ namespace unvell.ReoScript
 #if EXTERNAL_GETTER_SETTER
 		class RangeLiteralParser : INodeParser
 		{
-			public object Parse(CommonTree t, ScriptRunningMachine srm, ScriptContext ctx)
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
 			{
-				string fromText = ((CommonTree)t.Children[0]).Text;
-				string toText = ((CommonTree)t.Children[0]).Text;
+				string fromText = ((SyntaxNode)t.Children[0]).Text;
+				string toText = ((SyntaxNode)t.Children[0]).Text;
 
-				//object from = ScriptRunningMachine.ParseNode(t.Children[0] as CommonTree, ctx);
-				//object to = ScriptRunningMachine.ParseNode(t.Children[1] as CommonTree, ctx);
+				//object from = ScriptRunningMachine.ParseNode(t.Children[0] as SyntaxNode, ctx);
+				//object to = ScriptRunningMachine.ParseNode(t.Children[1] as SyntaxNode, ctx);
 
 				//if (from is IAccess) from = ((IAccess)from).Get();
 				//if (to is IAccess) to = ((IAccess)to).Get();
@@ -2461,87 +2458,87 @@ namespace unvell.ReoScript
 	#region Define Interface
 	interface IParserAdapter
 	{
-		INodeParser MatchParser(CommonTree t);
+		INodeParser MatchParser(SyntaxNode t);
 	}
 	#endregion
 
 	#region AWDLDefaultParserAdapter
 	class AWDLLogicSyntaxParserAdapter : IParserAdapter
 	{
-		internal static readonly INodeParser[] definedParser = new INodeParser[ReoScriptLexer.MAX_TOKENS];
+		internal static readonly INodeParser[] definedParser = new INodeParser[NodeType.MAX_TOKENS];
 
 		static AWDLLogicSyntaxParserAdapter()
 		{
 			#region Generic Parsers
-			definedParser[ReoScriptLexer.IMPORT] = new ImportNodeParser();
-			definedParser[ReoScriptLexer.LOCAL_DECLARE_ASSIGNMENT] = new DeclarationNodeParser();
-			definedParser[ReoScriptLexer.ASSIGNMENT] = new AssignmentNodeParser();
-			definedParser[ReoScriptLexer.IF_STATEMENT] = new IfStatementNodeParser();
-			definedParser[ReoScriptLexer.FOR_STATEMENT] = new ForStatementNodeParser();
-			//definedParser[ReoScriptLexer.FOR_STATEMENT] = new JITForStatementNodeParser();
-			definedParser[ReoScriptLexer.FOREACH_STATEMENT] = new ForEachStatementNodeParser();
-			definedParser[ReoScriptLexer.SWITCH] = new SwitchCaseStatementNodeParser();
-			definedParser[ReoScriptLexer.FUNCTION_CALL] = new FunctionCallNodeParser();
-			//definedParser[ReoScriptLexer.FUNCTION_DEFINE] = new FunctionDefineNodeParser();
-			definedParser[ReoScriptLexer.ANONYMOUS_FUNCTION] = new AnonymousFunctionNodeParser();
-			//definedParser[ReoScriptLexer.BREAK] = new BreakNodeParser();
-			//definedParser[ReoScriptLexer.CONTINUE] = new ContinueNodeParser();
-			definedParser[ReoScriptLexer.RETURN] = new ReturnNodeParser();
-			definedParser[ReoScriptLexer.CREATE] = new CreateObjectNodeParser();
-			definedParser[ReoScriptLexer.TRY_CATCH] = new TryCatchNodeParser();
-			definedParser[ReoScriptLexer.TRY_CATCH_TRHOW] = new ThrowNodeParser();
-			definedParser[ReoScriptLexer.ARRAY_ACCESS] = new IndexAccessNodeParser();
-			definedParser[ReoScriptLexer.PROPERTY_ACCESS] = new PropertyAccessNodeParser();
-			definedParser[ReoScriptLexer.DELETE_PROP] = new DeletePropertyNodeParser();
-			definedParser[ReoScriptLexer.TYPEOF] = new TypeofNodeParser();
-			definedParser[ReoScriptLexer.INSTANCEOF] = new InstanceOfNodeParser();
+			definedParser[NodeType.IMPORT] = new ImportNodeParser();
+			definedParser[NodeType.LOCAL_DECLARE_ASSIGNMENT] = new DeclarationNodeParser();
+			definedParser[NodeType.ASSIGNMENT] = new AssignmentNodeParser();
+			definedParser[NodeType.IF_STATEMENT] = new IfStatementNodeParser();
+			definedParser[NodeType.FOR_STATEMENT] = new ForStatementNodeParser();
+			//definedParser[NodeType.FOR_STATEMENT] = new JITForStatementNodeParser();
+			definedParser[NodeType.FOREACH_STATEMENT] = new ForEachStatementNodeParser();
+			definedParser[NodeType.SWITCH] = new SwitchCaseStatementNodeParser();
+			definedParser[NodeType.FUNCTION_CALL] = new FunctionCallNodeParser();
+			//definedParser[NodeType.FUNCTION_DEFINE] = new FunctionDefineNodeParser();
+			definedParser[NodeType.ANONYMOUS_FUNCTION] = new AnonymousFunctionNodeParser();
+			//definedParser[NodeType.BREAK] = new BreakNodeParser();
+			//definedParser[NodeType.CONTINUE] = new ContinueNodeParser();
+			definedParser[NodeType.RETURN] = new ReturnNodeParser();
+			definedParser[NodeType.CREATE] = new CreateObjectNodeParser();
+			definedParser[NodeType.TRY_CATCH] = new TryCatchNodeParser();
+			definedParser[NodeType.TRY_CATCH_TRHOW] = new ThrowNodeParser();
+			definedParser[NodeType.ARRAY_ACCESS] = new IndexAccessNodeParser();
+			definedParser[NodeType.PROPERTY_ACCESS] = new PropertyAccessNodeParser();
+			definedParser[NodeType.DELETE_PROP] = new DeletePropertyNodeParser();
+			definedParser[NodeType.TYPEOF] = new TypeofNodeParser();
+			definedParser[NodeType.INSTANCEOF] = new InstanceOfNodeParser();
 
 			#endregion
 
 			#region Operators
-			definedParser[ReoScriptLexer.PLUS] = new ExprPlusNodeParser();
-			definedParser[ReoScriptLexer.MINUS] = new ExprMinusNodeParser();
-			definedParser[ReoScriptLexer.MUL] = new ExprMultiNodeParser();
-			definedParser[ReoScriptLexer.DIV] = new ExprDivNodeParser();
-			definedParser[ReoScriptLexer.MOD] = new ExprModNodeParser();
-			definedParser[ReoScriptLexer.AND] = new ExprAndNodeParser();
-			definedParser[ReoScriptLexer.OR] = new ExprOrNodeParser();
-			definedParser[ReoScriptLexer.XOR] = new ExprXorNodeParser();
-			definedParser[ReoScriptLexer.LSHIFT] = new ExprLeftShiftNodeParser();
-			definedParser[ReoScriptLexer.RSHIFT] = new ExprRightShiftNodeParser();
+			definedParser[NodeType.PLUS] = new ExprPlusNodeParser();
+			definedParser[NodeType.MINUS] = new ExprMinusNodeParser();
+			definedParser[NodeType.MUL] = new ExprMultiNodeParser();
+			definedParser[NodeType.DIV] = new ExprDivNodeParser();
+			definedParser[NodeType.MOD] = new ExprModNodeParser();
+			definedParser[NodeType.AND] = new ExprAndNodeParser();
+			definedParser[NodeType.OR] = new ExprOrNodeParser();
+			definedParser[NodeType.XOR] = new ExprXorNodeParser();
+			definedParser[NodeType.LSHIFT] = new ExprLeftShiftNodeParser();
+			definedParser[NodeType.RSHIFT] = new ExprRightShiftNodeParser();
 			#endregion
 
 			#region Unary Operators
-			definedParser[ReoScriptLexer.PRE_UNARY] = new ExprUnaryNodeParser();
-			definedParser[ReoScriptLexer.PRE_UNARY_STEP] = new ExprPreIncrementNodeParser();
-			definedParser[ReoScriptLexer.POST_UNARY_STEP] = new ExprPostIncrementNodeParser();
+			definedParser[NodeType.PRE_UNARY] = new ExprUnaryNodeParser();
+			definedParser[NodeType.PRE_UNARY_STEP] = new ExprPreIncrementNodeParser();
+			definedParser[NodeType.POST_UNARY_STEP] = new ExprPostIncrementNodeParser();
 			#endregion
 
 			#region Relation Operators
-			definedParser[ReoScriptLexer.CONDITION] = new ExprConditionNodeParser();
-			definedParser[ReoScriptLexer.EQUALS] = new ExprEqualsNodeParser();
-			definedParser[ReoScriptLexer.NOT_EQUALS] = new ExprNotEqualsNodeParser();
-			definedParser[ReoScriptLexer.STRICT_EQUALS] = new ExprStrictEqualsNodeParser();
-			definedParser[ReoScriptLexer.STRICT_NOT_EQUALS] = new ExprStrictNotEqualsNodeParser();
-			definedParser[ReoScriptLexer.GREAT_THAN] = new ExprGreaterThanNodeParser();
-			definedParser[ReoScriptLexer.GREAT_EQUALS] = new ExprGreaterOrEqualsNodeParser();
-			definedParser[ReoScriptLexer.LESS_THAN] = new ExprLessThanNodeParser();
-			definedParser[ReoScriptLexer.LESS_EQUALS] = new ExprLessOrEqualsNodeParser();
+			definedParser[NodeType.CONDITION] = new ExprConditionNodeParser();
+			definedParser[NodeType.EQUALS] = new ExprEqualsNodeParser();
+			definedParser[NodeType.NOT_EQUALS] = new ExprNotEqualsNodeParser();
+			definedParser[NodeType.STRICT_EQUALS] = new ExprStrictEqualsNodeParser();
+			definedParser[NodeType.STRICT_NOT_EQUALS] = new ExprStrictNotEqualsNodeParser();
+			definedParser[NodeType.GREAT_THAN] = new ExprGreaterThanNodeParser();
+			definedParser[NodeType.GREAT_EQUALS] = new ExprGreaterOrEqualsNodeParser();
+			definedParser[NodeType.LESS_THAN] = new ExprLessThanNodeParser();
+			definedParser[NodeType.LESS_EQUALS] = new ExprLessOrEqualsNodeParser();
 			#endregion
 
 			#region Boolean Operations
-			definedParser[ReoScriptLexer.LOGICAL_AND] = new BooleanAndNodeParser();
-			definedParser[ReoScriptLexer.LOGICAL_OR] = new BooleanOrNodeParser();
+			definedParser[NodeType.LOGICAL_AND] = new BooleanAndNodeParser();
+			definedParser[NodeType.LOGICAL_OR] = new BooleanOrNodeParser();
 			#endregion
 
 			#region External Statements
-			definedParser[ReoScriptLexer.TAG] = new TagNodeParser();
-			definedParser[ReoScriptLexer.TEMPLATE_DEFINE] = new TemplateDefineNodeParser();
-			//definedParser[ReoScriptLexer.RANGE_EXP] = new RangeLiteralParser();
+			definedParser[NodeType.TAG] = new TagNodeParser();
+			definedParser[NodeType.TEMPLATE_DEFINE] = new TemplateDefineNodeParser();
+			//definedParser[NodeType.RANGE_EXP] = new RangeLiteralParser();
 			#endregion
 		}
 
-		static object Parse(CommonTree t, ScriptContext ctx)
+		static object Parse(SyntaxNode t, ScriptContext ctx)
 		{
 			Parsers.INodeParser parser = definedParser[t.Type];
 			return (parser != null) ? parser.Parse(t, ctx.Srm, ctx) : null;
@@ -2550,7 +2547,7 @@ namespace unvell.ReoScript
 
 		#region IParserAdapter Members
 
-		public virtual INodeParser MatchParser(CommonTree t)
+		public virtual INodeParser MatchParser(SyntaxNode t)
 		{
 			return definedParser[t.Type];
 		}

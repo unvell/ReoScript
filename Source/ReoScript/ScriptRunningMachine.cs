@@ -28,8 +28,6 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 
-using Antlr.Runtime;
-using Antlr.Runtime.Tree;
 
 // Resources now loaded via Assembly.GetManifestResourceStream instead of resx
 using unvell.ReoScript.Runtime;
@@ -1071,9 +1069,9 @@ namespace unvell.ReoScript
 			//  {
 			//    this.ParseNode(((FunctionObject)code).Body);
 			//  }
-			//  else if (code is CommonTree)
+			//  else if (code is SyntaxNode)
 			//  {
-			//    this.ParseNode(((CommonTree)code));
+			//    this.ParseNode(((SyntaxNode)code));
 			//  }
 			//  else
 			//  {
@@ -1124,9 +1122,9 @@ namespace unvell.ReoScript
 							{
 								this.InvokeFunction(bw.ScriptContext, GlobalObject, code as FunctionObject, args);
 							}
-							else if (code is CommonTree)
+							else if (code is SyntaxNode)
 							{
-								ScriptRunningMachine.ParseNode(((CommonTree)code), bw.ScriptContext);
+								ScriptRunningMachine.ParseNode(((SyntaxNode)code), bw.ScriptContext);
 							}
 							else
 							{
@@ -1394,7 +1392,10 @@ namespace unvell.ReoScript
 		/// <param name="s">stream to load script</param>
 		public void Load(Stream s)
 		{
-			Load(new ANTLRInputStream(s), null);
+			using (var reader = new StreamReader(s))
+			{
+				Load(reader.ReadToEnd(), null);
+			}
 		}
 
 		/// <summary>
@@ -1424,12 +1425,12 @@ namespace unvell.ReoScript
 				throw new ReoScriptException("File not found: " + fi.FullName);
 			}
 
-			Load(new ANTLRFileStream(path), path);
+			Load(File.ReadAllText(path), path);
 		}
 
-		private void Load(ICharStream stream, string filepath)
+		private void Load(string script, string filepath)
 		{
-			Run(stream, filepath, true);
+			Run(script, filepath, true);
 		}
 
 		/// <summary>
@@ -1450,7 +1451,7 @@ namespace unvell.ReoScript
 		/// <returns>last result returned from script</returns>
 		public object Run(FileInfo filePath, bool ignoreSyntaxErrors)
 		{
-			return Run(new ANTLRFileStream(filePath.FullName), filePath.FullName, ignoreSyntaxErrors);
+			return Run(File.ReadAllText(filePath.FullName), filePath.FullName, ignoreSyntaxErrors);
 		}
 
 		/// <summary>
@@ -1500,33 +1501,23 @@ namespace unvell.ReoScript
 
 		internal object Run(string script, string filePath, bool ignoreSyntaxErrors)
 		{
-			return Run(new ANTLRStringStream(script), filePath, ignoreSyntaxErrors);
+			return Run(script, filePath, ignoreSyntaxErrors ? (Action<ErrorObject>)(e => { }) : null);
 		}
 
 		internal object Run(string script, string filePath, bool ignoreSyntaxErrors, ScriptContext context)
 		{
-			return Run(new ANTLRStringStream(script), filePath, ignoreSyntaxErrors, context);
+			return Run(script, filePath, ignoreSyntaxErrors ? (Action<ErrorObject>)(e => { }) : null, context);
 		}
 
-		internal object Run(ICharStream stream, string filepath, bool ignoreSyntaxErrors)
-		{
-			return Run(stream, filepath, ignoreSyntaxErrors ? (Action<ErrorObject>)(e => { }) : null);
-		}
-
-		internal object Run(ICharStream stream, string filepath, bool ignoreSyntaxErrors, ScriptContext context)
-		{
-			return Run(stream, filepath, ignoreSyntaxErrors ? (Action<ErrorObject>)(e => { }) : null, context);
-		}
-
-		internal object Run(ICharStream stream, string filePath, Action<ErrorObject> compilingErrorHandler)
+		internal object Run(string script, string filePath, Action<ErrorObject> compilingErrorHandler)
 		{
 			ScriptContext context = new ScriptContext(this, entryFunction, filePath);
-			return Run(stream, filePath, compilingErrorHandler, context);
+			return Run(script, filePath, compilingErrorHandler, context);
 		}
 
-		internal object Run(ICharStream stream, string filePath, Action<ErrorObject> compilingErrorHandler, ScriptContext context)
+		internal object Run(string script, string filePath, Action<ErrorObject> compilingErrorHandler, ScriptContext context)
 		{
-			return RunCompiledScript(Compile(stream, compilingErrorHandler), context);
+			return RunCompiledScript(Compile(script, compilingErrorHandler), context);
 		}
 
 		/// <summary>
@@ -1683,15 +1674,13 @@ namespace unvell.ReoScript
 
 		public object CalcExpression(string expression, ScriptContext context, bool ignoreErrors)
 		{
-			ReoScriptLexer exprLex = new ReoScriptLexer(new ANTLRStringStream(expression));
-			CommonTokenStream exprTokens = new CommonTokenStream(exprLex);
-			ReoScriptParser exprParser = new ReoScriptParser(exprTokens);
+			var parser = new ReoScriptHandwrittenParser();
 			if (!ignoreErrors)
 			{
-				exprParser.CompilingErrorHandler = e => { throw new ReoScriptCompilingException(e); };
+				parser.CompilingErrorHandler = e => { throw new ReoScriptCompilingException(e); };
 			}
 
-			CommonTree t = exprParser.expression().Tree as CommonTree;
+			SyntaxNode t = parser.ParseExpression(expression);
 			isForceStop = false;
 			object v = ParseNode(t, context);
 			while (v is IAccess) v = ((IAccess)v).Get();
@@ -1754,26 +1743,19 @@ namespace unvell.ReoScript
 		/// <returns>compiled script instance in memory</returns>
 		public CompiledScript Compile(FileInfo file, Action<ErrorObject> compilingErrorHandler)
 		{
-			return Compile(new ANTLRFileStream(file.FullName), compilingErrorHandler);
+			return Compile(File.ReadAllText(file.FullName), compilingErrorHandler);
 		}
 
 		/// <summary>
-		/// Pre-interpret specified script in text. 
-		/// Syntax errors will be detected and passed into CompilingErrorHandler instantly. 
+		/// Pre-interpret specified script in text.
+		/// Syntax errors will be detected and passed into CompilingErrorHandler instantly.
 		/// </summary>
 		/// <param name="script">script specified to compile</param>
 		/// <param name="compilingErrorHandler">error handler to receive syntax error</param>
 		/// <returns>compiled script instance in memory</returns>
 		public CompiledScript Compile(string script, Action<ErrorObject> compilingErrorHandler)
 		{
-			return Compile(new ANTLRStringStream(script), compilingErrorHandler);
-		}
-
-		internal CompiledScript Compile(ICharStream stream, Action<ErrorObject> compilingErrorHandler)
-		{
-			ReoScriptLexer lex = new ReoScriptLexer(stream);
-			CommonTokenStream tokens = new CommonTokenStream(lex);
-			ReoScriptParser parser = new ReoScriptParser(tokens);
+			var parser = new ReoScriptHandwrittenParser();
 
 			if (compilingErrorHandler == null)
 			{
@@ -1783,7 +1765,7 @@ namespace unvell.ReoScript
 			parser.CompilingErrorHandler = compilingErrorHandler;
 
 			// parse script and build AST
-			CommonTree t = parser.script().Tree;
+			SyntaxNode t = parser.ParseScript(script);
 
 			return new CompiledScript
 			{
@@ -1793,11 +1775,11 @@ namespace unvell.ReoScript
 			};
 		}
 
-		internal static void IterateAST(CommonTree parent, Action<CommonTree> iterate)
+		internal static void IterateAST(SyntaxNode parent, Action<SyntaxNode> iterate)
 		{
 			if (parent != null && parent.ChildCount > 0)
 			{
-				foreach (CommonTree t in parent.Children)
+				foreach (SyntaxNode t in parent.Children)
 				{
 					iterate(t);
 				}
@@ -1823,7 +1805,7 @@ namespace unvell.ReoScript
 			return oldAdapter;
 		}
 
-		public static object ParseNode(CommonTree t, ScriptContext ctx)
+		public static object ParseNode(SyntaxNode t, ScriptContext ctx)
 		{
 			if (t == null || ctx.Srm.isForceStop)
 			{
@@ -1839,7 +1821,7 @@ namespace unvell.ReoScript
 			{
 				switch (t.Type)
 				{
-					case ReoScriptLexer.IDENTIFIER:
+					case NodeType.IDENTIFIER:
 						{
 							if (t.Text == ScriptRunningMachine.GLOBAL_VARIABLE_NAME)
 								return ctx.GlobalObject;
@@ -1850,47 +1832,47 @@ namespace unvell.ReoScript
 							//return new VariableAccess(ctx.Srm, ctx, t.Text);
 						}
 
-					case ReoScriptLexer.THIS:
+					case NodeType.THIS:
 						return ctx.ThisObject;
 
-					case ReoScriptLexer.CONST_VALUE:
+					case NodeType.CONST_VALUE:
 						{
-							CommonTree child = (CommonTree)t.Children[0];
+							SyntaxNode child = (SyntaxNode)t.Children[0];
 
 							switch (child.Type)
 							{
-								case ReoScriptLexer.CONST_VALUE:
+								case NodeType.CONST_VALUE:
 									return ((ConstValueNode)child).ConstValue;
 
-								case ReoScriptLexer.LIT_TRUE:
+								case NodeType.LIT_TRUE:
 									return true;
 
-								case ReoScriptLexer.LIT_FALSE:
+								case NodeType.LIT_FALSE:
 									return false;
 
-								case ReoScriptLexer.LIT_NULL:
-								case ReoScriptLexer.UNDEFINED:
+								case NodeType.LIT_NULL:
+								case NodeType.UNDEFINED:
 									return null;
 							}
 						}
 						break;
 
-					//case ReoScriptLexer.NUMBER_LITERATE:
+					//case NodeType.NUMBER_LITERATE:
 					//  return Convert.ToDouble(t.Text);
 
-					//case ReoScriptLexer.HEX_LITERATE:
+					//case NodeType.HEX_LITERATE:
 					//  return (double)Convert.ToInt32(t.Text.Substring(2), 16);
 
-					//case ReoScriptLexer.BINARY_LITERATE:
+					//case NodeType.BINARY_LITERATE:
 					//  return (double)Convert.ToInt32(t.Text.Substring(2), 2);
 
-					//case ReoScriptLexer.STRING_LITERATE:
+					//case NodeType.STRING_LITERATE:
 					//  string str = t.ToString();
 					//  str = str.Substring(1, str.Length - 2);
 					//  return ConvertEscapeLiterals(str);
 
 
-					case ReoScriptLexer.OBJECT_LITERAL:
+					case NodeType.OBJECT_LITERAL:
 						if (t.ChildCount % 2 != 0)
 							throw ctx.CreateRuntimeError(t, "object literal should be key/value paired.");
 
@@ -1898,11 +1880,11 @@ namespace unvell.ReoScript
 
 						for (int i = 0; i < t.ChildCount; i += 2)
 						{
-							object value = ParseNode((CommonTree)t.Children[i + 1], ctx);
+							object value = ParseNode((SyntaxNode)t.Children[i + 1], ctx);
 							if (value is IAccess) value = ((IAccess)value).Get();
 
 							string identifier = t.Children[i].ToString();
-							if (t.Children[i].Type == ReoScriptLexer.STRING_LITERATE)
+							if (t.Children[i].Type == NodeType.STRING_LITERATE)
 								identifier = identifier.Substring(1, identifier.Length - 2);
 
 							val[identifier] = value;
@@ -1910,44 +1892,44 @@ namespace unvell.ReoScript
 
 						return val;
 
-					case ReoScriptLexer.ARRAY_LITERAL:
+					case NodeType.ARRAY_LITERAL:
 						ArrayObject arr = ctx.CreateNewObject(ctx.Srm.BuiltinConstructors.ArrayFunction) as ArrayObject;
 
 						if (arr == null) return arr;
 
 						for (int i = 0; i < t.ChildCount; i++)
 						{
-							object value = ParseNode((CommonTree)t.Children[i], ctx);
+							object value = ParseNode((SyntaxNode)t.Children[i], ctx);
 							if (value is IAccess) value = ((IAccess)value).Get();
 							arr.List.Add(value);
 						}
 						return arr;
 
-					case ReoScriptLexer.REPLACED_TREE:
-						return ((ReplacedCommonTree)t).Object;
+					case NodeType.REPLACED_TREE:
+						return ((ReplacedSyntaxNode)t).Object;
 
-					case ReoScriptLexer.NAN:
+					case NodeType.NAN:
 						return NaNValue.Value;
 
-					case ReoScriptLexer.BREAK:
+					case NodeType.BREAK:
 						return BreakNode.Value;
 
-					case ReoScriptLexer.CONTINUE:
+					case NodeType.CONTINUE:
 						return ContinueNode.Value;
 				}
 
 				return ParseChildNodes(t, ctx);
 			}
 		}
-		public static object ParseChildNodes(CommonTree t, ScriptContext ctx)
+		public static object ParseChildNodes(SyntaxNode t, ScriptContext ctx)
 		{
 			object childValue = null;
 			if (t.ChildCount > 0)
 			{
-				//foreach (CommonTree child in t.Children)
+				//foreach (SyntaxNode child in t.Children)
 				for (int i = 0; i < t.ChildCount; i++)
 				{
-					childValue = ParseNode((CommonTree)t.Children[i], ctx);
+					childValue = ParseNode((SyntaxNode)t.Children[i], ctx);
 
 					if (childValue is BreakNode || childValue is ContinueNode || childValue is ReturnNode)
 						return childValue;
@@ -1965,7 +1947,7 @@ namespace unvell.ReoScript
 				.Replace("\\\\", new string(new char[] { '\\' }));
 		}
 
-		internal object[] GetParameterList(CommonTree paramsTree, ScriptContext ctx)
+		internal object[] GetParameterList(SyntaxNode paramsTree, ScriptContext ctx)
 		{
 			int argCount = paramsTree == null ? 0 : paramsTree.ChildCount;
 			object[] args = new object[argCount];
@@ -1974,7 +1956,7 @@ namespace unvell.ReoScript
 			{
 				for (int i = 0; i < argCount; i++)
 				{
-					object val = ParseNode((CommonTree)paramsTree.Children[i], ctx);
+					object val = ParseNode((SyntaxNode)paramsTree.Children[i], ctx);
 					if (val is IAccess) val = ((IAccess)val).Get();
 
 					args[i] = val;
@@ -2623,8 +2605,8 @@ namespace unvell.ReoScript
 			}
 
 			// Compile the module source
-			var stream = new ANTLRFileStream(fullPath);
-			CompiledScript script = Compile(stream, e => { });
+			string moduleSource = File.ReadAllText(fullPath);
+			CompiledScript script = Compile(moduleSource, e => { });
 			if (script == null || script.RootNode == null)
 			{
 				throw new ReoScriptException("Failed to compile module: " + fi.FullName);
@@ -2683,7 +2665,7 @@ namespace unvell.ReoScript
 		//	CommonTokenStream t = new CommonTokenStream(l);
 		//	ReoScriptParser p = new ReoScriptParser(t);
 
-		//	CommonTree tree = p.script().Tree;
+		//	SyntaxNode tree = p.script().Tree;
 
 
 		//}
@@ -2854,15 +2836,15 @@ namespace unvell.ReoScript
 			}
 			public static object Plus(ScriptContext ctx, object left, object right)
 			{
-				return ((ExprPlusNodeParser)AWDLLogicSyntaxParserAdapter.definedParser[ReoScriptLexer.PLUS]).Calc(left, right, ctx.Srm, ctx);
+				return ((ExprPlusNodeParser)AWDLLogicSyntaxParserAdapter.definedParser[NodeType.PLUS]).Calc(left, right, ctx.Srm, ctx);
 			}
 			public static bool LessThan(ScriptContext ctx, object left, object right)
 			{
-				return ((ExprLessThanNodeParser)AWDLLogicSyntaxParserAdapter.definedParser[ReoScriptLexer.LESS_THAN]).Compare(left, right, ctx.Srm);
+				return ((ExprLessThanNodeParser)AWDLLogicSyntaxParserAdapter.definedParser[NodeType.LESS_THAN]).Compare(left, right, ctx.Srm);
 			}
 			public static bool LessEquals(ScriptContext ctx, object left, object right)
 			{
-				return ((ExprLessOrEqualsNodeParser)AWDLLogicSyntaxParserAdapter.definedParser[ReoScriptLexer.LESS_EQUALS]).Compare(left, right, ctx.Srm);
+				return ((ExprLessOrEqualsNodeParser)AWDLLogicSyntaxParserAdapter.definedParser[NodeType.LESS_EQUALS]).Compare(left, right, ctx.Srm);
 			}
 			public static object CallFunction(ScriptContext ctx, object owner, object funObj, object[] args)
 			{

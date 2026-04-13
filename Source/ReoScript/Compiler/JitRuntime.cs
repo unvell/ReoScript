@@ -10,7 +10,6 @@
  ****************************************************************************/
 
 using System;
-using Antlr.Runtime.Tree;
 using unvell.ReoScript.Core.Statement;
 
 namespace unvell.ReoScript.Compiler
@@ -230,7 +229,7 @@ namespace unvell.ReoScript.Compiler
 		/// This ensures correctness: the JIT is never "wrong", it may
 		/// just be slower for unsupported constructs.
 		/// </summary>
-		public static object InterpretNode(ScriptContext ctx, CommonTree node)
+		public static object InterpretNode(ScriptContext ctx, SyntaxNode node)
 		{
 			return ScriptRunningMachine.ParseNode(node, ctx);
 		}

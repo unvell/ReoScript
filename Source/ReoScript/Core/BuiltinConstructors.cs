@@ -19,8 +19,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Antlr.Runtime;
-using Antlr.Runtime.Tree;
 using unvell.ReoScript.Core;
 using unvell.ReoScript.Core.Statement;
 using unvell.ReoScript.Parsers;
@@ -340,27 +338,25 @@ namespace unvell.ReoScript
 						string lit = Convert.ToString(args[0]);
 						if (string.IsNullOrEmpty(lit)) return null;
 
-						ReoScriptLexer lex = new ReoScriptLexer(new ANTLRStringStream(lit.Trim()));
-						CommonTokenStream tokens = new CommonTokenStream(lex);
-						ReoScriptParser parser = new ReoScriptParser(tokens);
+						// Parse JSON as a ReoScript object literal expression
+						var jsonParser = new ReoScriptHandwrittenParser();
+						SyntaxNode jsonTree = jsonParser.ParseExpression(lit.Trim());
+						object parsed = ScriptRunningMachine.ParseNode(jsonTree, ctx);
+						if (parsed is IAccess acc) parsed = acc.Get();
 
-						// read script and build ASTree
-						ObjectValue obj = ctx.CreateNewObject();
-
-						if (args.Length == 1 || args[1] == null || (!(args[1] is AbstractFunctionObject)))
+						if (args.Length >= 2 && args[1] is AbstractFunctionObject func)
 						{
-							parser.jsonParse(ctx, (key, value) => { obj[key] = value; });
-						}
-						else
-						{
-							AbstractFunctionObject func = ((args[1]) as AbstractFunctionObject);
-							parser.jsonParse(ctx, (key, value) =>
+							// Apply reviver function to each key/value pair
+							if (parsed is ObjectValue ov)
 							{
-								obj[key] = srm.InvokeAbstractFunction(ctx.ThisObject, func, new object[] { key, value });
-							});
+								foreach (string key in ov)
+								{
+									ov[key] = srm.InvokeAbstractFunction(ctx.ThisObject, func, new object[] { key, ov[key] });
+								}
+							}
 						}
 
-						return obj;
+						return parsed;
 					});
 
 					json["stringify"] = new NativeFunctionObject("stringify", (ctx, owner, args) =>

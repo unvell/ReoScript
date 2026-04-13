@@ -17,8 +17,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using Antlr.Runtime.Tree;
-
 using unvell.ReoScript.Core.Statement;
 using unvell.ReoScript.Reflection;
 
@@ -29,7 +27,7 @@ namespace unvell.ReoScript
 	/// </summary>
 	public class CompiledScript
 	{
-		internal CommonTree RootNode { get; set; }
+		internal SyntaxNode RootNode { get; set; }
 
 		/// <summary>
 		/// Errors happened at compiling-time
@@ -64,11 +62,11 @@ namespace unvell.ReoScript
 			}
 		}
 
-		internal static IEnumerable IterateAST(CommonTree node)
+		internal static IEnumerable IterateAST(SyntaxNode node)
 		{
 			if (node != null && node.ChildCount > 0)
 			{
-				foreach (CommonTree t in node.Children)
+				foreach (SyntaxNode t in node.Children)
 				{
 					if (t.ChildCount > 0)
 						yield return IterateAST(node);
@@ -77,10 +75,5 @@ namespace unvell.ReoScript
 				}
 			}
 		}
-
-		//public void IterateProperties(Action<string, string> iterate)
-		//{
-
-		//}
 	}
 }

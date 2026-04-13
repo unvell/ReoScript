@@ -37,7 +37,7 @@ dotnet build Source/ReoScript.sln
 dotnet build Source/ReoScript.sln -c Release
 ```
 
-ANTLR runtime is vendored at [Source/ReoScript/Ref/Antlr3.Runtime.dll](Source/ReoScript/Ref/Antlr3.Runtime.dll) (referenced directly, no NuGet needed). All other dependencies (xUnit) are restored via NuGet automatically.
+The project has zero external dependencies beyond the .NET SDK (xUnit is restored via NuGet for tests only).
 
 ## Running Tests
 
@@ -65,9 +65,13 @@ Note: `070-001 setInterval` is a known flaky test (timing-dependent busy-wait).
 
 ### Pipeline
 
-1. **Lexing/Parsing** — ANTLR 3 generated lexer/parser. The authoritative grammar is [Source/ReoScript/ReoScript.g](Source/ReoScript/ReoScript.g) (recovered from a 2015 backup); regenerate `ReoScriptLexer.cs` / `ReoScriptParser.cs` from it with ANTLR 3 if syntax changes. The big generated files at the project root — [Source/ReoScript/ReoScriptLexer.cs](Source/ReoScript/ReoScriptLexer.cs) (~5.4k LOC) and [Source/ReoScript/ReoScriptParser.cs](Source/ReoScript/ReoScriptParser.cs) (~12.9k LOC) — are the ANTLR output. The much smaller files under [Source/ReoScript/Core/Grammar/](Source/ReoScript/Core/Grammar/) are **`partial class` extensions** of those generated classes (hand-written constants and helpers like `HIDDEN`, `MAX_TOKENS`, `REPLACED_TREE`), not duplicates — keeping them in separate files means re-running ANTLR doesn't clobber the hand-written parts.
+1. **Lexing/Parsing** — Hand-written lexer and recursive descent parser under [Source/ReoScript/Core/Syntax/](Source/ReoScript/Core/Syntax/). No external parser-generator dependency. The original ANTLR 3 grammar is preserved at [Source/ReoScript/ReoScript.g](Source/ReoScript/ReoScript.g) for reference.
+   - `NodeType.cs` — integer constants for all token/node types (values match the former ANTLR constants so existing dispatch tables work unchanged).
+   - `Token.cs` / `Lexer.cs` — tokenizer producing `Token` structs.
+   - `Parser.cs` — `ReoScriptHandwrittenParser` with precedence-climbing expression parsing. Produces `SyntaxNode` AST.
+   - `SyntaxNode.cs` — base AST node class (replaces ANTLR's `CommonTree`). Also contains `ConstValueNode` and `ReplacedSyntaxNode`.
 2. **Pre-interpret pass** — constant folding, syntax-error promotion, function-info collection. See `FunctionInfo`/`VariableInfo` under [Source/ReoScript/Core/Reflection/](Source/ReoScript/Core/Reflection/).
-3. **Tree walking** — [Source/ReoScript/ScriptRunningMachine.cs](Source/ReoScript/ScriptRunningMachine.cs) (~9k LOC) is the heart of the project. It contains the `ScriptRunningMachine` (SRM) class plus most built-in object types (`ObjectValue`, wrapper types, `BreakNode`/`ContinueNode` sentinels, etc.). New AST node types and runtime semantics generally land here.
+3. **Tree walking** — [Source/ReoScript/ScriptRunningMachine.cs](Source/ReoScript/ScriptRunningMachine.cs) is the heart of the project. It contains the `ScriptRunningMachine` (SRM) class plus most built-in object types (`ObjectValue`, wrapper types, `BreakNode`/`ContinueNode` sentinels, etc.). New AST node types and runtime semantics generally land here.
 
 `ScriptContext` represents an execution scope; SRM exposes `Run`, `CalcExpression`, and `CreateContext` for host integration.
 
@@ -75,19 +79,20 @@ Note: `070-001 setInterval` is a known flaky test (timing-dependent busy-wait).
 
 Closures use lexical scoping. Each `FunctionObject` has a `CapturedScope` field set once at creation time (not at call time). This means escaped closures, independent closure instances, and mutable shared state all work correctly, matching JavaScript's closure behavior.
 
-### Core types split out of `ScriptRunningMachine.cs`
+### Core types
 
-[Source/ReoScript/Core/](Source/ReoScript/Core/) is an in-progress refactor pulling individual node/statement classes out of the monolithic `ScriptRunningMachine.cs`:
+[Source/ReoScript/Core/](Source/ReoScript/Core/) organizes individual node/statement classes:
 
+- `Core/Syntax/` — lexer, parser, AST node types, token constants.
 - `Core/Node/` — primitive value sentinels (`InfinityValue`, `MinusInfinityValue`, `NaNValue`, `ReturnNode`).
 - `Core/Statement/` — `FunctionDefineNode`, `VariableDefineNode`, `StaticFunctionScope`, `MemberScopeModifier`, `ISyntaxTreeReturn` (the marker interface implemented by every value/node that flows through the interpreter).
 - `Core/Reflection/` — `FunctionInfo`, `VariableInfo` (compile-time metadata).
 
-[Source/ReoScript/AnonymousFunctionDefineNode.cs](Source/ReoScript/AnonymousFunctionDefineNode.cs) lives at the project root for the same reason. When adding new node types, prefer the `Core/` layout over adding to the root.
+[Source/ReoScript/AnonymousFunctionDefineNode.cs](Source/ReoScript/AnonymousFunctionDefineNode.cs) lives at the project root for historical reasons. When adding new node types, prefer the `Core/` layout over adding to the root.
 
 ### JIT compiler prototype
 
-A JIT compiler prototype (`ReoScriptCompiler`, `CompilerContext`) exists in `ScriptRunningMachine.cs` behind `#if REOSCRIPT_JIT`. It uses `System.Reflection.Emit` to generate IL. This is not yet functional and will be rewritten for .NET 10.
+A JIT compiler prototype exists under [Source/ReoScript/Compiler/](Source/ReoScript/Compiler/). It uses `System.Reflection.Emit` to generate IL from the `SyntaxNode` AST, with automatic fallback to tree-walking for unsupported node types. The AST is designed with JIT in mind — `SyntaxNode` is a public typed base class supporting the Visitor pattern for future compilation backends.
 
 ### Truthy/falsy semantics
 

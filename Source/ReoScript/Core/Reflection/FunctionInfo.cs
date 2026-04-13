@@ -1,7 +1,7 @@
-﻿/*****************************************************************************
- * 
+/*****************************************************************************
+ *
  * ReoScript - .NET Script Language Engine
- * 
+ *
  * https://github.com/unvell/ReoScript
  *
  * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
@@ -11,11 +11,10 @@
  *
  * This software released under MIT license.
  * Copyright (c) 2012-2019 Jingwood, unvell.com, all rights reserved.
- * 
+ *
  ****************************************************************************/
 
 using System.Collections.Generic;
-using Antlr.Runtime.Tree;
 using unvell.ReoScript.Core.Statement;
 
 namespace unvell.ReoScript
@@ -65,7 +64,7 @@ namespace unvell.ReoScript
 			/// </summary>
 			public int Line { get; set; }
 
-			internal CommonTree BodyTree { get; set; }
+			internal SyntaxNode BodyTree { get; set; }
 			internal StaticFunctionScope InnerScope { get; set; }
 			internal StaticFunctionScope OuterScope { get; set; }
 
@@ -75,7 +74,7 @@ namespace unvell.ReoScript
 			/// <returns></returns>
 			public string GetBodyText()
 			{
-				return BodyTree.ToString();
+				return BodyTree?.ToString();
 			}
 
 			/// <summary>
@@ -85,7 +84,7 @@ namespace unvell.ReoScript
 			{
 				get
 				{
-					return InnerScope.Functions;
+					return InnerScope?.Functions;
 				}
 			}
 
@@ -96,7 +95,7 @@ namespace unvell.ReoScript
 			{
 				get
 				{
-					return InnerScope.Variables;
+					return InnerScope?.Variables;
 				}
 			}
 		}

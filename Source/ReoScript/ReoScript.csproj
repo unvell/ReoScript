@@ -22,10 +22,5 @@
     <EmbeddedResource Include="scripts\number.reo" LogicalName="unvell.ReoScript.scripts.number.reo" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Antlr3.Runtime">
-      <HintPath>Ref\Antlr3.Runtime.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 
 </Project>

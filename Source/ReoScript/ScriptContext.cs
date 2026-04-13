@@ -18,7 +18,6 @@ using System;
 using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
-using Antlr.Runtime.Tree;
 using unvell.ReoScript.Parsers;
 using unvell.ReoScript.Core.Statement;
 
@@ -402,7 +401,7 @@ namespace unvell.ReoScript
 			return arr;
 		}
 
-		internal ErrorObject CreateErrorObject(CommonTree t, string msg)
+		internal ErrorObject CreateErrorObject(SyntaxNode t, string msg)
 		{
 			ErrorObject err = CreateNewObject(Srm.BuiltinConstructors.ErrorFunction) as ErrorObject;
 			err.Line = t.Line;
@@ -424,7 +423,7 @@ namespace unvell.ReoScript
 			return err;
 		}
 
-		internal ReoScriptRuntimeException CreateRuntimeError(CommonTree t, string msg)
+		internal ReoScriptRuntimeException CreateRuntimeError(SyntaxNode t, string msg)
 		{
 			return new ReoScriptRuntimeException(CreateErrorObject(t, msg));
 		}
