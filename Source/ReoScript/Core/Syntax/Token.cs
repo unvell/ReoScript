@@ -24,12 +24,20 @@ namespace unvell.ReoScript
 		public int Line;
 		public int CharPosition;
 
+		/// <summary>
+		/// True when at least one newline (line terminator) appeared in the
+		/// source text between the previous token and this token.
+		/// Used by the parser for Automatic Semicolon Insertion (ASI).
+		/// </summary>
+		public bool NewlineBefore;
+
 		public Token(int type, string text, int line, int charPos)
 		{
 			Type = type;
 			Text = text;
 			Line = line;
 			CharPosition = charPos;
+			NewlineBefore = false;
 		}
 
 		public override string ToString()

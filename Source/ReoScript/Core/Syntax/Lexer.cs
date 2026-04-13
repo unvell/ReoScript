@@ -33,57 +33,70 @@ namespace unvell.ReoScript
 		public List<Token> Tokenize()
 		{
 			var tokens = new List<Token>();
+			bool sawNewline = false;
 
 			while (pos < source.Length)
 			{
-				SkipWhitespaceAndComments();
+				sawNewline = SkipWhitespaceAndComments(sawNewline);
 				if (pos >= source.Length) break;
 
 				int startLine = line;
 				int startCol = col;
 				char c = source[pos];
 
+				Token tok;
+
 				// String literals
 				if (c == '"' || c == '\'')
 				{
-					tokens.Add(ReadString(c, startLine, startCol));
-					continue;
+					tok = ReadString(c, startLine, startCol);
 				}
-
 				// Number literals (including 0x and 0b)
-				if (char.IsDigit(c) || (c == '.' && pos + 1 < source.Length && char.IsDigit(source[pos + 1])))
+				else if (char.IsDigit(c) || (c == '.' && pos + 1 < source.Length && char.IsDigit(source[pos + 1])))
 				{
-					tokens.Add(ReadNumber(startLine, startCol));
-					continue;
+					tok = ReadNumber(startLine, startCol);
 				}
-
 				// Identifiers and keywords
-				if (IsIdentStart(c))
+				else if (IsIdentStart(c))
 				{
-					tokens.Add(ReadIdentifierOrKeyword(startLine, startCol));
-					continue;
+					tok = ReadIdentifierOrKeyword(startLine, startCol);
+				}
+				else
+				{
+					// Operators and punctuation
+					Token? op = ReadOperator(startLine, startCol);
+					if (op.HasValue)
+					{
+						tok = op.Value;
+					}
+					else
+					{
+						// Unknown character — skip and report
+						Advance();
+						continue;
+					}
 				}
 
-				// Operators and punctuation
-				Token? op = ReadOperator(startLine, startCol);
-				if (op.HasValue)
-				{
-					tokens.Add(op.Value);
-					continue;
-				}
-
-				// Unknown character — skip and report
-				Advance();
+				tok.NewlineBefore = sawNewline;
+				tokens.Add(tok);
+				sawNewline = false;
 			}
 
-			tokens.Add(new Token(NodeType.EOF, "<EOF>", line, col));
+			var eof = new Token(NodeType.EOF, "<EOF>", line, col);
+			eof.NewlineBefore = sawNewline;
+			tokens.Add(eof);
 			return tokens;
 		}
 
 		#region Whitespace & Comments
 
-		private void SkipWhitespaceAndComments()
+		/// <summary>
+		/// Skips whitespace and comments. Returns true if any newline was encountered.
+		/// </summary>
+		private bool SkipWhitespaceAndComments(bool alreadySawNewline)
 		{
+			bool sawNewline = alreadySawNewline;
+
 			while (pos < source.Length)
 			{
 				char c = source[pos];
@@ -94,6 +107,7 @@ namespace unvell.ReoScript
 				}
 				else if (c == '\r' || c == '\n')
 				{
+					sawNewline = true;
 					if (c == '\r' && Peek(1) == '\n') pos++;
 					pos++;
 					line++;
@@ -101,7 +115,8 @@ namespace unvell.ReoScript
 				}
 				else if (c == '/' && Peek(1) == '/')
 				{
-					// Line comment
+					// Line comment — implicitly ends at newline, so counts as newline
+					sawNewline = true;
 					while (pos < source.Length && source[pos] != '\n' && source[pos] != '\r')
 						pos++;
 					col = pos; // will be reset on next newline
@@ -117,9 +132,10 @@ namespace unvell.ReoScript
 							pos += 2; col += 2;
 							break;
 						}
-						if (source[pos] == '\n') { line++; col = 0; pos++; }
+						if (source[pos] == '\n') { sawNewline = true; line++; col = 0; pos++; }
 						else if (source[pos] == '\r')
 						{
+							sawNewline = true;
 							if (Peek(1) == '\n') pos++;
 							pos++; line++; col = 0;
 						}
@@ -131,6 +147,8 @@ namespace unvell.ReoScript
 					break;
 				}
 			}
+
+			return sawNewline;
 		}
 
 		#endregion

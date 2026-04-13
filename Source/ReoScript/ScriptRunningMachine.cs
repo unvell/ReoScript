@@ -1461,7 +1461,6 @@ namespace unvell.ReoScript
 		/// <returns>result of last exected statement</returns>
 		public object Run(string script)
 		{
-			if (!script.EndsWith(";")) script += ";";
 			return Run(script, true);
 		}
 

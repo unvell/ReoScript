@@ -422,5 +422,120 @@ function greet(name) { return 'hello ' + name; }
 		}
 
 		#endregion
+
+		#region ASI (Automatic Semicolon Insertion)
+
+		[Fact]
+		public void ASI_SimpleStatements()
+		{
+			var srm = new ScriptRunningMachine();
+			new ScriptDebugger(srm);
+			// Variable declaration and assignment without semicolons
+			object result = srm.Run(@"
+var a = 10
+var b = 20
+a + b
+");
+			Assert.Equal(30d, ScriptRunningMachine.GetNumberValue(result));
+		}
+
+		[Fact]
+		public void ASI_FunctionCallWithoutSemicolon()
+		{
+			var srm = new ScriptRunningMachine();
+			new ScriptDebugger(srm);
+			object result = srm.Run(@"
+function add(x, y) {
+	return x + y
+}
+add(3, 4)
+");
+			Assert.Equal(7d, ScriptRunningMachine.GetNumberValue(result));
+		}
+
+		[Fact]
+		public void ASI_ReturnWithNewline()
+		{
+			var srm = new ScriptRunningMachine();
+			new ScriptDebugger(srm);
+			// return on its own line should return null (like JS)
+			object result = srm.Run(@"
+function f() {
+	return
+	42
+}
+f()
+");
+			Assert.Null(result);
+		}
+
+		[Fact]
+		public void ASI_ReturnWithValueOnSameLine()
+		{
+			var srm = new ScriptRunningMachine();
+			new ScriptDebugger(srm);
+			object result = srm.Run(@"
+function f() {
+	return 42
+}
+f()
+");
+			Assert.Equal(42d, ScriptRunningMachine.GetNumberValue(result));
+		}
+
+		[Fact]
+		public void ASI_MixedWithExplicitSemicolons()
+		{
+			var srm = new ScriptRunningMachine();
+			new ScriptDebugger(srm);
+			// Mixing explicit semicolons and ASI should work
+			object result = srm.Run(@"
+var a = 1;
+var b = 2
+var c = a + b;
+c
+");
+			Assert.Equal(3d, ScriptRunningMachine.GetNumberValue(result));
+		}
+
+		[Fact]
+		public void ASI_ForLoopStillRequiresSemicolons()
+		{
+			var srm = new ScriptRunningMachine();
+			new ScriptDebugger(srm);
+			// for loop header semicolons are mandatory
+			object result = srm.Run(@"
+var sum = 0
+for (var i = 0; i < 5; i++) {
+	sum = sum + i
+}
+sum
+");
+			Assert.Equal(10d, ScriptRunningMachine.GetNumberValue(result));
+		}
+
+		[Fact]
+		public void ASI_ObjectPropertyAccess()
+		{
+			var srm = new ScriptRunningMachine();
+			new ScriptDebugger(srm);
+			object result = srm.Run(@"
+var obj = { x: 10, y: 20 }
+obj.x + obj.y
+");
+			Assert.Equal(30d, ScriptRunningMachine.GetNumberValue(result));
+		}
+
+		[Fact]
+		public void ASI_BeforeClosingBrace()
+		{
+			var srm = new ScriptRunningMachine();
+			new ScriptDebugger(srm);
+			// ASI before } (no newline or semicolon needed)
+			object result = srm.Run("function f() { return 5 } f()");
+			Assert.Equal(5d, ScriptRunningMachine.GetNumberValue(result));
+		}
+
+		#endregion
 	}
 }

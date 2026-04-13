@@ -104,7 +104,7 @@ namespace unvell.ReoScript
 			if (Check(NodeType.STRING_LITERATE))
 			{
 				node.AddChild(MakeLeaf(Advance()));
-				Expect(NodeType.SEMI);
+				ExpectSemiOrASI();
 				return node;
 			}
 
@@ -122,7 +122,7 @@ namespace unvell.ReoScript
 					node.AddChild(MakeLeaf(Expect(NodeType.IDENTIFIER)));
 				}
 			}
-			Expect(NodeType.SEMI);
+			ExpectSemiOrASI();
 			return node;
 		}
 
@@ -147,7 +147,7 @@ namespace unvell.ReoScript
 				// Single declaration — return the VariableDefineNode directly
 				// (ANTLR wraps in DECLARATION with TYPE child, but the interpreter
 				//  dispatches on LOCAL_DECLARE_ASSIGNMENT which is the VariableDefineNode type)
-				Expect(NodeType.SEMI);
+				ExpectSemiOrASI();
 				return first;
 			}
 
@@ -155,7 +155,7 @@ namespace unvell.ReoScript
 			var decl = new SyntaxNode(NodeType.DECLARATION, "DECLARATION", sLine, sCol);
 			decl.AddChild(first);
 			foreach (var e in extras) decl.AddChild(e);
-			Expect(NodeType.SEMI);
+			ExpectSemiOrASI();
 			return decl;
 		}
 
@@ -299,17 +299,8 @@ namespace unvell.ReoScript
 			}
 
 			// expression statement (assignment, invocation, etc.)
-			var expr = ParseStatementExpression();
-			if (!Match(NodeType.SEMI))
-			{
-				// Error recovery: skip to next semicolon or statement-starting token
-				// without consuming the statement-starting token
-				while (!IsAtEnd() && !Check(NodeType.SEMI) && !IsStatementStart())
-				{
-					Advance();
-				}
-				Match(NodeType.SEMI); // consume the semicolon if found
-			}
+			var expr = ParseExpressionStatement();
+			ExpectSemiOrASI();
 			return expr;
 		}
 
@@ -325,6 +316,91 @@ namespace unvell.ReoScript
 			}
 			Expect(NodeType.RCURLY);
 			return block;
+		}
+
+		#endregion
+
+		#region Expression Statements
+
+		/// <summary>
+		/// Parses an expression used as a statement. Supports full expressions
+		/// (including binary operators) so that <c>a + b</c> is valid as a statement.
+		/// Also handles statement-specific constructs like new, delete, and pre-increment.
+		/// </summary>
+		private SyntaxNode ParseExpressionStatement()
+		{
+			// new X(...)
+			if (Check(NodeType.CREATE))
+			{
+				int sLine = Current().Line, sCol = Current().CharPosition;
+				Advance();
+				var expr = ParsePrimaryExpression();
+				var node = new SyntaxNode(NodeType.CREATE, "CREATE", sLine, sCol);
+				node.AddChild(expr);
+				return node;
+			}
+
+			// delete X
+			if (Check(NodeType.DELETE_PROP))
+			{
+				int sLine = Current().Line, sCol = Current().CharPosition;
+				Advance();
+				var expr = ParsePrimaryExpression();
+				var node = new SyntaxNode(NodeType.DELETE_PROP, "DELETE_PROP", sLine, sCol);
+				node.AddChild(expr);
+				return node;
+			}
+
+			// Full expression with optional assignment suffix
+			int savedPos = pos;
+			int savedErrorCount = CompilingErrors.Count;
+			var left = ParseExpression_Internal();
+
+			// Error recovery: if expression parsing produced errors and consumed
+			// a statement-starting keyword, restore and skip the offending tokens
+			if (CompilingErrors.Count > savedErrorCount && pos > savedPos + 1)
+			{
+				// Restore to saved position and skip tokens until a statement boundary
+				pos = savedPos;
+				while (!IsAtEnd() && !Check(NodeType.SEMI) && !IsStatementStart())
+				{
+					Advance();
+				}
+				Match(NodeType.SEMI);
+				return null;
+			}
+
+			// Compound assignment operators (+=, -=, etc.)
+			int? compoundOp = Current().Type switch
+			{
+				NodeType.ASSIGN_PLUS => NodeType.PLUS,
+				NodeType.ASSIGN_MINUS => NodeType.MINUS,
+				NodeType.ASSIGN_MUL => NodeType.MUL,
+				NodeType.ASSIGN_DIV => NodeType.DIV,
+				NodeType.ASSIGN_REM => NodeType.MOD,
+				NodeType.ASSIGN_AND => NodeType.AND,
+				NodeType.ASSIGN_OR => NodeType.OR,
+				NodeType.ASSIGN_REV => NodeType.XOR,
+				NodeType.ASSIGN_LSHIFT => NodeType.LSHIFT,
+				NodeType.ASSIGN_RSHIFT => NodeType.RSHIFT,
+				_ => null,
+			};
+
+			if (compoundOp.HasValue)
+			{
+				int sLine = Current().Line, sCol = Current().CharPosition;
+				Advance();
+				var val = ParseExpression_Internal();
+				var binOp = new SyntaxNode(compoundOp.Value, GetNodeName(compoundOp.Value), sLine, sCol);
+				binOp.AddChild(left);
+				binOp.AddChild(val);
+				var assign = new SyntaxNode(NodeType.ASSIGNMENT, "ASSIGNMENT", sLine, sCol);
+				assign.AddChild(left);
+				assign.AddChild(binOp);
+				return assign;
+			}
+
+			return left;
 		}
 
 		#endregion
@@ -705,7 +781,7 @@ namespace unvell.ReoScript
 			int sLine = Current().Line, sCol = Current().CharPosition;
 			Expect(NodeType.TRY_CATCH_TRHOW); // 'throw'
 			var expr = ParseExpression_Internal();
-			Expect(NodeType.SEMI);
+			ExpectSemiOrASI();
 			var node = new SyntaxNode(NodeType.TRY_CATCH_TRHOW, "TRY_CATCH_TRHOW", sLine, sCol);
 			node.AddChild(expr);
 			return node;
@@ -721,7 +797,9 @@ namespace unvell.ReoScript
 			{
 				case NodeType.RETURN:
 					node = new SyntaxNode(NodeType.RETURN, "RETURN", sLine, sCol);
-					if (!Check(NodeType.SEMI) && !Check(NodeType.RCURLY) && !IsAtEnd())
+					// ASI for return: if the next token is on a new line, treat as bare return
+					if (!Check(NodeType.SEMI) && !Check(NodeType.RCURLY) && !IsAtEnd()
+						&& !Current().NewlineBefore)
 					{
 						node.AddChild(ParseExpression_Internal());
 					}
@@ -737,7 +815,7 @@ namespace unvell.ReoScript
 					break;
 			}
 
-			Expect(NodeType.SEMI);
+			ExpectSemiOrASI();
 			return node;
 		}
 
@@ -1654,6 +1732,33 @@ namespace unvell.ReoScript
 			var tok = Current();
 			pos++;
 			return tok;
+		}
+
+		/// <summary>
+		/// Automatic Semicolon Insertion (ASI).
+		/// Consumes a semicolon if present; otherwise inserts a virtual one when:
+		///   1. The current token is preceded by a newline
+		///   2. The current token is '}'
+		///   3. We've reached the end of the input
+		/// </summary>
+		private bool ExpectSemiOrASI()
+		{
+			// Explicit semicolon
+			if (Match(NodeType.SEMI)) return true;
+
+			// ASI: newline before current token
+			if (Current().NewlineBefore) return true;
+
+			// ASI: next token is '}' (end of block)
+			if (Check(NodeType.RCURLY)) return true;
+
+			// ASI: end of input
+			if (IsAtEnd()) return true;
+
+			// No ASI possible — report error but continue
+			var tok = Current();
+			ReportError($"expected ';'", tok.Line, tok.CharPosition);
+			return false;
 		}
 
 		private Token Expect(int type)
