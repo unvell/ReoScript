@@ -31,9 +31,17 @@ namespace unvell.ReoScript
 			{
 				Console.WriteLine(
 @"ReoScript(TM) Running Machine
-Copyright(c) 2012-2013 unvell, All Rights Reserved.
+Copyright(c) 2012-2019 Jingwood, All Rights Reserved.
 
-Usage: ReoScript.exe [filename|-workpath|-debug|-exec|-console]");
+Usage: ReoScript [options] [filename...]
+
+Options:
+  -e <script>    Execute script string directly
+  -exec <script> Same as -e
+  -workpath <p>  Set working directory
+  -debug         Enable debug mode
+  -console       Enter interactive console after execution
+  -com           Compile mode (not yet available)");
 				return;
 			}
 
@@ -67,6 +75,7 @@ Usage: ReoScript.exe [filename|-workpath|-debug|-exec|-console]");
 								debug = true;
 								break;
 
+							case "e":
 							case "exec":
 								initScript = GetParameter(args, i);
 								i++;
