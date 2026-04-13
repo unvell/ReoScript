@@ -225,6 +225,68 @@ namespace unvell.ReoScript.TestCase
 
 		#endregion
 
+		#region Async (setTimeout / setInterval)
+
+		[Fact]
+		public void SetTimeout_CallbackExecutes()
+		{
+			var srm = CreateSRM();
+			srm.Run("var a = 0; setTimeout(function(){ a = 10; }, 10);");
+
+			// Wait enough time for the callback to fire
+			System.Threading.Thread.Sleep(200);
+
+			Assert.Equal(10.0, srm.CalcExpression("a;"));
+		}
+
+		[Fact]
+		public void SetInterval_CallbackFiresMultipleTimes()
+		{
+			var srm = CreateSRM();
+			srm.Run("var count = 0; var id = setInterval(function(){ count++; }, 20);");
+
+			// Wait for several intervals to fire
+			System.Threading.Thread.Sleep(300);
+
+			srm.Run("clearInterval(id);");
+			var count = Convert.ToDouble(srm.CalcExpression("count;"));
+
+			// Should have fired multiple times (at least 3 in 300ms with 20ms interval)
+			Assert.True(count >= 3, $"Expected count >= 3, but was {count}");
+		}
+
+		[Fact]
+		public void ClearInterval_StopsCallback()
+		{
+			var srm = CreateSRM();
+			srm.Run("var count = 0; var id = setInterval(function(){ count++; }, 20);");
+
+			System.Threading.Thread.Sleep(150);
+			srm.Run("clearInterval(id);");
+
+			var countAfterClear = Convert.ToDouble(srm.CalcExpression("count;"));
+
+			// Wait more and confirm count didn't increase
+			System.Threading.Thread.Sleep(200);
+			var countLater = Convert.ToDouble(srm.CalcExpression("count;"));
+
+			Assert.Equal(countAfterClear, countLater);
+		}
+
+		[Fact]
+		public void SetInterval_ReturnsValidId()
+		{
+			var srm = CreateSRM();
+			srm.Run("var id = setInterval(function(){}, 100);");
+
+			var id = Convert.ToDouble(srm.CalcExpression("id;"));
+			Assert.True(id > 0, "setInterval should return a positive id");
+
+			srm.Run("clearInterval(id);");
+		}
+
+		#endregion
+
 		#region Module Import
 
 		private string WriteTempScript(string content)
