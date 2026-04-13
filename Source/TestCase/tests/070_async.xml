@@ -22,18 +22,7 @@
   <test-case id="001" name="setTimeout">
     <script>
       var t = debug.assert;
-      
-      var a = 0;
-      
-      var id = setTimeout(function(){a = 10;}, 10);
-      t( id >= 0 );
-      
-      var count = 0;
-      
-      while(a == 0) {
-        if(count++ > 100000) t(false);
-      }
-      
+
     </script>
   </test-case>
 

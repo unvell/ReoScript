@@ -4915,16 +4915,31 @@ namespace unvell.ReoScript
 						}
 					}
 
-					// If not found via CapturedScope chain, search up the call stack.
-					// This allows nested tags inside templates to resolve template parameters.
+					// If not found via CapturedScope chain, search up the call stack
+					// but ONLY when inside a template tag scope. This allows nested
+					// tags inside templates to resolve template parameters without
+					// leaking caller locals into normal function calls.
 					if (container == null)
 					{
+						bool insideTemplate = false;
 						foreach (var stackScope in callStack)
 						{
-							if (stackScope != cs && stackScope.Variables.ContainsKey(identifier))
+							if (stackScope.CurrentFunction is TemplateConstructorObject)
 							{
-								container = stackScope;
+								insideTemplate = true;
 								break;
+							}
+						}
+
+						if (insideTemplate)
+						{
+							foreach (var stackScope in callStack)
+							{
+								if (stackScope != cs && stackScope.Variables.ContainsKey(identifier))
+								{
+									container = stackScope;
+									break;
+								}
 							}
 						}
 					}
