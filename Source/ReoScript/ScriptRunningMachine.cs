@@ -2568,7 +2568,7 @@ namespace unvell.ReoScript
 			classDefines[name] = constructor;
 		}
 
-		private static readonly List<string> importedCodeFiles = new List<string>();
+		private readonly List<string> importedCodeFiles = new List<string>();
 
 		internal void ImportCodeFile(string fullPath)
 		{
