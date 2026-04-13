@@ -289,6 +289,7 @@ namespace unvell.ReoScript
 			if (c == '!' && n == '=' && n2 == '=') { pos += 3; col += 3; return new Token(NodeType.STRICT_NOT_EQUALS, "!==", startLine, startCol); }
 			if (c == '<' && n == '<' && n2 == '=') { pos += 3; col += 3; return new Token(NodeType.ASSIGN_LSHIFT, "<<=", startLine, startCol); }
 			if (c == '>' && n == '>' && n2 == '=') { pos += 3; col += 3; return new Token(NodeType.ASSIGN_RSHIFT, ">>=", startLine, startCol); }
+			if (c == '.' && n == '.' && n2 == '.') { pos += 3; col += 3; return new Token(NodeType.SPREAD, "...", startLine, startCol); }
 
 			// Arrow =>
 			if (c == '=' && n == '>') { pos += 2; col += 2; return new Token(NodeType.LAMBDA_FUNCTION, "=>", startLine, startCol); }

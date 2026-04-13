@@ -119,6 +119,32 @@ namespace unvell.ReoScript
 			#endregion
 		}
 		#endregion
+		#region Destructuring Declaration
+		class DestructureNodeParser : INodeParser
+		{
+			public object Parse(SyntaxNode t, ScriptRunningMachine srm, ScriptContext ctx)
+			{
+				// Children: [name1, name2, ..., nameN, initExpr]
+				// Last child is the initializer expression
+				int nameCount = t.ChildCount - 1;
+				SyntaxNode initNode = (SyntaxNode)t.Children[nameCount];
+
+				object initVal = ScriptRunningMachine.ParseNode(initNode, ctx);
+				if (initVal is IAccess) initVal = ((IAccess)initVal).Get();
+
+				ObjectValue source = initVal as ObjectValue;
+
+				for (int i = 0; i < nameCount; i++)
+				{
+					string name = t.Children[i].ToString();
+					object value = source != null ? source[name] : null;
+					ctx[name] = value;
+				}
+
+				return null;
+			}
+		}
+		#endregion
 		#region Local Variable Declaration
 		class DeclarationNodeParser : INodeParser
 		{
@@ -2498,6 +2524,7 @@ namespace unvell.ReoScript
 		{
 			#region Generic Parsers
 			definedParser[NodeType.IMPORT] = new ImportNodeParser();
+			definedParser[NodeType.DESTRUCTURE] = new DestructureNodeParser();
 			definedParser[NodeType.LOCAL_DECLARE_ASSIGNMENT] = new DeclarationNodeParser();
 			definedParser[NodeType.ASSIGNMENT] = new AssignmentNodeParser();
 			definedParser[NodeType.IF_STATEMENT] = new IfStatementNodeParser();

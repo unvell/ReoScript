@@ -1872,24 +1872,41 @@ namespace unvell.ReoScript
 
 
 					case NodeType.OBJECT_LITERAL:
-						if (t.ChildCount % 2 != 0)
-							throw ctx.CreateRuntimeError(t, "object literal should be key/value paired.");
-
-						ObjectValue val = ctx.CreateNewObject();
-
-						for (int i = 0; i < t.ChildCount; i += 2)
 						{
-							object value = ParseNode((SyntaxNode)t.Children[i + 1], ctx);
-							if (value is IAccess) value = ((IAccess)value).Get();
+							ObjectValue val = ctx.CreateNewObject();
 
-							string identifier = t.Children[i].ToString();
-							if (t.Children[i].Type == NodeType.STRING_LITERATE)
-								identifier = identifier.Substring(1, identifier.Length - 2);
+							int i = 0;
+							while (i < t.ChildCount)
+							{
+								if (t.Children[i].Type == NodeType.SPREAD)
+								{
+									// Spread: ...expr — copy all properties from the source object
+									object spreadObj = ParseNode((SyntaxNode)t.Children[i].Children[0], ctx);
+									if (spreadObj is IAccess) spreadObj = ((IAccess)spreadObj).Get();
+									if (spreadObj is ObjectValue ov)
+									{
+										foreach (string key in ov)
+											val[key] = ov[key];
+									}
+									i++;
+								}
+								else
+								{
+									// Normal key-value pair (including shorthand — parser emits both key and value)
+									string identifier = t.Children[i].ToString();
+									if (t.Children[i].Type == NodeType.STRING_LITERATE)
+										identifier = identifier.Substring(1, identifier.Length - 2);
 
-							val[identifier] = value;
+									object value = ParseNode((SyntaxNode)t.Children[i + 1], ctx);
+									if (value is IAccess) value = ((IAccess)value).Get();
+
+									val[identifier] = value;
+									i += 2;
+								}
+							}
+
+							return val;
 						}
-
-						return val;
 
 					case NodeType.ARRAY_LITERAL:
 						ArrayObject arr = ctx.CreateNewObject(ctx.Srm.BuiltinConstructors.ArrayFunction) as ArrayObject;

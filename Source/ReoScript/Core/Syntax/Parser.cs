@@ -149,6 +149,12 @@ namespace unvell.ReoScript
 			int sLine = Current().Line, sCol = Current().CharPosition;
 			Expect(NodeType.TYPE); // 'var'
 
+			// Destructuring: var { a, b } = expr;
+			if (Check(NodeType.LCURLY))
+			{
+				return ParseDestructuringDeclaration(sLine, sCol);
+			}
+
 			var first = ParseLocalVariableDeclarationAssignment();
 			if (first == null) return null;
 
@@ -175,6 +181,45 @@ namespace unvell.ReoScript
 			foreach (var e in extras) decl.AddChild(e);
 			ExpectSemiOrASI();
 			return decl;
+		}
+
+		private SyntaxNode ParseDestructuringDeclaration(int sLine, int sCol)
+		{
+			Expect(NodeType.LCURLY); // '{'
+
+			var node = new SyntaxNode(NodeType.DESTRUCTURE, "DESTRUCTURE", sLine, sCol);
+
+			// Parse property names: { a, b, c }
+			node.AddChild(MakeLeaf(Expect(NodeType.IDENTIFIER)));
+			while (Match(NodeType.COMMA))
+			{
+				if (Check(NodeType.RCURLY)) break; // trailing comma
+				node.AddChild(MakeLeaf(Expect(NodeType.IDENTIFIER)));
+			}
+
+			Expect(NodeType.RCURLY); // '}'
+			Expect(NodeType.ASSIGNMENT); // '='
+
+			// The initializer expression (right-hand side)
+			node.AddChild(ParseExpression_Internal());
+
+			// Register all destructured names as local variables
+			for (int i = 0; i < node.ChildCount - 1; i++)
+			{
+				var vi = new VariableInfo
+				{
+					Name = node.Children[i].Text,
+					HasInitialValue = true,
+					IsImplicitDeclaration = false,
+					IsLocal = true,
+					CharIndex = node.Children[i].CharPositionInLine,
+					Line = node.Children[i].Line,
+				};
+				CurrentStack.Variables.Add(vi);
+			}
+
+			ExpectSemiOrASI();
+			return node;
 		}
 
 		private VariableDefineNode ParseLocalVariableDeclarationAssignment()
@@ -1413,26 +1458,51 @@ namespace unvell.ReoScript
 
 		private void ParseKeyPair(SyntaxNode parent)
 		{
+			// Spread: ...expr
+			if (Check(NodeType.SPREAD))
+			{
+				int sLine = Current().Line, sCol = Current().CharPosition;
+				Advance(); // consume '...'
+				var spreadNode = new SyntaxNode(NodeType.SPREAD, "...", sLine, sCol);
+				spreadNode.AddChild(ParseExpression_Internal());
+				parent.AddChild(spreadNode);
+				return;
+			}
+
 			// key: either identifier or string
 			SyntaxNode key;
 			if (Check(NodeType.STRING_LITERATE))
 			{
 				key = MakeLeaf(Advance());
+				Expect(NodeType.COLON);
+				var value = ParseExpression_Internal();
+				parent.AddChild(key);
+				parent.AddChild(value);
+				return;
 			}
-			else
+
+			key = MakeLeaf(Expect(NodeType.IDENTIFIER));
+
+			// Shorthand property: { a } or { a, b }
+			if (!Check(NodeType.COLON))
 			{
-				key = MakeLeaf(Expect(NodeType.IDENTIFIER));
+				// Emit key and a copy of the identifier as value
+				parent.AddChild(key);
+				parent.AddChild(new SyntaxNode(NodeType.IDENTIFIER, key.Text, key.Line, key.CharPositionInLine));
+				return;
 			}
+
 			Expect(NodeType.COLON);
-			var value = ParseExpression_Internal();
+			var val = ParseExpression_Internal();
 			parent.AddChild(key);
-			parent.AddChild(value);
+			parent.AddChild(val);
 		}
 
 		private bool IsObjectLiteral()
 		{
 			// Distinguish object literal { key: value } from block { statement }
 			// Look ahead: { IDENTIFIER : ... } or { STRING : ... } or { }
+			// Also: { IDENTIFIER , ... } (shorthand) or { ...expr } (spread)
 			if (!Check(NodeType.LCURLY)) return false;
 
 			int saved = pos;
@@ -1440,11 +1510,15 @@ namespace unvell.ReoScript
 
 			if (Check(NodeType.RCURLY)) { pos = saved; return true; } // empty object {}
 
+			// Spread: { ...expr }
+			if (Check(NodeType.SPREAD)) { pos = saved; return true; }
+
 			bool result = false;
 			if (Check(NodeType.IDENTIFIER) || Check(NodeType.STRING_LITERATE))
 			{
 				pos++;
-				result = Check(NodeType.COLON);
+				// key: value, or shorthand: key, or key }
+				result = Check(NodeType.COLON) || Check(NodeType.COMMA) || Check(NodeType.RCURLY);
 			}
 
 			pos = saved;

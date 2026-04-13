@@ -651,5 +651,89 @@ var elapsed = Date.now() - start;
 		}
 
 		#endregion
+
+		#region Shorthand Property
+
+		[Fact]
+		public void ShorthandProperty_Basic()
+		{
+			var srm = CreateSRM();
+			srm.Run("var a = 1, b = 2; var obj = { a, b };");
+			Assert.Equal(1.0, srm.CalcExpression("obj.a;"));
+			Assert.Equal(2.0, srm.CalcExpression("obj.b;"));
+		}
+
+		[Fact]
+		public void ShorthandProperty_MixedWithNormal()
+		{
+			var srm = CreateSRM();
+			srm.Run("var x = 10; var obj = { x, y: 20 };");
+			Assert.Equal(10.0, srm.CalcExpression("obj.x;"));
+			Assert.Equal(20.0, srm.CalcExpression("obj.y;"));
+		}
+
+		#endregion
+
+		#region Object Spread
+
+		[Fact]
+		public void ObjectSpread_CopiesProperties()
+		{
+			var srm = CreateSRM();
+			srm.Run("var obj1 = { a: 1, b: 2 }; var obj2 = { ...obj1 };");
+			Assert.Equal(1.0, srm.CalcExpression("obj2.a;"));
+			Assert.Equal(2.0, srm.CalcExpression("obj2.b;"));
+		}
+
+		[Fact]
+		public void ObjectSpread_WithAdditionalProperties()
+		{
+			var srm = CreateSRM();
+			srm.Run("var obj1 = { a: 1 }; var obj2 = { ...obj1, b: 2 };");
+			Assert.Equal(1.0, srm.CalcExpression("obj2.a;"));
+			Assert.Equal(2.0, srm.CalcExpression("obj2.b;"));
+		}
+
+		[Fact]
+		public void ObjectSpread_OverridesProperties()
+		{
+			var srm = CreateSRM();
+			srm.Run("var obj1 = { a: 1, b: 2 }; var obj2 = { ...obj1, b: 99 };");
+			Assert.Equal(1.0, srm.CalcExpression("obj2.a;"));
+			Assert.Equal(99.0, srm.CalcExpression("obj2.b;"));
+		}
+
+		#endregion
+
+		#region Destructuring
+
+		[Fact]
+		public void Destructuring_Basic()
+		{
+			var srm = CreateSRM();
+			srm.Run("var obj = { a: 10, b: 20 }; var { a, b } = obj;");
+			Assert.Equal(10.0, srm.CalcExpression("a;"));
+			Assert.Equal(20.0, srm.CalcExpression("b;"));
+		}
+
+		[Fact]
+		public void Destructuring_PartialExtract()
+		{
+			var srm = CreateSRM();
+			srm.Run("var obj = { x: 1, y: 2, z: 3 }; var { x, z } = obj;");
+			Assert.Equal(1.0, srm.CalcExpression("x;"));
+			Assert.Equal(3.0, srm.CalcExpression("z;"));
+		}
+
+		[Fact]
+		public void Destructuring_MissingProperty_IsNull()
+		{
+			var srm = CreateSRM();
+			srm.Run("var obj = { a: 1 }; var { a, b } = obj;");
+			Assert.Equal(1.0, srm.CalcExpression("a;"));
+			Assert.Null(srm.CalcExpression("b;"));
+		}
+
+		#endregion
 	}
 }

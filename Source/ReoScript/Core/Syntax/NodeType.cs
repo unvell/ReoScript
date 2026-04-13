@@ -150,6 +150,12 @@ namespace unvell.ReoScript
 		// Context keyword: used in "import ... as alias"
 		public const int AS = 152;
 
+		// Spread operator: ...expr (used in object literals)
+		public const int SPREAD = 153;
+
+		// Destructuring pattern: var { a, b } = expr
+		public const int DESTRUCTURE = 154;
+
 		public const int MAX_TOKENS = 200;
 		public const int REPLACED_TREE = MAX_TOKENS - 1;
 	}
