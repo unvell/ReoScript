@@ -613,5 +613,43 @@ var x = 42;
 		}
 
 		#endregion
+
+		#region Date Enhancement
+
+		[Fact]
+		public void DateNow_ReturnsNumber()
+		{
+			var srm = CreateSRM();
+			object result = srm.CalcExpression("Date.now();");
+			Assert.IsType<double>(result);
+			Assert.True((double)result > 0);
+		}
+
+		[Fact]
+		public void DateGetTime_MatchesTicks()
+		{
+			var srm = CreateSRM();
+			srm.Run("var d = new Date(); var t = d.getTime();");
+			object result = srm.CalcExpression("t;");
+			Assert.IsType<double>(result);
+			Assert.True((double)result > 0);
+		}
+
+		[Fact]
+		public void DateNow_ElapsedPattern()
+		{
+			var srm = CreateSRM();
+			srm.Run(@"
+var start = Date.now();
+var sum = 0;
+for (var i = 0; i < 1000; i++) { sum += i; }
+var elapsed = Date.now() - start;
+");
+			object elapsed = srm.CalcExpression("elapsed;");
+			Assert.IsType<double>(elapsed);
+			Assert.True((double)elapsed >= 0);
+		}
+
+		#endregion
 	}
 }

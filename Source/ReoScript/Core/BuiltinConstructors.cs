@@ -163,6 +163,10 @@ namespace unvell.ReoScript
 						});
 					}
 				});
+			DateFunction["now"] = new NativeFunctionObject("now", (ctx, owner, args) =>
+			{
+				return (double)(DateTime.UtcNow.Ticks - DateObject.StartTimeTicks) / 10000d;
+			});
 			#endregion
 
 			#region Array

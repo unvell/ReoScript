@@ -36,6 +36,7 @@ namespace unvell.ReoScript
 			this["getMinutes"] = new NativeFunctionObject("getMinutes", (ctx, owner, args) => { return DateTime.Minute; });
 			this["getSeconds"] = new NativeFunctionObject("getSeconds", (ctx, owner, args) => { return DateTime.Second; });
 			this["getMilliseconds"] = new NativeFunctionObject("getMilliseconds", (ctx, owner, args) => { return DateTime.Millisecond; });
+			this["getTime"] = new NativeFunctionObject("getTime", (ctx, owner, args) => { return Ticks; });
 		}
 
 		public DateObject() :
