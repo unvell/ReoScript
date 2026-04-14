@@ -1,0 +1,40 @@
+{
+  "name": "reoscript-syntax",
+  "displayName": "ReoScript Syntax",
+  "description": "Syntax highlighting for ReoScript (.reo), including mixed JavaScript-like code and tag literals.",
+  "version": "0.1.0",
+  "publisher": "local",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "reoscript",
+        "aliases": [
+          "ReoScript",
+          "reo"
+        ],
+        "extensions": [
+          ".reo"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "reoscript",
+        "scopeName": "source.reoscript",
+        "path": "./syntaxes/reoscript.tmLanguage.json",
+        "embeddedLanguages": {
+          "source.js": "javascript",
+          "source.js.jsx": "javascriptreact"
+        }
+      }
+    ]
+  }
+}

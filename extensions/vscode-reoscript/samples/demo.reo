@@ -1,0 +1,22 @@
+import "core.reo";
+
+function User(name) {
+	return {
+		name: name,
+		render: function() {
+			return <UserCard name=name active=true />;
+		}
+	};
+}
+
+template<UserCard>(name, active)
+	<Card>
+		if (active) {
+			debug.assert(name != null);
+		}
+		<Title value=name />
+	</Card>;
+
+var user = User("Alice");
+var node = user.render();
+var module = importModule("ui/card.reo");

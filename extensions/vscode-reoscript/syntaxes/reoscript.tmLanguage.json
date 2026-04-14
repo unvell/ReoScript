@@ -1,0 +1,86 @@
+{
+  "name": "ReoScript",
+  "scopeName": "source.reoscript",
+  "fileTypes": [
+    "reo"
+  ],
+  "patterns": [
+    {
+      "include": "#template-definition"
+    },
+    {
+      "include": "#reoscript-keywords"
+    },
+    {
+      "include": "#reoscript-builtins"
+    },
+    {
+      "include": "source.js.jsx"
+    }
+  ],
+  "repository": {
+    "template-definition": {
+      "begin": "\\b(?:(public|private|protected|internal)\\s+)?(template)\\b\\s*(<)\\s*([A-Za-z_$][\\w$]*)\\s*(>)",
+      "beginCaptures": {
+        "1": {
+          "name": "storage.modifier.access.reoscript"
+        },
+        "2": {
+          "name": "storage.type.template.reoscript"
+        },
+        "3": {
+          "name": "punctuation.definition.typeparameters.begin.reoscript"
+        },
+        "4": {
+          "name": "entity.name.type.template.reoscript"
+        },
+        "5": {
+          "name": "punctuation.definition.typeparameters.end.reoscript"
+        }
+      },
+      "end": "(?=<\\s*[A-Za-z_$])",
+      "name": "meta.template.definition.reoscript",
+      "patterns": [
+        {
+          "match": "\\b(?:public|private|protected|internal)\\b",
+          "name": "storage.modifier.access.reoscript"
+        },
+        {
+          "match": "\\btemplate\\b",
+          "name": "storage.type.template.reoscript"
+        },
+        {
+          "include": "source.js"
+        }
+      ]
+    },
+    "reoscript-keywords": {
+      "patterns": [
+        {
+          "match": "\\b(?:public|private|protected|internal)\\b",
+          "name": "storage.modifier.access.reoscript"
+        },
+        {
+          "match": "\\btemplate\\b",
+          "name": "storage.type.template.reoscript"
+        },
+        {
+          "match": "\\bimportModule\\b",
+          "name": "support.function.reoscript"
+        },
+        {
+          "match": "\\b(?:undefined|NaN)\\b",
+          "name": "constant.language.reoscript"
+        }
+      ]
+    },
+    "reoscript-builtins": {
+      "patterns": [
+        {
+          "match": "\\bdebug\\b",
+          "name": "support.variable.reoscript"
+        }
+      ]
+    }
+  }
+}
